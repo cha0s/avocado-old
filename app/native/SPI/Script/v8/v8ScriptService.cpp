@@ -6,6 +6,8 @@
 #include "../Script.h"
 #include "v8Script.h"
 
+#include "v8CoreService.h"
+
 using namespace v8;
 using namespace std;
 
@@ -23,17 +25,16 @@ v8ScriptService::v8ScriptService()
 
 	Handle<ObjectTemplate> global = ObjectTemplate::New();
 
-	global->Set(
-		v8::String::New("log"),
-		FunctionTemplate::New(V8::writeStderr)
-	);
+	Handle<ObjectTemplate> avo = ObjectTemplate::New();
+
+	v8CoreService::initialize(avo);
+
+	global->Set(String::New("avo"), avo);
 
 	context = Context::New(NULL, global);
 
 	context->Enter();
-}
 
-void v8ScriptService::initialize() {
 	ScriptService::initialize();
 }
 

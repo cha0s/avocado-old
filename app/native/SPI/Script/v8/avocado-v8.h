@@ -27,10 +27,6 @@ namespace V8 {
  *  exception. */
 v8::Handle<v8::Value> toJson(v8::Handle<v8::Value> value);
 
-/** Write JS values to stderr. Primitives get written verbatim, everything else
- *  gets JSON.stringify'd and written. */
-v8::Handle<v8::Value> writeStderr(const v8::Arguments& args);
-
 /** Turn an exception from V8 into a string we can use to report the error. */
 std::string stringifyException(const v8::TryCatch& try_catch, bool suppressBacktrace = false);
 
@@ -44,5 +40,25 @@ std::string stringToStdString(v8::Handle<v8::String> value);
  */
 
 }
+
+#define V8_SET_METHOD(obj, name, callback)                     \
+  obj->Set(v8::String::NewSymbol(name),                        \
+           v8::FunctionTemplate::New(callback)->GetFunction())
+
+#define V8_SET_PROTOTYPE_METHOD(templ, name, callback)                    \
+do {                                                                      \
+  v8::Local<v8::Signature> __callback##_SIG = v8::Signature::New(templ);  \
+  v8::Local<v8::FunctionTemplate> __callback##_TEM =                      \
+    v8::FunctionTemplate::New(callback, v8::Handle<v8::Value>(),          \
+                          __callback##_SIG);                              \
+  templ->PrototypeTemplate()->Set(v8::String::NewSymbol(name),            \
+                                  __callback##_TEM);                      \
+} while (0)
+
+#define V8_SET_PROPERTY(obj, name, getter, setter)              \
+  obj->SetAccessor(v8::String::NewSymbol(name), getter, setter)
+
+#define V8_SET_INTERCEPTOR(obj, getter, setter) \
+  obj->SetNamedPropertyHandler(getter, setter)
 
 #endif // AVOCADO_V8_H

@@ -38,7 +38,7 @@ public:
 template<class T>
 class FactoryManager {
 
-private:
+public:
 
 	/**
 	 * An exception thrown by FactoryManager when a NULL factory instance is
@@ -54,8 +54,6 @@ private:
 
 		}
 	};
-
-public:
 
 	FactoryManager<T>()
 		: m_instance(NULL)

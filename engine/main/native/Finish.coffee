@@ -1,1 +1,1 @@
-console.log 'Closing...'
+avo.Logger.info 'Closing...'

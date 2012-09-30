@@ -37,7 +37,6 @@ int main(int argc, char **argv) {
 		avo::ScriptService *ScriptService = avo::ScriptService::factoryManager.instance()->create();
 
 		// Initialize the engine.
-		ScriptService->initialize();
 		avo::Script *initialize = ScriptService->scriptFromFile(
 			nativeMainPath / "Initialize.coffee"
 		);

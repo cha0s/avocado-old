@@ -25,9 +25,6 @@ public:
 	v8ScriptService();
 	~v8ScriptService();
 
-	/** SPII embedding. */
-	void initialize();
-
 	/**
 	 * Precompile the passed in code, inferring any precompiler from the
 	 * extension of the filename passed in, if any.

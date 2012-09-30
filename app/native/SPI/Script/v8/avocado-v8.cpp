@@ -92,38 +92,6 @@ v8::Handle<v8::Value> toJson(v8::Handle<v8::Value> value) {
 	return scope.Close(stringified);
 }
 
-v8::Handle<v8::Value> writeStderr(const v8::Arguments& args) {
-	HandleScope scope;
-
-	for (int i = 0; i < args.Length(); i++) {
-
-		Handle<String> argString;
-
-		// Primitives sent verbatim.
-		if (args[i]->IsString() || args[i]->IsNumber()) {
-
-			argString = args[i]->ToString();
-		}
-		else {
-
-			// Try JSON.stringify...
-			Handle<Value> jsonResult = toJson(args[i]);
-			if (jsonResult->IsUndefined()) {
-
-				// If it bombed, then return the result; it's an exception.
-				return jsonResult;
-			}
-
-			argString = jsonResult.As<String>();
-		}
-
-		// Stream it.
-		std::cerr << *String::Utf8Value(argString) << std::endl;
-	}
-
-	return Undefined();
-}
-
 }
 
 }

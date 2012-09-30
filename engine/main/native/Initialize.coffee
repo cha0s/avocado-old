@@ -1,4 +1,2 @@
-@console =
-	log: log
-
-console.log 'Initializing engine...'
+avo.CoreService.implementSpi 'sdl'
+avo.coreService = new avo.CoreService()

@@ -29,7 +29,7 @@ namespace avo {
 template<typename T>
 class SpiiLoader {
 
-private:
+public:
 
 	/**
 	 * @brief Thrown when loading an SPII fails.
@@ -44,8 +44,6 @@ private:
 		}
 
 	};
-
-public:
 
 	SpiiLoader<T>()
 		: m_library(NULL)
@@ -84,7 +82,7 @@ public:
 		if (!m_library->open()) {
 
 			throw spi_implementation_error(
-				"Couldn't load " + T::name() + "'s " + implementation + " SPII."
+				"Couldn't load " + T::name() + "'s " + implementation + " SPII. dlerror() says: " + dlerror()
 			);
 		}
 

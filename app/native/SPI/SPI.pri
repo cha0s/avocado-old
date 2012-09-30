@@ -1,5 +1,6 @@
 TEMPLATE = lib
 
+CONFIG -= qt
 CONFIG += dll
 
 QMAKE_POST_LINK = cp $(TARGET) $${TARGET}.spii

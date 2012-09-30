@@ -90,7 +90,8 @@ SOURCES += \
 	\
 	FS.cpp \
 	\
-	SPI/Script/Script.cpp SPI/Script/ScriptService.cpp
+	SPI/Script/Script.cpp SPI/Script/ScriptService.cpp \
+	SPI/Core/CoreService.cpp
 
 HEADERS += \
 	\
@@ -101,7 +102,8 @@ HEADERS += \
 	FS.h \
 	\
 	SPI/SpiiLoader.h \
-	SPI/Script/Script.h SPI/Script/ScriptService.h
+	SPI/Script/Script.h SPI/Script/ScriptService.h \
+	SPI/Core/CoreService.h
 
 INCLUDEPATH += deps
 

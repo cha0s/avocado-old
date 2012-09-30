@@ -4,7 +4,6 @@ TEMPLATE = app
 CONFIG -= qt
 CONFIG += exceptions precompile_header
 
-dependencies.target = dependencies
 dependencies.commands +=	\
 	echo "Building dependencies..."; \
 	#
@@ -31,7 +30,6 @@ dependencies.commands +=	\
 	cd ../..; \
 	echo "Done building v8.";
 	
-spi_implementations.target = spi_implementations
 spi_implementations.commands +=	\
 	#
 	# SPI implementations
@@ -40,9 +38,9 @@ spi_implementations.commands +=	\
 	./build-spi; \
 	echo "Done building SPI implementations.";
 
-QMAKE_EXTRA_TARGETS += dependencies spi_implementations
+everything.depends = dependencies spi_implementations all
 
-PRE_TARGETDEPS = spi_implementations
+QMAKE_EXTRA_TARGETS += dependencies spi_implementations everything
 
 QMAKE_CLEAN += ../../SPI/*
 QMAKE_CLEAN += $$system('find SPI -name "*.o" -o -name "*.so*"')

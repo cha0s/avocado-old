@@ -67,11 +67,11 @@ boost::filesystem::path unqualifyPath(const boost::filesystem::path &base, const
 boost::filesystem::path m_exePath;
 
 boost::filesystem::path exePath() {
-	return boost::filesystem::canonical(m_exePath);
+	return m_exePath;
 }
 
 void setExePath(const boost::filesystem::path &path) {
-	m_exePath = path;
+	m_exePath = boost::filesystem::canonical(path);
 }
 
 boost::filesystem::path m_engineRoot;

@@ -1,3 +1,4 @@
+![avocado logo](https://raw.github.com/cha0s/avocado/master/resource/image/avocado.png)
 
 NOTE: Currently, I am only building this on 32-bit xubuntu 12.04.1. More platforms will be coming.
 

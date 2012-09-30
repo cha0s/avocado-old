@@ -11,7 +11,6 @@ avo.Logger.registerStrategy (message, type) ->
 		reset : '\x1B[0m'
 		
 	# TYPE:
-	# message
 	avo.CoreService.writeStderr "#{
 		colors[type]
 	}#{
@@ -20,6 +19,7 @@ avo.Logger.registerStrategy (message, type) ->
 		colors.reset
 	}:"
 	
+	# message
 	avo.CoreService.writeStderr message
 
 avo.Logger.info 'Main engine loop...'

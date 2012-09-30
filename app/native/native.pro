@@ -4,7 +4,7 @@ TEMPLATE = app
 CONFIG -= qt
 CONFIG += exceptions precompile_header
 
-dependencies.commands +=	\
+dependencies.commands += \
 	echo "Building dependencies..."; \
 	#
 	# V8
@@ -30,7 +30,7 @@ dependencies.commands +=	\
 	cd ../..; \
 	echo "Done building v8.";
 	
-spiis.commands +=	\
+spiis.commands += \
 	#
 	# SPIIs
 	#

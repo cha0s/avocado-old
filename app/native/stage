@@ -1,1 +1,18 @@
-make -j4 && cp -u avocado ../.. && cd ../.. && ./avocado
+echo "Compiling native engine..." && \
+make -j4 && \
+cp -u avocado ../.. && \
+p=`pwd` && \
+for i in `find SPI -name '*.pro'`
+do
+	j=`echo $i | sed 's_\(.*\)/.*_\1_'`
+	
+	echo `echo $j | sed "s_SPI/\(.*\)/\(.*\)_Compiling \1's \2 SPI implementation..._"`
+	
+	cd $j
+	make
+	cd $p
+	
+done && \
+find SPI -name '*.spi' -exec cp -u {} ../../SPI \; && \
+cd ../.. && \
+./avocado

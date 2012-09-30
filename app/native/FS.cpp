@@ -50,6 +50,16 @@ void writeString(const boost::filesystem::path &filename, const std::string &str
 	}
 }
 
+boost::filesystem::path m_exePath;
+
+boost::filesystem::path exePath() {
+	return m_exePath;
+}
+
+void setExePath(const boost::filesystem::path &path) {
+	m_exePath = path;
+}
+
 boost::filesystem::path m_resourceRoot;
 
 boost::filesystem::path resourceRoot() {

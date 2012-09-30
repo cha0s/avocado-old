@@ -3,40 +3,38 @@
 #include <boost/filesystem/operations.hpp>
 
 #include "FS.h"
-#include "SPI/Script/Script.h"
-
-#include "SPI/Script/v8/v8ScriptSystem.h"
+#include "SPI/Script/ScriptSystem.h"
+#include "SPI/SpiLoader.h"
 
 /** Application entry point. */
 int main(int argc, char **argv) {
 	AVOCADO_UNUSED(argc);
 
-	// Set engine root to <EXEPATH>/engine
-	avo::FS::setEngineRoot(
+	// Set <EXEPATH>.
+	avo::FS::setExePath(
 		boost::filesystem::canonical(boost::filesystem::absolute(
-			boost::filesystem::path(argv[0]).parent_path() / "engine",
+			boost::filesystem::path(argv[0]).parent_path(),
 			boost::filesystem::current_path()
 		))
 	);
 
-	// We're only using v8 as a Script SPI (for now).
-	avo::ScriptSystem::factoryManager.setInstance(avo::v8ScriptSystem::factory);
+	// Set engine root to <EXEPATH>/engine.
+	avo::FS::setEngineRoot(avo::FS::exePath() / "engine");
 
-	// Set resource root to <EXEPATH>/resource
-	avo::FS::setResourceRoot(
-		boost::filesystem::canonical(boost::filesystem::absolute(
-			boost::filesystem::path(argv[0]).parent_path() / "resource",
-			boost::filesystem::current_path()
-		))
-	);
+	// The native main code's filepath.
+	boost::filesystem::path nativeMainPath = avo::FS::engineRoot() / "main" / "native";
 
-	// Instantiate the Script system.
-	avo::ScriptSystem *scriptSystem = avo::ScriptSystem::factoryManager.instance()->create();
+	// Set resource root to <EXEPATH>/resource.
+	avo::FS::setResourceRoot(avo::FS::exePath() / "resource");
 
 	try {
 
-		// The native main code's path.
-		boost::filesystem::path nativeMainPath = avo::FS::engineRoot() / "main" / "native";
+		// We're only using v8 as a Script SPI (for now).
+		avo::SpiLoader<avo::ScriptSystem> scriptSpiLoader;
+		scriptSpiLoader.implementSpi("v8");
+
+		// Instantiate the Script system.
+		avo::ScriptSystem *scriptSystem = avo::ScriptSystem::factoryManager.instance()->create();
 
 		// Initialize the engine.
 		scriptSystem->initialize();
@@ -63,14 +61,14 @@ int main(int argc, char **argv) {
 		delete finish;
 		delete main;
 		delete initialize;
+
+		delete scriptSystem;
 	}
 	catch (std::exception &e) {
 
 		// Report any errors.
-		std::cerr << e.what() << std::endl;
+		std::cerr << "Uncaught exception: " << e.what() << std::endl;
 	}
-
-	delete scriptSystem;
 
 	return 0;
 }

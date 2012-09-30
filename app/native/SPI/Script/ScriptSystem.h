@@ -92,6 +92,10 @@ public:
 	 */
 	static FactoryManager<ScriptSystem> factoryManager;
 
+	static std::string name() {
+		return "ScriptSystem";
+	}
+
 };
 
 /**

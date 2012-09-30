@@ -23,14 +23,24 @@ namespace FS {
 std::vector<boost::filesystem::path> findFilenames(const boost::filesystem::path &path, const boost::regex &regex = boost::regex(".*"));
 
 /**
- * Read a file into a string.
+ * Read filename into a string.
  */
 std::string readString(const boost::filesystem::path &filename);
 
 /**
- * Write a string to a file.
+ * Write a string to filename.
  */
 void writeString(const boost::filesystem::path &filename, const std::string &string);
+
+/**
+ * Get the path of the executable.
+ */
+boost::filesystem::path exePath();
+
+/**
+ * Set the path of the executable.
+ */
+void setExePath(const boost::filesystem::path &root);
 
 /**
  * Get the root path of resources.
@@ -43,7 +53,9 @@ boost::filesystem::path resourceRoot();
 void setResourceRoot(const boost::filesystem::path &root);
 
 /**
- * Strip off the resource root from a resource URI.
+ * Strip off the resource root from a resource URI. For instance,
+ * /home/cha0s/avocado/resource/image/avocado.png ->
+ * /image/avocado.png
  */
 boost::filesystem::path unqualifyUri(const boost::filesystem::path &uri, const boost::filesystem::path &prefix = "");
 
@@ -58,7 +70,9 @@ boost::filesystem::path engineRoot();
 void setEngineRoot(const boost::filesystem::path &root);
 
 /**
- * Strip off the engine root from a source code filename.
+ * Strip off the engine root from a source code filename. For instance,
+ * /home/cha0s/avocado/engine/main/native/Main.coffee ->
+ * /main/native/Main.coffee
  */
 boost::filesystem::path unqualifySource(const boost::filesystem::path &uri);
 

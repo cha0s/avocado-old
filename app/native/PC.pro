@@ -1,14 +1,10 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2010-11-18T08:15:47
-#
-#-------------------------------------------------
-
 TARGET = avocado
 TEMPLATE = app
 
 CONFIG -= qt
 CONFIG += exceptions precompile_header
+
+QMAKE_LFLAGS += -rdynamic
 
 PRECOMPILED_HEADER = avocado-global.h
 
@@ -22,8 +18,7 @@ SOURCES += \
 	\
 	FS.cpp \
 	\
-	SPI/Script/Script.cpp SPI/Script/ScriptSystem.cpp \
-	SPI/Script/v8/avocado-v8.cpp SPI/Script/v8/v8Script.cpp SPI/Script/v8/v8ScriptSystem.cpp
+	SPI/Script/Script.cpp SPI/Script/ScriptSystem.cpp
 
 HEADERS += \
 	\
@@ -33,8 +28,10 @@ HEADERS += \
 	\
 	FS.h \
 	\
-	SPI/Script/Script.h SPI/Script/ScriptSystem.h \
-	SPI/Script/v8/avocado-v8.h SPI/Script/v8/v8Script.h SPI/Script/v8/v8ScriptSystem.h
+	SPI/SpiLoader.h \
+	SPI/Script/Script.h SPI/Script/ScriptSystem.h
+
+INCLUDEPATH += deps
 
 LIBS += -lboost_filesystem -lboost_regex -lboost_system
 

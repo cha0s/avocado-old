@@ -8,7 +8,7 @@
  *
  * @section whycome How come it sucks?
  *
- * Because I'm one guy making it and programming is hard.
+ * Because programming is hard.
  *
  * @section naaw No way man, keep at it!
  *

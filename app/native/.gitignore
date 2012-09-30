@@ -2,6 +2,7 @@
 .project
 Makefile
 avocado
+avocado-test
 obj
 *.spii
 *.so*

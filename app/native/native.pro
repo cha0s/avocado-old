@@ -4,6 +4,37 @@ TEMPLATE = app
 CONFIG -= qt
 CONFIG += exceptions precompile_header
 
+gtest.commands += \
+	#
+	# Google Test
+	#
+	echo "Building Google Test..."; \
+	cd test/gtest; \
+	#
+	# Build it if it hasn't been.
+	#
+	test ! -d avocado \
+		&& mkdir avocado \
+		&& cd avocado \
+		&& cmake .. \
+		&& make \
+		&& cd ..; \
+	cd ..; \
+	echo "Done building Google Test."; \
+	echo "Building tests..."; \
+	#
+	# Build tests
+	#
+	qmake; \
+	make -j4 && \
+	cd .. && \
+	echo "Done building tests..." && \
+	echo "Running tests..." && \
+	#
+	# Run tests
+	#
+	./avocado-test;
+	
 dependencies.commands += \
 	echo "Building dependencies..."; \
 	#
@@ -40,7 +71,7 @@ spiis.commands += \
 
 everything.depends = dependencies spiis all
 
-QMAKE_EXTRA_TARGETS += dependencies spiis everything
+QMAKE_EXTRA_TARGETS += dependencies spiis everything gtest
 
 QMAKE_CLEAN += ../../SPII/*.spii
 QMAKE_CLEAN += $$system('find SPI -name "*.o" -o -name "*.so*"')

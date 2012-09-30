@@ -50,38 +50,28 @@ void writeString(const boost::filesystem::path &filename, const std::string &str
 	}
 }
 
-boost::filesystem::path m_exePath;
+boost::filesystem::path unqualifyPath(const boost::filesystem::path &base, const boost::filesystem::path &uri) {
 
-boost::filesystem::path exePath() {
-	return m_exePath;
-}
-
-void setExePath(const boost::filesystem::path &path) {
-	m_exePath = path;
-}
-
-boost::filesystem::path m_resourceRoot;
-
-boost::filesystem::path resourceRoot() {
-	return m_resourceRoot;
-}
-
-void setResourceRoot(const boost::filesystem::path &root) {
-	m_resourceRoot = root;
-}
-
-boost::filesystem::path unqualifyUri(const boost::filesystem::path &uri, const boost::filesystem::path &prefix) {
-
-	std::string prefixedRoot = (resourceRoot() / prefix).string();
-	std::string uriString = uri.string();
+	std::string baseString = base.string();
+	std::string uriString = boost::filesystem::canonical(uri).string();
 
 	std::string::size_type  pos;
-	if (std::string::npos != (pos = uriString.find(prefixedRoot))) {
-		return uriString.substr(prefixedRoot.size());
+	if (std::string::npos != (pos = uriString.find(baseString))) {
+		return uriString.substr(baseString.size());
 	}
 	else {
 		return "";
 	}
+}
+
+boost::filesystem::path m_exePath;
+
+boost::filesystem::path exePath() {
+	return boost::filesystem::canonical(m_exePath);
+}
+
+void setExePath(const boost::filesystem::path &path) {
+	m_exePath = path;
 }
 
 boost::filesystem::path m_engineRoot;
@@ -90,22 +80,18 @@ boost::filesystem::path engineRoot() {
 	return m_engineRoot;
 }
 
-void setEngineRoot(const boost::filesystem::path &root) {
-	m_engineRoot = root;
+void setEngineRoot(const boost::filesystem::path &engineRoot) {
+	m_engineRoot = boost::filesystem::canonical(engineRoot);
 }
 
-boost::filesystem::path unqualifySource(const boost::filesystem::path &uri) {
+boost::filesystem::path m_resourceRoot;
 
-	std::string prefixedRoot = engineRoot().string();
-	std::string uriString = uri.string();
+boost::filesystem::path resourceRoot() {
+	return m_resourceRoot;
+}
 
-	std::string::size_type  pos;
-	if (std::string::npos != (pos = uriString.find(prefixedRoot))) {
-		return uriString.substr(prefixedRoot.size());
-	}
-	else {
-		return "";
-	}
+void setResourceRoot(const boost::filesystem::path &resourceRoot) {
+	m_resourceRoot = boost::filesystem::canonical(resourceRoot);
 }
 
 bool ilexicographical_compare(const boost::filesystem::path& l, const boost::filesystem::path& r) {

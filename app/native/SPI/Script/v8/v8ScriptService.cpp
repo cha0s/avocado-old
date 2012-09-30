@@ -40,7 +40,7 @@ void v8ScriptService::initialize() {
 std::string v8ScriptService::preCompileCode(const std::string &code, const boost::filesystem::path &filename) {
 	HandleScope scope;
 
-	std::string filenameString = avo::FS::unqualifySource(filename).string();
+	std::string filenameString = FS::unqualifyPath(FS::engineRoot(), filename).string();
 
 	// Compile coffeescript to JS.
 	if (std::string::npos != filenameString.find(".coffee")) {
@@ -89,7 +89,7 @@ Script *v8ScriptService::scriptFromCode(const std::string &code, const boost::fi
 	TryCatch exception;
 	Handle<v8::Script> script = v8::Script::New(
 		String::New(precompiledCode.c_str()),
-		String::New(avo::FS::unqualifySource(filename).string().c_str())
+		String::New(FS::unqualifyPath(FS::engineRoot(), filename).string().c_str())
 	);
 	if (exception.HasCaught()) {
 		throw script_compilation_error(V8::stringifyException(exception));

@@ -35,13 +35,15 @@ void v8CoreService::initialize(Handle<ObjectTemplate> target) {
 
 	Persistent<FunctionTemplate> constructor_template;
 
+	// CoreService is an instantiable embedded C++ class.
 	constructor_template = Persistent<FunctionTemplate>::New(
 		FunctionTemplate::New(v8CoreService::New)
 	);
 	constructor_template->InstanceTemplate()->SetInternalFieldCount(1);
 	constructor_template->SetClassName(String::NewSymbol("CoreService"));
 
-	V8_SET_PROTOTYPE_METHOD(constructor_template, "%close", v8CoreService::Close);
+	// Set methods.
+	V8_SET_PROTOTYPE_METHOD(constructor_template, "close", v8CoreService::Close);
 
 	constructor_template->Set(
 		String::New("implementSpi"),
@@ -49,10 +51,11 @@ void v8CoreService::initialize(Handle<ObjectTemplate> target) {
 	);
 
 	constructor_template->Set(
-		String::New("writeStderr"),
+		String::New("%writeStderr"),
 		FunctionTemplate::New(v8CoreService::WriteStderr)
 	);
 
+	// Register.
 	target->Set(String::NewSymbol("CoreService"), constructor_template);
 }
 
@@ -71,12 +74,14 @@ v8::Handle<v8::Value> v8CoreService::ImplementSpi(const Arguments &args) {
 
 	try {
 
+		// Attempt to load the SPII.
 		coreServiceSpiiLoader.implementSpi(
 			V8::stringToStdString(args[0]->ToString())
 		);
 	}
 	catch (SpiiLoader<CoreService>::spi_implementation_error &e) {
 
+		// If it couldn't be loaded, throw an error.
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			e.what()
 		)));
@@ -120,8 +125,8 @@ v8::Handle<v8::Value> v8CoreService::WriteStderr(const v8::Arguments& args) {
 v8::Handle<v8::Value> v8CoreService::Close(const Arguments &args) {
 	HandleScope scope;
 
+	// Check for fishyness.
 	v8CoreService *coreServiceWrapper = ObjectWrap::Unwrap<v8CoreService>(args.Holder());
-
 	if (NULL == coreServiceWrapper) {
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			"CoreService::close(): NULL Holder."

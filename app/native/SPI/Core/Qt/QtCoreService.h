@@ -13,7 +13,17 @@ namespace avo {
  */
 
 /**
+ * @ingroup SPI
+ * @{
+ */
+
+/**
  * @ingroup @Qt
+ */
+
+/**
+ * The %QtCoreService SPI implementation doesn't actually do anything at this
+ * time.
  */
 class QtCoreService : public CoreService {
 
@@ -24,7 +34,7 @@ public:
 };
 
 /**
- * @ingroup Resources
+ * @ingroup Manufacturing
  */
 template <>
 class AbstractFactory<QtCoreService> : public AbstractFactory<CoreService> {
@@ -33,9 +43,20 @@ public:
 
 	virtual ~AbstractFactory<QtCoreService>() {}
 
+	/**
+	 * Create a concrete CoreService.
+	 */
 	QtCoreService *create() { return new QtCoreService() ; }
 
 };
+
+/**
+ * @}
+ */
+
+/**
+ * @}
+ */
 
 /**
  * @}

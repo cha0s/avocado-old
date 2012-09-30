@@ -16,37 +16,43 @@ class ObjectWrap {
 
 public:
 
-	ObjectWrap ()
-	{
-	}
-
+	/** Called at GC. */
 	virtual ~ObjectWrap();
 
+	/**
+	 * Get the T pointer from inside an object.
+	 */
 	template <class T>
 	static inline T* Unwrap(v8::Handle<v8::Object> handle) {
-		if (handle.IsEmpty() || 0 == handle->InternalFieldCount()) {
-			return NULL;
-		}
-		return static_cast<T*>(handle->GetPointerFromInternalField(0));
-	}
 
-	v8::Persistent<v8::Object> handle_;
+		// Ensure there's an object pointer in here.
+		if (handle.IsEmpty() || 0 == handle->InternalFieldCount()) return NULL;
+
+		// Return the object pointer.
+		return static_cast<T *>(handle->GetPointerFromInternalField(0));
+	}
 
 protected:
 
+	/**
+	 * Wrap this class with the passed in object.
+	 */
 	inline void Wrap(v8::Handle<v8::Object> handle) {
+
+		// Make sure our handle isn't wrapping anything yet,
 		assert(handle_.IsEmpty());
+		// and the passed in wrapper is expecting an object pointer.
 		assert(handle->InternalFieldCount() > 0);
+		// Allocate and embed our object pointer.
 		handle_ = v8::Persistent<v8::Object>::New(handle);
 		handle_->SetPointerInInternalField(0, this);
-		MakeWeak();
-	}
-
-
-	inline void MakeWeak(void) {
+		// Mark it as 'weak' so GC will release it ASAP.
 		handle_.MakeWeak(this, WeakCallback);
 		handle_.MarkIndependent();
 	}
+
+	/** Keep our object around until GC releases it. */
+	v8::Persistent<v8::Object> handle_;
 
 private:
 

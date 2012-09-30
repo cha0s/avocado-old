@@ -15,6 +15,15 @@ namespace avo {
  * @{
  */
 
+/**
+ * @ingroup SPI
+ * @{
+ */
+
+/**
+ * The %CoreService SPI handles core framework initialization as well as
+ * general-purpose tools such as filesystem access.
+ */
 class CoreService {
 
 public:
@@ -47,9 +56,16 @@ public:
 
 	virtual ~AbstractFactory<CoreService>() {}
 
+	/**
+	 * Reimplemented as non-virtual by concrete CoreService factories.
+	 */
 	virtual CoreService *create() = 0;
 
 };
+
+/**
+ * @}
+ */
 
 /**
  * @}

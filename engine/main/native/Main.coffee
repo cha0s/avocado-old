@@ -10,15 +10,16 @@ avo.Logger.registerStrategy (message, type) ->
 		info  : '\x1B[1;32m'
 		reset : '\x1B[0m'
 		
-	# TYPE\t: message
+	# TYPE:
+	# message
 	avo.CoreService.writeStderr "#{
 		colors[type]
 	}#{
 		type.toUpperCase()
 	}#{
 		colors.reset
-	}\t: #{
-		message
-	}"
+	}:"
+	
+	avo.CoreService.writeStderr message
 
 avo.Logger.info 'Main engine loop...'

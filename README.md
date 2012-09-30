@@ -13,6 +13,10 @@ NOTE: Currently, I am only building this on 32-bit xubuntu 12.04.1. More platfor
 	cd ../..
 	./avocado
 	
+### Test the engine
+
+	make gtest
+	
 ### Eat an avocado
 
 	echo Yummy!

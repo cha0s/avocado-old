@@ -38,7 +38,7 @@ INCLUDEPATH += ../../.. ../../../deps
 #LIBS += -lboost_filesystem -lboost_regex -lboost_system
 
 LIBS += -L../../../deps/v8
-LIBS += -lv8-wb -lv8_snapshot-wb
+LIBS += -lv8-avocado -lv8_snapshot-avocado
 
 unix:OUT_DIR = obj/unix
 

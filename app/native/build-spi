@@ -6,6 +6,7 @@ do
 	echo `echo $j | sed "s_SPI/\(.*\)/\(.*\)_Compiling the \2 \1 SPI implementation..._"`
 	
 	cd $j
+	qmake
 	make -j4
 	cd $p
 	

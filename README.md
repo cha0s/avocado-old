@@ -15,6 +15,7 @@ NOTE: Currently, I am only building this on 32-bit xubuntu 12.04.1. More platfor
 	
 ### Test the engine
 
+	cd app/native
 	make gtest
 	
 ### Eat an avocado

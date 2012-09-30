@@ -1,5 +1,5 @@
-#ifndef AVOCADO_SPILOADER_H
-#define AVOCADO_SPILOADER_H
+#ifndef AVOCADO_SPIILOADER_H
+#define AVOCADO_SPIILOADER_H
 
 #include "avocado-global.h"
 
@@ -16,30 +16,30 @@ namespace avo {
  */
 
 /**
- * %SpiLoader handles dynamically loading SPI implementations. By default, SPI
- * implementations are located within \<EXEPATH\>/SPI.
+ * %SpiiLoader handles dynamically loading SPI implementations (SPIIs). By
+ * default, SPIIs are located within \<EXEPATH\>/SPII.
  *
- * SPIs follow the naming convention:
+ * SPIIs follow the naming convention:
  *
  *     [SPI_NAME]-[SPI_IMPLEMENTATION].spi
  *
- * For example, by default the v8 ScriptSystem SPI implementation will be
- * located at \<EXEPATH\>/SPI/ScriptSystem-v8.spi.
+ * For example, by default the v8 ScriptService SPII will be
+ * located at \<EXEPATH\>/SPII/ScriptService-v8.spi.
  */
 template<typename T>
-class SpiLoader {
+class SpiiLoader {
 
 private:
 
 	/**
-	 * @brief Thrown when loading an SPI implementation fails.
+	 * @brief Thrown when loading an SPII fails.
 	 */
 	class spi_implementation_error : public std::runtime_error {
 
 	public:
 
 		spi_implementation_error(const std::string &text)
-			: std::runtime_error("SPI implemntation failure: " + text)
+			: std::runtime_error("SPII load failure: " + text)
 		{
 		}
 
@@ -47,22 +47,21 @@ private:
 
 public:
 
-	SpiLoader<T>()
+	SpiiLoader<T>()
 		: m_library(NULL)
 	{
 	}
 
-	~SpiLoader() {
+	~SpiiLoader() {
 
 		// Unload any implementation.
 		if (NULL != m_library) delete m_library;
 	}
 
 	/**
-	 * This function handles dynamically loading an SPI implementation. It
-	 * will clean up any previous SPI implementation (if any), then it'll pass
-	 * T's factory manager to the %implementSpi() function located within
-	 * the SPI implementation.
+	 * This function handles dynamically loading an SPII. It will clean up any
+	 * previous SPII (if any), then it'll pass T's factory manager to the
+	 * %implementSpi() function located within the SPII.
 	 */
 	void implementSpi(const std::string &implementation) {
 
@@ -70,11 +69,11 @@ public:
 		// implementation exists, unload it.
 		if (NULL != m_library) delete m_library;
 
-		// By default, load SPI implementations from
-		// <EXEPATH>/SPI/[SPI_NAME]-[SPI_IMPLEMENTATION].
+		// By default, load SPIIs from
+		// <EXEPATH>/SPII/[SPI_NAME]-[SPI_IMPLEMENTATION].
 		boost::filesystem::path spiPath = avo::FS::exePath();
-		spiPath /= "SPI";
-		spiPath /= T::name() + "-" + implementation + ".spi";
+		spiPath /= "SPII";
+		spiPath /= T::name() + "-" + implementation + ".spii";
 
 		// Load the shared library.
 		m_library = new boost::extensions::shared_library(
@@ -85,7 +84,7 @@ public:
 		if (!m_library->open()) {
 
 			throw spi_implementation_error(
-				"Couldn't load " + T::name() + "'s " + implementation + " SPI implementation."
+				"Couldn't load " + T::name() + "'s " + implementation + " SPII."
 			);
 		}
 
@@ -96,7 +95,7 @@ public:
 		if (!implementSpi) {
 
 			throw spi_implementation_error(
-				"Couldn't find implementSpi() within " + T::name() + "'s " + implementation + " SPI implementation."
+				"Couldn't find implementSpi() within " + T::name() + "'s " + implementation + " SPII."
 			);
 		}
 
@@ -116,4 +115,4 @@ private:
 
 }
 
-#endif // AVOCADO_SPILOADER_H
+#endif // AVOCADO_SPIILOADER_H

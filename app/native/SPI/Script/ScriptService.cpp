@@ -7,7 +7,7 @@
 
 #include "FS.h"
 #include "Script.h"
-#include "ScriptSystem.h"
+#include "ScriptService.h"
 
 #include "deps/v8/include/v8.h"
 
@@ -18,7 +18,7 @@ using namespace v8;
 namespace avo {
 
 /**
- * Thrown when ScriptSystem::loadCore fails.
+ * Thrown when ScriptService::loadCore fails.
  */
 class script_system_load_core_error : public runtime_error {
 
@@ -31,16 +31,16 @@ public:
 
 };
 
-FactoryManager<ScriptSystem> ScriptSystem::factoryManager;
+FactoryManager<ScriptService> ScriptService::factoryManager;
 
-ScriptSystem::ScriptSystem()
+ScriptService::ScriptService()
 {
 }
 
-ScriptSystem::~ScriptSystem() {
+ScriptService::~ScriptService() {
 }
 
-void ScriptSystem::initialize() {
+void ScriptService::initialize() {
 
 	// CoffeeScript. <3
 	Script *coffeeCompiler = scriptFromFile(
@@ -49,7 +49,7 @@ void ScriptSystem::initialize() {
 	coffeeCompiler->execute();
 }
 
-std::vector<std::string> ScriptSystem::loadCore() {
+std::vector<std::string> ScriptService::loadCore() {
 
 	// Gather up all the core files.
 	vector<filesystem::path> filenames = FS::findFilenames(
@@ -133,7 +133,7 @@ std::vector<std::string> ScriptSystem::loadCore() {
 				scripts.erase(i++);
 			}
 
-			// Throw an engine initialization exception.
+			// Throw a core exception.
 			throw script_system_load_core_error(message);
 		}
 	}
@@ -141,7 +141,7 @@ std::vector<std::string> ScriptSystem::loadCore() {
 	return scriptsSuccessfullyRun;
 }
 
-Script *ScriptSystem::scriptFromFile(const boost::filesystem::path &filename) {
+Script *ScriptService::scriptFromFile(const boost::filesystem::path &filename) {
 	return scriptFromCode(avo::FS::readString(filename), filename);
 }
 

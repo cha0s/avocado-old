@@ -15,8 +15,13 @@ namespace avo {
  */
 
 /**
- * A %Script is an executable script. Scripts can be instantiated by filename
- * or a string containing code.
+ * @ingroup SPI
+ * @{
+ */
+
+/**
+ * A %Script is an executable script. %Script production is handled by
+ * ScriptService.
  */
 class Script {
 
@@ -67,6 +72,10 @@ public:
 	 */
 	virtual Script *create() = 0;
 };
+
+/**
+ * @}
+ */
 
 /**
  * @}

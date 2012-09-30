@@ -3,8 +3,8 @@
 #include <boost/filesystem/operations.hpp>
 
 #include "FS.h"
-#include "SPI/Script/ScriptSystem.h"
-#include "SPI/SpiLoader.h"
+#include "SPI/Script/ScriptService.h"
+#include "SPI/SpiiLoader.h"
 
 /** Application entry point. */
 int main(int argc, char **argv) {
@@ -29,31 +29,31 @@ int main(int argc, char **argv) {
 
 	try {
 
-		// We're only using v8 as a Script SPI (for now).
-		avo::SpiLoader<avo::ScriptSystem> scriptSpiLoader;
-		scriptSpiLoader.implementSpi("v8");
+		// We're only using v8 as a Script SPII (for now).
+		avo::SpiiLoader<avo::ScriptService> scriptServiceSpiiLoader;
+		scriptServiceSpiiLoader.implementSpi("v8");
 
 		// Instantiate the Script system.
-		avo::ScriptSystem *scriptSystem = avo::ScriptSystem::factoryManager.instance()->create();
+		avo::ScriptService *ScriptService = avo::ScriptService::factoryManager.instance()->create();
 
 		// Initialize the engine.
-		scriptSystem->initialize();
-		avo::Script *initialize = scriptSystem->scriptFromFile(
+		ScriptService->initialize();
+		avo::Script *initialize = ScriptService->scriptFromFile(
 			nativeMainPath / "Initialize.coffee"
 		);
 		initialize->execute();
 
 		// Load core code.
-		scriptSystem->loadCore();
+		ScriptService->loadCore();
 
 		// Execute the main loop.
-		avo::Script *main = scriptSystem->scriptFromFile(
+		avo::Script *main = ScriptService->scriptFromFile(
 			nativeMainPath / "Main.coffee"
 		);
 		main->execute();
 
 		// Finish and clean up.
-		avo::Script *finish = scriptSystem->scriptFromFile(
+		avo::Script *finish = ScriptService->scriptFromFile(
 			nativeMainPath / "Finish.coffee"
 		);
 		finish->execute();
@@ -62,7 +62,7 @@ int main(int argc, char **argv) {
 		delete main;
 		delete initialize;
 
-		delete scriptSystem;
+		delete ScriptService;
 	}
 	catch (std::exception &e) {
 

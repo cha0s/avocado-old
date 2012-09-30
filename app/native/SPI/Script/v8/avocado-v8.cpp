@@ -1,3 +1,5 @@
+#include "avocado-global.h"
+
 #include "avocado-v8.h"
 
 #include <iostream>
@@ -90,7 +92,7 @@ v8::Handle<v8::Value> toJson(v8::Handle<v8::Value> value) {
 	return scope.Close(stringified);
 }
 
-Handle<Value> writeStderr(const Arguments& args) {
+v8::Handle<v8::Value> writeStderr(const v8::Arguments& args) {
 	HandleScope scope;
 
 	for (int i = 0; i < args.Length(); i++) {

@@ -2,7 +2,7 @@
 
 #include <boost/extension/extension.hpp>
 
-#include "v8ScriptSystem.h"
+#include "v8ScriptService.h"
 
 /**
  * @addtogroup SPI
@@ -11,9 +11,9 @@
 
 extern "C"
 void BOOST_EXTENSION_EXPORT_DECL
-implementSpi(avo::FactoryManager<avo::ScriptSystem> &manager) {
+implementSpi(avo::FactoryManager<avo::ScriptService> &manager) {
 
-	manager.setInstance(avo::v8ScriptSystem::factory);
+	manager.setInstance(avo::v8ScriptService::factory);
 }
 
 /**

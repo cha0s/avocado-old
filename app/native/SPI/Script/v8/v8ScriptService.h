@@ -1,11 +1,11 @@
-#ifndef AVOCADO_V8SCRIPTSYSTEM_H
-#define AVOCADO_V8SCRIPTSYSTEM_H
+#ifndef AVOCADO_V8SCRIPTSERVICE_H
+#define AVOCADO_V8SCRIPTSERVICE_H
 
 #include "avocado-global.h"
 
 #include "avocado-v8.h"
 
-#include "../ScriptSystem.h"
+#include "../ScriptService.h"
 
 namespace avo {
 
@@ -15,18 +15,17 @@ namespace avo {
  */
 
 /**
- * %v8ScriptSystem implements the
- * [V8 JavaScript engine](http://code.google.com/p/v8/) by providing a bridge
- * between the C++ SPIs and engine code.
+ * %v8ScriptService embeds the
+ * [V8 JavaScript engine](http://code.google.com/p/v8/).
  */
-class v8ScriptSystem : public ScriptSystem {
+class v8ScriptService : public ScriptService {
 
 public:
 
-	v8ScriptSystem();
-	~v8ScriptSystem();
+	v8ScriptService();
+	~v8ScriptService();
 
-	/** SPI embedding. */
+	/** SPII embedding. */
 	void initialize();
 
 	/**
@@ -41,9 +40,9 @@ public:
 	Script *scriptFromCode(const std::string &code, const boost::filesystem::path &filename = "<anonymous>");
 
 	/**
-	 * Concrete ScriptSystem factory instance.
+	 * Concrete ScriptService factory instance.
 	 */
-	static AbstractFactory<v8ScriptSystem> *factory;
+	static AbstractFactory<v8ScriptService> *factory;
 
 private:
 
@@ -56,17 +55,17 @@ private:
  */
 
 template <>
-class AbstractFactory<v8ScriptSystem> : public AbstractFactory<ScriptSystem> {
+class AbstractFactory<v8ScriptService> : public AbstractFactory<ScriptService> {
 
 public:
 
-	virtual ~AbstractFactory<v8ScriptSystem>() {}
+	virtual ~AbstractFactory<v8ScriptService>() {}
 
 	/**
-	 * Create a concrete ScriptSystem.
+	 * Create a concrete ScriptService.
 	 */
-	v8ScriptSystem *create() {
-		return new v8ScriptSystem();
+	v8ScriptService *create() {
+		return new v8ScriptService();
 	}
 
 };
@@ -81,4 +80,4 @@ public:
 
 }
 
-#endif // AVOCADO_V8SCRIPTSYSTEM_H
+#endif // AVOCADO_V8SCRIPTSERVICE_H

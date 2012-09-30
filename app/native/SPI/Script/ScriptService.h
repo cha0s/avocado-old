@@ -17,13 +17,27 @@ namespace avo {
  */
 
 /**
- * A %ScriptSystem is an embedded scripting engine e.g.
- * [V8](http://code.google.com/p/v8/).
- *
- * Bindings to C++ symbols are
- * initialized, and core engine scripts are discovered and loaded.
+ * @ingroup SPI
+ * @{
  */
-class ScriptSystem {
+
+/**
+ * @brief %ScriptService manages embedding a JavaScript interpreter within
+ * the Avocado engine.
+ *
+ * %ScriptService handles SPII initialization for Script.
+ *
+ * This SPI allows for embedding C++ classes and objects within JavaScript,
+ * handles discovery and compilation/execution of core engine scripts, and
+ * manages the production of Script objects.
+ *
+ * Script objects can be instantiated from strings containing code, or
+ * a filename which is loaded.
+ *
+ * %ScriptService also handles script precompilation (such as CoffeeScript ->
+ * JavaScript), and exposes precompilation functionality for convenience.
+ */
+class ScriptService {
 
 public:
 
@@ -55,8 +69,8 @@ public:
 
 	};
 
-	ScriptSystem();
-	virtual ~ScriptSystem();
+	ScriptService();
+	virtual ~ScriptService();
 
 	/**
 	 * Initialize service provider interfaces as well as compilers.
@@ -88,12 +102,12 @@ public:
 	Script *scriptFromFile(const boost::filesystem::path &filename);
 
 	/**
-	 * Manages the concrete ScriptSystem factory instance.
+	 * Manages the concrete ScriptService factory instance.
 	 */
-	static FactoryManager<ScriptSystem> factoryManager;
+	static FactoryManager<ScriptService> factoryManager;
 
 	static std::string name() {
-		return "ScriptSystem";
+		return "ScriptService";
 	}
 
 };
@@ -103,18 +117,22 @@ public:
  */
 
 template <>
-class AbstractFactory<ScriptSystem> {
+class AbstractFactory<ScriptService> {
 
 public:
 
-	virtual ~AbstractFactory<ScriptSystem>() {}
+	virtual ~AbstractFactory<ScriptService>() {}
 
 	/**
-	 * Reimplemented as non-virtual by concrete ScriptSystem factories.
+	 * Reimplemented as non-virtual by concrete ScriptService factories.
 	 */
-	virtual ScriptSystem *create() = 0;
+	virtual ScriptService *create() = 0;
 
 };
+
+/**
+ * @}
+ */
 
 /**
  * @}

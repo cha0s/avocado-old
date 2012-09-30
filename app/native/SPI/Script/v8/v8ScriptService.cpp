@@ -1,6 +1,6 @@
 #include "avocado-global.h"
 
-#include "v8ScriptSystem.h"
+#include "v8ScriptService.h"
 
 #include "FS.h"
 #include "../Script.h"
@@ -11,10 +11,10 @@ using namespace std;
 
 namespace avo {
 
-AbstractFactory<v8ScriptSystem> *v8ScriptSystem::factory = new AbstractFactory<v8ScriptSystem>;
+AbstractFactory<v8ScriptService> *v8ScriptService::factory = new AbstractFactory<v8ScriptService>;
 
-v8ScriptSystem::v8ScriptSystem()
-	: ScriptSystem()
+v8ScriptService::v8ScriptService()
+	: ScriptService()
 {
 
 	Script::factoryManager.setInstance(v8Script::factory);
@@ -33,11 +33,11 @@ v8ScriptSystem::v8ScriptSystem()
 	context->Enter();
 }
 
-void v8ScriptSystem::initialize() {
-	ScriptSystem::initialize();
+void v8ScriptService::initialize() {
+	ScriptService::initialize();
 }
 
-std::string v8ScriptSystem::preCompileCode(const std::string &code, const boost::filesystem::path &filename) {
+std::string v8ScriptService::preCompileCode(const std::string &code, const boost::filesystem::path &filename) {
 	HandleScope scope;
 
 	std::string filenameString = avo::FS::unqualifySource(filename).string();
@@ -73,7 +73,7 @@ std::string v8ScriptSystem::preCompileCode(const std::string &code, const boost:
 	}
 }
 
-Script *v8ScriptSystem::scriptFromCode(const std::string &code, const boost::filesystem::path &filename) {
+Script *v8ScriptService::scriptFromCode(const std::string &code, const boost::filesystem::path &filename) {
 	HandleScope scope;
 
 	// Precompile the code.
@@ -108,7 +108,7 @@ Script *v8ScriptSystem::scriptFromCode(const std::string &code, const boost::fil
 	return v8ScriptFactory->create(script);
 }
 
-v8ScriptSystem::~v8ScriptSystem() {
+v8ScriptService::~v8ScriptService() {
 
 	// Leave the context and dispose of it.
 	context->Exit();

@@ -10,4 +10,4 @@ do
 	cd $p
 	
 done
-find SPI -name '*.spi' -exec cp -u {} ../../SPI \;
+find SPI -name '*.spii' -exec cp -u {} ../../SPII \;

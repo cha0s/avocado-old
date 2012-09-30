@@ -9,7 +9,8 @@
  * @{
  */
 
-/** Macro to clean up dead code to keep warnings down about unused parameters. */
+/** Macro to clean up dead code to keep warnings down about intentionally
+ *  unused parameters. */
 #define AVOCADO_UNUSED(__var) (void)(__var)
 
 /** Stack frame alignment madness for bunk GCC versions on Windows. See

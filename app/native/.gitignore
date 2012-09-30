@@ -3,5 +3,5 @@
 Makefile
 avocado
 obj
-*.spi
+*.spii
 *.so*

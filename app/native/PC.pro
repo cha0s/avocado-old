@@ -30,19 +30,19 @@ dependencies.commands +=	\
 	cd ../..; \
 	echo "Done building v8.";
 	
-spi_implementations.commands +=	\
+spiis.commands +=	\
 	#
-	# SPI implementations
+	# SPIIs
 	#
-	echo "Building SPI implementations..."; \
+	echo "Building SPIIs..."; \
 	./build-spi; \
-	echo "Done building SPI implementations.";
+	echo "Done building SPIIs.";
 
-everything.depends = dependencies spi_implementations all
+everything.depends = dependencies spiis all
 
-QMAKE_EXTRA_TARGETS += dependencies spi_implementations everything
+QMAKE_EXTRA_TARGETS += dependencies spiis everything
 
-QMAKE_CLEAN += ../../SPI/*
+QMAKE_CLEAN += ../../SPII/*.spii
 QMAKE_CLEAN += $$system('find SPI -name "*.o" -o -name "*.so*"')
 
 QMAKE_LFLAGS += -rdynamic
@@ -59,7 +59,7 @@ SOURCES += \
 	\
 	FS.cpp \
 	\
-	SPI/Script/Script.cpp SPI/Script/ScriptSystem.cpp
+	SPI/Script/Script.cpp SPI/Script/ScriptService.cpp
 
 HEADERS += \
 	\
@@ -69,8 +69,8 @@ HEADERS += \
 	\
 	FS.h \
 	\
-	SPI/SpiLoader.h \
-	SPI/Script/Script.h SPI/Script/ScriptSystem.h
+	SPI/SpiiLoader.h \
+	SPI/Script/Script.h SPI/Script/ScriptService.h
 
 INCLUDEPATH += deps
 

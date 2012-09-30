@@ -1,9 +1,9 @@
 TEMPLATE = lib
-TARGET = ScriptSystem-v8
+TARGET = ScriptService-v8
 
 CONFIG += dll
 
-QMAKE_POST_LINK = cp $(TARGET) ScriptSystem-v8.spi
+QMAKE_POST_LINK = cp $(TARGET) ScriptService-v8.spii
 
 PRECOMPILED_HEADER = ../../../avocado-global.h
 
@@ -17,7 +17,7 @@ SOURCES += \
 	\
 	implementSpi.cpp \
 	\
-	v8Script.cpp v8ScriptSystem.cpp
+	v8Script.cpp v8ScriptService.cpp
 
 HEADERS += \
 	\
@@ -27,11 +27,11 @@ HEADERS += \
 	\
 	../../../FS.h \
 	\
-	../Script.h ../ScriptSystem.h \
+	../Script.h ../ScriptService.h \
 	\
 	avocado-v8.h \
 	\
-	v8Script.h v8ScriptSystem.h
+	v8Script.h v8ScriptService.h
 
 INCLUDEPATH += ../../.. ../../../deps
 

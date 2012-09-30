@@ -18,6 +18,11 @@ namespace avo {
 namespace FS {
 
 /**
+ * @addtogroup Filesystem
+ * @{
+ */
+
+/**
  * Find a sorted list of filenames.
  */
 std::vector<boost::filesystem::path> findFilenames(const boost::filesystem::path &path, const boost::regex &regex = boost::regex(".*"));
@@ -80,6 +85,10 @@ boost::filesystem::path unqualifySource(const boost::filesystem::path &uri);
  * Helper function to compare two paths case-insensitively.
  */
 bool ilexicographical_compare(const boost::filesystem::path& l, const boost::filesystem::path& r);
+
+/**
+ * @}
+ */
 
 }
 

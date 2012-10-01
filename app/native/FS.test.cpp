@@ -107,6 +107,39 @@ TEST_F(FS, setResourceRoot) {
 
 }
 
+TEST_F(FS, qualifyPath) {
+
+	// Normal usage.
+	EXPECT_EQ(
+		qualifyPath(resourceRoot(), "/test.txt").string(),
+		resourceRoot() / "test.txt"
+	);
+
+	// Out and then back in.
+	EXPECT_EQ(
+		qualifyPath(
+			resourceRoot(),
+			boost::filesystem::path("..") / "qualifyPath" / "test.txt"
+		).string(),
+		resourceRoot() / "test.txt"
+	);
+
+	// Trying to break out.
+	EXPECT_THROW(
+		qualifyPath(
+			resourceRoot(),
+			boost::filesystem::path("..") / "setResourceRoot"
+		).string(),
+		std::runtime_error
+	);
+
+	// Doesn't exist.
+	EXPECT_THROW(
+		qualifyPath(resourceRoot(), "/doesNotExist").string(),
+		boost::filesystem::filesystem_error
+	);
+}
+
 TEST_F(FS, unqualifyPath) {
 
 	// Normal usage.
@@ -125,15 +158,15 @@ TEST_F(FS, unqualifyPath) {
 	);
 
 	// Trying to break out.
-	EXPECT_EQ(
+	EXPECT_THROW(
 		unqualifyPath(
 			resourceRoot(),
 			resourceRoot() / ".." / "setResourceRoot"
 		).string(),
-		""
+		std::runtime_error
 	);
 
-	// Just plain wrong.
+	// Doesn't exist.
 	EXPECT_THROW(
 		unqualifyPath(resourceRoot(), resourceRoot() / ".." / "doesNotExist").string(),
 		boost::filesystem::filesystem_error

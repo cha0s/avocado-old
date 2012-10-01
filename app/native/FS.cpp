@@ -50,6 +50,21 @@ void writeString(const boost::filesystem::path &filename, const std::string &str
 	}
 }
 
+boost::filesystem::path qualifyPath(const boost::filesystem::path &base, const boost::filesystem::path &uri) {
+
+	std::string baseString = base.string();
+	std::string uriString = boost::filesystem::canonical(base / uri).string();
+
+	std::string::size_type  pos;
+	if (std::string::npos != (pos = uriString.find(baseString))) {
+		return uriString;
+	}
+	else {
+		throw std::runtime_error("qualifyPath() detected a directory traversal exploit!");
+	}
+}
+
+
 boost::filesystem::path unqualifyPath(const boost::filesystem::path &base, const boost::filesystem::path &uri) {
 
 	std::string baseString = base.string();
@@ -60,7 +75,7 @@ boost::filesystem::path unqualifyPath(const boost::filesystem::path &base, const
 		return uriString.substr(baseString.size());
 	}
 	else {
-		return "";
+		throw std::runtime_error("unqualifyPath() detected a directory traversal exploit!");
 	}
 }
 

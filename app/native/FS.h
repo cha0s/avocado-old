@@ -28,6 +28,24 @@ std::string readString(const boost::filesystem::path &filename);
 void writeString(const boost::filesystem::path &filename, const std::string &string);
 
 /**
+ * Qualify a URI with a base path. Will throw an exception if the URI tries
+ * to break out of the base path, or if the qualified URI doesn't exist.
+ *
+ *     qualifyPath("/one/two", "/three.txt");
+ *
+ * will return
+ *
+ *     "/one/two/three.txt"
+ *
+ * and
+ *
+ *     qualifyPath("/one/two", "../etc/passwd");
+ *
+ * will throw an exception.
+ */
+boost::filesystem::path qualifyPath(const boost::filesystem::path &base, const boost::filesystem::path &uri);
+
+/**
  * Strip off the qualifying part of a path. For example, calling like:
  *
  *     unqualifyPath("/one/two", "/one/two/three.txt");

@@ -13,12 +13,13 @@ namespace avo {
  */
 
 /**
- * @ingroup SPI
+ * @ingroup SDL
  * @{
  */
 
 /**
- * @ingroup @SDL
+ * @ingroup SPI
+ * @{
  */
 
 /**

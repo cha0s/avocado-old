@@ -15,6 +15,11 @@ namespace avo {
  */
 
 /**
+ * @ingroup V8
+ * @{
+ */
+
+/**
  * @namespace avo::V8
  *
  * @brief Utility functions and embed bindings for

@@ -10,17 +10,7 @@
 
 namespace avo {
 
-/**
- * @namespace avo::FS
- *
- * @brief Filesystem operations and definitions.
- */
 namespace FS {
-
-/**
- * @addtogroup Filesystem
- * @{
- */
 
 /**
  * Find a sorted list of filenames.
@@ -82,10 +72,6 @@ void setResourceRoot(const boost::filesystem::path &resourceRoot);
  * Helper function to compare two paths case-insensitively.
  */
 bool ilexicographical_compare(const boost::filesystem::path& l, const boost::filesystem::path& r);
-
-/**
- * @}
- */
 
 }
 

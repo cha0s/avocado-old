@@ -15,6 +15,16 @@ namespace avo {
  */
 
 /**
+ * @ingroup V8
+ * @{
+ */
+
+/**
+ * @ingroup SPI
+ * @{
+ */
+
+/**
  * %v8ScriptService embeds the
  * [V8 JavaScript engine](http://code.google.com/p/v8/).
  */

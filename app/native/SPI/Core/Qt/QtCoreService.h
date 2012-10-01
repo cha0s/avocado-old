@@ -13,12 +13,13 @@ namespace avo {
  */
 
 /**
- * @ingroup SPI
+ * @ingroup Qt
  * @{
  */
 
 /**
- * @ingroup @Qt
+ * @ingroup SPI
+ * @{
  */
 
 /**

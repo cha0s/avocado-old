@@ -22,6 +22,12 @@
  */
 
 /**
+ * @namespace avo::FS
+ *
+ * @brief Filesystem operations and definitions.
+ */
+
+/**
  * @defgroup SPI Service Provider Interfaces
  *
  * @brief Simply put, SPI implementations (SPIIs) provide an way for the engine
@@ -42,6 +48,25 @@
  */
 
 /**
+ * @defgroup Script Script SPI
+ *
+ * @brief The %Script SPI handles all communication between the native C++
+ * engine and JavaScript.
+ *
+ * All other SPI interfaces (SPIIs) are managed through the %Script SPII.
+ * Avocado is designed to spend most of its time in JavaScript, so it's no
+ * overstatement that the %Script SPI is pretty much the most important SPI.
+ */
+
+/**
+ * @defgroup Core Core SPI
+ *
+ * @brief The core SPI handles framework initialization (e.g. SDL_Init()) and
+ * teardown (e.g. SDL_Quit()) as well as bridges to core engine functionality
+ * like filesystem access.
+ */
+
+/**
  * @defgroup Manufacturing Manufacturing
  *
  * @brief Manufacturing functionality handles @link AbstractFactory abstract
@@ -54,4 +79,26 @@
  * @defgroup Global Globals and miscellany
  *
  * @brief Global macros and other miscellany.
+ */
+
+/**
+ * @defgroup V8 V8 JavaScript interface
+ *
+ * @brief Avocado's interface to the
+ * [V8 JavaScript engine](http://code.google.com/p/v8/).
+ */
+
+
+/**
+ * @defgroup SDL Simple DirectMedia Layer interface
+ *
+ * @brief Avocado's interface to the
+ * [Simple DirectMedia Layer](http://www.libsdl.org/).
+ */
+
+/**
+ * @defgroup Qt Qt development framework interface
+ *
+ * @brief Avocado's interface to the
+ * [Qt development framework](http://qt.digia.com/).
  */

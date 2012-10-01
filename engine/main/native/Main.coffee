@@ -56,7 +56,7 @@ try
 	
 		avo.state = state: 'Initial' 
 	
-	avo.input.on 'quit.Engine', ->
+	avo.Input.on 'quit.Engine', ->
 		
 		running = false
 		waiting = false
@@ -67,7 +67,7 @@ try
 		
 		if tick.ticks()
 			
-			avo.input.poll()
+			avo.Input.poll()
 		
 			main.tick()
 			

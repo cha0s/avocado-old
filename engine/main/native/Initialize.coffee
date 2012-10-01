@@ -8,7 +8,7 @@ avo.graphicsService = new avo.GraphicsService()
 
 # Use SDL InputService for now.
 avo.InputService.implementSpi 'sdl'
-avo.inputService = new avo.InputService()
+avo.InputService = new avo.InputService()
 
 # Use SDL TimingService for now.
 avo.TimingService.implementSpi 'sdl'

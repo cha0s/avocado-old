@@ -36,8 +36,8 @@ avo.States['Initial'] = new class
 		
 		# Move it 100px a second.
 		movement = avo.tickTimeElapsed() * 100
-		@x += avo.input.movement[0] * movement
-		@y += avo.input.movement[1] * movement
+		@x += avo.Input.movement[0] * movement
+		@y += avo.Input.movement[1] * movement
 	
 	# Called repeatedly while this state is loaded. You can render all of
 	# your pretty pictures here!
@@ -54,7 +54,7 @@ avo.States['Initial'] = new class
 	onExit: (nextStateName) ->
 		
 		# Remove our user input event handler.
-		avo.input.off 'inputEvent.State'
+		avo.Input.off 'inputEvent.State'
 		
 		# Wave to the next state because we're a friendly state!
 		avo.Logger.info "*waves to #{nextStateName}*"

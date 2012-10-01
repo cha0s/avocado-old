@@ -1,10 +1,11 @@
+Input = new avo.Input()
+avo.Input = Input
+
 avo.Input.LeftButton   = 1
 avo.Input.MiddleButton = 2
 avo.Input.RightButton  = 3
 avo.Input.WheelUp      = 4
 avo.Input.WheelDown    = 5
-
-avo.input = new avo.Input()
 
 keyCodeMap =
 
@@ -33,7 +34,7 @@ moveState = [0, 0, 0, 0]
 repeatIntervals = [null, null]
 repeatTimeouts = [null, null]
 
-avo.input.movement = [0, 0]
+avo.Input.movement = [0, 0]
 
 eventMap = [
 	['moveLeft', 'moveRight']
@@ -42,7 +43,7 @@ eventMap = [
 
 doRepeats = ->
 	
-	avo.input.movement = [
+	avo.Input.movement = [
 		moveState[1] - moveState[3]
 		moveState[2] - moveState[0]
 	]
@@ -53,7 +54,7 @@ doRepeats = ->
 			->
 				repeatIntervals[i] ?= setInterval(
 					->
-						avo.input.emit('inputEvent', event);
+						avo.Input.emit('inputEvent', event);
 					50
 				)
 			500
@@ -61,10 +62,10 @@ doRepeats = ->
 	
 	for i in [0, 1]
 		
-		if avo.input.movement[i]
+		if avo.Input.movement[i]
 			
 			repeatTimeouts[i] ?= repeater(
-				eventMap[i][if avo.input.movement[i] < 0 then 0 else 1]
+				eventMap[i][if avo.Input.movement[i] < 0 then 0 else 1]
 				i
 			)
 			
@@ -75,7 +76,7 @@ doRepeats = ->
 			
 			repeatTimeouts[i] = repeatIntervals[i] = null
 
-avo.input.on 'joyAxis', (stick, axis, value) ->
+avo.Input.on 'joyAxis', (stick, axis, value) ->
 	
 	if axis is 1
 		
@@ -87,73 +88,73 @@ avo.input.on 'joyAxis', (stick, axis, value) ->
 		
 	doRepeats()
 
-avo.input.on 'keyDown', (code) ->
+avo.Input.on 'keyDown', (code) ->
 	
 	switch code
 		
 		when keyCodeMap['confirm']
 			
-			avo.input.emit 'inputEvent', 'confirm'
+			avo.Input.emit 'inputEvent', 'confirm'
 			
 		when keyCodeMap['cancel']
 			
-			avo.input.emit 'inputEvent', 'cancel'
+			avo.Input.emit 'inputEvent', 'cancel'
 			
 		when keyCodeMap['menu']
 			
-			avo.input.emit 'inputEvent', 'menu'
+			avo.Input.emit 'inputEvent', 'menu'
 			
 		when keyCodeMap['moveUp']
 		
-			avo.input.emit 'inputEvent', 'moveUp'
+			avo.Input.emit 'inputEvent', 'moveUp'
 			
 			moveState[0] = 1
 			
 		when keyCodeMap['moveRight']
 			
-			avo.input.emit 'inputEvent', 'moveRight'
+			avo.Input.emit 'inputEvent', 'moveRight'
 			
 			moveState[1] = 1
 			
 		when keyCodeMap['moveDown']
 		
-			avo.input.emit 'inputEvent', 'moveDown'
+			avo.Input.emit 'inputEvent', 'moveDown'
 			
 			moveState[2] = 1
 			
 		when keyCodeMap['moveLeft']
 		
-			avo.input.emit 'inputEvent', 'moveLeft'
+			avo.Input.emit 'inputEvent', 'moveLeft'
 			
 			moveState[3] = 1
 	
 	doRepeats()
 
-avo.input.on 'keyUp', (code) ->
+avo.Input.on 'keyUp', (code) ->
 	
 	switch code
 		
 		when keyCodeMap['moveUp']
 		
-			avo.input.emit 'inputEvent', 'moveUpReleased'
+			avo.Input.emit 'inputEvent', 'moveUpReleased'
 		
 			moveState[0] = 0
 			
 		when keyCodeMap['moveRight']
 			
-			avo.input.emit 'inputEvent', 'moveRightReleased'
+			avo.Input.emit 'inputEvent', 'moveRightReleased'
 			
 			moveState[1] = 0
 			
 		when keyCodeMap['moveDown']
 		
-			avo.input.emit 'inputEvent', 'moveDownReleased'
+			avo.Input.emit 'inputEvent', 'moveDownReleased'
 			
 			moveState[2] = 0
 			
 		when keyCodeMap['moveLeft']
 		
-			avo.input.emit 'inputEvent', 'moveLeftReleased'
+			avo.Input.emit 'inputEvent', 'moveLeftReleased'
 			
 			moveState[3] = 0
 	

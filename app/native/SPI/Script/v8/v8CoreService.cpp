@@ -32,10 +32,7 @@ v8CoreService::~v8CoreService() {
 void v8CoreService::initialize(Handle<ObjectTemplate> target) {
 	HandleScope scope;
 
-	Handle<FunctionTemplate> constructor_template;
-
-	// CoreService is an instantiable embedded C++ class.
-	constructor_template = FunctionTemplate::New(v8CoreService::New);
+	Handle<FunctionTemplate> constructor_template = FunctionTemplate::New(v8CoreService::New);
 	constructor_template->InstanceTemplate()->SetInternalFieldCount(1);
 	constructor_template->SetClassName(String::NewSymbol("CoreService"));
 

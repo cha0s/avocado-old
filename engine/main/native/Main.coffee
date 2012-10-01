@@ -27,15 +27,16 @@ window = new avo.Window()
 window.set [640, 480]
 
 working = new avo.Image 320, 240
+working.fill 255, 255, 255
 
 avo.Image.load('/image/avocado.png').then (image) ->
 	
-	avo.Logger.info 'Loaded an avocado.'
-	
 	image.render [0, 0], working
 	
-	avo.Logger.info 'Rendered it to the backbuffer.'
+while true
 	
+	avo.timingService.sleep 50
+
 	window.render working
 
-	avo.Logger.info 'Rendered it to the screen.'
+	

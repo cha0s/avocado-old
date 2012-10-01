@@ -8,7 +8,9 @@
 
 #include "v8CoreService.h"
 #include "v8GraphicsService.h"
+#include "v8TimingService.h"
 
+#include "v8Counter.h"
 #include "v8Image.h"
 #include "v8Window.h"
 
@@ -33,6 +35,9 @@ v8ScriptService::v8ScriptService()
 
 	v8CoreService::initialize(avo);
 	v8GraphicsService::initialize(avo);
+	v8TimingService::initialize(avo);
+
+	v8Counter::initialize(avo);
 	v8Image::initialize(avo);
 	v8Window::initialize(avo);
 

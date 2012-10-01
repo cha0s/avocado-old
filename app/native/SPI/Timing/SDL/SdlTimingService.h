@@ -1,0 +1,52 @@
+#ifndef AVOCADO_SDLTIMINGSERVICE_H
+#define AVOCADO_SDLTIMINGSERVICE_H
+
+#include "avocado-global.h"
+
+#include "../TimingService.h"
+
+namespace avo {
+
+/**
+ * @addtogroup Timing
+ * @{
+ */
+
+/**
+ * @ingroup SDL
+ * @ingroup SPI
+ */
+class SdlTimingService : public TimingService {
+
+public:
+
+	SdlTimingService();
+	~SdlTimingService();
+
+	void sleep(int ms);
+
+	static AbstractFactory<SdlTimingService> *factory;
+
+};
+
+/**
+ * @ingroup Resources
+ */
+template <>
+class AbstractFactory<SdlTimingService> : public AbstractFactory<TimingService> {
+
+public:
+
+	virtual ~AbstractFactory<SdlTimingService>() {}
+
+	SdlTimingService *create() { return new SdlTimingService(); }
+
+};
+
+/**
+ * @}
+ */
+
+}
+
+#endif // AVOCADO_SDLTIMINGSERVICE_H

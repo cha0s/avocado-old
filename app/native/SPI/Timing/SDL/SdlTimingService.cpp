@@ -1,0 +1,23 @@
+#include "avocado-global.h"
+
+#include "SdlTimingService.h"
+
+#include "SdlCounter.h"
+
+namespace avo {
+
+AbstractFactory<SdlTimingService> *SdlTimingService::factory = new AbstractFactory<SdlTimingService>;
+
+SdlTimingService::SdlTimingService() {
+
+	Counter::factoryManager.setInstance(SdlCounter::factory);
+}
+
+SdlTimingService::~SdlTimingService() {
+}
+
+void SdlTimingService::sleep(int ms) {
+	SDL_Delay(ms);
+}
+
+}

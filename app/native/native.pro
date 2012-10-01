@@ -92,7 +92,8 @@ SOURCES += \
 	\
 	SPI/Script/Script.cpp SPI/Script/ScriptService.cpp \
 	SPI/Core/CoreService.cpp \
-	SPI/Graphics/GraphicsService.cpp SPI/Graphics/Image.cpp SPI/Graphics/Window.cpp
+	SPI/Graphics/GraphicsService.cpp SPI/Graphics/Image.cpp SPI/Graphics/Window.cpp \
+	SPI/Timing/TimingService.cpp SPI/Timing/Counter.cpp
 
 HEADERS += \
 	\
@@ -105,7 +106,8 @@ HEADERS += \
 	SPI/SpiiLoader.h \
 	SPI/Script/Script.h SPI/Script/ScriptService.h \
 	SPI/Core/CoreService.h \
-	SPI/Graphics/GraphicsService.h SPI/Graphics/Image.h SPI/Graphics/Window.h
+	SPI/Graphics/GraphicsService.h SPI/Graphics/Image.h SPI/Graphics/Window.h \
+	SPI/Timing/TimingService.h SPI/Timing/Counter.h
 
 INCLUDEPATH += deps
 

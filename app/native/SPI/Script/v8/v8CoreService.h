@@ -37,7 +37,7 @@ private:
 	static v8::Handle<v8::Value> New(const v8::Arguments &args);
 
 	/**
-	 * Manage the CoreService SPII implementation.
+	 * Manage the CoreService SPI implementation.
 	 */
 	static v8::Handle<v8::Value> ImplementSpi(const v8::Arguments &args);
 

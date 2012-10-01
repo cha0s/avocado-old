@@ -37,7 +37,7 @@ private:
 	static v8::Handle<v8::Value> New(const v8::Arguments &args);
 
 	/**
-	 * Manage the GraphicsService SPII implementation.
+	 * Manage the GraphicsService SPI implementation.
 	 */
 	static v8::Handle<v8::Value> ImplementSpi(const v8::Arguments &args);
 

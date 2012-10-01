@@ -11,7 +11,7 @@
 
 extern "C"
 void BOOST_EXTENSION_EXPORT_DECL
-implementSpi(avo::FactoryManager<avo::ScriptService> &manager) {
+implementSpi(avo::FactoryManager<AVOCADO_SPI(Script, v8)> &manager) {
 
 	manager.setInstance(avo::v8ScriptService::factory);
 }

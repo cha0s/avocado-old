@@ -11,7 +11,7 @@
 
 extern "C"
 void BOOST_EXTENSION_EXPORT_DECL
-implementSpi(avo::FactoryManager<avo::GraphicsService> &manager) {
+implementSpi(avo::FactoryManager<AVOCADO_SPI(Graphics, Sdl)> &manager) {
 
 	manager.setInstance(avo::SdlGraphicsService::factory);
 }

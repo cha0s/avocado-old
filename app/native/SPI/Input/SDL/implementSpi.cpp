@@ -11,7 +11,7 @@
 
 extern "C"
 void BOOST_EXTENSION_EXPORT_DECL
-implementSpi(avo::FactoryManager<avo::InputService> &manager) {
+implementSpi(avo::FactoryManager<AVOCADO_SPI(Input, Sdl)> &manager) {
 
 	manager.setInstance(avo::SdlInputService::factory);
 }

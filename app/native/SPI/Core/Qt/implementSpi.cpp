@@ -11,7 +11,7 @@
 
 extern "C"
 void BOOST_EXTENSION_EXPORT_DECL
-implementSpi(avo::FactoryManager<avo::CoreService> &manager) {
+implementSpi(avo::FactoryManager<AVOCADO_SPI(Core, Qt)> &manager) {
 
 	manager.setInstance(avo::QtCoreService::factory);
 }

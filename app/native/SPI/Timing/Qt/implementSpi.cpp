@@ -11,7 +11,7 @@
 
 extern "C"
 void BOOST_EXTENSION_EXPORT_DECL
-implementSpi(avo::FactoryManager<avo::TimingService> &manager) {
+implementSpi(avo::FactoryManager<AVOCADO_SPI(Timing, Qt)> &manager) {
 
 	manager.setInstance(avo::QtTimingService::factory);
 }

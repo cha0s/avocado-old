@@ -94,23 +94,25 @@ public:
 	 * Decrement the reference count for a resource. If it reaches 0, the
 	 * resource will be released immediately.
 	 */
-	void release(const boost::filesystem::path &uri) {
-		m_release(uri);
+	bool release(const boost::filesystem::path &uri) {
+		return m_release(uri);
 	}
 
 private:
 
-	void m_release(const boost::filesystem::path &uri, bool referenceCheck = true) {
-		if (!resourceIsCached(uri)) return;
+	bool m_release(const boost::filesystem::path &uri, bool referenceCheck = true) {
+		if (!resourceIsCached(uri)) return false;
 
 		// If we have a record of this resource, decrement the
 		// references. If the references have reached 0, or
 		// if the check has been overidden, release the resource.
-		if (--resourceMap[uri].referenceCount != 0 && referenceCheck) return;
+		if (--resourceMap[uri].referenceCount != 0 && referenceCheck) return false;
 
 		// Release the resource.
 		delete resourceMap[uri].data;
 		resourceMap.erase(uri);
+
+		return true;
 	}
 
 	bool resourceIsCached(const boost::filesystem::path &uri) {

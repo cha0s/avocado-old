@@ -135,7 +135,7 @@ public:
 	 * estimation. It would be slightly less naive to take the BPP into
 	 * account.
 	 */
-	int sizeInBytes() {
+	unsigned int sizeInBytes() {
 		return width() * height() * 4;
 	}
 

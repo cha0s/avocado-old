@@ -10,6 +10,9 @@
  * http://www.opensource.org/licenses/mit-license.php
  *
  * @version 1.0.2
+ * 
+ * Hereafter referred to as 'upon', renamed to avoid name conflicts with
+ * CoffeeScript.
  */
 
 (function(define) {
@@ -89,7 +92,7 @@ define(function() {
 
     /**
      * Trusted Promise constructor.  A Promise created from this constructor is
-     * a trusted when.js promise.  Any other duck-typed promise is considered
+     * a trusted upon.js promise.  Any other duck-typed promise is considered
      * untrusted.
      */
     function Promise() {}
@@ -180,7 +183,7 @@ define(function() {
      * then. The resolver has resolve, reject, and progress.  The promise
      * only has then.
      *
-     * @memberOf when
+     * @memberOf upon
      * @function
      *
      * @returns {Deferred}
@@ -384,7 +387,7 @@ define(function() {
      * Register an observer for a promise or immediate value.
      *
      * @function
-     * @name when
+     * @name upon
      * @namespace
      *
      * @param promiseOrValue anything
@@ -400,7 +403,7 @@ define(function() {
      *   value of callback or errback or the completion value of promiseOrValue if
      *   callback and/or errback is not supplied.
      */
-    function when(promiseOrValue, callback, errback, progressHandler) {
+    function upon(promiseOrValue, callback, errback, progressHandler) {
         // Get a promise for the input promiseOrValue
         // See promise()
         var trustedPromise = promise(promiseOrValue);
@@ -421,8 +424,8 @@ define(function() {
      *
      * @param promiseOrValue anything
      *
-     * @returns Guaranteed to return a trusted Promise.  If promiseOrValue is a when.js {@link Promise}
-     *   returns promiseOrValue, otherwise, returns a new, already-resolved, when.js {@link Promise}
+     * @returns Guaranteed to return a trusted Promise.  If promiseOrValue is a upon.js {@link Promise}
+     *   returns promiseOrValue, otherwise, returns a new, already-resolved, upon.js {@link Promise}
      *   whose resolution value is:
      *   * the resolution value of promiseOrValue if it's a foreign promise, or
      *   * promiseOrValue if it's a value
@@ -431,20 +434,20 @@ define(function() {
         var promise, deferred;
 
         if(promiseOrValue instanceof Promise) {
-            // It's a when.js promise, so we trust it
+            // It's a upon.js promise, so we trust it
             promise = promiseOrValue;
 
         } else {
-            // It's not a when.js promise.  Check to see if it's a foreign promise
+            // It's not a upon.js promise.  Check to see if it's a foreign promise
             // or a value.
 
             deferred = defer();
             if(isPromise(promiseOrValue)) {
                 // It's a compliant promise, but we don't know where it came from,
                 // so we don't trust its implementation entirely.  Introduce a trusted
-                // middleman when.js promise
+                // middleman upon.js promise
 
-                // IMPORTANT: This is the only place when.js should ever call .then() on
+                // IMPORTANT: This is the only place upon.js should ever call .then() on
                 // an untrusted promise.
                 promiseOrValue.then(deferred.resolve, deferred.reject, deferred.progress);
                 promise = deferred.promise;
@@ -465,7 +468,7 @@ define(function() {
      * have resolved. The resolution value of the returned promise will be an array of
      * length howMany containing the resolutions values of the triggering promisesOrValues.
      *
-     * @memberOf when
+     * @memberOf upon
      *
      * @param promisesOrValues {Array} array of anything, may contain a mix
      *      of {@link Promise}s and values
@@ -484,7 +487,7 @@ define(function() {
         toResolve = Math.max(0, Math.min(howMany, len));
         results = [];
         deferred = defer();
-        ret = when(deferred, callback, errback, progressHandler);
+        ret = upon(deferred, callback, errback, progressHandler);
 
         // Wrapper so that resolver can be replaced
         function resolve(val) {
@@ -541,7 +544,7 @@ define(function() {
             // TODO: Replace while with forEach
             for(i = 0; i < len; ++i) {
                 if(i in promisesOrValues) {
-                    when(promisesOrValues[i], resolve, reject, progress);
+                	upon(promisesOrValues[i], resolve, reject, progress);
                 }
             }
         }
@@ -554,7 +557,7 @@ define(function() {
      * have resolved. The resolution value of the returned promise will be an array
      * containing the resolution values of each of the promisesOrValues.
      *
-     * @memberOf when
+     * @memberOf upon
      *
      * @param promisesOrValues {Array} array of anything, may contain a mix
      *      of {@link Promise}s and values
@@ -570,7 +573,7 @@ define(function() {
         results = allocateArray(promisesOrValues.length);
         promise = reduce(promisesOrValues, reduceIntoArray, results);
 
-        return when(promise, callback, errback, progressHandler);
+        return upon(promise, callback, errback, progressHandler);
     }
 
     function reduceIntoArray(current, val, i) {
@@ -583,7 +586,7 @@ define(function() {
      * has resolved. The resolution value of the returned promise will be the resolution
      * value of the triggering promiseOrValue.
      *
-     * @memberOf when
+     * @memberOf upon
      *
      * @param promisesOrValues {Array} array of anything, may contain a mix
      *      of {@link Promise}s and values
@@ -607,7 +610,7 @@ define(function() {
      * input to contain {@link Promise}s and/or values, and mapFunc may return
      * either a value or a {@link Promise}
      *
-     * @memberOf when
+     * @memberOf upon
      *
      * @param promisesOrValues {Array} array of anything, may contain a mix
      *      of {@link Promise}s and values
@@ -630,7 +633,7 @@ define(function() {
         // asap, and then use reduce() to collect all the results
         for(;i >= 0; --i) {
             if(i in promisesOrValues)
-                results[i] = when(promisesOrValues[i], mapFunc);
+                results[i] = upon(promisesOrValues[i], mapFunc);
         }
 
         // Could use all() here, but that would result in another array
@@ -647,7 +650,7 @@ define(function() {
      * may return either a value or a {@link Promise}, *and* initialValue may
      * be a {@link Promise} for the starting value.
      *
-     * @memberOf when
+     * @memberOf upon
      *
      * @param promisesOrValues {Array} array of anything, may contain a mix
      *      of {@link Promise}s and values
@@ -672,8 +675,8 @@ define(function() {
 
         args = [
             function (current, val, i) {
-                return when(current, function (c) {
-                    return when(val, function (value) {
+                return upon(current, function (c) {
+                    return upon(val, function (value) {
                         return reduceFunc(c, value, i, total);
                     });
                 });
@@ -689,7 +692,7 @@ define(function() {
      * Ensure that resolution of promiseOrValue will complete resolver with the completion
      * value of promiseOrValue, or instead with resolveValue if it is provided.
      *
-     * @memberOf when
+     * @memberOf upon
      *
      * @param promiseOrValue
      * @param resolver {Resolver}
@@ -700,7 +703,7 @@ define(function() {
     function chain(promiseOrValue, resolver, resolveValue) {
         var useResolveValue = arguments.length > 2;
 
-        return when(promiseOrValue,
+        return upon(promiseOrValue,
             function(val) {
                 resolver.resolve(useResolveValue ? resolveValue : val);
             },
@@ -713,25 +716,25 @@ define(function() {
     // Public API
     //
 
-    when.defer     = defer;
+    upon.defer     = defer;
 
-    when.isPromise = isPromise;
-    when.some      = some;
-    when.all       = all;
-    when.any       = any;
+    upon.isPromise = isPromise;
+    upon.some      = some;
+    upon.all       = all;
+    upon.any       = any;
 
-    when.reduce    = reduce;
-    when.map       = map;
+    upon.reduce    = reduce;
+    upon.map       = map;
 
-    when.chain     = chain;
+    upon.chain     = chain;
 
-    return when;
+    return upon;
 });
 })(typeof define == 'function'
     ? define
     : function (factory) { typeof module != 'undefined'
         ? (module.exports = factory())
-        : (this.when_      = factory());
+        : (this.upon      = factory());
     }
     // Boilerplate for AMD, Node, and browser global
 );

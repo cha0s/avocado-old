@@ -36,6 +36,8 @@ public:
 
 /**
  * @ingroup Manufacturing
+ * @ingroup Qt
+ * @ingroup SPI
  */
 template <>
 class AbstractFactory<QtCoreService> : public AbstractFactory<CoreService> {

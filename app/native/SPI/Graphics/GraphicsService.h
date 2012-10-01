@@ -47,6 +47,7 @@ public:
 
 /**
  * @ingroup Manufacturing
+ * @ingroup SPI
  */
 template <>
 class AbstractFactory<GraphicsService> {

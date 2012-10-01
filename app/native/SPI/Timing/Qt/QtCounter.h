@@ -45,7 +45,7 @@ private:
 };
 
 /**
- * @ingroup Resources
+ * @ingroup Manufacturing
  * @ingroup Qt
  * @ingroup SPI
  */

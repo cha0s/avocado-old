@@ -30,7 +30,9 @@ public:
 };
 
 /**
- * @ingroup Resources
+ * @ingroup SDL
+ * @ingroup Manufacturing
+ * @ingroup SPI
  */
 template <>
 class AbstractFactory<SdlTimingService> : public AbstractFactory<TimingService> {

@@ -80,7 +80,8 @@ private:
 };
 
 /**
- * @ingroup Resources
+ * @ingroup Manufacturing
+ * @ingroup SPI
  */
 template <>
 class AbstractFactory<Window> {

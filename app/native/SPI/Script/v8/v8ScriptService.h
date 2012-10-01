@@ -52,8 +52,8 @@ private:
 
 /**
  * @ingroup Manufacturing
- * @ingroup V8
  * @ingroup SPI
+ * @ingroup V8
  */
 template <>
 class AbstractFactory<v8ScriptService> : public AbstractFactory<ScriptService> {

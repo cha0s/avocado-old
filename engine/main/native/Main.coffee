@@ -1,4 +1,3 @@
-
 # Register a stderr logging strategy.
 avo.Logger.registerStrategy (message, type) ->
 	
@@ -22,21 +21,70 @@ avo.Logger.registerStrategy (message, type) ->
 	# message
 	avo.CoreService.writeStderr message
 
-window = new avo.Window()
+class MainCpp extends avo.Main
 
-window.set [640, 480]
-
-working = new avo.Image 320, 240
-working.fill 255, 255, 255
-
-avo.Image.load('/image/avocado.png').then (image) ->
+	constructor: ->
+		
+		@window = new avo.Window()
+		
+		@window.set [640, 480]
+		
+		@window.setWindowTitle 'Avocado - collaborative, libre, gratis game development'
 	
-	image.render [0, 0], working
+		super
+		
+	relieveCpu: ->
 	
-while true
+		nextWake = Math.min(
+			@lastTickTime + @tickFrequency
+			@lastRenderTime + @renderFrequency
+		) - @timeCounter.current()
+		
+		avo.timingService.sleep nextWake / 2 if nextWake > 1 and Math.random() > .5
 	
-	avo.timingService.sleep 50
+try
+	
+	main = new MainCpp()
 
-	window.render working
-
+	running = true
+	waiting = true
 	
+	tick = new avo.Ticker main.tickFrequency
+	render = new avo.Ticker main.renderFrequency
+	
+	main.initialize().then ->
+	
+		avo.state = state: 'Initial' 
+	
+	avo.input.on 'quit.Engine', ->
+		
+		running = false
+		waiting = false
+	
+	while running
+		
+		avo.setTimeElapsed main.timeCounter.current() / 1000
+		
+		if tick.ticks()
+			
+			avo.input.poll()
+		
+			main.tick()
+			
+			avo.tickTimeouts()
+			
+		if render.ticks()
+			
+			main.render()
+			
+		main.handleStateChange()
+		
+		main.relieveCpu()
+		
+catch error
+
+	message = if error.stack?
+		error.stack
+	else
+		error.toString()
+	avo.Logger.error message

@@ -58,6 +58,7 @@ public:
 
 /**
  * @ingroup Manufacturing
+ * @ingroup SPI
  */
 
 template <>

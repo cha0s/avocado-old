@@ -145,13 +145,13 @@ Handle<Object> v8Image::New(Image *image) {
 v8::Handle<v8::Value> v8Image::Load(const Arguments &args) {
 	HandleScope scope;
 
-	Handle<Object> when_ = Context::GetCurrent()->Global()->Get(
-		String::NewSymbol("when_")
+	Handle<Object> upon = Context::GetCurrent()->Global()->Get(
+		String::NewSymbol("upon")
 	).As<Object>();
 
-	Handle<Object> defer = when_->Get(
+	Handle<Object> defer = upon->Get(
 		String::NewSymbol("defer")
-	).As<Function>()->Call(when_, 0, NULL).As<Object>();
+	).As<Function>()->Call(upon, 0, NULL).As<Object>();
 
 	try {
 

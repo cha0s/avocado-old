@@ -27,7 +27,9 @@ public:
 };
 
 /**
- * @ingroup Resources
+ * @ingroup Manufacturing
+ * @ingroup Qt
+ * @ingroup SPI
  */
 template <>
 class AbstractFactory<QtGraphicsService> : public AbstractFactory<GraphicsService> {

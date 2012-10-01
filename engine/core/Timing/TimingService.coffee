@@ -1,9 +1,13 @@
 
-avo.Counter::current = @['%current']
+avo.TimingService::sleep = (ms) ->
+	return unless ms?
+	
+	@['%sleep'] ms
 
-avo.Counter::since = @['%since']
-
-avo.Counter::secondsSince = @['%secondsSince']
+@setTimeout = avo['%setTimeout']
+@setInterval = avo['%setInterval']
+@clearTimeout = avo['%clearTimeout']
+@clearInterval = avo['%clearInterval']
 
 timeElapsed = 0
 lastTimeElapsed = 0

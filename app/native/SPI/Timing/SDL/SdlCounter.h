@@ -43,8 +43,9 @@ private:
 };
 
 /**
- * @ingroup Resources
+ * @ingroup Manufacturing
  * @ingroup SDL
+ * @ingroup SPI
  */
 template<>
 class AbstractFactory<SdlCounter> : public AbstractFactory<Counter> {

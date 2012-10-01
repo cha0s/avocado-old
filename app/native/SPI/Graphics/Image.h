@@ -209,7 +209,9 @@ private:
 };
 
 /**
+ * @ingroup Manufacturing
  * @ingroup Resources
+ * @ingroup SPI
  */
 template <>
 class AbstractFactory<Image> {

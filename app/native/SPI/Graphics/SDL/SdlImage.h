@@ -81,8 +81,10 @@ private:
 };
 
 /**
+ * @ingroup Manufacturing
  * @ingroup Resources
  * @ingroup SDL
+ * @ingroup SPI
  */
 template <>
 class AbstractFactory<SdlImage> : public AbstractFactory<Image> {

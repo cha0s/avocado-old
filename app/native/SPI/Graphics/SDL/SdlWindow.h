@@ -43,7 +43,9 @@ private:
 };
 
 /**
- * @ingroup Resources
+ * @ingroup Manufacturing
+ * @ingroup SDL
+ * @ingroup SPI
  */
 template <>
 class AbstractFactory<SdlWindow> : public AbstractFactory<Window> {

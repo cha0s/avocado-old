@@ -48,6 +48,8 @@ public:
 
 /**
  * @ingroup Manufacturing
+ * @ingroup SDL
+ * @ingroup SPI
  */
 template <>
 class AbstractFactory<SdlCoreService> : public AbstractFactory<CoreService> {

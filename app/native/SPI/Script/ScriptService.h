@@ -114,6 +114,7 @@ public:
 
 /**
  * @ingroup Manufacturing
+ * @ingroup SPI
  */
 template <>
 class AbstractFactory<ScriptService> {

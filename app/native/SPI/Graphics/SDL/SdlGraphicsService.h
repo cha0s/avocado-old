@@ -27,7 +27,9 @@ public:
 };
 
 /**
- * @ingroup Resources
+ * @ingroup Manufacturing
+ * @ingroup SDL
+ * @ingroup SPI
  */
 template <>
 class AbstractFactory<SdlGraphicsService> : public AbstractFactory<GraphicsService> {

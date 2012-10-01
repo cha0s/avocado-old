@@ -84,6 +84,8 @@ private:
 /**
  * @ingroup Manufacturing
  * @ingroup Qt
+ * @ingroup Resources
+ * @ingroup SPI
  */
 template <>
 class AbstractFactory<QtImage> : public AbstractFactory<Image> {

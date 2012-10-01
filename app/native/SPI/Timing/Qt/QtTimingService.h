@@ -30,7 +30,9 @@ public:
 };
 
 /**
- * @ingroup Resources
+ * @ingroup Manufacturing
+ * @ingroup Qt
+ * @ingroup SPI
  */
 template <>
 class AbstractFactory<QtTimingService> : public AbstractFactory<TimingService> {

@@ -91,7 +91,8 @@ SOURCES += \
 	FS.cpp \
 	\
 	SPI/Script/Script.cpp SPI/Script/ScriptService.cpp \
-	SPI/Core/CoreService.cpp
+	SPI/Core/CoreService.cpp \
+	SPI/Graphics/GraphicsService.cpp SPI/Graphics/Image.cpp SPI/Graphics/Window.cpp
 
 HEADERS += \
 	\
@@ -103,7 +104,8 @@ HEADERS += \
 	\
 	SPI/SpiiLoader.h \
 	SPI/Script/Script.h SPI/Script/ScriptService.h \
-	SPI/Core/CoreService.h
+	SPI/Core/CoreService.h \
+	SPI/Graphics/GraphicsService.h SPI/Graphics/Image.h SPI/Graphics/Window.h
 
 INCLUDEPATH += deps
 

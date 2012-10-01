@@ -22,4 +22,20 @@ avo.Logger.registerStrategy (message, type) ->
 	# message
 	avo.CoreService.writeStderr message
 
-avo.Logger.info 'Main engine loop...'
+window = new avo.Window()
+
+window.set [640, 480]
+
+working = new avo.Image 320, 240
+
+avo.Image.load('/image/avocado.png').then (image) ->
+	
+	avo.Logger.info 'Loaded an avocado.'
+	
+	image.render [0, 0], working
+	
+	avo.Logger.info 'Rendered it to the backbuffer.'
+	
+	window.render working
+
+	avo.Logger.info 'Rendered it to the screen.'

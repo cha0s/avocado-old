@@ -15,18 +15,11 @@ namespace avo {
  */
 
 /**
- * @ingroup V8
- * @{
- */
-
-/**
- * @ingroup SPI
- * @{
- */
-
-/**
  * %v8ScriptService embeds the
  * [V8 JavaScript engine](http://code.google.com/p/v8/).
+ *
+ * @ingroup V8
+ * @ingroup SPI
  */
 class v8ScriptService : public ScriptService {
 
@@ -59,6 +52,8 @@ private:
 
 /**
  * @ingroup Manufacturing
+ * @ingroup V8
+ * @ingroup SPI
  */
 template <>
 class AbstractFactory<v8ScriptService> : public AbstractFactory<ScriptService> {
@@ -75,14 +70,6 @@ public:
 	}
 
 };
-
-/**
- * @}
- */
-
-/**
- * @}
- */
 
 /**
  * @}

@@ -83,6 +83,13 @@
  */
 
 /**
+ * @defgroup Resources Resource management
+ *
+ * @brief Resources are loaded from the resource root and are managed using
+ * reference counting.
+ */
+
+/**
  * @defgroup Global Globals and miscellany
  *
  * @brief Global macros and other miscellany.

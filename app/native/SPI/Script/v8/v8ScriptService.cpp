@@ -7,6 +7,10 @@
 #include "v8Script.h"
 
 #include "v8CoreService.h"
+#include "v8GraphicsService.h"
+
+#include "v8Image.h"
+#include "v8Window.h"
 
 using namespace v8;
 using namespace std;
@@ -28,6 +32,9 @@ v8ScriptService::v8ScriptService()
 	Handle<ObjectTemplate> avo = ObjectTemplate::New();
 
 	v8CoreService::initialize(avo);
+	v8GraphicsService::initialize(avo);
+	v8Image::initialize(avo);
+	v8Window::initialize(avo);
 
 	global->Set(String::New("avo"), avo);
 

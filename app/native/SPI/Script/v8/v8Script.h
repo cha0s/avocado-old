@@ -15,12 +15,9 @@ namespace avo {
  */
 
 /**
- * @ingroup V8
- * @{
- */
-
-/**
  * %v8Script is an executable script wrapping the v8::Script class.
+ *
+ * @ingroup V8
  */
 class v8Script : public Script {
 
@@ -46,6 +43,11 @@ private:
 
 };
 
+/**
+ * @ingroup Manufacturing
+ * @ingroup V8
+ * @ingroup SPI
+ */
 template <>
 class AbstractFactory<v8Script> : public AbstractFactory<Script> {
 

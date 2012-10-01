@@ -15,17 +15,10 @@ namespace avo {
  */
 
 /**
- * @ingroup V8
- * @{
- */
-
-/**
- * @ingroup SPI
- * @{
- */
-
-/**
  * %v8CoreService handles providing the CoreService SPI to V8 JavaScript.
+ *
+ * @ingroup V8
+ * @ingroup SPI
  */
 class v8CoreService : public ObjectWrap {
 
@@ -56,10 +49,6 @@ private:
 
 	static v8::Handle<v8::Value> Close(const v8::Arguments &args);
 };
-
-/**
- * @}
- */
 
 /**
  * @}

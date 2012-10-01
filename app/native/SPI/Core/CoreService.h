@@ -36,7 +36,7 @@ public:
 	virtual void close() { }
 
 	/**
-	 * Manages the concrete ScriptService factory instance.
+	 * Manages the concrete %CoreService factory instance.
 	 */
 	static FactoryManager<CoreService> factoryManager;
 
@@ -56,16 +56,9 @@ public:
 
 	virtual ~AbstractFactory<CoreService>() {}
 
-	/**
-	 * Reimplemented as non-virtual by concrete CoreService factories.
-	 */
 	virtual CoreService *create() = 0;
 
 };
-
-/**
- * @}
- */
 
 /**
  * @}

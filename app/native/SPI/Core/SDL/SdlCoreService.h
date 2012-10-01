@@ -71,10 +71,6 @@ public:
  * @}
  */
 
-/**
- * @}
- */
-
 }
 
 #endif // AVOCADO_SDLCORESERVICE_H

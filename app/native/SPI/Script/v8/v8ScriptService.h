@@ -60,7 +60,6 @@ private:
 /**
  * @ingroup Manufacturing
  */
-
 template <>
 class AbstractFactory<v8ScriptService> : public AbstractFactory<ScriptService> {
 
@@ -76,6 +75,10 @@ public:
 	}
 
 };
+
+/**
+ * @}
+ */
 
 /**
  * @}

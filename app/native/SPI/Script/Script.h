@@ -50,7 +50,7 @@ public:
 	virtual void execute() = 0;
 
 	/**
-	 * Manages the concrete Script factory instance.
+	 * Manages the concrete %Script factory instance.
 	 */
 	static FactoryManager<Script> factoryManager;
 
@@ -67,15 +67,8 @@ public:
 
 	virtual ~AbstractFactory<Script>() {}
 
-	/**
-	 * Reimplemented as non-virtual by concrete Script factories.
-	 */
 	virtual Script *create() = 0;
 };
-
-/**
- * @}
- */
 
 /**
  * @}

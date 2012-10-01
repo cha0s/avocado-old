@@ -1,5 +1,5 @@
-#ifndef AVOCADO_SYSTEM_V8_H
-#define AVOCADO_SYSTEM_V8_H
+#ifndef AVOCADO_V8CORESERVICE_H
+#define AVOCADO_V8CORESERVICE_H
 
 #include "avocado-global.h"
 
@@ -67,4 +67,4 @@ private:
 
 }
 
-#endif // AVOCADO_SYSTEM_V8_H
+#endif // AVOCADO_V8CORESERVICE_H

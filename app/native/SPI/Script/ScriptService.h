@@ -102,7 +102,7 @@ public:
 	Script *scriptFromFile(const boost::filesystem::path &filename);
 
 	/**
-	 * Manages the concrete ScriptService factory instance.
+	 * Manages the concrete %ScriptService factory instance.
 	 */
 	static FactoryManager<ScriptService> factoryManager;
 
@@ -115,7 +115,6 @@ public:
 /**
  * @ingroup Manufacturing
  */
-
 template <>
 class AbstractFactory<ScriptService> {
 
@@ -123,16 +122,9 @@ public:
 
 	virtual ~AbstractFactory<ScriptService>() {}
 
-	/**
-	 * Reimplemented as non-virtual by concrete ScriptService factories.
-	 */
 	virtual ScriptService *create() = 0;
 
 };
-
-/**
- * @}
- */
 
 /**
  * @}

@@ -50,12 +50,12 @@
 /**
  * @defgroup Script Script SPI
  *
- * @brief The %Script SPI handles all communication between the native C++
+ * @brief The script SPI handles all communication between the native C++
  * engine and JavaScript.
  *
- * All other SPI interfaces (SPIIs) are managed through the %Script SPII.
+ * All other SPI interfaces (SPIIs) are managed through the script SPII.
  * Avocado is designed to spend most of its time in JavaScript, so it's no
- * overstatement that the %Script SPI is pretty much the most important SPI.
+ * overstatement that the script SPI is pretty much the most important SPI.
  */
 
 /**
@@ -64,6 +64,13 @@
  * @brief The core SPI handles framework initialization (e.g. SDL_Init()) and
  * teardown (e.g. SDL_Quit()) as well as bridges to core engine functionality
  * like filesystem access.
+ */
+
+/**
+ * @defgroup Graphics Graphics SPI
+ *
+ * @brief The graphics SPI handles window and graphics system initialization,
+ * and rendering.
  */
 
 /**

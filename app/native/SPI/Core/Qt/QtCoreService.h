@@ -59,10 +59,6 @@ public:
  * @}
  */
 
-/**
- * @}
- */
-
 }
 
 #endif // AVOCADO_QTCORESERVICE_H

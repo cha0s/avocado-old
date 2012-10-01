@@ -12,11 +12,10 @@ avo::SpiiLoader<avo::CoreService> coreServiceSpiiLoader;
 
 v8CoreService::v8CoreService(Handle<Object> wrapper)
 {
+	Wrap(wrapper);
 
 	try {
 		coreService = CoreService::factoryManager.instance()->create();
-
-		Wrap(wrapper);
 	}
 	catch (FactoryManager<CoreService>::factory_instance_error &e) {
 
@@ -33,12 +32,10 @@ v8CoreService::~v8CoreService() {
 void v8CoreService::initialize(Handle<ObjectTemplate> target) {
 	HandleScope scope;
 
-	Persistent<FunctionTemplate> constructor_template;
+	Handle<FunctionTemplate> constructor_template;
 
 	// CoreService is an instantiable embedded C++ class.
-	constructor_template = Persistent<FunctionTemplate>::New(
-		FunctionTemplate::New(v8CoreService::New)
-	);
+	constructor_template = FunctionTemplate::New(v8CoreService::New);
 	constructor_template->InstanceTemplate()->SetInternalFieldCount(1);
 	constructor_template->SetClassName(String::NewSymbol("CoreService"));
 

@@ -36,7 +36,7 @@ void v8TimingService::initialize(Handle<ObjectTemplate> target) {
 	constructor_template->InstanceTemplate()->SetInternalFieldCount(1);
 	constructor_template->SetClassName(String::NewSymbol("TimingService"));
 
-	V8_SET_PROTOTYPE_METHOD(constructor_template, "%close", v8TimingService::Close);
+	V8_SET_PROTOTYPE_METHOD(constructor_template, "close", v8TimingService::Close);
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%sleep", v8TimingService::Sleep);
 
 	constructor_template->Set(

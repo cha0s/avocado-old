@@ -27,7 +27,7 @@ class MainCpp extends avo.Main
 		
 		@window = new avo.Window()
 		
-		@window.set [640, 480]
+		@window.set [320, 240]
 		
 		@window.setWindowTitle 'Avocado - collaborative, libre, gratis game development'
 	

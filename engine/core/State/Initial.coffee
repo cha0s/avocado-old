@@ -7,6 +7,12 @@ avo.States['Initial'] = new class
 		
 		# Yum, an avocado!
 		@avocado = {}
+		
+		# Keep track of when we're dragging the mouse.
+		@dragging = false
+		@dragStartAvocadoLocation = []
+		@dragStartMouseLocation = []
+		@mouseLocation = []
 	
 		# Let's move around the avocado! In order to do that, we'll need to
 		# keep track of its x, y location.
@@ -26,6 +32,31 @@ avo.States['Initial'] = new class
 			# When the image is loaded, we're done initializing. Tell Avocado
 			# we're ready!
 			defer.resolve()
+			
+		# Allow dragging the avocado around.
+		avo.Input.on 'mouseButtonDown.State', (button) =>
+		
+			# Ignore anything except left mouse button
+			return unless button is avo.Input.LeftButton
+			
+			@dragging = true
+			@dragStartAvocadoLocation = [@x, @y]
+			@dragStartMouseLocation = @mouseLocation
+			
+		avo.Input.on 'mouseButtonUp.State', (button) =>
+		
+			# Ignore anything except left mouse button
+			return unless button is avo.Input.LeftButton
+			
+			@dragging = false
+		
+		avo.Input.on 'mouseMove.State', (x, y) =>
+			@mouseLocation = [x, y]
+			
+			return unless @dragging
+			
+			@x = @mouseLocation[0] - @dragStartMouseLocation[0] + @dragStartAvocadoLocation[0]
+			@y = @mouseLocation[1] - @dragStartMouseLocation[1] + @dragStartAvocadoLocation[1]
 		
 		# Promise Avocado we'll finish initialization... eventually!
 		defer.promise

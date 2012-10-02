@@ -7,8 +7,8 @@ class avo.Main
 		@currentState = ''
 		@state = null
 		
-		@ticksPerSecond = new avo.Fps()
-		@rendersPerSecond = new avo.Fps()
+		@ticksPerSecond = new avo.Cps()
+		@rendersPerSecond = new avo.Cps()
 		
 		@lastTickTime = 0
 		@lastRenderTime = 0

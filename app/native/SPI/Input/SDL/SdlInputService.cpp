@@ -16,4 +16,7 @@ SdlInputService::SdlInputService() {
 SdlInputService::~SdlInputService() {
 }
 
+void SdlInputService::close() {
+}
+
 }

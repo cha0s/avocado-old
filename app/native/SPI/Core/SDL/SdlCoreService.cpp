@@ -9,7 +9,7 @@ namespace avo {
 AbstractFactory<SdlCoreService> *SdlCoreService::factory = new AbstractFactory<SdlCoreService>;
 
 SdlCoreService::SdlCoreService() {
-	SDL_Init(SDL_INIT_EVERYTHING);
+	SDL_Init(SDL_INIT_NOPARACHUTE);
 }
 
 SdlCoreService::~SdlCoreService() {

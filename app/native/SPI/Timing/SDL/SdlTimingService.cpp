@@ -11,6 +11,8 @@ AbstractFactory<SdlTimingService> *SdlTimingService::factory = new AbstractFacto
 SdlTimingService::SdlTimingService() {
 
 	Counter::factoryManager.setInstance(SdlCounter::factory);
+
+	SDL_InitSubSystem(SDL_INIT_TIMER);
 }
 
 SdlTimingService::~SdlTimingService() {
@@ -18,6 +20,10 @@ SdlTimingService::~SdlTimingService() {
 
 void SdlTimingService::sleep(int ms) {
 	SDL_Delay(ms);
+}
+
+void SdlTimingService::close() {
+	SDL_QuitSubSystem(SDL_INIT_TIMER);
 }
 
 }

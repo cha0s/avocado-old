@@ -25,6 +25,8 @@ public:
 	SdlInputService();
 	~SdlInputService();
 
+	void close();
+
 	static AbstractFactory<SdlInputService> *factory;
 
 };

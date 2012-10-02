@@ -22,6 +22,8 @@ public:
 	SdlGraphicsService();
 	~SdlGraphicsService();
 
+	void close();
+
 	static AbstractFactory<SdlGraphicsService> *factory;
 
 };

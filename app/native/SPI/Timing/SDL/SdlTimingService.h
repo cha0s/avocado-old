@@ -23,6 +23,8 @@ public:
 	SdlTimingService();
 	~SdlTimingService();
 
+	void close();
+
 	void sleep(int ms);
 
 	static AbstractFactory<SdlTimingService> *factory;

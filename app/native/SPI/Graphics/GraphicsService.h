@@ -32,7 +32,7 @@ public:
 	/**
 	 * Close out the service.
 	 */
-	virtual void close() { }
+	virtual void close() {}
 
 	/**
 	 * Manages the concrete %GraphicsService factory instance.

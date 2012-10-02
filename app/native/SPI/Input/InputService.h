@@ -23,7 +23,10 @@ public:
 	InputService();
 	virtual ~InputService();
 
-	virtual void close() { }
+	/**
+	 * Close out the service.
+	 */
+	virtual void close() {}
 
 	static FactoryManager<InputService> factoryManager;
 

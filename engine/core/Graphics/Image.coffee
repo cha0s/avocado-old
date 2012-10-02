@@ -56,7 +56,7 @@ avo.Image::floodfill = (point, color) ->
 	
 	@['%floodfill'] point, color
 	
-avo.Image::height = -> @['%height']()
+avo.Image::height = @['%height']
 
 avo.Image::lockPixels = -> @['%lockPixels']?()
 
@@ -84,6 +84,6 @@ avo.Image::size = -> [@width(), @height()]
 
 avo.Image::unlockPixels = -> @['%unlockPixels']?()
 
-avo.Image::uri = -> @['%uri']()
+avo.Image::uri = @['%uri']
 
-avo.Image::width = -> @['%width']()
+avo.Image::width = @['%width']

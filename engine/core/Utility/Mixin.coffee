@@ -1,6 +1,6 @@
 # Dynamic object composition helper. Use in an object's constructor
 # function.
-@Mixin = (ToExtend, Extenders...) ->
+avo.Mixin = (ToExtend, Extenders...) ->
 	
 	# Each one of the extenders gets instantiated,
 	for Extender in Extenders

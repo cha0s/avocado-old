@@ -49,7 +49,11 @@ v8::Handle<v8::Value> v8Input::New(const Arguments &args) {
 
 	v8Input *inputWrapper = new v8Input(args.Holder());
 
-	Handle<Function> Mixin = Context::GetCurrent()->Global()->Get(
+	Handle<Object> avo = Context::GetCurrent()->Global()->Get(
+		String::New("avo")
+	).As<Object>();
+
+	Handle<Function> Mixin = avo->Get(
 		String::New("Mixin")
 	).As<Function>();
 

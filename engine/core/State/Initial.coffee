@@ -21,11 +21,13 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 			avo.Input.SpecialKeys.LeftArrow
 		], 0
 		
-		# Allow dragging the avocado around with the left mouse button.
-		avo.Input.on 'mouseButtonDown.AvocadoState', (button) =>
+		# Allow dragging the avocado around with the left mouse button. Keep
+		# track of where the avocado was when we started dragging.
+		@dragStartAvocadoLocation = []
+		avo.Input.on 'mouseButtonDown.InitialState', (button) =>
 			return unless button is avo.Input.LeftButton
 			@dragStartAvocadoLocation = [@x, @y]
-		avo.Input.on 'mouseDrag.AvocadoState', (position, button, relative) =>
+		avo.Input.on 'mouseDrag.InitialState', (position, button, relative) =>
 			return unless button is avo.Input.LeftButton
 			[@x, @y] = avo.Vector.add @dragStartAvocadoLocation, relative
 		
@@ -37,16 +39,10 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 			# we're ready!
 			defer.resolve()
 		
-		# Keep track of when we're dragging the mouse.
-		@dragging = false
-		@dragStartAvocadoLocation = []
-		@dragStartMouseLocation = []
-		@mouseLocation = []
-	
 		defer.promise
 	
 	# Called repeatedly while this state is loaded. You can do things like
-	# update your world here. We'll move the avocado based on user input.
+	# update your world here. We'll move the avocado based on movement input.
 	tick: ->
 		
 		# Move it 500px a second based on player 0's movement.
@@ -70,7 +66,4 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 	leave: (nextStateName) ->
 		
 		# Remove our user input event handler(s).
-		avo.Input.off '.AvocadoState'
-		
-		# Wave to the next state because we're a friendly state!
-		avo.Logger.info "*AvocadoState waves to #{nextStateName}*"
+		avo.Input.off '.InitialState'

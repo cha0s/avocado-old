@@ -6,6 +6,13 @@ using namespace v8;
 
 namespace avo {
 
+#define SPECIAL_KEY(key)               \
+	SpecialKeys->Set(                   \
+		String::New(#key),              \
+		Integer::New(specialKeyMap.key) \
+	);
+
+
 v8Input::v8Input(Handle<Object> wrapper)
 {
 	Wrap(wrapper);
@@ -40,7 +47,7 @@ void v8Input::initialize(Handle<ObjectTemplate> target) {
 v8::Handle<v8::Value> v8Input::New(const Arguments &args) {
 	HandleScope scope;
 
-	new v8Input(args.Holder());
+	v8Input *inputWrapper = new v8Input(args.Holder());
 
 	Handle<Function> Mixin = Context::GetCurrent()->Global()->Get(
 		String::New("Mixin")
@@ -53,6 +60,17 @@ v8::Handle<v8::Value> v8Input::New(const Arguments &args) {
 	Handle<Value> argv[] = {args.Holder(), EventEmitter};
 	Mixin->Call(Context::GetCurrent()->Global(), 2, argv);
 
+	Input::SpecialKeyMap specialKeyMap = inputWrapper->input->specialKeyMap();
+
+	Handle<Object> SpecialKeys = Object::New();
+
+	SPECIAL_KEY(UpArrow);
+	SPECIAL_KEY(RightArrow);
+	SPECIAL_KEY(DownArrow);
+	SPECIAL_KEY(LeftArrow);
+
+	args.Holder()->Set(String::New("SpecialKeys"), SpecialKeys);
+
 	return args.Holder();
 }
 
@@ -60,17 +78,17 @@ v8::Handle<v8::Value> v8Input::Poll(const v8::Arguments &args) {
 	HandleScope scope;
 
 	Handle<Object> holder = args.Holder();
-	v8Input *input_v8 = ObjectWrap::Unwrap<v8Input>(holder);
+	v8Input *inputWrapper = ObjectWrap::Unwrap<v8Input>(holder);
 
-	if (NULL == input_v8) {
+	if (NULL == inputWrapper) {
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			"Input::poll(): NULL Holder."
 		)));
 	}
 
-	bool anyResults = input_v8->input->poll();
+	bool anyResults = inputWrapper->input->poll();
 	if (anyResults) {
-		Input::PollResults &results = input_v8->input->results;
+		Input::PollResults &results = inputWrapper->input->results;
 
 		Handle<Function> emitFunction = args.Holder()->Get(
 			String::New("emit")

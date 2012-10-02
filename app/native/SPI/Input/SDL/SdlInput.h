@@ -33,6 +33,8 @@ public:
 
 	bool poll();
 
+	SpecialKeyMap specialKeyMap();
+
 	static AbstractFactory<SdlInput> *factory;
 
 	int numJoysticks;

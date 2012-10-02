@@ -24,6 +24,7 @@ public:
 	Input();
 	virtual ~Input() {}
 
+	/** Standardize mouse buttons. */
 	enum MouseButtons {
 		LeftButton   = 1,
 		MiddleButton = 2,
@@ -32,14 +33,25 @@ public:
 		WheelDown    = 5
 	};
 
+	/** Standardize special key codes. */
+	struct SpecialKeyMap {
+		int UpArrow;
+		int RightArrow;
+		int DownArrow;
+		int LeftArrow;
+	};
+
+	/** Standardize key down event. */
 	struct KeyDown {
 		int code;
 	};
 
+	/** Standardize key up event. */
 	struct KeyUp {
 		int code;
 	};
 
+	/** Standardize joystick axis event. */
 	struct JoyAxis {
 		int stick;
 		int axis;
@@ -50,6 +62,7 @@ public:
 		}
 	};
 
+	/** Standardize joystick button down event. */
 	struct JoyButtonDown {
 		int stick;
 		int button;
@@ -59,6 +72,7 @@ public:
 		}
 	};
 
+	/** Standardize joystick button up event. */
 	struct JoyButtonUp {
 		int stick;
 		int button;
@@ -68,24 +82,29 @@ public:
 		}
 	};
 
+	/** Standardize mouse button down event. */
 	struct MouseButtonDown {
 		MouseButtons button;
 	};
 
+	/** Standardize mouse button up event. */
 	struct MouseButtonUp {
 		MouseButtons button;
 	};
 
+	/** Standardize mouse move event. */
 	struct MouseMove {
 		int x;
 		int y;
 	};
 
+	/** Standardize screen resize event. */
 	struct Resize {
 		int width;
 		int height;
 	};
 
+	/** Input polling results. */
 	struct PollResults {
 
 		std::deque<KeyDown> keyDown;
@@ -125,8 +144,12 @@ public:
 			quit = false;
 		}
 	};
-
 	PollResults results;
+
+	/**
+	 * Standardized map of spcial keys.
+	 */
+	virtual SpecialKeyMap specialKeyMap() = 0;
 
 	/**
 	 * Get input from the concrete Input implementation.

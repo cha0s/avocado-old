@@ -21,16 +21,16 @@ keyCodeMap =
 	'menu'     : 27
 	
 	# Up
-	'moveUp'   : 273
+	'moveUp'   : avo.Input.SpecialKeys.UpArrow
 	
 	# Right
-	'moveRight': 275
+	'moveRight': avo.Input.SpecialKeys.RightArrow
 	
 	# Down
-	'moveDown' : 274
+	'moveDown' : avo.Input.SpecialKeys.DownArrow
 	
 	# Left
-	'moveLeft' : 276
+	'moveLeft' : avo.Input.SpecialKeys.LeftArrow
 
 moveState = [0, 0, 0, 0]
 repeatIntervals = [null, null]

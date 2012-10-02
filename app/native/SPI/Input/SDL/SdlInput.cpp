@@ -32,6 +32,18 @@ SdlInput::SdlInput()
 	}
 }
 
+Input::SpecialKeyMap SdlInput::specialKeyMap() {
+
+	SpecialKeyMap keyMap;
+
+	keyMap.UpArrow = SDLK_UP;
+	keyMap.RightArrow = SDLK_RIGHT;
+	keyMap.DownArrow = SDLK_DOWN;
+	keyMap.LeftArrow = SDLK_LEFT;
+
+	return keyMap;
+}
+
 bool SdlInput::poll() {
 	bool anyResults = Input::poll();
 
@@ -197,4 +209,5 @@ bool SdlInput::poll() {
 
 	return anyResults;
 }
+
 }

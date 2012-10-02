@@ -43,7 +43,7 @@ class avo.Main
 				
 				alert 'Game over'
 			
-			@state?.onExit? avo.state.state
+			@state?.onExit avo.state.state
 			
 			@state = null
 			

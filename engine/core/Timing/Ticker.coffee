@@ -4,7 +4,7 @@ class avo.Ticker
 		
 		@tickRemainder = 0
 		@frequency = frequency
-		@last_ = avo.timeElapsed()
+		@last_ = avo.TimingService.elapsed()
 		
 	copy: ->
 		
@@ -22,8 +22,8 @@ class avo.Ticker
 	ticks: ->
 		
 		# Get current ticks.
-		now = (avo.timeElapsed() - @last_) * 1000
-		@last_ = avo.timeElapsed()
+		now = (avo.TimingService.elapsed() - @last_) * 1000
+		@last_ = avo.TimingService.elapsed()
 
 		# The number of milliseconds since last invocation.
 		since = 0

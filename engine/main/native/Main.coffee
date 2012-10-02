@@ -21,70 +21,67 @@ avo.Logger.registerStrategy (message, type) ->
 	# message
 	avo.CoreService.writeStderr message
 
-class MainCpp extends avo.Main
+avo.main = new class extends avo.Main
 
 	constructor: ->
 		
 		@window = new avo.Window()
-		
 		@window.set [320, 240]
+		@window.setWindowTitle 'Avocado - Fun Should Be Free'
 		
-		@window.setWindowTitle 'Avocado - collaborative, libre, gratis game development'
+		# Keep track of ticks and renders so we can calculate when the next one
+		# will happen, and relieve the CPU between.
+		@timeCounter = new avo.Counter()
+		@lastTickTime = 0
+		@lastRenderTime = 0
 	
 		super
 		
-	relieveCpu: ->
-	
-		nextWake = Math.min(
-			@lastTickTime + @tickFrequency
-			@lastRenderTime + @renderFrequency
-		) - @timeCounter.current()
+	begin: ->
 		
-		avo.timingService.sleep nextWake / 2 if nextWake > 1 and Math.random() > .5
-	
-try
-	
-	main = new MainCpp()
-
-	running = true
-	waiting = true
-	
-	tick = new avo.Ticker main.tickFrequency
-	render = new avo.Ticker main.renderFrequency
-	
-	main.initialize().then ->
-	
-		avo.state = state: 'Initial' 
-	
-	avo.Input.on 'quit.Engine', ->
+		super
 		
-		running = false
-		waiting = false
-	
-	while running
-		
-		avo.setTimeElapsed main.timeCounter.current() / 1000
-		
-		if tick.ticks()
+		running = true
 			
-			avo.Input.poll()
+		@on 'quit', ->
+			
+			running = false
 		
-			main.tick()
+		while running
+			
+			avo.TimingService.setElapsed @timeCounter.current() / 1000
 			
 			avo.tickTimeouts()
+				
+			nextWake = Math.min(
+				@lastTickTime + @tickFrequency
+				@lastRenderTime + @renderFrequency
+			) - @timeCounter.current()
 			
-		if render.ticks()
-			
-			main.render()
-			
-		main.handleStateChange()
+			avo.timingService.sleep(
+				nextWake / 2 if nextWake > 1 and Math.random() > .5
+			)
+	
+	tick: ->
 		
-		main.relieveCpu()
+		super
 		
-catch error
+		@lastTickTime = @timeCounter.current()
+	
+	render: (buffer) ->
+		
+		super buffer
+	
+		@lastRenderTime = @timeCounter.current()
+	
+avo.main.on 'error', (error) ->
 
 	message = if error.stack?
 		error.stack
 	else
 		error.toString()
 	avo.Logger.error message
+	
+	avo.main.quit()
+	
+avo.main.begin()

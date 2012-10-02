@@ -1,10 +1,12 @@
 # Avocado loads the 'Initial' state, and from there it's all up to you!
-avo.States['Initial'] = new class extends avo.AbstractState
+class avo.States['Initial'] extends avo.AbstractState
 	
 	# Called the first time this state is loaded. You can set up any stuff your
 	# state needs here. This is the Initial state, so we can also set up
 	# things specific to our game.
-	constructor: ->
+	initialize: ->
+		
+		defer = upon.defer()
 		
 		# We want to store how much the player is moving either with the
 		# arrow keys or the joystick/gamepad. We can set up our own custom
@@ -14,7 +16,7 @@ avo.States['Initial'] = new class extends avo.AbstractState
 		
 		# Let's add a little helper to calculate the movement for one tick.
 		avo.Input.tickMovement = ->
-			avo.Vector.scale avo.Input.movement, avo.tickTimeElapsed()
+			avo.Vector.scale avo.Input.movement, avo.TimingService.tickElapsed()
 		
 		# We'll store any movement that comes in.
 		storeMovement = -> avo.Input.movement = [
@@ -41,6 +43,7 @@ avo.States['Initial'] = new class extends avo.AbstractState
 			
 		# Keyboard movement started.
 		avo.Input.on 'keyDown', (code) ->
+			
 			switch code
 				when avo.Input.SpecialKeys.UpArrow then keyboardMoveState[0] = 1
 				when avo.Input.SpecialKeys.RightArrow then keyboardMoveState[1] = 1
@@ -71,10 +74,14 @@ avo.States['Initial'] = new class extends avo.AbstractState
 		# Let's move around the avocado! In order to do that, we'll need to
 		# keep track of its x, y location.
 		[@x, @y] = [0, 0]
+		
+		defer.resolve()
+		
+		defer.promise
 	
-	# Called every time this state is loaded. You should do things like loading
-	# images and setting up your event handlers here.
-	initialize: (args) ->
+	# Called every time this state is entered. You should do things like
+	# setting up your event handlers here.
+	enter: (args) ->
 		
 		# Initialization is asynchronous.
 		defer = upon.defer()

@@ -9,15 +9,15 @@ avo.TimingService::sleep = (ms) ->
 @clearTimeout = avo['%clearTimeout']
 @clearInterval = avo['%clearInterval']
 
-timeElapsed = 0
-lastTimeElapsed = 0
-tickTimeElapsed = 0
+elapsed = 0
+lastElapsed = 0
+tickElapsed = 0
 
-avo.timeElapsed = -> timeElapsed
-avo.setTimeElapsed = (elapsed) -> timeElapsed = elapsed
+avo.TimingService.elapsed = -> elapsed
+avo.TimingService.setElapsed = (e) -> elapsed = e
 
-avo.tickTimeElapsed = -> tickTimeElapsed
-avo.setTickTimeElapsed = ->
+avo.TimingService.tickElapsed = -> tickElapsed
+avo.TimingService.tick = ->
 	
-	tickTimeElapsed = timeElapsed - lastTimeElapsed
-	lastTimeElapsed = timeElapsed
+	tickElapsed = elapsed - lastElapsed
+	lastElapsed = elapsed

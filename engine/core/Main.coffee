@@ -101,7 +101,6 @@ class avo.Main
 		@stateObject?.render @buffer
 		
 		@emit 'render', @buffer
-#		@window?.render @buffer
 		
 		@rendersPerSecond.tick()
 

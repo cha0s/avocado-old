@@ -25,6 +25,8 @@ avo.main = new class extends avo.Main
 
 	constructor: ->
 		
+		super
+		
 		window = new avo.Window()
 		window.set [320, 240]
 		window.setWindowTitle 'Avocado - Fun Should Be Free'
@@ -35,9 +37,7 @@ avo.main = new class extends avo.Main
 		@lastTickTime = 0
 		@lastRenderTime = 0
 		
-		super
-		
-		@on 'render', (buffer) -> window?.render buffer
+		@on 'render', (buffer) -> window.render buffer
 	
 	begin: ->
 		

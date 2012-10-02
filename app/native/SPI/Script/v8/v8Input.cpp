@@ -6,12 +6,11 @@ using namespace v8;
 
 namespace avo {
 
-#define SPECIAL_KEY(key)               \
-	SpecialKeys->Set(                   \
-		String::New(#key),              \
-		Integer::New(specialKeyMap.key) \
-	);
-
+#define SPECIAL_KEY(key)                \
+    SpecialKeys->Set(                   \
+        String::New(#key),              \
+        Integer::New(specialKeyMap.key) \
+    );
 
 v8Input::v8Input(Handle<Object> wrapper)
 {

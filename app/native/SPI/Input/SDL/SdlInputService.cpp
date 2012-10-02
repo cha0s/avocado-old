@@ -11,9 +11,12 @@ AbstractFactory<SdlInputService> *SdlInputService::factory = new AbstractFactory
 SdlInputService::SdlInputService() {
 
 	Input::factoryManager.setInstance(SdlInput::factory);
+
+	SDL_InitSubSystem(SDL_INIT_JOYSTICK);
 }
 
 SdlInputService::~SdlInputService() {
+	SDL_QuitSubSystem(SDL_INIT_JOYSTICK);
 }
 
 void SdlInputService::close() {

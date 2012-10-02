@@ -1,3 +1,4 @@
+# Proxy and constant definitions.
 
 avo.Window.Flags_Default = 0
 avo.Window.Flags_Fullscreen = 1

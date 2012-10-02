@@ -1,3 +1,3 @@
-avo.CoreService.writeStderr = (message) ->
-	
-	avo.CoreService['%writeStderr'] message
+# Proxy and constant definitions.
+
+avo.CoreService.writeStderr = avo.CoreService['%writeStderr']

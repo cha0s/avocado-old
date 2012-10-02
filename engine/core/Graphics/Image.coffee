@@ -1,3 +1,5 @@
+# Proxy and constant definitions.
+
 avo.Image.DrawMode_Replace = 0
 avo.Image.DrawMode_Blend   = 1
 

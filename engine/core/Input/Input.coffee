@@ -1,3 +1,5 @@
+# Proxy and constant definitions.
+
 Input = new avo.Input()
 avo.Input = Input
 

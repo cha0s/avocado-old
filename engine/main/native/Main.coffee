@@ -14,6 +14,9 @@ avo.main = new class extends avo.Main
 		window.setWindowTitle 'Avocado - Fun Should Be Free'
 		@on 'render', (buffer) -> window.render buffer
 		
+		# Catch the quit event from Input (window close event).
+		avo.Input.on 'quit.Engine', => @quit()
+		
 		# Keep track of ticks and renders so we can calculate when the next one
 		# will happen, and relieve the CPU between.
 		@timeCounter = new avo.Counter()

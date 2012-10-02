@@ -1,5 +1,5 @@
 # Avocado loads the 'Initial' state, and from there it's all up to you!
-class avo.States['Initial'] extends avo.AbstractState
+class avo.Main.States['Initial'] extends avo.AbstractState
 	
 	# Called the first time this state is loaded. You can set up any stuff your
 	# state needs here. This is the Initial state, so we can also set up

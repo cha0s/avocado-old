@@ -3,6 +3,9 @@
 #
 # Avocado is always in a State, except during the initialization phase, and
 # shotly before exiting.
+#
+# States will never be destroyed during the lifecycle of the engine. Remember
+# this, as it means that no child objects will be garbage collected!
 class avo.AbstractState
 	
 	# When the state is first loaded, initialize is called. This is used to
@@ -16,7 +19,7 @@ class avo.AbstractState
 		
 		defer.promise
 	
-	enter: (args) ->
+	enter: (args, previousStateName) ->
 		
 		defer = upon.defer()
 		

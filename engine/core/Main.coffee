@@ -5,110 +5,153 @@
 # Also, States are managed here; instantiated as needed, and entered and left
 # as requested.
 #
+# Subclass this to implement platform-specific functionality.
+#
 # Emits:
+# * error: When an error was encountered.
 # * quit: When the engine is shutting down.
 class avo.Main
+	
+	# State implementations should add their class to this map.
+	@States = {}
 
 	constructor: ->
 		
 		Mixin this, EventEmitter
-	
-		@buffer = new avo.Image [320, 240]
 		
-		@currentStateName = ''
+		# Keep a back buffer to receive all rendering from the current State.
+		@backBuffer = new avo.Image [320, 240]
+		
+		# Holds the current State's name.
+		@stateName = ''
+		
+		# Contains an object such as:
+		#    {
+		#        name: 'Initial',
+		#        args: {
+		#            ...
+		#        }
+		#    }
+		#
+		# or if no state change is being requested, undefined.
+		@stateChange = name: 'Initial', args: {}
+		
+		# Hold the current State object.
 		@stateObject = null
+		
+		# A cache of all instantiated State objects.
 		@states = {}
 		
+		# Keep a count of the tick and render operations performed per second.
 		@ticksPerSecond = new avo.Cps()
 		@rendersPerSecond = new avo.Cps()
 		
-		@tickFrequency = 1000 / avo.ticksPerSecondTarget
-		@renderFrequency = 1000 / avo.rendersPerSecondTarget
-		
+		# Keep handles for out tick and render loops, so we can GC them on
+		# quit.
 		@tickInterval = null
 		@renderInterval = null
 	
 	begin: ->
-	
-		avo.state = state: 'Initial' 
 		
-		avo.Input.on 'quit.Engine', => @quit()
-		
+		# Tick loop.
 		setInterval(
 			=>
 				try 
 					@tick()
 				catch error
 					@emit 'error', error
-			@tickFrequency
+			1000 / avo.ticksPerSecondTarget
 		)
 		
+		# Render loop.
 		setInterval(
 			=>
 				try
 					@render()
 				catch error
 					@emit 'error', error
-			@renderFrequency
+			1000 / avo.rendersPerSecondTarget
 		)
-			
+	
+	# Change the State. This isn't immediate, but will be dispatched on the
+	# next tick.
+	changeState: (name, args) -> @stateChange = name: name, args: args ? {}
+	
+	# Handle the last State change request.
 	handleStateChange: ->
-		return unless avo.state?
-			
-		@stateObject?.leave avo.state.state
+		return unless @stateChange?
+		
+		# Hold handles to some children in @stateChange since we're going to
+		# delete it to say we've handled the state change request.
+		args = @stateChange.args
+		stateName = @stateChange.name
+
+		# Leave any State we're currently in and NULL the object so
+		# State::tick and State::render don't run until the next State is
+		# loaded.
+		@stateObject?.leave stateName
 		@stateObject = null
 		
-		args = avo.state.args ? {}
-		args.from = @currentStateName
-		
-		if @states[avo.state.state]?
-			
+		# If the State is already loaded and cached, resolve the
+		# initialization promise immediately.
+		if @states[stateName]?
 			defer = upon.defer()
 			defer.resolve()
 			initializationPromise = defer.promise
 			
+		# Otherwise, instantiate and cache the State, and the initialization
+		# promise is State::initialize's promise.
 		else
+			@states[stateName] = new avo.Main.States[stateName]
+			initializationPromise = @states[stateName].initialize()
 			
-			@states[avo.state.state] = new avo.States[avo.state.state]
-			initializationPromise = @states[avo.state.state].initialize()
-			
-		stateObject = @states[avo.state.state]
-		stateName = avo.state.state
+		# When the State is finished initializing,		
+		p = initializationPromise.then(
+			=>
+				# and finished being entered,
+				@states[stateName].enter(args, @stateName).then =>
+					
+					# set the new State name, and the object for ticking/rendering.
+					@stateObject = @states[stateName]
+					@stateName = stateName
+		)
 		
-		initializationPromise.then =>
-		
-			stateObject.enter(args).then =>
-				
-				@stateObject = stateObject
-				@currentStateName = stateName
-		
-		delete avo.state
+		# We've handled the state change.
+		delete @stateChange
 		
 	tick: ->
-	
-		avo.Input.poll()
-	
+		
+		# Store the time passed since the last tick.
 		avo.TimingService.tick()
 		
+		# Poll user input.
+		avo.Input.poll()
+		
+		# Let the State tick.
 		@stateObject?.tick()
 		
+		# Track the ticks per second.
 		@ticksPerSecond.tick()
 		
+		# Handle any State change.
 		@handleStateChange()
 		
 	render: ->
 		
-		@stateObject?.render @buffer
+		# Let the State render to the back buffer.
+		@stateObject?.render @backBuffer
 		
-		@emit 'render', @buffer
+		# Notify any listeners that there's something to render.
+		@emit 'render', @backBuffer
 		
+		# Track the renders per second.
 		@rendersPerSecond.tick()
 
 	quit: ->
 		
+		# GC our tick and render loop handles.
 		clearInterval @tickInterval
 		clearInterval @renderInterval
 		
+		# Notify any listeners that it's time to quit.
 		@emit 'quit'
-		
-avo.States = {}

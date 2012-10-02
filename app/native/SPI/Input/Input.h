@@ -53,32 +53,32 @@ public:
 
 	/** Standardize joystick axis event. */
 	struct JoyAxis {
-		int stick;
+		int stickIndex;
 		int axis;
 		double value;
 
 		bool operator == (const JoyAxis &other) {
-			return other.stick == stick && other.axis == axis;
+			return other.stickIndex == stickIndex && other.axis == axis;
 		}
 	};
 
 	/** Standardize joystick button down event. */
 	struct JoyButtonDown {
-		int stick;
+		int stickIndex;
 		int button;
 
 		bool operator == (const JoyButtonDown &other) {
-			return other.stick == stick && other.button == button;
+			return other.stickIndex == stickIndex && other.button == button;
 		}
 	};
 
 	/** Standardize joystick button up event. */
 	struct JoyButtonUp {
-		int stick;
+		int stickIndex;
 		int button;
 
 		bool operator == (const JoyButtonUp &other) {
-			return other.stick == stick && other.button == button;
+			return other.stickIndex == stickIndex && other.button == button;
 		}
 	};
 

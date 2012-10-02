@@ -8,6 +8,15 @@ class avo.Main.States['Avocado'] extends avo.AbstractState
 		
 		defer = upon.defer()
 		
+		# Register a player (0) to receive input using the keyboard keys and
+		# joystick index 0.
+		avo.Input.registerPlayerMovement 0, [
+			avo.Input.SpecialKeys.UpArrow
+			avo.Input.SpecialKeys.RightArrow
+			avo.Input.SpecialKeys.DownArrow
+			avo.Input.SpecialKeys.LeftArrow
+		], 0
+		
 		# Allow dragging the avocado around.
 		avo.Input.on 'mouseButtonDown.AvocadoState', (button) =>
 		
@@ -59,10 +68,10 @@ class avo.Main.States['Avocado'] extends avo.AbstractState
 	# update your world here. We'll move the avocado based on user input.
 	tick: ->
 		
-		# Move it 500px a second.
+		# Move it 500px a second based on player 0's movement.
 		[@x, @y] = avo.Vector.add(
 			[@x, @y]
-			avo.Vector.scale avo.Input.tickMovement(), 500
+			avo.Vector.scale avo.Input.playerTickMovement(0), 500
 		)
 	
 	# Called repeatedly while this state is loaded. You can render all of

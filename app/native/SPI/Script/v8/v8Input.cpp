@@ -122,7 +122,7 @@ v8::Handle<v8::Value> v8Input::Poll(const v8::Arguments &args) {
 			argv[0] = String::New("joyAxis");
 			for (unsigned int i = 0; i < results.joyAxis.size(); i++) {
 
-				argv[1] = Integer::New(results.joyAxis[i].stick);
+				argv[1] = Integer::New(results.joyAxis[i].stickIndex);
 				argv[2] = Integer::New(results.joyAxis[i].axis);
 				argv[3] = Number::New(results.joyAxis[i].value);
 				emitFunction->Call(holder, 4, argv);
@@ -134,7 +134,7 @@ v8::Handle<v8::Value> v8Input::Poll(const v8::Arguments &args) {
 			argv[0] = String::New("joyButtonDown");
 			for (unsigned int i = 0; i < results.joyButtonDown.size(); i++) {
 
-				argv[1] = Integer::New(results.joyButtonDown[i].stick);
+				argv[1] = Integer::New(results.joyButtonDown[i].stickIndex);
 				argv[2] = Integer::New(results.joyButtonDown[i].button);
 				emitFunction->Call(holder, 3, argv);
 			}
@@ -145,7 +145,7 @@ v8::Handle<v8::Value> v8Input::Poll(const v8::Arguments &args) {
 			argv[0] = String::New("joyButtonUp");
 			for (unsigned int i = 0; i < results.joyButtonUp.size(); i++) {
 
-				argv[1] = Integer::New(results.joyButtonUp[i].stick);
+				argv[1] = Integer::New(results.joyButtonUp[i].stickIndex);
 				argv[2] = Integer::New(results.joyButtonUp[i].button);
 				emitFunction->Call(holder, 3, argv);
 			}

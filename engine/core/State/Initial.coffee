@@ -32,7 +32,6 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 			[@x, @y] = avo.Vector.add @dragStartAvocadoLocation, relative
 		
 		# Yum, an avocado!
-		@avocado = {}
 		avo.Image.load('/image/avocado.png').then (@avocado) =>
 			
 			# When the image is loaded, we're done initializing. Tell Avocado

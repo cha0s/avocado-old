@@ -29,7 +29,7 @@ setCallback = (fn, duration, O, isInterval) ->
 	fn: fn
 	O: O ?= this
 	duration: duration / 1000
-	when: avo.TimingService.elapsed()
+	nextCall: avo.TimingService.elapsed()
 	isInterval: isInterval
 
 newHandle = (fn, duration, O, isInterval) ->
@@ -70,7 +70,7 @@ avo.tickTimeouts = ->
 	
 	for id, handle of handles
 		
-		if avo.TimingService.elapsed() >= handle.when + handle.duration
+		if avo.TimingService.elapsed() >= handle.nextCall + handle.duration
 			
 			handle.fn.apply handle.O
 			
@@ -80,4 +80,4 @@ avo.tickTimeouts = ->
 				
 			else
 			
-				handle.when = avo.TimingService.elapsed()
+				handle.nextCall = avo.TimingService.elapsed()

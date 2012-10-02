@@ -157,7 +157,9 @@ v8::Handle<v8::Value> v8Input::Poll(const v8::Arguments &args) {
 			for (unsigned int i = 0; i < results.mouseButtonDown.size(); i++) {
 
 				argv[1] = Integer::New(results.mouseButtonDown[i].button);
-				emitFunction->Call(holder, 2, argv);
+				argv[2] = Integer::New(results.mouseButtonDown[i].x);
+				argv[3] = Integer::New(results.mouseButtonDown[i].y);
+				emitFunction->Call(holder, 4, argv);
 			}
 		}
 
@@ -167,6 +169,8 @@ v8::Handle<v8::Value> v8Input::Poll(const v8::Arguments &args) {
 			for (unsigned int i = 0; i < results.mouseButtonUp.size(); i++) {
 
 				argv[1] = Integer::New(results.mouseButtonUp[i].button);
+				argv[2] = Integer::New(results.mouseButtonUp[i].x);
+				argv[3] = Integer::New(results.mouseButtonUp[i].y);
 				emitFunction->Call(holder, 2, argv);
 			}
 		}

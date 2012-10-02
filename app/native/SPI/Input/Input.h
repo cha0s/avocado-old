@@ -84,11 +84,15 @@ public:
 
 	/** Standardize mouse button down event. */
 	struct MouseButtonDown {
+		int x;
+		int y;
 		MouseButtons button;
 	};
 
 	/** Standardize mouse button up event. */
 	struct MouseButtonUp {
+		int x;
+		int y;
 		MouseButtons button;
 	};
 

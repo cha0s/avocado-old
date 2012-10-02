@@ -8,8 +8,12 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 		
 		defer = upon.defer()
 		
-		# Register a player (0) to receive input using the keyboard keys and
-		# joystick index 0.
+		# Let's move around the avocado! In order to do that, we'll need to
+		# keep track of its x, y location.
+		[@x, @y] = [0, 0]
+		
+		# Register a player (0) to receive input using the keyboard arrow keys
+		# and joystick index 0.
 		avo.Input.registerPlayerMovement 0, [
 			avo.Input.SpecialKeys.UpArrow
 			avo.Input.SpecialKeys.RightArrow
@@ -17,32 +21,13 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 			avo.Input.SpecialKeys.LeftArrow
 		], 0
 		
-		# Allow dragging the avocado around.
+		# Allow dragging the avocado around with the left mouse button.
 		avo.Input.on 'mouseButtonDown.AvocadoState', (button) =>
-		
-			# Ignore anything except left mouse button
 			return unless button is avo.Input.LeftButton
-			
-			@dragging = true
 			@dragStartAvocadoLocation = [@x, @y]
-			@dragStartMouseLocation = @mouseLocation
-			
-		avo.Input.on 'mouseButtonUp.AvocadoState', (button) =>
-		
-			# Ignore anything except left mouse button
+		avo.Input.on 'mouseDrag.AvocadoState', (position, button, relative) =>
 			return unless button is avo.Input.LeftButton
-			
-			@dragging = false
-		
-		avo.Input.on 'mouseMove.AvocadoState', (x, y) =>
-			@mouseLocation = [x, y]
-			
-			return unless @dragging
-			
-			[@x, @y] = avo.Vector.add @dragStartAvocadoLocation, avo.Vector.sub(
-				@mouseLocation
-				@dragStartMouseLocation
-			)
+			[@x, @y] = avo.Vector.add @dragStartAvocadoLocation, relative
 		
 		# Yum, an avocado!
 		@avocado = {}
@@ -58,10 +43,6 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 		@dragStartMouseLocation = []
 		@mouseLocation = []
 	
-		# Let's move around the avocado! In order to do that, we'll need to
-		# keep track of its x, y location.
-		[@x, @y] = [0, 0]
-		
 		defer.promise
 	
 	# Called repeatedly while this state is loaded. You can do things like

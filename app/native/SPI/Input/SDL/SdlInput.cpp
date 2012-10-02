@@ -148,7 +148,11 @@ bool SdlInput::poll() {
 				case SDL_BUTTON_WHEELUP: button = WheelUp; break;
 				case SDL_BUTTON_WHEELDOWN: button = WheelDown; break;
 			}
-			MouseButtonDown mouseDown = {button};
+			MouseButtonDown mouseDown = {
+				event.button.x,
+				event.button.y,
+				button
+			};
 			results.mouseButtonDown.push_back(mouseDown);
 
 			break;
@@ -165,7 +169,11 @@ bool SdlInput::poll() {
 				case SDL_BUTTON_WHEELUP: button = WheelUp; break;
 				case SDL_BUTTON_WHEELDOWN: button = WheelDown; break;
 			}
-			MouseButtonUp mouseUp = {button};
+			MouseButtonUp mouseUp = {
+				event.button.x,
+				event.button.y,
+				button
+			};
 			results.mouseButtonUp.push_back(mouseUp);
 
 			break;

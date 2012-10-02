@@ -68,7 +68,7 @@ registerMovement = (player) ->
 	]
 
 # Joystick movement.
-avo.Input.on 'joyAxis', (stickIndex, axis, value) ->
+avo.Input.on 'joyAxis.Avocado', (stickIndex, axis, value) ->
 	return if axis > 1
 	
 	return unless (player = stickIndexMap[stickIndex])?
@@ -87,7 +87,7 @@ avo.Input.on 'joyAxis', (stickIndex, axis, value) ->
 	registerMovement player
 	
 # Keyboard movement started.
-avo.Input.on 'keyDown', (code) ->
+avo.Input.on 'keyDown.Avocado', (code) ->
 	
 	return unless (player = keyCodeMap[code])?
 	return unless m = movement[player]
@@ -97,7 +97,7 @@ avo.Input.on 'keyDown', (code) ->
 	registerMovement player
 	
 # Keyboard movement stopped.
-avo.Input.on 'keyUp', (code) ->
+avo.Input.on 'keyUp.Avocado', (code) ->
 
 	return unless (player = keyCodeMap[code])?
 	return unless m = movement[player]
@@ -105,3 +105,40 @@ avo.Input.on 'keyUp', (code) ->
 	m.keyState[m.keyCodes.indexOf code] = 0
 	
 	registerMovement player
+
+# Mouse dragging is a bit of a higher-level concept. We'll implement it using
+# the low-level API.
+buttons = {}
+dragStartLocation = {}
+mouseLocation = [0, 0]
+
+# Start dragging when a button is clicked.
+avo.Input.on 'mouseButtonDown.Avocado', (button) ->
+	switch button
+		when avo.Input.LeftButton, avo.Input.MiddleButton, avo.Input.RightButton
+			dragStartLocation[button] = mouseLocation
+			buttons[button] = true
+			
+# Stop dragging when a button is released.
+avo.Input.on 'mouseButtonUp.Avocado', (button) ->
+	switch button
+		when avo.Input.LeftButton, avo.Input.MiddleButton, avo.Input.RightButton
+			delete buttons[button]
+			delete dragStartLocation[button]
+
+# When the mouse moves,
+avo.Input.on 'mouseMove.Avocado', (x, y) ->
+	mouseLocation = [x, y]
+	
+	# Check if any buttons are being held down
+	keys = Object.keys buttons
+	if keys.length > 0
+		
+		# IF so, send a mouseDrag event for each of them.
+		for key in keys
+			avo.Input.emit(
+				'mouseDrag'
+				mouseLocation
+				parseInt key
+				avo.Vector.sub mouseLocation, dragStartLocation[key]
+			)

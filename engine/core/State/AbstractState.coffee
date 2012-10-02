@@ -28,4 +28,4 @@ class avo.AbstractState
 	
 	render: (buffer) ->
 
-	onExit: ->
+	leave: ->

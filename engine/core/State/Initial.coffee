@@ -145,7 +145,7 @@ class avo.States['Initial'] extends avo.AbstractState
 		
 	# Called when another state is loaded. This gives you a chance to clean
 	# up resources and event handlers.
-	onExit: (nextStateName) ->
+	leave: (nextStateName) ->
 		
 		# Remove our user input event handler.
 		avo.Input.off 'inputEvent.State'

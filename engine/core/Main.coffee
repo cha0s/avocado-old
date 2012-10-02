@@ -1,3 +1,12 @@
+# avo.**Main** implements the main engine loop. This class does everything
+# you'd expect in a game loop: user input polling, timing, updating the game
+# state (called *tick*ing) and rendering the game state.
+#
+# Also, States are managed here; instantiated as needed, and entered and left
+# as requested.
+#
+# Emits:
+# * quit: When the engine is shutting down.
 class avo.Main
 
 	constructor: ->
@@ -23,47 +32,30 @@ class avo.Main
 	
 		avo.state = state: 'Initial' 
 		
-		avo.Input.on 'quit.Engine', =>
-		
-			@quit()
+		avo.Input.on 'quit.Engine', => @quit()
 		
 		setInterval(
 			=>
-				
-				try
-				
-					avo.Input.poll()
-				
+				try 
 					@tick()
-					
-					@handleStateChange()
-				
 				catch error
-					
 					@emit 'error', error
-					
 			@tickFrequency
 		)
 		
 		setInterval(
-		
 			=>
-			
 				try
-				
 					@render()
-				
 				catch error
-					
 					@emit 'error', error
-					
 			@renderFrequency
 		)
 			
 	handleStateChange: ->
 		return unless avo.state?
 			
-		@stateObject?.onExit avo.state.state
+		@stateObject?.leave avo.state.state
 		@stateObject = null
 		
 		args = avo.state.args ? {}
@@ -94,15 +86,22 @@ class avo.Main
 		
 	tick: ->
 	
+		avo.Input.poll()
+	
 		avo.TimingService.tick()
+		
 		@stateObject?.tick()
 		
 		@ticksPerSecond.tick()
 		
+		@handleStateChange()
+		
 	render: ->
 		
 		@stateObject?.render @buffer
-		@window?.render @buffer
+		
+		@emit 'render', @buffer
+#		@window?.render @buffer
 		
 		@rendersPerSecond.tick()
 

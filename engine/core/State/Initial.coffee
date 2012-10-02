@@ -2,8 +2,62 @@
 avo.States['Initial'] = new class
 	
 	# Called the first time this state is loaded. You can set up any stuff your
-	# state needs here.
+	# state needs here. This is the Initial state, so we can also set up
+	# things specific to our game.
 	constructor: ->
+		
+		# We want to store how much the player is moving either with the
+		# arrow keys or the joystick/gamepad. We can set up our own custom
+		# input handling here!
+		avo.Input.movement = [0, 0]
+		keyboardMoveState = [0, 0, 0, 0]
+		
+		# Let's add a little helper to calculate the movement for one tick.
+		avo.Input.tickMovement = ->
+			avo.Vector.scale avo.Input.movement, avo.tickTimeElapsed()
+		
+		# We'll store any movement that comes in.
+		storeMovement = -> avo.Input.movement = [
+			keyboardMoveState[1] - keyboardMoveState[3]
+			keyboardMoveState[2] - keyboardMoveState[0]
+		]
+		
+		# Joystick movement.
+		avo.Input.on 'joyAxis', (stick, axis, value) ->
+			return if axis > 1
+			
+			if value > 0
+				keyboardMoveState[if axis is 0 then 1 else 2] = Math.abs value
+			else if value < 0
+				keyboardMoveState[if axis is 0 then 3 else 0] = Math.abs value
+			else
+				
+				if axis is 0
+					keyboardMoveState[1] = keyboardMoveState[3] = 0
+				else
+					keyboardMoveState[0] = keyboardMoveState[2] = 0
+			
+			storeMovement()
+			
+		# Keyboard movement started.
+		avo.Input.on 'keyDown', (code) ->
+			switch code
+				when avo.Input.SpecialKeys.UpArrow then keyboardMoveState[0] = 1
+				when avo.Input.SpecialKeys.RightArrow then keyboardMoveState[1] = 1
+				when avo.Input.SpecialKeys.DownArrow then keyboardMoveState[2] = 1
+				when avo.Input.SpecialKeys.LeftArrow then keyboardMoveState[3] = 1
+			
+			storeMovement()
+			
+		# Keyboard movement stopped.
+		avo.Input.on 'keyUp', (code) ->
+			switch code
+				when avo.Input.SpecialKeys.UpArrow then keyboardMoveState[0] = 0
+				when avo.Input.SpecialKeys.RightArrow then keyboardMoveState[1] = 0
+				when avo.Input.SpecialKeys.DownArrow then keyboardMoveState[2] = 0
+				when avo.Input.SpecialKeys.LeftArrow then keyboardMoveState[3] = 0
+			
+			storeMovement()
 		
 		# Yum, an avocado!
 		@avocado = {}
@@ -16,8 +70,7 @@ avo.States['Initial'] = new class
 	
 		# Let's move around the avocado! In order to do that, we'll need to
 		# keep track of its x, y location.
-		@x = 0
-		@y = 0
+		[@x, @y] = [0, 0]
 	
 	# Called every time this state is loaded. You should do things like loading
 	# images and setting up your event handlers here.
@@ -55,8 +108,10 @@ avo.States['Initial'] = new class
 			
 			return unless @dragging
 			
-			@x = @mouseLocation[0] - @dragStartMouseLocation[0] + @dragStartAvocadoLocation[0]
-			@y = @mouseLocation[1] - @dragStartMouseLocation[1] + @dragStartAvocadoLocation[1]
+			[@x, @y] = avo.Vector.add @dragStartAvocadoLocation, avo.Vector.sub(
+				@mouseLocation
+				@dragStartMouseLocation
+			)
 		
 		# Promise Avocado we'll finish initialization... eventually!
 		defer.promise
@@ -65,10 +120,11 @@ avo.States['Initial'] = new class
 	# update your world here. We'll move the avocado based on user input.
 	tick: ->
 		
-		# Move it 100px a second.
-		movement = avo.tickTimeElapsed() * 100
-		@x += avo.Input.movement[0] * movement
-		@y += avo.Input.movement[1] * movement
+		# Move it 500px a second.
+		[@x, @y] = avo.Vector.add(
+			[@x, @y]
+			avo.Vector.scale avo.Input.tickMovement(), 500
+		)
 	
 	# Called repeatedly while this state is loaded. You can render all of
 	# your pretty pictures here!

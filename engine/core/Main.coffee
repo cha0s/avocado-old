@@ -78,7 +78,7 @@ class avo.Main
 	
 	# Change the State. This isn't immediate, but will be dispatched on the
 	# next tick.
-	changeState: (name, args) -> @stateChange = name: name, args: args ? {}
+	changeState: (name, args = {}) -> @stateChange = name: name, args: args
 	
 	# Handle the last State change request.
 	handleStateChange: ->
@@ -89,6 +89,9 @@ class avo.Main
 		args = @stateChange.args
 		stateName = @stateChange.name
 
+		# We're handling the state change.
+		delete @stateChange
+		
 		# Leave any State we're currently in and NULL the object so
 		# State::tick and State::render don't run until the next State is
 		# loaded.
@@ -108,7 +111,7 @@ class avo.Main
 			@states[stateName] = new avo.Main.States[stateName]
 			initializationPromise = @states[stateName].initialize()
 			
-		# When the State is finished initializing,		
+		# When the State is finished initializing,
 		p = initializationPromise.then =>
 			
 			# and finished being entered,
@@ -118,9 +121,6 @@ class avo.Main
 				@stateObject = @states[stateName]
 				@stateName = stateName
 		
-		# We've handled the state change.
-		delete @stateChange
-		
 	tick: ->
 		
 		# Store the time passed since the last tick.
@@ -129,11 +129,11 @@ class avo.Main
 		# Poll user input.
 		avo.Input.poll()
 		
-		# Let the State tick.
-		@stateObject?.tick()
-		
 		# Track the ticks per second.
 		@ticksPerSecond.tick()
+		
+		# Let the State tick.
+		@stateObject?.tick()
 		
 		# Handle any State change.
 		@handleStateChange()

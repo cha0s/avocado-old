@@ -8,8 +8,10 @@
 # Subclass this to implement platform-specific functionality.
 #
 # Emits:
-# * error: When an error was encountered.
-# * quit: When the engine is shutting down.
+# 
+# * <pre>error: When an error was encountered.</pre>
+# * <pre>quit:  When the engine is shutting down.</pre>
+# 
 class avo.Main
 	
 	# State implementations should add their class to this map.
@@ -26,12 +28,13 @@ class avo.Main
 		@stateName = ''
 		
 		# Contains an object such as:
-		#    {
-		#        name: 'Initial',
-		#        args: {
-		#            ...
-		#        }
-		#    }
+		# 
+		#     {
+		#         name: 'Initial',
+		#         args: {
+		#             ...
+		#         }
+		#     }
 		#
 		# or if no state change is being requested, undefined.
 		@stateChange = name: 'Initial', args: {}
@@ -106,15 +109,14 @@ class avo.Main
 			initializationPromise = @states[stateName].initialize()
 			
 		# When the State is finished initializing,		
-		p = initializationPromise.then(
-			=>
-				# and finished being entered,
-				@states[stateName].enter(args, @stateName).then =>
-					
-					# set the new State name, and the object for ticking/rendering.
-					@stateObject = @states[stateName]
-					@stateName = stateName
-		)
+		p = initializationPromise.then =>
+			
+			# and finished being entered,
+			@states[stateName].enter(args, @stateName).then =>
+				
+				# set the new State name, and the object for ticking/rendering.
+				@stateObject = @states[stateName]
+				@stateName = stateName
 		
 		# We've handled the state change.
 		delete @stateChange

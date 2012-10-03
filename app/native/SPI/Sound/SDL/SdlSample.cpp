@@ -32,4 +32,8 @@ int SdlSample::play(int loops, int channel) {
 	return Mix_PlayChannel(channel, sample, loops);
 }
 
+unsigned int SdlSample::sizeInBytes() {
+	return sample->alen;
+}
+
 }

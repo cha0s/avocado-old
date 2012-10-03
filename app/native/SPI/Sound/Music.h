@@ -102,11 +102,16 @@ public:
 	 *
 	 * This calculation is extremely naive. 4MB
 	 */
-	unsigned int sizeInBytes() {
-		return 1024 * 1024 * 4;
-	}
+	virtual unsigned int sizeInBytes();
 
+	/**
+	 * Manages music resources.
+	 */
 	static ResourceManager<Music> manager;
+
+	/**
+	 * Manages the concrete %Music factory instance.
+	 */
 	static FactoryManager<Music> factoryManager;
 
 protected:

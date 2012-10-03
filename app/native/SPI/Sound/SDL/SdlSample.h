@@ -40,6 +40,12 @@ public:
 
 	int play(int loops = 0, int channel = AnyChannel);
 
+	/**
+	 * The amount of memory in bytes that SDL_mixer reports this sample is
+	 * consuming.
+	 */
+	unsigned int sizeInBytes();
+
 	static AbstractFactory<SdlSample> *factory;
 
 private:

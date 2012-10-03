@@ -135,9 +135,7 @@ public:
 	 * estimation. It would be slightly less naive to take the BPP into
 	 * account.
 	 */
-	unsigned int sizeInBytes() {
-		return width() * height() * 4;
-	}
+	virtual unsigned int sizeInBytes();
 
 	/**
 	 * Per pixel alpha blending.
@@ -186,7 +184,7 @@ public:
 	}
 
 	/**
-	 * Manages %Image resources.
+	 * Manages image resources.
 	 */
 	static ResourceManager<Image> manager;
 

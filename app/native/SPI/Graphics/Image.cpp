@@ -23,5 +23,8 @@ boost::filesystem::path Image::uri() const {
 	return m_uri;
 }
 
+unsigned int Image::sizeInBytes() {
+	return width() * height() * 4;
 }
 
+}

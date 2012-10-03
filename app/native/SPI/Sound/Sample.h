@@ -62,11 +62,16 @@ public:
 	 *
 	 * This calculation is extremely naive. 200KB
 	 */
-	unsigned int sizeInBytes() {
-		return 1024 * 200;
-	}
+	virtual unsigned int sizeInBytes();
 
+	/**
+	 * Manages sample resources.
+	 */
 	static ResourceManager<Sample> manager;
+
+	/**
+	 * Manages the concrete %Sample factory instance.
+	 */
 	static FactoryManager<Sample> factoryManager;
 
 protected:

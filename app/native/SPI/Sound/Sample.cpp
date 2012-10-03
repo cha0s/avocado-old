@@ -18,5 +18,8 @@ void Sample::setUri(const boost::filesystem::path &uri) {
 	m_uri = uri;
 }
 
+unsigned int Sample::sizeInBytes() {
+	return 1024 * 200;
 }
 
+}

@@ -18,5 +18,8 @@ void Music::setUri(const boost::filesystem::path &uri) {
 	m_uri = uri;
 }
 
+unsigned int Music::sizeInBytes() {
+	return 1024 * 1024 * 4;
 }
 
+}

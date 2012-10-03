@@ -6,8 +6,6 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 	# things specific to our game.
 	initialize: ->
 		
-		defer = upon.defer()
-		
 		# Let's move around the avocado! In order to do that, we'll need to
 		# keep track of its x, y location.
 		[@x, @y] = [0, 0]
@@ -37,16 +35,17 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 		# Happy music!
 		musicPromise = avo.Music.load('/music/smile.ogg').then (@music) =>
 		
+			# Start it as soon as it loads.
 			@music.play()
 		
+		# When the image and music are done loading, then we're done
+		# initializing. Remember - with CoffeeScript, the last statement in
+		# a function is the return value. And upon.all returns a promise, just
+		# as initialize requires. Elegant!
 		upon.all([
 			imagePromise
 			musicPromise
-		]).then ->
-			
-			defer.resolve()
-		
-		defer.promise
+		])
 	
 	# Called repeatedly while this state is loaded. You can do things like
 	# update your world here. We'll move the avocado based on movement input.

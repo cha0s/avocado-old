@@ -23,6 +23,7 @@ namespace avo {
  * image operations.
  *
  * @ingroup Qt
+ * @ingroup Resources
  */
 class QtImage : public Image {
 

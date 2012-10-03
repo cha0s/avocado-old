@@ -74,6 +74,25 @@
  */
 
 /**
+ * @defgroup Input Input SPI
+ *
+ * @brief The input SPI handles user input polling.
+ */
+
+/**
+ * @defgroup Sound Sound SPI
+ *
+ * @brief The sound SPI handles sound system initialization, as well as
+ * music and sample loading and playing.
+ */
+
+/**
+ * @defgroup Timing Timing SPI
+ *
+ * @brief The timing SPI handles measuring time.
+ */
+
+/**
  * @defgroup Manufacturing Manufacturing
  *
  * @brief Manufacturing functionality handles @link AbstractFactory abstract

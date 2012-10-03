@@ -17,6 +17,8 @@ namespace avo {
 
 /**
  * %Sample (sound effect) class.
+ *
+ * @ingroup Resources
  */
 class Sample {
 

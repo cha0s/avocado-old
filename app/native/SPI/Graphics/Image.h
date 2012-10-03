@@ -18,6 +18,8 @@ namespace avo {
  *
  * The %Image SPI is responsible for constructing, destroying, rendering and
  * various primitive drawing operations that can take place on an image.
+ *
+ * @ingroup Resources
  */
 class Image {
 

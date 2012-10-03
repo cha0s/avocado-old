@@ -18,7 +18,8 @@ namespace avo {
 class SdlMusic;
 
 /**
- * @ingroup @SDL
+ * @ingroup Resources
+ * @ingroup SDL
  */
 class SdlMusic : public Music {
 

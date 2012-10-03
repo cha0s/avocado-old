@@ -13,7 +13,7 @@ namespace avo {
  */
 
 /**
- * @ingroup @SDL
+ * @ingroup SDL
  */
 class SdlGraphicsService : public GraphicsService {
 

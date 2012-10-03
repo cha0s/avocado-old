@@ -18,7 +18,8 @@ namespace avo {
 class SdlSample;
 
 /**
- * @ingroup @SDL
+ * @ingroup Resources
+ * @ingroup SDL
  */
 class SdlSample : public Sample {
 
@@ -58,6 +59,7 @@ private:
  * @ingroup Manufacturing
  * @ingroup Resources
  * @ingroup SDL
+ * @ingroup SPI
  */
 template <>
 class AbstractFactory<SdlSample> : public AbstractFactory<Sample> {

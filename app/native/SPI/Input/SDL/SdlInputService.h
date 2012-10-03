@@ -16,7 +16,7 @@ namespace avo {
  * The %SdlInputService SPI implementation uses vanilla SDL to gather keyboard,
  * joystick and window events.
  *
- * @ingroup @SDL
+ * @ingroup SDL
  */
 class SdlInputService : public InputService {
 

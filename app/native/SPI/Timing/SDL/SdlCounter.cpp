@@ -18,12 +18,6 @@ SdlCounter::~SdlCounter() {
 
 }
 
-Counter &SdlCounter::operator =(const Counter &counter) {
-	AVOCADO_UNUSED(counter);
-
-	return *this;
-}
-
 double SdlCounter::current() {
 	return SDL_GetTicks();
 }

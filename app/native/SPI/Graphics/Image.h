@@ -201,9 +201,6 @@ protected:
 
 private:
 
-	Image(const Image &image);
-	virtual Image &operator =(const Image &image) = 0;
-
 	boost::filesystem::path m_uri;
 
 };

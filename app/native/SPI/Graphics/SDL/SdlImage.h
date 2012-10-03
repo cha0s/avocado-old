@@ -74,9 +74,6 @@ public:
 
 private:
 
-	SdlImage(const SdlImage &image);
-	Image &operator =(const Image &image);
-
 	SDL_Surface *surface;
 
 };

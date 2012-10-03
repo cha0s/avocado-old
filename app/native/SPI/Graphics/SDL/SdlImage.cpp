@@ -79,12 +79,6 @@ SdlImage::~SdlImage() {
 	if (surface) SDL_FreeSurface(surface);
 }
 
-Image &SdlImage::operator =(const Image &image) {
-	AVOCADO_UNUSED(image);
-
-	return *this;
-}
-
 unsigned int SdlImage::pixelAt(int x, int y) const {
 	if (NULL == surface) return 0;
 

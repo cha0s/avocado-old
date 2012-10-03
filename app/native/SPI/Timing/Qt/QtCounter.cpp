@@ -18,12 +18,6 @@ QtCounter::QtCounter()
 QtCounter::~QtCounter() {
 }
 
-Counter &QtCounter::operator =(const Counter &counter) {
-	AVOCADO_UNUSED(counter);
-
-	return *this;
-}
-
 double QtCounter::current() {
 	return time.elapsed();
 }

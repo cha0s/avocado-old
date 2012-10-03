@@ -35,11 +35,6 @@ public:
 
 	double current();
 
-private:
-
-	SdlCounter(const Counter &counter);
-	Counter &operator =(const Counter &counter);
-
 };
 
 /**

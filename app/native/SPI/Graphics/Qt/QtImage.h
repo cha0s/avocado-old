@@ -75,9 +75,6 @@ public:
 
 private:
 
-	QtImage(const QtImage &image);
-	Image &operator =(const Image &image);
-
 	QImage *qImage;
 
 };

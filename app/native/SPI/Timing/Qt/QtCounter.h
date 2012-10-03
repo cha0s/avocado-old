@@ -37,9 +37,6 @@ public:
 
 private:
 
-	QtCounter(const Counter &counter);
-	Counter &operator =(const Counter &counter);
-
 	QTime time;
 
 };

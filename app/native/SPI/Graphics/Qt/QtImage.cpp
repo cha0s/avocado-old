@@ -46,12 +46,6 @@ QtImage::~QtImage() {
 	if (qImage) delete qImage;
 }
 
-Image &QtImage::operator =(const Image &image) {
-	AVOCADO_UNUSED(image);
-
-	return *this;
-}
-
 void QtImage::drawCircle(int x, int y, int radius, int r, int g, int b, int a, DrawMode drawMode) {
 	if (NULL == qImage) return;
 

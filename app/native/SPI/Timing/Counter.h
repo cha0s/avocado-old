@@ -42,9 +42,6 @@ protected:
 
 private:
 
-	Counter(const Counter &counter);
-	virtual Counter &operator =(const Counter &counter) = 0;
-
 	double m_current;
 
 };

@@ -43,7 +43,7 @@ void v8Input::initialize(Handle<ObjectTemplate> target) {
 	target->Set(String::NewSymbol("Input"), constructor_template);
 }
 
-v8::Handle<v8::Value> v8Input::New(const Arguments &args) {
+v8::Handle<v8::Value> v8Input::New(const v8::Arguments &args) {
 	HandleScope scope;
 
 	v8Input *inputWrapper = new v8Input(args.Holder());

@@ -48,7 +48,7 @@ void v8GraphicsService::initialize(Handle<ObjectTemplate> target) {
 	target->Set(String::NewSymbol("GraphicsService"), constructor_template);
 }
 
-v8::Handle<v8::Value> v8GraphicsService::New(const Arguments &args) {
+v8::Handle<v8::Value> v8GraphicsService::New(const v8::Arguments &args) {
 	HandleScope scope;
 
 	new v8GraphicsService(args.Holder());
@@ -56,7 +56,7 @@ v8::Handle<v8::Value> v8GraphicsService::New(const Arguments &args) {
 	return args.Holder();
 }
 
-v8::Handle<v8::Value> v8GraphicsService::ImplementSpi(const Arguments &args) {
+v8::Handle<v8::Value> v8GraphicsService::ImplementSpi(const v8::Arguments &args) {
 	HandleScope scope;
 
 	AVOCADO_UNUSED(args);
@@ -79,7 +79,7 @@ v8::Handle<v8::Value> v8GraphicsService::ImplementSpi(const Arguments &args) {
 	return Undefined();
 }
 
-v8::Handle<v8::Value> v8GraphicsService::Close(const Arguments &args) {
+v8::Handle<v8::Value> v8GraphicsService::Close(const v8::Arguments &args) {
 	HandleScope scope;
 
 	v8GraphicsService *graphicsServiceWrapper = ObjectWrap::Unwrap<v8GraphicsService>(args.Holder());

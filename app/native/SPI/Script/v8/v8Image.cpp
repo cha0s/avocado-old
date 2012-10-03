@@ -91,7 +91,7 @@ void v8Image::releaseImage() {
 	}
 }
 
-v8::Handle<v8::Value> v8Image::New(const Arguments &args) {
+v8::Handle<v8::Value> v8Image::New(const v8::Arguments &args) {
 	HandleScope scope;
 
 	Image *image = NULL;
@@ -131,18 +131,18 @@ Handle<Object> v8Image::New(Image *image) {
 
 	Handle<Object> instance = constructor_template->GetFunction()->NewInstance();
 
-	v8Image *image_v8 = ObjectWrap::Unwrap<v8Image>(instance);
+	v8Image *imageWrapper = ObjectWrap::Unwrap<v8Image>(instance);
 
-	image_v8->releaseImage();
+	imageWrapper->releaseImage();
 
-	image_v8->owns = false;
+	imageWrapper->owns = false;
 
-	image_v8->image = image;
+	imageWrapper->image = image;
 
 	return scope.Close(instance);
 }
 
-v8::Handle<v8::Value> v8Image::Load(const Arguments &args) {
+v8::Handle<v8::Value> v8Image::Load(const v8::Arguments &args) {
 	HandleScope scope;
 
 	Handle<Object> upon = Context::GetCurrent()->Global()->Get(
@@ -155,9 +155,7 @@ v8::Handle<v8::Value> v8Image::Load(const Arguments &args) {
 
 	try {
 
-		Handle<Object> image;
-
-		image = v8Image::New(
+		Handle<Object> image = v8Image::New(
 			Image::manager.load(
 				V8::stringToStdString(args[0]->ToString())
 			)
@@ -180,12 +178,12 @@ v8::Handle<v8::Value> v8Image::Load(const Arguments &args) {
 	return scope.Close(defer->Get(String::NewSymbol("promise")));
 }
 
-v8::Handle<v8::Value> v8Image::DrawCircle(const Arguments &args) {
+v8::Handle<v8::Value> v8Image::DrawCircle(const v8::Arguments &args) {
 	HandleScope scope;
 
-	v8Image *image_v8 = ObjectWrap::Unwrap<v8Image>(args.Holder());
+	v8Image *imageWrapper = ObjectWrap::Unwrap<v8Image>(args.Holder());
 
-	if (NULL == image_v8) {
+	if (NULL == imageWrapper) {
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			"Image::drawCircle(): NULL Holder."
 		)));
@@ -193,7 +191,7 @@ v8::Handle<v8::Value> v8Image::DrawCircle(const Arguments &args) {
 
 	Handle<Array> position = args[0].As<Array>();
 
-	image_v8->image->drawCircle(
+	imageWrapper->image->drawCircle(
 		position->Get(0)->Int32Value(),
 		position->Get(1)->Int32Value(),
 		args[1]->Uint32Value(),
@@ -207,12 +205,12 @@ v8::Handle<v8::Value> v8Image::DrawCircle(const Arguments &args) {
 	return v8::Undefined();
 }
 
-v8::Handle<v8::Value> v8Image::DrawFilledBox(const Arguments &args) {
+v8::Handle<v8::Value> v8Image::DrawFilledBox(const v8::Arguments &args) {
 	HandleScope scope;
 
-	v8Image *image_v8 = ObjectWrap::Unwrap<v8Image>(args.Holder());
+	v8Image *imageWrapper = ObjectWrap::Unwrap<v8Image>(args.Holder());
 
-	if (NULL == image_v8) {
+	if (NULL == imageWrapper) {
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			"Image::drawFilledBox(): NULL Holder."
 		)));
@@ -220,7 +218,7 @@ v8::Handle<v8::Value> v8Image::DrawFilledBox(const Arguments &args) {
 
 	Handle<Array> dimensions = args[0].As<Array>();
 
-	image_v8->image->drawFilledBox(
+	imageWrapper->image->drawFilledBox(
 		dimensions->Get(0)->Int32Value(),
 		dimensions->Get(1)->Int32Value(),
 		dimensions->Get(2)->Int32Value(),
@@ -235,12 +233,12 @@ v8::Handle<v8::Value> v8Image::DrawFilledBox(const Arguments &args) {
 	return v8::Undefined();
 }
 
-v8::Handle<v8::Value> v8Image::DrawLine(const Arguments &args) {
+v8::Handle<v8::Value> v8Image::DrawLine(const v8::Arguments &args) {
 	HandleScope scope;
 
-	v8Image *image_v8 = ObjectWrap::Unwrap<v8Image>(args.Holder());
+	v8Image *imageWrapper = ObjectWrap::Unwrap<v8Image>(args.Holder());
 
-	if (NULL == image_v8) {
+	if (NULL == imageWrapper) {
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			"Image::drawLine(): NULL Holder."
 		)));
@@ -248,7 +246,7 @@ v8::Handle<v8::Value> v8Image::DrawLine(const Arguments &args) {
 
 	Handle<Array> dimensions = args[0].As<Array>();
 
-	image_v8->image->drawLine(
+	imageWrapper->image->drawLine(
 		dimensions->Get(0)->Int32Value(),
 		dimensions->Get(1)->Int32Value(),
 		dimensions->Get(2)->Int32Value(),
@@ -263,12 +261,12 @@ v8::Handle<v8::Value> v8Image::DrawLine(const Arguments &args) {
 	return v8::Undefined();
 }
 
-v8::Handle<v8::Value> v8Image::DrawLineBox(const Arguments &args) {
+v8::Handle<v8::Value> v8Image::DrawLineBox(const v8::Arguments &args) {
 	HandleScope scope;
 
-	v8Image *image_v8 = ObjectWrap::Unwrap<v8Image>(args.Holder());
+	v8Image *imageWrapper = ObjectWrap::Unwrap<v8Image>(args.Holder());
 
-	if (NULL == image_v8) {
+	if (NULL == imageWrapper) {
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			"Image::drawLineBox(): NULL Holder."
 		)));
@@ -276,7 +274,7 @@ v8::Handle<v8::Value> v8Image::DrawLineBox(const Arguments &args) {
 
 	Handle<Array> dimensions = args[0].As<Array>();
 
-	image_v8->image->drawLineBox(
+	imageWrapper->image->drawLineBox(
 		dimensions->Get(0)->Int32Value(),
 		dimensions->Get(1)->Int32Value(),
 		dimensions->Get(2)->Int32Value(),
@@ -291,18 +289,18 @@ v8::Handle<v8::Value> v8Image::DrawLineBox(const Arguments &args) {
 	return v8::Undefined();
 }
 
-v8::Handle<v8::Value> v8Image::Fill(const Arguments &args) {
+v8::Handle<v8::Value> v8Image::Fill(const v8::Arguments &args) {
 	HandleScope scope;
 
-	v8Image *image_v8 = ObjectWrap::Unwrap<v8Image>(args.Holder());
+	v8Image *imageWrapper = ObjectWrap::Unwrap<v8Image>(args.Holder());
 
-	if (NULL == image_v8) {
+	if (NULL == imageWrapper) {
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			"Image::fill(): NULL Holder."
 		)));
 	}
 
-	image_v8->image->fill(
+	imageWrapper->image->fill(
 		args[0]->Uint32Value(),
 		args[1]->Uint32Value(),
 		args[2]->Uint32Value(),
@@ -312,47 +310,47 @@ v8::Handle<v8::Value> v8Image::Fill(const Arguments &args) {
 	return v8::Undefined();
 }
 
-v8::Handle<v8::Value> v8Image::Height(const Arguments &args) {
+v8::Handle<v8::Value> v8Image::Height(const v8::Arguments &args) {
 	HandleScope scope;
 
-	v8Image *image_v8 = ObjectWrap::Unwrap<v8Image>(args.Holder());
+	v8Image *imageWrapper = ObjectWrap::Unwrap<v8Image>(args.Holder());
 
-	if (NULL == image_v8) {
+	if (NULL == imageWrapper) {
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			"Image::height(): NULL Holder."
 		)));
 	}
 
 	return scope.Close(
-		Integer::New(image_v8->image->height())
+		Integer::New(imageWrapper->image->height())
 	);
 }
 
-v8::Handle<v8::Value> v8Image::PixelAt(const Arguments &args) {
+v8::Handle<v8::Value> v8Image::PixelAt(const v8::Arguments &args) {
 	HandleScope scope;
 
-	v8Image *image_v8 = ObjectWrap::Unwrap<v8Image>(args.Holder());
+	v8Image *imageWrapper = ObjectWrap::Unwrap<v8Image>(args.Holder());
 
-	if (NULL == image_v8) {
+	if (NULL == imageWrapper) {
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			"Image::pixelAt(): NULL Holder."
 		)));
 	}
 
 	return scope.Close(Integer::New(
-		image_v8->image->pixelAt(
+		imageWrapper->image->pixelAt(
 			args[0]->Uint32Value(),
 			args[1]->Uint32Value()
 		)
 	));
 }
 
-v8::Handle<v8::Value> v8Image::Render(const Arguments &args) {
+v8::Handle<v8::Value> v8Image::Render(const v8::Arguments &args) {
 	HandleScope scope;
 
-	v8Image *image_v8 = ObjectWrap::Unwrap<v8Image>(args.Holder());
+	v8Image *imageWrapper = ObjectWrap::Unwrap<v8Image>(args.Holder());
 
-	if (NULL == image_v8) {
+	if (NULL == imageWrapper) {
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			"Image::render(): NULL Holder."
 		)));
@@ -369,7 +367,7 @@ v8::Handle<v8::Value> v8Image::Render(const Arguments &args) {
 		)));
 	}
 
-	image_v8->image->render(
+	imageWrapper->image->render(
 		position->Get(0)->Int32Value(),
 		position->Get(1)->Int32Value(),
 		destination->image,
@@ -384,18 +382,18 @@ v8::Handle<v8::Value> v8Image::Render(const Arguments &args) {
 	return v8::Undefined();
 }
 
-v8::Handle<v8::Value> v8Image::SetPixelAt(const Arguments &args) {
+v8::Handle<v8::Value> v8Image::SetPixelAt(const v8::Arguments &args) {
 	HandleScope scope;
 
-	v8Image *image_v8 = ObjectWrap::Unwrap<v8Image>(args.Holder());
+	v8Image *imageWrapper = ObjectWrap::Unwrap<v8Image>(args.Holder());
 
-	if (NULL == image_v8) {
+	if (NULL == imageWrapper) {
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			"Image::setPixelAt(): NULL Holder."
 		)));
 	}
 
-	image_v8->image->setPixelAt(
+	imageWrapper->image->setPixelAt(
 		args[0]->Uint32Value(),
 		args[1]->Uint32Value(),
 		args[2]->Uint32Value()
@@ -404,18 +402,18 @@ v8::Handle<v8::Value> v8Image::SetPixelAt(const Arguments &args) {
 	return v8::Undefined();
 }
 
-v8::Handle<v8::Value> v8Image::Width(const Arguments &args) {
+v8::Handle<v8::Value> v8Image::Width(const v8::Arguments &args) {
 	HandleScope scope;
 
-	v8Image *image_v8 = ObjectWrap::Unwrap<v8Image>(args.Holder());
+	v8Image *imageWrapper = ObjectWrap::Unwrap<v8Image>(args.Holder());
 
-	if (NULL == image_v8) {
+	if (NULL == imageWrapper) {
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			"Image::width(): NULL Holder."
 		)));
 	}
 
-	return scope.Close(Integer::New(image_v8->image->width()));
+	return scope.Close(Integer::New(imageWrapper->image->width()));
 }
 
 Persistent<FunctionTemplate> v8Image::constructor_template;

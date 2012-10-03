@@ -42,7 +42,7 @@ Counter *v8Counter::wrappedCounter() {
 	return counter;
 }
 
-v8::Handle<v8::Value> v8Counter::New(const Arguments &args) {
+v8::Handle<v8::Value> v8Counter::New(const v8::Arguments &args) {
 	HandleScope scope;
 
 	new v8Counter(args.Holder());
@@ -50,7 +50,7 @@ v8::Handle<v8::Value> v8Counter::New(const Arguments &args) {
 	return args.This();
 }
 
-v8::Handle<v8::Value> v8Counter::Current(const Arguments &args) {
+v8::Handle<v8::Value> v8Counter::Current(const v8::Arguments &args) {
 	HandleScope scope;
 
 	v8Counter *counterWrapper = ObjectWrap::Unwrap<v8Counter>(args.Holder());
@@ -64,7 +64,7 @@ v8::Handle<v8::Value> v8Counter::Current(const Arguments &args) {
 	return scope.Close(Number::New(counterWrapper->counter->current()));
 }
 
-v8::Handle<v8::Value> v8Counter::Since(const Arguments &args) {
+v8::Handle<v8::Value> v8Counter::Since(const v8::Arguments &args) {
 	HandleScope scope;
 
 	v8Counter *counterWrapper = ObjectWrap::Unwrap<v8Counter>(args.Holder());

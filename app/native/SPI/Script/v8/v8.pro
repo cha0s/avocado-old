@@ -14,7 +14,9 @@ SOURCES += \
 	\
 	v8InputService.cpp v8Input.cpp \
 	\
-	v8TimingService.cpp v8Counter.cpp
+	v8TimingService.cpp v8Counter.cpp \
+	\
+	v8SoundService.cpp v8Music.cpp v8Sample.cpp
 
 HEADERS += \
 	\
@@ -28,7 +30,9 @@ HEADERS += \
 	\
 	v8InputService.h ../../Input/Input.h v8Input.h \
 	\
-	v8TimingService.h ../../Timing/Counter.h v8Counter.h
+	v8TimingService.h ../../Timing/Counter.h v8Counter.h \
+	\
+	v8SoundService.h v8Music.h v8Sample.h
 
 LIBS += -L../../../deps/v8
 LIBS += -lv8-avocado -lv8_snapshot-avocado

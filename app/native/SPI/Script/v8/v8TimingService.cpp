@@ -47,7 +47,7 @@ void v8TimingService::initialize(Handle<ObjectTemplate> target) {
 	target->Set(String::NewSymbol("TimingService"), constructor_template);
 }
 
-v8::Handle<v8::Value> v8TimingService::New(const Arguments &args) {
+v8::Handle<v8::Value> v8TimingService::New(const v8::Arguments &args) {
 	HandleScope scope;
 
 	new v8TimingService(args.Holder());
@@ -55,7 +55,7 @@ v8::Handle<v8::Value> v8TimingService::New(const Arguments &args) {
 	return args.Holder();
 }
 
-v8::Handle<v8::Value> v8TimingService::ImplementSpi(const Arguments &args) {
+v8::Handle<v8::Value> v8TimingService::ImplementSpi(const v8::Arguments &args) {
 	HandleScope scope;
 
 	AVOCADO_UNUSED(args);
@@ -78,7 +78,7 @@ v8::Handle<v8::Value> v8TimingService::ImplementSpi(const Arguments &args) {
 	return Undefined();
 }
 
-v8::Handle<v8::Value> v8TimingService::Close(const Arguments &args) {
+v8::Handle<v8::Value> v8TimingService::Close(const v8::Arguments &args) {
 	HandleScope scope;
 
 	v8TimingService *timingServiceWrapper = ObjectWrap::Unwrap<v8TimingService>(args.Holder());
@@ -94,7 +94,7 @@ v8::Handle<v8::Value> v8TimingService::Close(const Arguments &args) {
 	return v8::Undefined();
 }
 
-v8::Handle<v8::Value> v8TimingService::Sleep(const Arguments &args) {
+v8::Handle<v8::Value> v8TimingService::Sleep(const v8::Arguments &args) {
 	HandleScope scope;
 
 	v8TimingService *timingServiceWrapper = ObjectWrap::Unwrap<v8TimingService>(args.Holder());

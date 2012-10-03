@@ -53,7 +53,7 @@ void v8CoreService::initialize(Handle<ObjectTemplate> target) {
 	target->Set(String::NewSymbol("CoreService"), constructor_template);
 }
 
-v8::Handle<v8::Value> v8CoreService::New(const Arguments &args) {
+v8::Handle<v8::Value> v8CoreService::New(const v8::Arguments &args) {
 	HandleScope scope;
 
 	new v8CoreService(args.Holder());
@@ -61,7 +61,7 @@ v8::Handle<v8::Value> v8CoreService::New(const Arguments &args) {
 	return args.Holder();
 }
 
-v8::Handle<v8::Value> v8CoreService::ImplementSpi(const Arguments &args) {
+v8::Handle<v8::Value> v8CoreService::ImplementSpi(const v8::Arguments &args) {
 	HandleScope scope;
 
 	AVOCADO_UNUSED(args);
@@ -116,7 +116,7 @@ v8::Handle<v8::Value> v8CoreService::WriteStderr(const v8::Arguments& args) {
 	return Undefined();
 }
 
-v8::Handle<v8::Value> v8CoreService::Close(const Arguments &args) {
+v8::Handle<v8::Value> v8CoreService::Close(const v8::Arguments &args) {
 	HandleScope scope;
 
 	// Check for fishyness.

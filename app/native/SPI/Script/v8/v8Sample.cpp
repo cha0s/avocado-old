@@ -1,0 +1,167 @@
+#include "avocado-global.h"
+
+#include "v8Sample.h"
+
+using namespace v8;
+
+namespace avo {
+
+v8Sample::v8Sample(Handle<Object> wrapper, Sample *sample)
+	: sample(sample)
+	, owns(false)
+{
+	Wrap(wrapper);
+
+	if (NULL == this->sample) {
+
+		try {
+			this->sample = Sample::factoryManager.instance()->create();
+
+			::V8::AdjustAmountOfExternalAllocatedMemory(
+				this->sample->sizeInBytes()
+			);
+
+			owns = true;
+		}
+		catch (FactoryManager<Sample>::factory_instance_error &e) {
+
+			ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
+				e.what()
+			)));
+		}
+	}
+}
+
+v8Sample::~v8Sample() {
+	releaseSample();
+}
+
+void v8Sample::releaseSample() {
+
+	unsigned int size = sample->sizeInBytes();
+
+	if (owns) {
+
+		::V8::AdjustAmountOfExternalAllocatedMemory(
+			-size
+		);
+
+		delete sample;
+	}
+	else {
+
+		if (Sample::manager.release(sample->uri())) {
+
+			::V8::AdjustAmountOfExternalAllocatedMemory(
+				-size
+			);
+		}
+	}
+}
+
+void v8Sample::initialize(Handle<ObjectTemplate> target) {
+	HandleScope scope;
+
+	constructor_template = Persistent<FunctionTemplate>(
+		FunctionTemplate::New(v8Sample::New)
+	);
+	constructor_template->InstanceTemplate()->SetInternalFieldCount(1);
+	constructor_template->SetClassName(String::NewSymbol("Sample"));
+
+	V8_SET_PROTOTYPE_METHOD(constructor_template, "%play", v8Sample::Play);
+
+	constructor_template->Set(
+		String::New("%load"),
+		FunctionTemplate::New(v8Sample::Load)
+	);
+
+	target->Set(String::NewSymbol("Sample"), constructor_template);
+}
+
+Sample *v8Sample::wrappedSample() {
+	return sample;
+}
+
+v8::Handle<v8::Value> v8Sample::New(const v8::Arguments &args) {
+	HandleScope scope;
+
+	new v8Sample(args.Holder());
+
+	return args.This();
+}
+
+Handle<Object> v8Sample::New(Sample *sample) {
+	HandleScope scope;
+
+	Handle<Object> instance = constructor_template->GetFunction()->NewInstance();
+
+	v8Sample *sampleWrapper = ObjectWrap::Unwrap<v8Sample>(instance);
+
+	sampleWrapper->releaseSample();
+
+	sampleWrapper->owns = false;
+
+	sampleWrapper->sample = sample;
+
+	return scope.Close(instance);
+}
+
+v8::Handle<v8::Value> v8Sample::Play(const v8::Arguments &args) {
+	HandleScope scope;
+
+	v8Sample *sampleWrapper = ObjectWrap::Unwrap<v8Sample>(args.Holder());
+
+	if (NULL == sampleWrapper) {
+		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
+			"Sample::play(): NULL Holder."
+		)));
+	}
+
+	sampleWrapper->sample->play(
+		args[0]->Int32Value(),
+		args[1]->Int32Value()
+	);
+
+	return v8::Undefined();
+}
+
+v8::Handle<v8::Value> v8Sample::Load(const v8::Arguments &args) {
+	HandleScope scope;
+
+	Handle<Object> upon = Context::GetCurrent()->Global()->Get(
+		String::NewSymbol("upon")
+	).As<Object>();
+
+	Handle<Object> defer = upon->Get(
+		String::NewSymbol("defer")
+	).As<Function>()->Call(upon, 0, NULL).As<Object>();
+
+	try {
+
+		Handle<Object> sample = v8Sample::New(
+			Sample::manager.load(
+				V8::stringToStdString(args[0]->ToString())
+			)
+		);
+
+		Handle<Value> resolveArgs[] = {
+			sample
+		};
+		defer->Get(
+			String::NewSymbol("resolve")
+		).As<Function>()->Call(defer, 1, resolveArgs);
+	}
+	catch (std::exception &e) {
+
+		return ThrowException(
+			v8::Exception::Error(String::New(e.what()))
+		);
+	}
+
+	return scope.Close(defer->Get(String::NewSymbol("promise")));
+}
+
+Persistent<FunctionTemplate> v8Sample::constructor_template;
+
+}
+

@@ -32,10 +32,18 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 			[@x, @y] = avo.Vector.add @dragStartAvocadoLocation, relative
 		
 		# Yum, an avocado!
-		avo.Image.load('/image/avocado.png').then (@avocado) =>
+		imagePromise = avo.Image.load('/image/avocado.png').then (@avocado) =>
+		
+		# Happy music!
+		musicPromise = avo.Music.load('/music/smile.ogg').then (@music) =>
+		
+			@music.play()
+		
+		upon.all([
+			imagePromise
+			musicPromise
+		]).then ->
 			
-			# When the image is loaded, we're done initializing. Tell Avocado
-			# we're ready!
 			defer.resolve()
 		
 		defer.promise

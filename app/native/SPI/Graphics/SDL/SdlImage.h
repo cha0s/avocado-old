@@ -18,6 +18,7 @@ namespace avo {
  * SDL image SPI implementation (SPII). The SPII uses SDL_Surface to implement
  * the image operations.
  *
+ * @ingroup Resources
  * @ingroup SDL
  */
 class SdlImage : public Image {

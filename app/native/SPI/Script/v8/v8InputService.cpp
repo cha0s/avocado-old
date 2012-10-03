@@ -46,7 +46,7 @@ void v8InputService::initialize(Handle<ObjectTemplate> target) {
 	target->Set(String::NewSymbol("InputService"), constructor_template);
 }
 
-v8::Handle<v8::Value> v8InputService::New(const Arguments &args) {
+v8::Handle<v8::Value> v8InputService::New(const v8::Arguments &args) {
 	HandleScope scope;
 
 	new v8InputService(args.Holder());
@@ -54,7 +54,7 @@ v8::Handle<v8::Value> v8InputService::New(const Arguments &args) {
 	return args.Holder();
 }
 
-v8::Handle<v8::Value> v8InputService::ImplementSpi(const Arguments &args) {
+v8::Handle<v8::Value> v8InputService::ImplementSpi(const v8::Arguments &args) {
 	HandleScope scope;
 
 	AVOCADO_UNUSED(args);
@@ -77,7 +77,7 @@ v8::Handle<v8::Value> v8InputService::ImplementSpi(const Arguments &args) {
 	return Undefined();
 }
 
-v8::Handle<v8::Value> v8InputService::Close(const Arguments &args) {
+v8::Handle<v8::Value> v8InputService::Close(const v8::Arguments &args) {
 	HandleScope scope;
 
 	v8InputService *inputServiceWrapper = ObjectWrap::Unwrap<v8InputService>(args.Holder());

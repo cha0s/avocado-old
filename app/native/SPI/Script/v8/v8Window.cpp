@@ -43,7 +43,7 @@ void v8Window::initialize(Handle<ObjectTemplate> target) {
 	target->Set(String::NewSymbol("Window"), constructor_template);
 }
 
-v8::Handle<v8::Value> v8Window::New(const Arguments &args) {
+v8::Handle<v8::Value> v8Window::New(const v8::Arguments &args) {
 	HandleScope scope;
 
 	new v8Window(args.Holder());
@@ -51,7 +51,7 @@ v8::Handle<v8::Value> v8Window::New(const Arguments &args) {
 	return args.Holder();
 }
 
-v8::Handle<v8::Value> v8Window::Render(const Arguments &args) {
+v8::Handle<v8::Value> v8Window::Render(const v8::Arguments &args) {
 	HandleScope scope;
 
 	v8Window *windowWrapper = ObjectWrap::Unwrap<v8Window>(args.Holder());
@@ -77,7 +77,7 @@ v8::Handle<v8::Value> v8Window::Render(const Arguments &args) {
 	return v8::Undefined();
 }
 
-v8::Handle<v8::Value> v8Window::Set(const Arguments &args) {
+v8::Handle<v8::Value> v8Window::Set(const v8::Arguments &args) {
 	HandleScope scope;
 
 	v8Window *windowWrapper = ObjectWrap::Unwrap<v8Window>(args.Holder());
@@ -99,7 +99,7 @@ v8::Handle<v8::Value> v8Window::Set(const Arguments &args) {
 	return v8::Undefined();
 }
 
-v8::Handle<v8::Value> v8Window::SetMouseVisibility(const Arguments &args) {
+v8::Handle<v8::Value> v8Window::SetMouseVisibility(const v8::Arguments &args) {
 	HandleScope scope;
 
 	v8Window *windowWrapper = ObjectWrap::Unwrap<v8Window>(args.Holder());
@@ -117,7 +117,7 @@ v8::Handle<v8::Value> v8Window::SetMouseVisibility(const Arguments &args) {
 	return v8::Undefined();
 }
 
-v8::Handle<v8::Value> v8Window::SetWindowTitle(const Arguments &args) {
+v8::Handle<v8::Value> v8Window::SetWindowTitle(const v8::Arguments &args) {
 	HandleScope scope;
 
 	v8Window *windowWrapper = ObjectWrap::Unwrap<v8Window>(args.Holder());
@@ -136,7 +136,7 @@ v8::Handle<v8::Value> v8Window::SetWindowTitle(const Arguments &args) {
 	return v8::Undefined();
 }
 
-v8::Handle<v8::Value> v8Window::Size(const Arguments &args) {
+v8::Handle<v8::Value> v8Window::Size(const v8::Arguments &args) {
 	HandleScope scope;
 
 	v8Window *windowWrapper = ObjectWrap::Unwrap<v8Window>(args.Holder());

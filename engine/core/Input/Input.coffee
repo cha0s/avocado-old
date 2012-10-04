@@ -4,6 +4,7 @@
 Input = new avo.Input()
 avo.Input = Input
 
+# Mouse button constants.
 avo.Input.LeftButton   = 1
 avo.Input.MiddleButton = 2
 avo.Input.RightButton  = 3

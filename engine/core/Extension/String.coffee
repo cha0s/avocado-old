@@ -7,9 +7,7 @@ avo.String =
 	# 
 	#     avocado> setterName 'width'
 	#     'setWidth'
-	setterName: (name) ->
-	
-		"set#{avo.String.capitalizeString name}"
+	setterName: (name) -> "set#{avo.String.capitalizeString name}"
 	
 	# Capitalize the first character in the string. e.g.
 	# 

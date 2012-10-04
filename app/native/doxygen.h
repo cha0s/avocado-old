@@ -132,6 +132,13 @@
  */
 
 /**
+ * @defgroup SFML Simple and Fast Multimedia Library interface
+ *
+ * @brief Avocado's interface to the
+ * [Simple and Fast Multimedia Library](http://www.sfml-dev.org).
+ */
+
+/**
  * @defgroup Qt Qt development framework interface
  *
  * @brief Avocado's interface to the

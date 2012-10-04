@@ -567,6 +567,7 @@ h1 {
 
 .line {
   white-space: pre;
+  height: 1.25em;
 }
 
 .fragment .line:first-child, .fragment .line:last-child {

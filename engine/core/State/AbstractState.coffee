@@ -1,5 +1,5 @@
 # avo.**AbstractState** is the abstract class which all states in the Avocado
-# engine.
+# engine extend.
 #
 # Avocado is always in a State, except during the initialization phase, and
 # shortly before exiting the engine.

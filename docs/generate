@@ -1,0 +1,7 @@
+cd ..
+./generate-docs
+cd docs
+
+cd ../app/native
+doxygen avocado.Doxyfile
+cd ../../docs

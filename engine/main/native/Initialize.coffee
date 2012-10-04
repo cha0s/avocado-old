@@ -18,7 +18,7 @@ avo.timingService = new avo.TimingService()
 avo.SoundService.implementSpi 'sdl'
 avo.soundService = new avo.SoundService()
 
-## Shoot for 60 FPS input and render.
+# Shoot for 60 FPS input and render.
 avo.ticksPerSecondTarget = 60
 avo.rendersPerSecondTarget = 60
 

@@ -1,0 +1,13 @@
+{
+  "name": "avocado",
+  "docco_husky": {
+    "css": "engine/docco/avocado.css",
+    "output_dir": "docs/output",
+    "content_dir": "engine/docco",
+    "project_name": "Avocado"
+  },
+  "version": "1.0.0",
+  "author": "cha0s <cha0s@therealcha0s.net>",
+  "description": "Collaborative, libre, gratis game development",
+  "dependencies": {}
+}

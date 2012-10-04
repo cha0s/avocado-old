@@ -10,14 +10,14 @@ NOTE: Currently, I am only building this on 32-bit xubuntu 12.04.1. More platfor
 
 	cd app/native
 	qmake
-	make everything
+	make -j4 everything
 	cd ../..
 	./avocado
 	
 ## Test the engine
 
 	cd app/native
-	make gtest
+	make -j4 gtest
 	
 ## Eat an avocado
 

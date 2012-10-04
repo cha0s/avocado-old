@@ -13,6 +13,10 @@
  * @section naaw No way man, keep at it!
  *
  * Thanks! Will do.
+ *
+ * @section script Where's the main documentation? C++ terrifies me.
+ *
+ * [Click here for the main documentation.](../index.html)
  */
 
 /**
@@ -120,7 +124,6 @@
  * @brief Avocado's interface to the
  * [V8 JavaScript engine](http://code.google.com/p/v8/).
  */
-
 
 /**
  * @defgroup SDL Simple DirectMedia Layer interface

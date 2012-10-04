@@ -58,14 +58,18 @@ public:
 	/**
 	 * @brief Thrown when script compilation fails.
 	 */
-	class script_compilation_error : public std::runtime_error {
+	class script_compilation_error : public std::exception {
 
 	public:
 
-		script_compilation_error(const std::string &text)
-			: std::runtime_error("Script compilation failed: " + text)
-		{
-		}
+		explicit script_compilation_error(const std::string &text, const std::string &precompiledCode = "");
+		virtual ~script_compilation_error() throw() {}
+
+		virtual const char *what() const throw();
+
+	private:
+
+		std::string m_what;
 
 	};
 

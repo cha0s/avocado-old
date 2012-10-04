@@ -3,19 +3,57 @@
 #include <algorithm>
 #include <map>
 #include <string>
+#include <sstream>
 #include <vector>
+
+#include "boost/format.hpp"
+#include <boost/tokenizer.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include "FS.h"
 #include "Script.h"
 #include "ScriptService.h"
 
-#include "deps/v8/include/v8.h"
-
 using namespace boost;
 using namespace std;
-using namespace v8;
 
 namespace avo {
+
+ScriptService::script_compilation_error::script_compilation_error(const std::string &text, const std::string &precompiledCode)
+{
+	m_what = "Script compilation failed: " + text;
+
+	if ("" != precompiledCode) {
+		m_what += "\nPrecompiled code follows:\n\n";
+
+		stringstream precompiledCodeStream(precompiledCode);
+		string precompiledCodeLine;
+
+		int lineNumber = 1;
+		int lineCount = std::count(
+			precompiledCode.begin(),
+			precompiledCode.end(),
+			'\n'
+		);
+		int lineCountWidth = boost::lexical_cast<std::string>(lineCount).length();
+
+		while (getline(precompiledCodeStream, precompiledCodeLine)) {
+
+			m_what += (
+				boost::format(
+					"%" + boost::lexical_cast<std::string>(lineCountWidth) + "d"
+				) % lineNumber++
+			).str();
+			m_what += " | ";
+			m_what += precompiledCodeLine;
+			m_what += "\n";
+		}
+	}
+}
+
+const char *ScriptService::script_compilation_error::what() const throw() {
+	return m_what.c_str();
+}
 
 /**
  * Thrown when ScriptService::loadCore fails.

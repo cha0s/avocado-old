@@ -4,7 +4,8 @@
     "css": "engine/docco/avocado.css",
     "output_dir": "docs/output",
     "content_dir": "engine/docco",
-    "project_name": "Avocado"
+    "project_name": "Avocado",
+    "show_timestamp": false
   },
   "version": "1.0.0",
   "author": "cha0s <cha0s@therealcha0s.net>",

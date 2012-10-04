@@ -9,6 +9,6 @@ do
 	qmake
 	make -j4
 	cd $p
-	
+
 done
 find SPI -name '*.spii' -exec cp -u {} ../../SPII \;

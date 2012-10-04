@@ -1,0 +1,8 @@
+<map id="Qt development framework interface" name="Qt development framework interface">
+<area shape="rect" id="node1" href="$group__Core.html" title="The core SPI handles framework initialization (e.g. SDL_Init()) and teardown (e.g. SDL_Quit()) as well as bridges to core engine functionality like filesystem access." alt="" coords="421,55,496,84"/>
+<area shape="rect" id="node2" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="369,293,548,323"/>
+<area shape="rect" id="node4" href="$group__Resources.html" title="Resources are loaded from the resource root and are managed using reference counting." alt="" coords="380,376,537,405"/>
+<area shape="rect" id="node5" href="$group__Timing.html" title="The timing SPI handles measuring time." alt="" coords="416,493,501,523"/>
+<area shape="rect" id="node6" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="407,697,511,727"/>
+<area shape="rect" id="node7" href="$group__Graphics.html" title="The graphics SPI handles window and graphics system initialization, and rendering." alt="" coords="409,815,508,844"/>
+</map>

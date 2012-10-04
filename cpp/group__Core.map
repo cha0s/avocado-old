@@ -1,0 +1,7 @@
+<map id="Core SPI" name="Core SPI">
+<area shape="rect" id="node2" href="$group__SDL.html" title="Avocado&#39;s interface to the Simple DirectMedia Layer." alt="" coords="276,45,412,91"/>
+<area shape="rect" id="node3" href="$group__Qt.html" title="Avocado&#39;s interface to the Qt development framework." alt="" coords="255,127,433,174"/>
+<area shape="rect" id="node4" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="255,339,433,368"/>
+<area shape="rect" id="node5" href="$group__V8.html" title="Avocado&#39;s interface to the V8 JavaScript engine." alt="" coords="265,392,423,421"/>
+<area shape="rect" id="node6" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="292,525,396,555"/>
+</map>

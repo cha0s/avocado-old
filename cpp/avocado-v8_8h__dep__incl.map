@@ -1,0 +1,32 @@
+<map id="SPI/Script/v8/avocado&#45;v8.h" name="SPI/Script/v8/avocado&#45;v8.h">
+<area shape="rect" id="node3" href="$avocado-v8_8cpp.html" title="SPI/Script/v8/avocado\l&#45;v8.cpp" alt="" coords="5,83,157,130"/>
+<area shape="rect" id="node5" href="$v8ScriptService_8h.html" title="SPI/Script/v8/v8ScriptService.h" alt="" coords="181,92,387,121"/>
+<area shape="rect" id="node11" href="$ObjectWrap_8h.html" title="SPI/Script/v8/ObjectWrap.h" alt="" coords="1325,92,1509,121"/>
+<area shape="rect" id="node15" href="$v8CoreService_8h.html" title="SPI/Script/v8/v8CoreService.h" alt="" coords="288,188,488,217"/>
+<area shape="rect" id="node20" href="$v8Counter_8h.html" title="SPI/Script/v8/v8Counter.h" alt="" coords="512,188,685,217"/>
+<area shape="rect" id="node25" href="$v8GraphicsService_8h.html" title="SPI/Script/v8/v8Graphics\lService.h" alt="" coords="709,179,880,226"/>
+<area shape="rect" id="node30" href="$v8Image_8h.html" title="SPI/Script/v8/v8Image.h" alt="" coords="1533,188,1699,217"/>
+<area shape="rect" id="node37" href="$v8Input_8h.html" title="SPI/Script/v8/v8Input.h" alt="" coords="904,188,1061,217"/>
+<area shape="rect" id="node42" href="$v8InputService_8h.html" title="SPI/Script/v8/v8InputService.h" alt="" coords="1085,188,1288,217"/>
+<area shape="rect" id="node47" href="$v8Music_8h.html" title="SPI/Script/v8/v8Music.h" alt="" coords="1923,188,2085,217"/>
+<area shape="rect" id="node52" href="$v8Sample_8h.html" title="SPI/Script/v8/v8Sample.h" alt="" coords="2109,188,2283,217"/>
+<area shape="rect" id="node57" href="$v8TimingService_8h.html" title="SPI/Script/v8/v8TimingService.h" alt="" coords="2307,188,2517,217"/>
+<area shape="rect" id="node62" href="$v8SoundService_8h.html" title="SPI/Script/v8/v8SoundService.h" alt="" coords="2541,188,2752,217"/>
+<area shape="rect" id="node67" href="$v8Window_8h.html" title="SPI/Script/v8/v8Window.h" alt="" coords="1723,188,1899,217"/>
+<area shape="rect" id="node79" href="$v8Script_8h.html" title="SPI/Script/v8/v8Script.h" alt="" coords="2708,92,2871,121"/>
+<area shape="rect" id="node7" href="$Script_2v8_2implementSpi_8cpp.html" title="SPI/Script/v8/implementSpi.cpp" alt="" coords="56,188,264,217"/>
+<area shape="rect" id="node9" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="1505,284,1727,313"/>
+<area shape="rect" id="node13" href="$ObjectWrap_8cpp.html" title="SPI/Script/v8/ObjectWrap.cpp" alt="" coords="1312,188,1509,217"/>
+<area shape="rect" id="node17" href="$v8CoreService_8cpp.html" title="SPI/Script/v8/v8CoreService.cpp" alt="" coords="223,284,436,313"/>
+<area shape="rect" id="node22" href="$v8Counter_8cpp.html" title="SPI/Script/v8/v8Counter.cpp" alt="" coords="460,284,649,313"/>
+<area shape="rect" id="node27" href="$v8GraphicsService_8cpp.html" title="SPI/Script/v8/v8Graphics\lService.cpp" alt="" coords="673,275,844,322"/>
+<area shape="rect" id="node32" href="$v8Image_8cpp.html" title="SPI/Script/v8/v8Image.cpp" alt="" coords="1303,284,1481,313"/>
+<area shape="rect" id="node35" href="$v8Window_8cpp.html" title="SPI/Script/v8/v8Window.cpp" alt="" coords="1751,284,1940,313"/>
+<area shape="rect" id="node39" href="$v8Input_8cpp.html" title="SPI/Script/v8/v8Input.cpp" alt="" coords="868,284,1039,313"/>
+<area shape="rect" id="node44" href="$v8InputService_8cpp.html" title="SPI/Script/v8/v8InputService.cpp" alt="" coords="1063,284,1279,313"/>
+<area shape="rect" id="node49" href="$v8Music_8cpp.html" title="SPI/Script/v8/v8Music.cpp" alt="" coords="1964,284,2143,313"/>
+<area shape="rect" id="node54" href="$v8Sample_8cpp.html" title="SPI/Script/v8/v8Sample.cpp" alt="" coords="2167,284,2353,313"/>
+<area shape="rect" id="node60" href="$v8TimingService_8cpp.html" title="SPI/Script/v8/v8TimingService.cpp" alt="" coords="2377,284,2604,313"/>
+<area shape="rect" id="node65" href="$v8SoundService_8cpp.html" title="SPI/Script/v8/v8SoundService.cpp" alt="" coords="2628,284,2852,313"/>
+<area shape="rect" id="node81" href="$v8Script_8cpp.html" title="SPI/Script/v8/v8Script.cpp" alt="" coords="2827,188,3003,217"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="V8 JavaScript interface" name="V8 JavaScript interface">
+<area shape="rect" id="node1" href="$group__Script.html" title="The script SPI handles all communication between the native C++ engine and JavaScript." alt="" coords="404,113,487,143"/>
+<area shape="rect" id="node2" href="$group__Core.html" title="The core SPI handles framework initialization (e.g. SDL_Init()) and teardown (e.g. SDL_Quit()) as well as bridges to core engine functionality like filesystem access." alt="" coords="408,188,483,217"/>
+<area shape="rect" id="node3" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="356,375,535,404"/>
+<area shape="rect" id="node5" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="393,475,497,504"/>
+<area shape="rect" id="node6" href="$group__Graphics.html" title="The graphics SPI handles window and graphics system initialization, and rendering." alt="" coords="396,557,495,587"/>
+</map>

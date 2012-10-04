@@ -1,0 +1,9 @@
+<map id="SPI/Sound/Music.h" name="SPI/Sound/Music.h">
+<area shape="rect" id="node3" href="$v8Music_8h.html" title="SPI/Script/v8/v8Music.h" alt="" coords="203,83,365,112"/>
+<area shape="rect" id="node9" href="$Music_8cpp.html" title="SPI/Sound/Music.cpp" alt="" coords="389,83,539,112"/>
+<area shape="rect" id="node11" href="$SdlMusic_8h.html" title="SPI/Sound/SDL/SdlMusic.h" alt="" coords="563,83,747,112"/>
+<area shape="rect" id="node5" href="$v8Music_8cpp.html" title="SPI/Script/v8/v8Music.cpp" alt="" coords="5,160,184,189"/>
+<area shape="rect" id="node7" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="208,160,429,189"/>
+<area shape="rect" id="node13" href="$SdlMusic_8cpp.html" title="SPI/Sound/SDL/SdlMusic.cpp" alt="" coords="521,160,719,189"/>
+<area shape="rect" id="node15" href="$SdlSoundService_8cpp.html" title="SPI/Sound/SDL/SdlSoundService.cpp" alt="" coords="743,160,985,189"/>
+</map>

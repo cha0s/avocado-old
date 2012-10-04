@@ -9,7 +9,7 @@
 		SPI
 		<dl>
 			<dt>
-				The core SPI handles framework initialization and teardown as
+				The Core SPI handles framework initialization and teardown as
 				well as bridges to core engine functionality like filesystem
 				access.
 			</dt>
@@ -21,7 +21,7 @@
 			</dd>
 			
 			<dt>
-				The graphics SPI handles window and graphics system
+				The Graphics SPI handles window and graphics system
 				initialization, and rendering.
 			</dt>
 			<dd>
@@ -33,7 +33,7 @@
 			</dd>
 			
 			<dt>
-				The timing SPI handles measuring time.
+				The Timing SPI handles measuring time.
 			</dt>
 			<dd>
 				Timing
@@ -46,7 +46,7 @@
 			</dd>
 			
 			<dt>
-				The input SPI handles loading and playing sound effects and
+				The Sound SPI handles loading and playing sound effects and
 				music.
 			</dt>
 			<dd>
@@ -58,24 +58,12 @@
 			</dd>
 			
 			<dt>
-				The Sound SPI handles user input polling.
+				The Input SPI handles user input polling.
 			</dt>
 			<dd>
 				Input
 				<dl>
 					<dd><a href="engine/core/Input/Input.coffee.html">Input</a></dd>
-				</dl>
-			</dd>
-			
-			<dt>
-				The graphics SPI handles window and graphics system
-				initialization, and rendering.
-			</dt>
-			<dd>
-				Graphics
-				<dl>
-					<dd><a href="engine/core/Graphics/Image.coffee.html">Image</a></dd>
-					<dd><a href="engine/core/Graphics/Window.coffee.html">Window</a></dd>
 				</dl>
 			</dd>
 		</dl>

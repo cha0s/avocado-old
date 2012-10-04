@@ -1,12 +1,17 @@
+# avo.**Ticker** allows you to keep track of how many discrete ticks have
+# passed. Ticks are measured in milliseconds.
 class avo.Ticker
 
+	# Initialize a ticker to count a tick every *frequency* milliseconds.
 	constructor: (frequency) ->
 		
+		# Keep the remainder counted towards the next tick.
 		@tickRemainder = 0
 		@frequency = frequency
 		@last_ = avo.TimingService.elapsed()
 		
-	copy: ->
+	# Deep copy a ticker.
+	deepCopy: ->
 		
 		ticker = new avo.Ticker()
 		
@@ -14,11 +19,14 @@ class avo.Ticker
 		ticker.frequency = @frequency
 		ticker.last_ = @last_
 	
+	# Reset a ticker, so it will be *@frequency* milliseconds until the next
+	# tick.
 	reset: ->
 		
 		@last_ = avo.timeElapsed()
 		@tickRemainder = 0
 	
+	# Count the number of ticks passed since the last invocation.
 	ticks: ->
 		
 		# Get current ticks.
@@ -39,6 +47,7 @@ class avo.Ticker
 			# delta next time.
 			ticks = Math.floor since / @frequency
 
+		# Keep the remainder of a tick that's passed.
 		@tickRemainder = since - ticks * @frequency
 
 		ticks

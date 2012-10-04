@@ -13,7 +13,7 @@ namespace avo {
  */
 
 /**
- * Counter class to count time passing between invocations.
+ * Counter keeps track of time.
  *
  * @ingroup SPI
  */

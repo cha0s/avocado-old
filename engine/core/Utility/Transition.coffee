@@ -1,3 +1,143 @@
+# avo.**Transition** is a **Mixin** which lends the ability to handle timed
+# transitions of arbitrary property methods residing on the mixed-in object.
+#
+# You can use this mixin like this:
+#
+#     avo.Mixin yourObject, avo.Transition
+#     
+#     yourObject.transition {x: 100}, 2000, 'easeOutQuad'
+#
+# The value of yourObject.x() will transition towards 100 over the course of
+# 2000 milliseconds. ***NOTE:*** yourObject must have the functions **x()** and
+# **setX()** defined.
+# 
+# This function was heavily inspired by the existence of
+# [jQuery.animate](http://api.jquery.com/animate/), though the API is ***NOT***
+# compatible.
+class avo.Transition
+
+	# Registered easing functions. An easing function is a parametric equation
+	# that determines the value of a property over the time length of the
+	# transition.
+	@easing: {}
+	
+	# Transition a set of properties at the specified speed in milliseconds,
+	# using the specified easing function.
+	transition: (props, speed, easing) ->
+		
+		# Register the transition. This isn't done inline because if a
+		# transition is already running against this object, we will add the
+		# next transition to the queue to run immediately after the currently
+		# running transition is finished.
+		registerTransition = =>
+		
+			# Speed might not get passed. If it doesn't, default to 100
+			# milliseconds.
+			speed = if 'number' == typeof speed then speed else 100
+			
+			# If easing isn't passed in as a function, attempt to look it up
+			# as a string key into avo.Transition.easing. If that fails, then
+			# default to 'easeOutQuad'.
+			if 'function' isnt typeof easing
+				easing = easing && Transition.easing[easing] || avo.Transition.easing['easeOutQuad']
+			
+			
+			# Store the original values of the properties and calculate the
+			# difference between the original values and the requested values.
+			original = {}
+			change = {}
+			method = {}
+			for i, prop of props
+				value = this[i]()
+				original[i] = value
+				change[i] = prop - value
+				method[i] = avo.String.setterName i
+			
+			# Set up the transition object.
+			defer = upon.defer()
+			transition = 
+				defer: defer
+				promise: defer.promise
+				then: defer.promise.then
+				duration: speed / 1000
+				start: avo.TimingService.elapsed()
+				elapsed: 0
+				original: original
+				change: change
+				method: method
+				easing: easing
+				O: this
+				
+			# Tick callback. Called repeatedly while this transition is
+			# running.
+			transition.tick = ->
+				
+				# If we've overshot the duration, we'll fix it up here, so
+				# things never transition too far (through the end point).
+				if @elapsed >= @duration
+					@elapsed = @duration
+				
+				# Do easing for each property that actually changed.
+				for i of @change
+					if @change[i]
+						@O[@method[i]] @easing(
+							@elapsed,
+							@original[i],
+							@change[i],
+							@duration
+						)
+				
+				# Let any listeners know where we're at in the transition
+				# cycle.
+				@defer.progress this
+				
+				# Stop if we're done.
+				@stop() if @elapsed is @duration
+
+			# Immediately stop the transition. This will leave the object in
+			# its current state; partially transitioned.				
+			transition.stop = ->
+				
+				# Stop the tick loop and clear out the handle so additional
+				# transitions attached to this object won't wait.
+				clearInterval @interval
+				delete @interval
+				
+				# Let any listeners know that the transition is complete.
+				@defer.resolve()
+				
+			# Immediately finish the transition. This will leave the object
+			# in the fully transitioned state.
+			transition.skip = ->
+				
+				# Just trick it into thinking the time passed and do one last
+				# tick.
+				@elapsed = @duration
+				@tick()
+				
+			transition.interval = setInterval(
+				=>
+					
+					# Update the transition's elapsed time and tick.
+					transition.elapsed += avo.TimingService.elapsed() - transition.start
+					transition.start = avo.TimingService.elapsed()
+					transition.tick()
+				10
+			)
+			
+			@transition_ = transition
+		
+		if @transition_?.interval?
+			
+			# If any transition is running, add this next one to the queue
+			# after the current transition.
+			@transition_.promise.then -> registerTransition()
+			@transition_
+		else
+			
+			# No other transition running? Start this one immediately.
+			registerTransition()
+
 ###
  *
  * jQuery Easing v1.3 - http://gsgd.co.uk/sandbox/jquery/easing/
@@ -38,10 +178,9 @@
  *
  *
 ###
-
 # Not worth the trouble of translating.
 `
-var easing = {
+avo.Transition.easing = {
 	linear: function (t, b, c, d) {
 		return b + c * t/d
 	},
@@ -171,92 +310,3 @@ var easing = {
 	}
 }
 `
-
-class avo.Transition
-
-	@easing: easing
-	
-	tick = ->
-		
-		@elapsed += avo.TimingService.elapsed() - @start
-		@start = avo.TimingService.elapsed()
-		
-		if @elapsed >= @duration
-			@elapsed = @duration
-		
-		for i of @change
-			
-			if @change[i]
-				
-				@O[@method[i]] @easing(
-					@elapsed,
-					@original[i],
-					@change[i],
-					@duration
-				)
-		
-		@defer.progress this
-		
-		if @elapsed == @duration
-			
-			@stop()
-	
-	transition: (props, speed, easing) ->
-		
-		registerTransition = =>
-		
-			speed = if 'number' == typeof speed then speed else 100
-			
-			if 'function' isnt typeof easing
-				easing = easing && Transition.easing[easing] || Transition.easing['easeOutQuad']
-	
-			original = {}
-			change = {}
-			method = {}
-			
-			for i, prop of props
-				value = this[i]()
-				
-				original[i] = value
-				change[i] = prop - value
-				method[i] = avo.String.setterName i
-			
-			defer = upon.defer()
-		
-			transition = 
-			
-				defer: defer
-				promise: defer.promise
-				duration: speed / 1000
-				elapsed: 0
-				start: avo.TimingService.elapsed()
-				original: original
-				change: change
-				method: method
-				easing: easing
-				stop: ->
-					
-					clearInterval @interval
-					delete @interval
-					
-					@defer.resolve()
-					
-				O: this
-				then: defer.promise.then
-				
-			transition.interval = setInterval(
-				tick.bind transition
-				10
-			)
-				
-			@transition_ = transition
-		
-		if @transition_?.interval?
-			
-			@transition_.promise.then -> registerTransition()
-			
-		else
-		
-			registerTransition()
-		
-		@transition_

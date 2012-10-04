@@ -1,4 +1,4 @@
-# Proxy and constant definitions.
+# SPI proxy and constant definitions.
 
 # avo.Input is a singleton.
 Input = new avo.Input()

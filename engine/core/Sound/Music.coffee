@@ -1,4 +1,4 @@
-# Proxy and constant definitions.
+# SPI proxy and constant definitions.
 
 avo.Music.LoopForever = -1
 avo.Music.AnyChannel = -1

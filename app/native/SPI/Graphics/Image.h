@@ -55,8 +55,8 @@ public:
 	virtual ~Image() {}
 
 	/**
-	 * Draw a box at the given x, y with the given width, height dimensions.
-	 * Draw it with the given RGBA color, and with the given draw mode.
+	 * Draw a circle at the given x, y with the given radius. Draw it with the
+	 * given RGBA color, and with the given draw mode.
 	 */
 	virtual void drawCircle(int x, int y, int radius, int r, int g, int b, int a = 255, DrawMode drawMode = DrawMode_Blend) = 0;
 
@@ -80,7 +80,7 @@ public:
 	virtual void drawLineBox(int x, int y, int w, int h, int r, int g, int b, int a = 255, DrawMode drawMode = DrawMode_Blend) = 0;
 
 	/**
-	 * Fill an image with a specified color.
+	 * Fill with a specified color.
 	 */
 	virtual void fill(int r, int g, int b, int a = 255) = 0;
 

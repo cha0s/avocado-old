@@ -1,4 +1,4 @@
-# Proxy and constant definitions.
+# SPI proxy and constant definitions.
 
 avo.Sample.LoopForever = -1
 avo.Sample.AnyChannel = -1

@@ -5,6 +5,5 @@ var searchData=
   ['wrap',['Wrap',['../classavo_1_1ObjectWrap.html#a62523c3ab5857e642383a40349b7dc79',1,'avo::ObjectWrap']]],
   ['wrappedcounter',['wrappedCounter',['../classavo_1_1v8Counter.html#aff9f86febac5a0268af3ed4d98c3a40f',1,'avo::v8Counter']]],
   ['wrappedimage',['wrappedImage',['../classavo_1_1v8Image.html#aaae5f7afc8e469bc21e7defdc5c29340',1,'avo::v8Image']]],
-  ['wrappedsample',['wrappedSample',['../classavo_1_1v8Sample.html#ad61c4c9938468921b454ad2d36b02781',1,'avo::v8Sample']]],
   ['writestring',['writeString',['../namespaceavo_1_1FS.html#a9a075894943e42c01d57cc4431f05941',1,'avo::FS']]]
 ];

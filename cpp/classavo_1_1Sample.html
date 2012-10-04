@@ -109,8 +109,7 @@ Inheritance diagram for avo::Sample:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a357a5f0b961590c41c35bb75305b4302"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Sample.html#a357a5f0b961590c41c35bb75305b4302">PlaybackProperties</a> { <a class="el" href="classavo_1_1Sample.html#a357a5f0b961590c41c35bb75305b4302a280907a7cf506482dfbde82509ba8f37">LoopForever</a> = -1, 
-<a class="el" href="classavo_1_1Sample.html#a357a5f0b961590c41c35bb75305b4302a8f4661b1a57fdf3d01635da7b3e48a61">AnyChannel</a> = -1
+<tr class="memitem:a357a5f0b961590c41c35bb75305b4302"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Sample.html#a357a5f0b961590c41c35bb75305b4302">PlaybackProperties</a> { <a class="el" href="classavo_1_1Sample.html#a357a5f0b961590c41c35bb75305b4302a280907a7cf506482dfbde82509ba8f37">LoopForever</a> = -1
  }</td></tr>
 <tr class="separator:a357a5f0b961590c41c35bb75305b4302"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -120,8 +119,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7fcd868806f37f20d3934a4909a0d45d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41c61dcff93e3ac2b6c28bbfc784a423"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Sample.html#a41c61dcff93e3ac2b6c28bbfc784a423">~Sample</a> ()</td></tr>
 <tr class="separator:a41c61dcff93e3ac2b6c28bbfc784a423"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6846f41e87be600d588334a04abd8d7"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Sample.html#ad6846f41e87be600d588334a04abd8d7">play</a> (int loops=0, int channel=<a class="el" href="classavo_1_1Sample.html#a357a5f0b961590c41c35bb75305b4302a8f4661b1a57fdf3d01635da7b3e48a61">AnyChannel</a>)=0</td></tr>
-<tr class="separator:ad6846f41e87be600d588334a04abd8d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1432771db08164a27a31bf3387de034"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Sample.html#af1432771db08164a27a31bf3387de034">play</a> (int loops=0)=0</td></tr>
+<tr class="separator:af1432771db08164a27a31bf3387de034"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5ae06ddab77f78c87c61c488dcdbfc3"><td class="memItemLeft" align="right" valign="top">boost::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Sample.html#ae5ae06ddab77f78c87c61c488dcdbfc3">uri</a> () const </td></tr>
 <tr class="separator:ae5ae06ddab77f78c87c61c488dcdbfc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16054b78bc6a60e708d55b96c469aab5"><td class="memItemLeft" align="right" valign="top">virtual unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Sample.html#a16054b78bc6a60e708d55b96c469aab5">sizeInBytes</a> ()</td></tr>
@@ -140,7 +139,7 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a629d6d190a80e596249ab6f1524c4a3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Sample (sound effect) class. </p>
+<div class="textblock"><p>Sample representation for a sound effect. </p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a class="anchor" id="a357a5f0b961590c41c35bb75305b4302"></a>
 <div class="memitem">
@@ -155,16 +154,12 @@ Protected Member Functions</h2></td></tr>
 <tr><td valign="top"><em><a class="anchor" id="a357a5f0b961590c41c35bb75305b4302a280907a7cf506482dfbde82509ba8f37"></a>LoopForever</em>&nbsp;</td><td>
 <p>Sound should loop forever. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a357a5f0b961590c41c35bb75305b4302a8f4661b1a57fdf3d01635da7b3e48a61"></a>AnyChannel</em>&nbsp;</td><td>
-</td></tr>
 </table>
 </dd>
 </dl>
 <div class="fragment"><div class="line">                            {</div>
 <div class="line"></div>
 <div class="line">        <a class="code" href="classavo_1_1Sample.html#a357a5f0b961590c41c35bb75305b4302a280907a7cf506482dfbde82509ba8f37">LoopForever</a> = -1</div>
-<div class="line"></div>
-<div class="line">        , <a class="code" href="classavo_1_1Sample.html#a357a5f0b961590c41c35bb75305b4302a8f4661b1a57fdf3d01635da7b3e48a61">AnyChannel</a> = -1</div>
 <div class="line">    };</div>
 </div><!-- fragment -->
 </div>
@@ -214,7 +209,7 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ad6846f41e87be600d588334a04abd8d7"></a>
+<a class="anchor" id="af1432771db08164a27a31bf3387de034"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -225,18 +220,8 @@ Protected Member Functions</h2></td></tr>
           <td class="memname">virtual int avo::Sample::play </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>loops</em> = <code>0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>loops</em> = <code>0</code></td><td>)</td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>channel</em> = <code><a class="el" href="classavo_1_1Sample.html#a357a5f0b961590c41c35bb75305b4302a8f4661b1a57fdf3d01635da7b3e48a61">AnyChannel</a></code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -245,9 +230,9 @@ Protected Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Play a sample, looping the specified number of times, on the specified channel. </p>
+<p>Play a sample, looping the specified number of times. </p>
 
-<p>Implemented in <a class="el" href="classavo_1_1SdlSample.html#a080262a38571f76323515bed6eb8320f">avo::SdlSample</a>.</p>
+<p>Implemented in <a class="el" href="classavo_1_1SdlSample.html#a8cc629f699cd0f9248c9aee93d329d9c">avo::SdlSample</a>.</p>
 
 </div>
 </div>

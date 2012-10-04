@@ -109,8 +109,6 @@ Inheritance diagram for avo::v8Sample:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a4d597c6f4eb415f79fc791e5fac30893"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1v8Sample.html#a4d597c6f4eb415f79fc791e5fac30893">~v8Sample</a> ()</td></tr>
 <tr class="separator:a4d597c6f4eb415f79fc791e5fac30893"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad61c4c9938468921b454ad2d36b02781"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classavo_1_1Sample.html">Sample</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1v8Sample.html#ad61c4c9938468921b454ad2d36b02781">wrappedSample</a> ()</td></tr>
-<tr class="separator:ad61c4c9938468921b454ad2d36b02781"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classavo_1_1ObjectWrap"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classavo_1_1ObjectWrap')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classavo_1_1ObjectWrap.html">avo::ObjectWrap</a></td></tr>
 <tr class="memitem:aaa16ea6d28b0f6a9f3ce42075e775a45 inherit pub_methods_classavo_1_1ObjectWrap"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1ObjectWrap.html#aaa16ea6d28b0f6a9f3ce42075e775a45">~ObjectWrap</a> ()</td></tr>
 <tr class="separator:aaa16ea6d28b0f6a9f3ce42075e775a45 inherit pub_methods_classavo_1_1ObjectWrap"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -179,7 +177,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="fragment"><div class="line">                                                       {</div>
 <div class="line">    HandleScope scope;</div>
 <div class="line"></div>
-<div class="line">    constructor_template = Persistent&lt;FunctionTemplate&gt;(</div>
+<div class="line">    constructor_template = Persistent&lt;FunctionTemplate&gt;::New(</div>
 <div class="line">        FunctionTemplate::New(<a class="code" href="classavo_1_1v8Sample.html#a8e4fc4e7f2288b6061d72e9b1a6847ce">v8Sample::New</a>)</div>
 <div class="line">    );</div>
 <div class="line">    constructor_template-&gt;InstanceTemplate()-&gt;SetInternalFieldCount(1);</div>
@@ -232,24 +230,6 @@ Additional Inherited Members</h2></td></tr>
 <div class="line">    sampleWrapper-&gt;sample = sample;</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordflow">return</span> scope.Close(instance);</div>
-<div class="line">}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="ad61c4c9938468921b454ad2d36b02781"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classavo_1_1Sample.html">Sample</a> * avo::v8Sample::wrappedSample </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="fragment"><div class="line">                                {</div>
-<div class="line">    <span class="keywordflow">return</span> sample;</div>
 <div class="line">}</div>
 </div><!-- fragment -->
 </div>

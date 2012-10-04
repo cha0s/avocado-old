@@ -77,7 +77,7 @@ dependencies.commands += \
 	test ! -d build \
 		&& mkdir build \
 		&& cd build \
-		&& cmake .. \
+		&& cmake -DBUILD_SHARED_LIBS=off .. \
 		&& make \
 		&& cd .. \
 	cd ../..; \

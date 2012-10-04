@@ -8,8 +8,8 @@
 # 
 # * <code>avo.Image.DrawMode_Replace</code>: Write over any graphics under this
 # image when rendering.
-# * <code>avo.Image.DrawMode_Blend</code>: (default) Blend the image with any
-# graphics underneath using alpha pixel values.
+# * <code>avo.Image.DrawMode_Blend</code>: ***(default)*** Blend the image with
+# any graphics underneath using alpha pixel values.
 avo.Image.DrawMode_Replace = 0
 avo.Image.DrawMode_Blend   = 1
 

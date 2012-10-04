@@ -4,7 +4,7 @@
 
 # Window creation constants.
 # 
-# * <code>avo.Window.Flags_Default</code>: (default) Nothing special.
+# * <code>avo.Window.Flags_Default</code>: ***(default)*** Nothing special.
 # * <code>avo.Window.Flags_Fullscreen</code>: Create a fullscreen window.
 # ***NOTE:*** May not be supported on all platforms.
 avo.Window.Flags_Default = 0

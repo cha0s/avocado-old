@@ -88,9 +88,8 @@ unsigned int SdlImage::pixelAt(int x, int y) const {
 }
 
 void SdlImage::drawCircle(int x, int y, int radius, int r, int g, int b, int a, DrawMode drawMode) {
-	if (NULL == surface) return;
-
 	AVOCADO_UNUSED(drawMode);
+	if (NULL == surface) return;
 
 	circleRGBA(
 		surface,
@@ -101,9 +100,8 @@ void SdlImage::drawCircle(int x, int y, int radius, int r, int g, int b, int a, 
 }
 
 void SdlImage::drawFilledBox(int x, int y, int w, int h, int r, int g, int b, int a, DrawMode drawMode) {
-	if (NULL == surface) return;
-
 	AVOCADO_UNUSED(drawMode);
+	if (NULL == surface) return;
 
 	boxRGBA(
 		surface,
@@ -113,9 +111,8 @@ void SdlImage::drawFilledBox(int x, int y, int w, int h, int r, int g, int b, in
 }
 
 void SdlImage::drawLine(int x1, int y1, int x2, int y2, int r, int g, int b, int a, DrawMode drawMode) {
-	if (NULL == surface) return;
-
 	AVOCADO_UNUSED(drawMode);
+	if (NULL == surface) return;
 
 	lineRGBA(
 		surface,
@@ -125,9 +122,8 @@ void SdlImage::drawLine(int x1, int y1, int x2, int y2, int r, int g, int b, int
 }
 
 void SdlImage::drawLineBox(int x, int y, int w, int h, int r, int g, int b, int a, DrawMode drawMode) {
-	if (NULL == surface) return;
-
 	AVOCADO_UNUSED(drawMode);
+	if (NULL == surface) return;
 
 	rectangleRGBA(
 		surface,

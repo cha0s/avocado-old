@@ -68,6 +68,12 @@ std::string v8ScriptService::preCompileCode(const std::string &code, const boost
 	// Compile coffeescript to JS.
 	if (std::string::npos != filenameString.find(".coffee")) {
 
+		// CoffeeScript. <3
+		Script *coffeeCompiler = scriptFromFile(
+			FS::engineRoot() / "compiler" / "CoffeeScript.js"
+		);
+		coffeeCompiler->execute();
+
 		Handle<Object> CoffeeScript = Context::GetCurrent()->Global()->Get(String::New("CoffeeScript")).As<Object>();
 		Handle<Function> compile = CoffeeScript->Get(String::New("compile")).As<Function>();
 

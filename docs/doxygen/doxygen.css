@@ -577,3 +577,7 @@ div.contents p {
     font-size: 14px;
     line-height: 1em;
 }
+
+.mlabel {
+  margin-right: 4px;
+}

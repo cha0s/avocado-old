@@ -112,8 +112,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a75531e2b2a6a2d4036d75fb5faa5c555"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84d78d5e761f57e8c69cc6e8f3a8092d"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1GraphicsService.html#a84d78d5e761f57e8c69cc6e8f3a8092d">~GraphicsService</a> ()</td></tr>
 <tr class="separator:a84d78d5e761f57e8c69cc6e8f3a8092d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3dec45d40dab99350f465a4b49b1dc7d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1GraphicsService.html#a3dec45d40dab99350f465a4b49b1dc7d">close</a> ()</td></tr>
-<tr class="separator:a3dec45d40dab99350f465a4b49b1dc7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4fe9950c4849eb0c6e2343c6efd6367"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1GraphicsService.html#ab4fe9950c4849eb0c6e2343c6efd6367">close</a> ()</td></tr>
+<tr class="separator:ab4fe9950c4849eb0c6e2343c6efd6367"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -172,7 +172,7 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a3dec45d40dab99350f465a4b49b1dc7d"></a>
+<a class="anchor" id="ab4fe9950c4849eb0c6e2343c6efd6367"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -180,7 +180,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void avo::GraphicsService::close </td>
+          <td class="memname">void avo::GraphicsService::close </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -188,14 +188,19 @@ Static Public Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p>Close out the service. </p>
 
 <p>Reimplemented in <a class="el" href="classavo_1_1SdlGraphicsService.html#aaf1a4d622964317fcf37618762aeab26">avo::SdlGraphicsService</a>.</p>
-<div class="fragment"><div class="line">{}</div>
+<div class="fragment"><div class="line">                            {</div>
+<div class="line">    <a class="code" href="classavo_1_1Image.html#a6284c26a755a311d77c1fe0f2be5685a">Image::manager</a>.<a class="code" href="classavo_1_1ResourceManager.html#aade670321db257a78eeedc07cadc2f26">forceReleaseAll</a>();</div>
+<div class="line">    <a class="code" href="classavo_1_1Image.html#a99d1bbc316fb27cf9600207f1647625d">Image::factoryManager</a>.<a class="code" href="classavo_1_1FactoryManager.html#a56743fbd3289253612ed8b16facc9b8b">setInstance</a>(NULL);</div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="classavo_1_1Window.html#a102fbf2bddee9690ce3872f6a87c6067">Window::factoryManager</a>.<a class="code" href="classavo_1_1FactoryManager.html#a56743fbd3289253612ed8b16facc9b8b">setInstance</a>(NULL);</div>
+<div class="line">}</div>
 </div><!-- fragment -->
 </div>
 </div>

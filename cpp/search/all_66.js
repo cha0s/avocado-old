@@ -25,6 +25,7 @@ var searchData=
   ['findfilenames',['findFilenames',['../namespaceavo_1_1FS.html#aa9fee26bf0c1e6367812a005d76317d2',1,'avo::FS']]],
   ['flags_5fdefault',['Flags_Default',['../classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0ab72160693e3a009592e9399c1da4cdf1',1,'avo::Window']]],
   ['flags_5ffullscreen',['Flags_Fullscreen',['../classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0a381aa866e88df37518371bae19f59a4e',1,'avo::Window']]],
+  ['forcereleaseall',['forceReleaseAll',['../classavo_1_1ResourceManager.html#aade670321db257a78eeedc07cadc2f26',1,'avo::ResourceManager']]],
   ['fs',['FS',['../classavo_1_1FS_1_1FS.html',1,'avo::FS']]],
   ['fs_2ecpp',['FS.cpp',['../FS_8cpp.html',1,'']]],
   ['fs_2eh',['FS.h',['../FS_8h.html',1,'']]],

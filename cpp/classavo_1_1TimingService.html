@@ -112,8 +112,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3f4ae0d8849bedc76a96ac8a68a6d2ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af08f6b4e745bbf74ab4bf60269535d49"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1TimingService.html#af08f6b4e745bbf74ab4bf60269535d49">~TimingService</a> ()</td></tr>
 <tr class="separator:af08f6b4e745bbf74ab4bf60269535d49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50ff9552a13b1a2c1bb58c9550e017d2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1TimingService.html#a50ff9552a13b1a2c1bb58c9550e017d2">close</a> ()</td></tr>
-<tr class="separator:a50ff9552a13b1a2c1bb58c9550e017d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c7bade13781da6662d807bb5a6c4081"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1TimingService.html#a2c7bade13781da6662d807bb5a6c4081">close</a> ()</td></tr>
+<tr class="separator:a2c7bade13781da6662d807bb5a6c4081"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae506e8c58067f2c6656e8f43f9d682d5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1TimingService.html#ae506e8c58067f2c6656e8f43f9d682d5">sleep</a> (int ms)=0</td></tr>
 <tr class="separator:ae506e8c58067f2c6656e8f43f9d682d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -174,7 +174,7 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a50ff9552a13b1a2c1bb58c9550e017d2"></a>
+<a class="anchor" id="a2c7bade13781da6662d807bb5a6c4081"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -182,7 +182,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void avo::TimingService::close </td>
+          <td class="memname">void avo::TimingService::close </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -190,14 +190,16 @@ Static Public Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p>Close out the service. </p>
 
-<p>Reimplemented in <a class="el" href="classavo_1_1SdlTimingService.html#a6e5382a3a118105e626b3154983928f4">avo::SdlTimingService</a>.</p>
-<div class="fragment"><div class="line">{}</div>
+<p>Reimplemented in <a class="el" href="classavo_1_1SdlTimingService.html#a6e5382a3a118105e626b3154983928f4">avo::SdlTimingService</a>, and <a class="el" href="classavo_1_1SfmlTimingService.html#af8d2dea7327320c3a390ccf6e8e6ceba">avo::SfmlTimingService</a>.</p>
+<div class="fragment"><div class="line">                          {</div>
+<div class="line">    <a class="code" href="classavo_1_1Counter.html#a0bf52dfaf2dad48e7c1923fe4402fcf1">Counter::factoryManager</a>.<a class="code" href="classavo_1_1FactoryManager.html#a56743fbd3289253612ed8b16facc9b8b">setInstance</a>(NULL);</div>
+<div class="line">}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -250,7 +252,7 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Delay execution by a given number of milliseconds. </p>
 
-<p>Implemented in <a class="el" href="classavo_1_1SdlTimingService.html#a33f91b371e3322b740262c1a6b93db10">avo::SdlTimingService</a>, <a class="el" href="classavo_1_1QtTimingService.html#a5af8187dd744eda7f82064c14c52c2c6">avo::QtTimingService</a>, and <a class="el" href="classavo_1_1SfmlTimingService.html#a4bdb2dc95af229e19814b5a2856cac3d">avo::SfmlTimingService</a>.</p>
+<p>Implemented in <a class="el" href="classavo_1_1SdlTimingService.html#a33f91b371e3322b740262c1a6b93db10">avo::SdlTimingService</a>, <a class="el" href="classavo_1_1SfmlTimingService.html#a4bdb2dc95af229e19814b5a2856cac3d">avo::SfmlTimingService</a>, and <a class="el" href="classavo_1_1QtTimingService.html#a5af8187dd744eda7f82064c14c52c2c6">avo::QtTimingService</a>.</p>
 
 </div>
 </div>

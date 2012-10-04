@@ -115,7 +115,7 @@ var searchData=
   ['sleep',['sleep',['../classavo_1_1I.html#a977331c03d3b1a614fddbf56a14e90c9',1,'avo::I::sleep()'],['../classavo_1_1QtTimingService.html#a5af8187dd744eda7f82064c14c52c2c6',1,'avo::QtTimingService::sleep()'],['../classavo_1_1SdlTimingService.html#a33f91b371e3322b740262c1a6b93db10',1,'avo::SdlTimingService::sleep()'],['../classavo_1_1SfmlTimingService.html#a4bdb2dc95af229e19814b5a2856cac3d',1,'avo::SfmlTimingService::sleep()'],['../classavo_1_1TimingService.html#ae506e8c58067f2c6656e8f43f9d682d5',1,'avo::TimingService::sleep()']]],
   ['sound_20spi',['Sound SPI',['../group__Sound.html',1,'']]],
   ['soundservice',['SoundService',['../classavo_1_1SoundService.html',1,'avo']]],
-  ['soundservice',['SoundService',['../classavo_1_1SoundService.html#abfd7b5149e8bceec1bd27d871df4c7ad',1,'avo::SoundService::SoundService()'],['../classavo_1_1v8SoundService.html#a8058d641b12c389526c957d57b9b99d5',1,'avo::v8SoundService::soundService()']]],
+  ['soundservice',['soundService',['../classavo_1_1v8SoundService.html#a8058d641b12c389526c957d57b9b99d5',1,'avo::v8SoundService::soundService()'],['../classavo_1_1SoundService.html#abfd7b5149e8bceec1bd27d871df4c7ad',1,'avo::SoundService::SoundService()']]],
   ['soundservice_2ecpp',['SoundService.cpp',['../SoundService_8cpp.html',1,'']]],
   ['soundservice_2eh',['SoundService.h',['../SoundService_8h.html',1,'']]],
   ['soundservicespiiloader',['soundServiceSpiiLoader',['../namespaceavo.html#a394a2bf4d73919421f5d07cca9a8d398',1,'avo']]],

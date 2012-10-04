@@ -1,8 +1,9 @@
 <map id="SPI/Sound/Sample.h" name="SPI/Sound/Sample.h">
 <area shape="rect" id="node3" href="$v8Sample_8h.html" title="SPI/Script/v8/v8Sample.h" alt="" coords="240,83,413,112"/>
-<area shape="rect" id="node9" href="$Sample_8cpp.html" title="SPI/Sound/Sample.cpp" alt="" coords="485,83,643,112"/>
-<area shape="rect" id="node11" href="$SdlSample_8h.html" title="SPI/Sound/SDL/SdlSample.h" alt="" coords="667,83,859,112"/>
-<area shape="rect" id="node17" href="$SfmlSample_8h.html" title="SPI/Sound/SFML/SfmlSample.h" alt="" coords="964,83,1175,112"/>
+<area shape="rect" id="node9" href="$Sample_8cpp.html" title="SPI/Sound/Sample.cpp" alt="" coords="535,83,692,112"/>
+<area shape="rect" id="node11" href="$SdlSample_8h.html" title="SPI/Sound/SDL/SdlSample.h" alt="" coords="716,83,908,112"/>
+<area shape="rect" id="node17" href="$SfmlSample_8h.html" title="SPI/Sound/SFML/SfmlSample.h" alt="" coords="948,83,1159,112"/>
+<area shape="rect" id="node23" href="$SoundService_8cpp.html" title="SPI/Sound/SoundService.cpp" alt="" coords="1183,83,1377,112"/>
 <area shape="rect" id="node5" href="$v8Sample_8cpp.html" title="SPI/Script/v8/v8Sample.cpp" alt="" coords="5,169,192,199"/>
 <area shape="rect" id="node7" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="216,169,437,199"/>
 <area shape="rect" id="node13" href="$SdlSample_8cpp.html" title="SPI/Sound/SDL/SdlSample.cpp" alt="" coords="461,169,667,199"/>

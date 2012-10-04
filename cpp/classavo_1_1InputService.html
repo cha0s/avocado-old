@@ -112,8 +112,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae7205062decb1215462af41d1c34119a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39b55a0399070d09e1ba5763967d1498"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1InputService.html#a39b55a0399070d09e1ba5763967d1498">~InputService</a> ()</td></tr>
 <tr class="separator:a39b55a0399070d09e1ba5763967d1498"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a0e01ce9e6dd5d8eef0c9c8de70539d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1InputService.html#a1a0e01ce9e6dd5d8eef0c9c8de70539d">close</a> ()</td></tr>
-<tr class="separator:a1a0e01ce9e6dd5d8eef0c9c8de70539d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1cea354af4a5d5a62b89be6e464f58a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1InputService.html#aa1cea354af4a5d5a62b89be6e464f58a">close</a> ()</td></tr>
+<tr class="separator:aa1cea354af4a5d5a62b89be6e464f58a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -172,7 +172,7 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a1a0e01ce9e6dd5d8eef0c9c8de70539d"></a>
+<a class="anchor" id="aa1cea354af4a5d5a62b89be6e464f58a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -180,7 +180,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void avo::InputService::close </td>
+          <td class="memname">void avo::InputService::close </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -188,14 +188,16 @@ Static Public Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <p>Close out the service. </p>
 
 <p>Reimplemented in <a class="el" href="classavo_1_1SdlInputService.html#a3c4b10b0540afe76904a417c57e23d67">avo::SdlInputService</a>.</p>
-<div class="fragment"><div class="line">{}</div>
+<div class="fragment"><div class="line">                         {</div>
+<div class="line">    <a class="code" href="classavo_1_1Input.html#a316601e6836a621ee84c9097b6b1871f">Input::factoryManager</a>.<a class="code" href="classavo_1_1FactoryManager.html#a56743fbd3289253612ed8b16facc9b8b">setInstance</a>(NULL);</div>
+<div class="line">}</div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -106,6 +106,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5fc86fa0e46abb31003d9a9c77bb05c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0630b7e99beba642cdcf39a761f451ae"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1ResourceManager.html#a0630b7e99beba642cdcf39a761f451ae">release</a> (const boost::filesystem::path &amp;uri)</td></tr>
 <tr class="separator:a0630b7e99beba642cdcf39a761f451ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aade670321db257a78eeedc07cadc2f26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1ResourceManager.html#aade670321db257a78eeedc07cadc2f26">forceReleaseAll</a> ()</td></tr>
+<tr class="separator:aade670321db257a78eeedc07cadc2f26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;class T&gt;<br/>
@@ -137,7 +139,36 @@ template&lt;class T&gt; </div>
 </div><div class="memdoc">
 <p>Shut down a <a class="el" href="classavo_1_1ResourceManager.html">ResourceManager</a>. Unconditionally destroy cached resources and metadata. </p>
 <div class="fragment"><div class="line">                       {</div>
-<div class="line"></div>
+<div class="line">        <a class="code" href="classavo_1_1ResourceManager.html#aade670321db257a78eeedc07cadc2f26">forceReleaseAll</a>();</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="aade670321db257a78eeedc07cadc2f26"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classavo_1_1ResourceManager.html">avo::ResourceManager</a>&lt; T &gt;::forceReleaseAll </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Force release all resources immediately. </p>
+<div class="fragment"><div class="line">                           {</div>
 <div class="line">        <span class="keywordflow">while</span> (!resourceMap.empty()) {</div>
 <div class="line">            m_release(resourceMap.begin()-&gt;first, <span class="keyword">false</span>);</div>
 <div class="line">        }</div>
@@ -145,7 +176,6 @@ template&lt;class T&gt; </div>
 </div><!-- fragment -->
 </div>
 </div>
-<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a5fc86fa0e46abb31003d9a9c77bb05c3"></a>
 <div class="memitem">
 <div class="memproto">

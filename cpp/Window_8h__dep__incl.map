@@ -1,9 +1,10 @@
 <map id="SPI/Graphics/Window.h" name="SPI/Graphics/Window.h">
-<area shape="rect" id="node3" href="$SdlWindow_8h.html" title="SPI/Graphics/SDL/SdlWindow.h" alt="" coords="199,83,409,112"/>
-<area shape="rect" id="node9" href="$Window_8cpp.html" title="SPI/Graphics/Window.cpp" alt="" coords="433,83,609,112"/>
-<area shape="rect" id="node11" href="$v8Window_8h.html" title="SPI/Script/v8/v8Window.h" alt="" coords="633,83,809,112"/>
-<area shape="rect" id="node5" href="$SdlGraphicsService_8cpp.html" title="SPI/Graphics/SDL/SdlGraphics\lService.cpp" alt="" coords="5,161,211,207"/>
-<area shape="rect" id="node7" href="$SdlWindow_8cpp.html" title="SPI/Graphics/SDL/SdlWindow.cpp" alt="" coords="235,169,459,199"/>
-<area shape="rect" id="node13" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="568,169,789,199"/>
-<area shape="rect" id="node15" href="$v8Window_8cpp.html" title="SPI/Script/v8/v8Window.cpp" alt="" coords="813,169,1003,199"/>
+<area shape="rect" id="node3" href="$GraphicsService_8cpp.html" title="SPI/Graphics/GraphicsService.cpp" alt="" coords="5,83,229,112"/>
+<area shape="rect" id="node5" href="$SdlWindow_8h.html" title="SPI/Graphics/SDL/SdlWindow.h" alt="" coords="253,83,464,112"/>
+<area shape="rect" id="node11" href="$Window_8cpp.html" title="SPI/Graphics/Window.cpp" alt="" coords="488,83,664,112"/>
+<area shape="rect" id="node13" href="$v8Window_8h.html" title="SPI/Script/v8/v8Window.h" alt="" coords="688,83,864,112"/>
+<area shape="rect" id="node7" href="$SdlGraphicsService_8cpp.html" title="SPI/Graphics/SDL/SdlGraphics\lService.cpp" alt="" coords="103,161,308,207"/>
+<area shape="rect" id="node9" href="$SdlWindow_8cpp.html" title="SPI/Graphics/SDL/SdlWindow.cpp" alt="" coords="332,169,556,199"/>
+<area shape="rect" id="node15" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="623,169,844,199"/>
+<area shape="rect" id="node17" href="$v8Window_8cpp.html" title="SPI/Script/v8/v8Window.cpp" alt="" coords="868,169,1057,199"/>
 </map>

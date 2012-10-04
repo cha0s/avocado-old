@@ -16,7 +16,7 @@ namespace avo {
  */
 
 /**
- * %Sample (sound effect) class.
+ * %Sample representation for a sound effect.
  *
  * @ingroup Resources
  */
@@ -28,9 +28,6 @@ public:
 
 		/** %Sound should loop forever. */
 		LoopForever = -1
-
-		/** Any free channel is suitable for playing. */
-		, AnyChannel = -1
 	};
 
 	Sample();
@@ -41,10 +38,9 @@ public:
 	virtual ~Sample();
 
 	/**
-	 * Play a sample, looping the specified number of times, on the specified
-	 * channel.
+	 * Play a sample, looping the specified number of times.
 	 */
-	virtual int play(int loops = 0, int channel = AnyChannel) = 0;
+	virtual int play(int loops = 0) = 0;
 
 	/**
 	 * Get the URI (if any) used to load this sample.

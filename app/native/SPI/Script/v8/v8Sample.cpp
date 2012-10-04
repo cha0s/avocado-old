@@ -62,7 +62,7 @@ void v8Sample::releaseSample() {
 void v8Sample::initialize(Handle<ObjectTemplate> target) {
 	HandleScope scope;
 
-	constructor_template = Persistent<FunctionTemplate>(
+	constructor_template = Persistent<FunctionTemplate>::New(
 		FunctionTemplate::New(v8Sample::New)
 	);
 	constructor_template->InstanceTemplate()->SetInternalFieldCount(1);
@@ -76,10 +76,6 @@ void v8Sample::initialize(Handle<ObjectTemplate> target) {
 	);
 
 	target->Set(String::NewSymbol("Sample"), constructor_template);
-}
-
-Sample *v8Sample::wrappedSample() {
-	return sample;
 }
 
 v8::Handle<v8::Value> v8Sample::New(const v8::Arguments &args) {
@@ -104,25 +100,6 @@ Handle<Object> v8Sample::New(Sample *sample) {
 	sampleWrapper->sample = sample;
 
 	return scope.Close(instance);
-}
-
-v8::Handle<v8::Value> v8Sample::Play(const v8::Arguments &args) {
-	HandleScope scope;
-
-	v8Sample *sampleWrapper = ObjectWrap::Unwrap<v8Sample>(args.Holder());
-
-	if (NULL == sampleWrapper) {
-		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
-			"Sample::play(): NULL Holder."
-		)));
-	}
-
-	sampleWrapper->sample->play(
-		args[0]->Int32Value(),
-		args[1]->Int32Value()
-	);
-
-	return v8::Undefined();
 }
 
 v8::Handle<v8::Value> v8Sample::Load(const v8::Arguments &args) {
@@ -159,6 +136,24 @@ v8::Handle<v8::Value> v8Sample::Load(const v8::Arguments &args) {
 	}
 
 	return scope.Close(defer->Get(String::NewSymbol("promise")));
+}
+
+v8::Handle<v8::Value> v8Sample::Play(const v8::Arguments &args) {
+	HandleScope scope;
+
+	v8Sample *sampleWrapper = ObjectWrap::Unwrap<v8Sample>(args.Holder());
+
+	if (NULL == sampleWrapper) {
+		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
+			"Sample::play(): NULL Holder."
+		)));
+	}
+
+	sampleWrapper->sample->play(
+		args[0]->Int32Value()
+	);
+
+	return v8::Undefined();
 }
 
 Persistent<FunctionTemplate> v8Sample::constructor_template;

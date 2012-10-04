@@ -16,7 +16,8 @@ namespace avo {
  */
 
 /**
- * %Music class.
+ * %Music allows playing looped music and volume adjustment, timed fading, and
+ * more.
  *
  * @ingroup Resources
  */
@@ -28,9 +29,6 @@ public:
 
 		/** %Sound should loop forever. */
 		LoopForever = -1
-
-		/** Any free channel is suitable for playing. */
-		, AnyChannel = -1
 	};
 
 	/**

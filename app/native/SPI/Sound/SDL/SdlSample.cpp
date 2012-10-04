@@ -28,12 +28,14 @@ SdlSample::~SdlSample() {
 	if (sample) Mix_FreeChunk(sample);
 }
 
-int SdlSample::play(int loops, int channel) {
-	return Mix_PlayChannel(channel, sample, loops);
+int SdlSample::play(int loops) {
+
+	// Any free channel.
+	return Mix_PlayChannel(-1, sample, loops);
 }
 
 unsigned int SdlSample::sizeInBytes() {
-	return sample->alen;
+	return sample ? sample->alen : 0;
 }
 
 }

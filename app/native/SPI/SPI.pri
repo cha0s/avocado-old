@@ -3,6 +3,8 @@ TEMPLATE = lib
 CONFIG -= qt
 CONFIG += dll
 
+QMAKE_LFLAGS += -g
+
 QMAKE_POST_LINK = cp $(TARGET) $${TARGET}.spii
 
 PRECOMPILED_HEADER = ../../../avocado-global.h

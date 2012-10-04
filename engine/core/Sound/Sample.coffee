@@ -1,13 +1,20 @@
 # SPI proxy and constant definitions.
 
-avo.Sample.LoopForever = -1
-avo.Sample.AnyChannel = -1
+# avo.**Sample** is the representation for a sound effect.
 
-avo.Sample.load = (uri, qualify = true) ->
+# Sample playing constants.
+# 
+# * <code>avo.Sample.LoopForever</code>: ***(default)*** Loops the sample
+# forever.
+avo.Sample.LoopForever = -1
+
+# Load a sample at the specified URI.
+avo.Sample.load = (uri) ->
 	return unless uri?
 	
-	@['%load'] uri, qualify
+	@['%load'] uri
 	
-avo.Sample::play = (loops = 0, channel = avo.Sample.AnyChannel) ->
+# Play the sample for the specified number of loops.
+avo.Sample::play = (loops = 0) ->
 	
-	@['%play'] loops, channel
+	@['%play'] loops

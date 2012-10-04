@@ -39,7 +39,7 @@ public:
 	 */
 	~SdlSample();
 
-	int play(int loops = 0, int channel = AnyChannel);
+	int play(int loops = 0);
 
 	/**
 	 * The amount of memory in bytes that SDL_mixer reports this sample is

@@ -19,8 +19,6 @@ public:
 
 	static v8::Handle<v8::Object> New(Sample *sample);
 
-	Sample *wrappedSample();
-
 private:
 
 	v8Sample(v8::Handle<v8::Object> wrapper, Sample *sample = NULL);

@@ -1,6 +1,7 @@
 # SPI proxy and constant definitions.
 
-# avo.Input is a singleton.
+# avo.**Input** is a library-agnostic representation/gatherer of user input.
+# It is a singleton.
 Input = new avo.Input()
 avo.Input = Input
 
@@ -29,10 +30,8 @@ avo.Input.registerPlayerMovement = (player, keyCodes, stickIndex) ->
 	stickIndexMap[stickIndex] = player
 	movement[player] =
 		tickUnit: [0, 0]
-		
 		keyCodes: keyCodes
 		keyState: [0, 0, 0, 0]
-		
 		stickIndex: stickIndex
 		joyState: [0, 0, 0, 0]
 

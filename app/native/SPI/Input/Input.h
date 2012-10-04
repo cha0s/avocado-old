@@ -15,7 +15,7 @@ namespace avo {
  */
 
 /**
- * Library-agnostic representation/gathering of user input.
+ * Library-agnostic representation/gatherer of user input.
  */
 class Input {
 

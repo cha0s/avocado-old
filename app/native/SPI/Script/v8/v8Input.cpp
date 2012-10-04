@@ -56,7 +56,7 @@ v8::Handle<v8::Value> v8Input::New(const v8::Arguments &args) {
 		String::New("Mixin")
 	).As<Function>();
 
-	Handle<Function> EventEmitter = Context::GetCurrent()->Global()->Get(
+	Handle<Function> EventEmitter = avo->Get(
 		String::New("EventEmitter")
 	).As<Function>();
 

@@ -19,7 +19,7 @@ class avo.Main
 
 	constructor: ->
 		
-		avo.Mixin this, EventEmitter
+		avo.Mixin this, avo.EventEmitter
 		
 		# Keep a back buffer to receive all rendering from the current State.
 		@backBuffer = new avo.Image [320, 240]

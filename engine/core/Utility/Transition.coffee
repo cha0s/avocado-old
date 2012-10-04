@@ -95,7 +95,7 @@ class avo.Transition
 				@stop() if @elapsed is @duration
 
 			# Immediately stop the transition. This will leave the object in
-			# its current state; partially transitioned.				
+			# its current state; potentially partially transitioned.				
 			transition.stop = ->
 				
 				# Stop the tick loop and clear out the handle so additional
@@ -115,6 +115,7 @@ class avo.Transition
 				@elapsed = @duration
 				@tick()
 				
+			# The tick interval.
 			transition.interval = setInterval(
 				=>
 					

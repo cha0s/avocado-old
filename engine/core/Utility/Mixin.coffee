@@ -1,11 +1,11 @@
-# Dynamic object composition helper. Use in an object's constructor
-# function.
-avo.Mixin = (ToExtend, Extenders...) ->
+# Dynamic object composition helper. Most often used in an object's constructor
+# function, however *instance* can be any object instance.
+avo.Mixin = (instance, Mixins...) ->
 	
-	# Each one of the extenders gets instantiated,
-	for Extender in Extenders
-		extender = new Extender()
+	# Each one of the mixins gets instantiated,
+	for Mixin in Mixins
+		mixin = new Mixin()
 		
 		# Then mixed in to the object we're extending.
-		for own key, value of Extender.prototype
-			ToExtend[key] = extender[key]
+		for own key, value of Mixin.prototype
+			instance[key] = mixin[key]

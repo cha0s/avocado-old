@@ -59,7 +59,29 @@ dependencies.commands += \
 		&& mv out/ia32.release/obj.target/tools/gyp/libv8_base.a libv8-avocado.a \
 		&& mv out/ia32.release/obj.target/tools/gyp/libv8_snapshot.a libv8_snapshot-avocado.a; \ 
 	cd ../..; \
-	echo "Done building v8.";
+	echo "Done building v8."; \
+	#
+	# SFML
+	#
+	echo "Building SFML..."; \
+	cd deps; \
+	#
+	# Checkout the SFML git repository if it hasn't been yet.
+	#
+	test ! -d SFML \
+		&& git clone git://github.com/LaurentGomila/SFML.git; \
+	cd SFML; \
+	#
+	# Build SFML if necessary.
+	#
+	test ! -d build \
+		&& mkdir build \
+		&& cd build \
+		&& cmake .. \
+		&& make \
+		&& cd .. \
+	cd ../..; \
+	echo "Done building SFML.";
 	
 spiis.commands += \
 	#

@@ -1,3 +1,6 @@
+# avo.**EventEmitter** is a mixin which lends the ability to emit events and
+# manage the registration of listeners who listen for the emission of the
+# events.
 class avo.EventEmitter
 
 	# Keeping track of events registered against this object.
@@ -47,7 +50,7 @@ class avo.EventEmitter
 		
 	# Remove listeners from an object.
 	# 
-	# There are four ways to use avo.EventEmitter.off:
+	# There are four ways to use avo.**EventEmitter**.off:
 	# 
 	# 1. You can call <code>object.off 'eventName', function</code> where
 	# *function* is a function previously attached with <code>object.on

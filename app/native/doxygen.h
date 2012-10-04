@@ -48,7 +48,6 @@
  *
  * The default script SPII in Avocado is the
  * [V8 JavaScript engine](http://code.google.com/p/v8/).
- *
  */
 
 /**

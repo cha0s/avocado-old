@@ -20,4 +20,8 @@ SfmlSoundService::SfmlSoundService() {
 SfmlSoundService::~SfmlSoundService() {
 }
 
+void SfmlSoundService::close() {
+	SoundService::close();
+}
+
 }

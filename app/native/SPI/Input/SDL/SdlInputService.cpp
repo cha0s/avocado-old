@@ -20,6 +20,7 @@ SdlInputService::~SdlInputService() {
 }
 
 void SdlInputService::close() {
+	InputService::close();
 }
 
 }

@@ -23,6 +23,8 @@ void SdlTimingService::sleep(int ms) {
 }
 
 void SdlTimingService::close() {
+	TimingService::close();
+
 	SDL_QuitSubSystem(SDL_INIT_TIMER);
 }
 

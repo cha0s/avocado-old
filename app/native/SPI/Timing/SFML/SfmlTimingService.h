@@ -23,6 +23,8 @@ public:
 	SfmlTimingService();
 	~SfmlTimingService();
 
+	void close();
+
 	void sleep(int ms);
 
 	static AbstractFactory<SfmlTimingService> *factory;

@@ -29,7 +29,7 @@ public:
 	/**
 	 * Close out the service.
 	 */
-	virtual void close() {}
+	virtual void close();
 
 	static FactoryManager<SoundService> factoryManager;
 

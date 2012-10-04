@@ -23,7 +23,7 @@ public:
 	SfmlSoundService();
 	~SfmlSoundService();
 
-	virtual void close() {}
+	void close();
 
 	static AbstractFactory<SfmlSoundService> *factory;
 

@@ -17,6 +17,8 @@ SdlCoreService::~SdlCoreService() {
 }
 
 void SdlCoreService::close() {
+	CoreService::close();
+
 	SDL_Quit();
 }
 

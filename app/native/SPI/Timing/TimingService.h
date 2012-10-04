@@ -27,7 +27,7 @@ public:
 	/**
 	 * Close out the service.
 	 */
-	virtual void close() {}
+	virtual void close();
 
 	/**
 	 * Delay execution by a given number of milliseconds.

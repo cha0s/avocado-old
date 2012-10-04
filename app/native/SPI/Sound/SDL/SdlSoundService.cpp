@@ -30,4 +30,8 @@ SdlSoundService::~SdlSoundService() {
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 }
 
+void SdlSoundService::close() {
+	SoundService::close();
+}
+
 }

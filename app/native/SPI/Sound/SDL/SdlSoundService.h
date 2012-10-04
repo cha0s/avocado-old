@@ -23,7 +23,7 @@ public:
 	SdlSoundService();
 	~SdlSoundService();
 
-	virtual void close() { }
+	void close();
 
 	static AbstractFactory<SdlSoundService> *factory;
 

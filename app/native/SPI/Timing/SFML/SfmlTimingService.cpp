@@ -11,7 +11,6 @@ namespace avo {
 AbstractFactory<SfmlTimingService> *SfmlTimingService::factory = new AbstractFactory<SfmlTimingService>;
 
 SfmlTimingService::SfmlTimingService() {
-
 	Counter::factoryManager.setInstance(SfmlCounter::factory);
 }
 
@@ -20,6 +19,10 @@ SfmlTimingService::~SfmlTimingService() {
 
 void SfmlTimingService::sleep(int ms) {
 	sf::sleep(sf::milliseconds(ms));
+}
+
+void SfmlTimingService::close() {
+	TimingService::close();
 }
 
 }

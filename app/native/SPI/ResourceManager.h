@@ -45,10 +45,7 @@ public:
 	 * and metadata.
 	 */
 	~ResourceManager() {
-
-		while (!resourceMap.empty()) {
-			m_release(resourceMap.begin()->first, false);
-		}
+		forceReleaseAll();
 	}
 
 	/**
@@ -96,6 +93,15 @@ public:
 	 */
 	bool release(const boost::filesystem::path &uri) {
 		return m_release(uri);
+	}
+
+	/**
+	 * Force release all resources immediately.
+	 */
+	void forceReleaseAll() {
+		while (!resourceMap.empty()) {
+			m_release(resourceMap.begin()->first, false);
+		}
 	}
 
 private:

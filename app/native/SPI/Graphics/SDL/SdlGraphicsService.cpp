@@ -43,6 +43,8 @@ SdlGraphicsService::~SdlGraphicsService() {
 }
 
 void SdlGraphicsService::close() {
+	GraphicsService::close();
+
 	SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
 

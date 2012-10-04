@@ -13,14 +13,11 @@ namespace avo {
  */
 
 /**
- * @ingroup SPI
- * @{
- */
-
-/**
  * %GraphicsService handles initialization and teardown of the graphics
  * framework. Each concrete SPI implementation (SPII) also manages SPIIs
  * for Window, Image, and other graphics-related SPIs.
+ *
+ * @ingroup SPI
  */
 class GraphicsService {
 
@@ -59,10 +56,6 @@ public:
 	virtual GraphicsService *create() = 0;
 
 };
-
-/**
- * @}
- */
 
 /**
  * @}

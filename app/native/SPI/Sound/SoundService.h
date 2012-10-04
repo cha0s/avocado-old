@@ -12,6 +12,13 @@ namespace avo {
  * @{
  */
 
+/**
+ * %SoundService handles initialization and teardown of the sound
+ * framework. Each concrete SPI implementation (SPII) also manages SPIIs
+ * for Music and Sample.
+ *
+ * @ingroup SPI
+ */
 class SoundService {
 
 public:
@@ -19,7 +26,10 @@ public:
 	SoundService();
 	virtual ~SoundService();
 
-	virtual void close() { }
+	/**
+	 * Close out the service.
+	 */
+	virtual void close() {}
 
 	static FactoryManager<SoundService> factoryManager;
 

@@ -94,7 +94,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classavo_1_1ObjectWrap-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">avo::ObjectWrap Class Reference<div class="ingroups"><a class="el" href="group__V8.html">V8 JavaScript interface</a></div></div>  </div>
+<div class="title">avo::ObjectWrap Class Reference<div class="ingroups"><a class="el" href="group__Script.html">Script SPI</a> &#124; <a class="el" href="group__V8.html">V8 JavaScript interface</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -109,164 +109,28 @@ Inheritance diagram for avo::ObjectWrap:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aaa16ea6d28b0f6a9f3ce42075e775a45"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1ObjectWrap.html#aaa16ea6d28b0f6a9f3ce42075e775a45">~ObjectWrap</a> ()</td></tr>
-<tr class="separator:aaa16ea6d28b0f6a9f3ce42075e775a45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaa16ea6d28b0f6a9f3ce42075e775a45"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Script.html#gaaa16ea6d28b0f6a9f3ce42075e775a45">~ObjectWrap</a> ()</td></tr>
+<tr class="separator:gaaa16ea6d28b0f6a9f3ce42075e775a45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:adb324bfe6517d6f197734a391dc5f5e0"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:adb324bfe6517d6f197734a391dc5f5e0"><td class="memTemplItemLeft" align="right" valign="top">static T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classavo_1_1ObjectWrap.html#adb324bfe6517d6f197734a391dc5f5e0">Unwrap</a> (v8::Handle&lt; v8::Object &gt; handle)</td></tr>
-<tr class="separator:adb324bfe6517d6f197734a391dc5f5e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb324bfe6517d6f197734a391dc5f5e0"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:gadb324bfe6517d6f197734a391dc5f5e0"><td class="memTemplItemLeft" align="right" valign="top">static T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Script.html#gadb324bfe6517d6f197734a391dc5f5e0">Unwrap</a> (v8::Handle&lt; v8::Object &gt; handle)</td></tr>
+<tr class="separator:gadb324bfe6517d6f197734a391dc5f5e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a62523c3ab5857e642383a40349b7dc79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1ObjectWrap.html#a62523c3ab5857e642383a40349b7dc79">Wrap</a> (v8::Handle&lt; v8::Object &gt; handle)</td></tr>
-<tr class="separator:a62523c3ab5857e642383a40349b7dc79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga62523c3ab5857e642383a40349b7dc79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Script.html#ga62523c3ab5857e642383a40349b7dc79">Wrap</a> (v8::Handle&lt; v8::Object &gt; handle)</td></tr>
+<tr class="separator:ga62523c3ab5857e642383a40349b7dc79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a848006aed612f9574f86c28a8e7587ea"><td class="memItemLeft" align="right" valign="top">v8::Persistent&lt; v8::Object &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1ObjectWrap.html#a848006aed612f9574f86c28a8e7587ea">handle_</a></td></tr>
-<tr class="separator:a848006aed612f9574f86c28a8e7587ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga848006aed612f9574f86c28a8e7587ea"><td class="memItemLeft" align="right" valign="top">v8::Persistent&lt; v8::Object &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Script.html#ga848006aed612f9574f86c28a8e7587ea">handle_</a></td></tr>
+<tr class="separator:ga848006aed612f9574f86c28a8e7587ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Wrap an object for ease going in/out of v8. Lovingly stolen with highest respect from NodeJS. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aaa16ea6d28b0f6a9f3ce42075e775a45"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">avo::ObjectWrap::~ObjectWrap </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Called at GC. </p>
-<div class="fragment"><div class="line">                        {</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// Only kill it once.</span></div>
-<div class="line">    <span class="keywordflow">if</span> (!<a class="code" href="classavo_1_1ObjectWrap.html#a848006aed612f9574f86c28a8e7587ea">handle_</a>.IsEmpty()) {</div>
-<div class="line"></div>
-<div class="line">        <span class="comment">// GC has run?</span></div>
-<div class="line">        assert(<a class="code" href="classavo_1_1ObjectWrap.html#a848006aed612f9574f86c28a8e7587ea">handle_</a>.IsNearDeath());</div>
-<div class="line"></div>
-<div class="line">        <span class="comment">// NULL out the handle.</span></div>
-<div class="line">        <a class="code" href="classavo_1_1ObjectWrap.html#a848006aed612f9574f86c28a8e7587ea">handle_</a>.ClearWeak();</div>
-<div class="line">        <a class="code" href="classavo_1_1ObjectWrap.html#a848006aed612f9574f86c28a8e7587ea">handle_</a>-&gt;SetInternalField(0, v8::Undefined());</div>
-<div class="line">        <a class="code" href="classavo_1_1ObjectWrap.html#a848006aed612f9574f86c28a8e7587ea">handle_</a>.Dispose();</div>
-<div class="line">        <a class="code" href="classavo_1_1ObjectWrap.html#a848006aed612f9574f86c28a8e7587ea">handle_</a>.Clear();</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="adb324bfe6517d6f197734a391dc5f5e0"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static T* avo::ObjectWrap::Unwrap </td>
-          <td>(</td>
-          <td class="paramtype">v8::Handle&lt; v8::Object &gt;&#160;</td>
-          <td class="paramname"><em>handle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Get the T pointer from inside an object. </p>
-<div class="fragment"><div class="line">                                                       {</div>
-<div class="line"></div>
-<div class="line">        <span class="comment">// Ensure there&#39;s an object pointer in here.</span></div>
-<div class="line">        <span class="keywordflow">if</span> (handle.IsEmpty() || 0 == handle-&gt;InternalFieldCount()) <span class="keywordflow">return</span> NULL;</div>
-<div class="line"></div>
-<div class="line">        <span class="comment">// Return the object pointer.</span></div>
-<div class="line">        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T *<span class="keyword">&gt;</span>(handle-&gt;GetPointerFromInternalField(0));</div>
-<div class="line">    }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="a62523c3ab5857e642383a40349b7dc79"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void avo::ObjectWrap::Wrap </td>
-          <td>(</td>
-          <td class="paramtype">v8::Handle&lt; v8::Object &gt;&#160;</td>
-          <td class="paramname"><em>handle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Wrap this class with the passed in object. </p>
-<div class="fragment"><div class="line">                                                {</div>
-<div class="line"></div>
-<div class="line">        <span class="comment">// Make sure our handle isn&#39;t wrapping anything yet,</span></div>
-<div class="line">        assert(<a class="code" href="classavo_1_1ObjectWrap.html#a848006aed612f9574f86c28a8e7587ea">handle_</a>.IsEmpty());</div>
-<div class="line">        <span class="comment">// and the passed in wrapper is expecting an object pointer.</span></div>
-<div class="line">        assert(handle-&gt;InternalFieldCount() &gt; 0);</div>
-<div class="line">        <span class="comment">// Allocate and embed our object pointer.</span></div>
-<div class="line">        <a class="code" href="classavo_1_1ObjectWrap.html#a848006aed612f9574f86c28a8e7587ea">handle_</a> = v8::Persistent&lt;v8::Object&gt;::New(handle);</div>
-<div class="line">        handle_-&gt;SetPointerInInternalField(0, <span class="keyword">this</span>);</div>
-<div class="line">        <span class="comment">// Mark it as &#39;weak&#39; so GC will release it ASAP.</span></div>
-<div class="line">        handle_.MakeWeak(<span class="keyword">this</span>, WeakCallback);</div>
-<div class="line">        handle_.MarkIndependent();</div>
-<div class="line">    }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a848006aed612f9574f86c28a8e7587ea"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">v8::Persistent&lt;v8::Object&gt; avo::ObjectWrap::handle_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Keep our object around until GC releases it. </p>
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>SPI/Script/v8/<a class="el" href="ObjectWrap_8h.html">ObjectWrap.h</a></li>
 <li>SPI/Script/v8/<a class="el" href="ObjectWrap_8cpp.html">ObjectWrap.cpp</a></li>
 </ul>

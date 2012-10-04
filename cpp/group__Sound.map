@@ -1,6 +1,8 @@
 <map id="Sound SPI" name="Sound SPI">
-<area shape="rect" id="node2" href="$group__SDL.html" title="Avocado&#39;s interface to the Simple DirectMedia Layer." alt="" coords="292,150,428,197"/>
-<area shape="rect" id="node3" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="271,432,449,461"/>
-<area shape="rect" id="node4" href="$group__Resources.html" title="Resources are loaded from the resource root and are managed using reference counting." alt="" coords="281,671,439,700"/>
-<area shape="rect" id="node5" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="308,909,412,939"/>
+<area shape="rect" id="node1" href="$group__Script.html" title="The script SPI handles all communication between the native C++ engine and JavaScript." alt="" coords="319,55,401,84"/>
+<area shape="rect" id="node3" href="$group__SDL.html" title="Avocado&#39;s interface to the Simple DirectMedia Layer." alt="" coords="292,233,428,279"/>
+<area shape="rect" id="node4" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="271,549,449,579"/>
+<area shape="rect" id="node5" href="$group__V8.html" title="Avocado&#39;s interface to the V8 JavaScript engine." alt="" coords="281,632,439,661"/>
+<area shape="rect" id="node6" href="$group__Resources.html" title="Resources are loaded from the resource root and are managed using reference counting." alt="" coords="281,871,439,900"/>
+<area shape="rect" id="node7" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="308,1109,412,1139"/>
 </map>

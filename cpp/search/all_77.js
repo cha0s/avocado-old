@@ -9,7 +9,7 @@ var searchData=
   ['window_2ecpp',['Window.cpp',['../Window_8cpp.html',1,'']]],
   ['window_2eh',['Window.h',['../Window_8h.html',1,'']]],
   ['windowflags',['WindowFlags',['../classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0',1,'avo::Window']]],
-  ['wrap',['Wrap',['../classavo_1_1ObjectWrap.html#a62523c3ab5857e642383a40349b7dc79',1,'avo::ObjectWrap']]],
+  ['wrap',['Wrap',['../group__Script.html#ga62523c3ab5857e642383a40349b7dc79',1,'avo::ObjectWrap']]],
   ['wrappedcounter',['wrappedCounter',['../classavo_1_1v8Counter.html#aff9f86febac5a0268af3ed4d98c3a40f',1,'avo::v8Counter']]],
   ['wrappedimage',['wrappedImage',['../classavo_1_1v8Image.html#aaae5f7afc8e469bc21e7defdc5c29340',1,'avo::v8Image']]],
   ['writestring',['writeString',['../namespaceavo_1_1FS.html#a9a075894943e42c01d57cc4431f05941',1,'avo::FS']]]

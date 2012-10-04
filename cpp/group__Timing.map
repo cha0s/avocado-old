@@ -1,6 +1,8 @@
 <map id="Timing SPI" name="Timing SPI">
-<area shape="rect" id="node1" href="$group__SDL.html" title="Avocado&#39;s interface to the Simple DirectMedia Layer." alt="" coords="297,98,433,145"/>
-<area shape="rect" id="node2" href="$group__Qt.html" title="Avocado&#39;s interface to the Qt development framework." alt="" coords="276,215,455,262"/>
-<area shape="rect" id="node3" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="276,532,455,561"/>
-<area shape="rect" id="node5" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="313,771,417,800"/>
+<area shape="rect" id="node1" href="$group__Script.html" title="The script SPI handles all communication between the native C++ engine and JavaScript." alt="" coords="324,21,407,51"/>
+<area shape="rect" id="node2" href="$group__SDL.html" title="Avocado&#39;s interface to the Simple DirectMedia Layer." alt="" coords="297,147,433,194"/>
+<area shape="rect" id="node3" href="$group__Qt.html" title="Avocado&#39;s interface to the Qt development framework." alt="" coords="276,265,455,311"/>
+<area shape="rect" id="node4" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="276,563,455,592"/>
+<area shape="rect" id="node5" href="$group__V8.html" title="Avocado&#39;s interface to the V8 JavaScript engine." alt="" coords="287,616,444,645"/>
+<area shape="rect" id="node7" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="313,853,417,883"/>
 </map>

@@ -90,7 +90,7 @@ Collaboration diagram for V8 JavaScript interface:</div>
 <div class="dyncontent">
 <center><table><tr><td><img src="group__V8.png" border="0" alt="" usemap="#group____V8"/>
 <map name="group____V8" id="group____V8">
-<area shape="rect" id="node1" href="group__Script.html" title="The script SPI handles all communication between the native C++ engine and JavaScript." alt="" coords="404,113,487,143"/><area shape="rect" id="node2" href="group__Core.html" title="The core SPI handles framework initialization (e.g. SDL_Init()) and teardown (e.g. SDL_Quit()) as well as bridges to core engine functionality like filesystem access." alt="" coords="408,188,483,217"/><area shape="rect" id="node3" href="group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="356,375,535,404"/><area shape="rect" id="node5" href="group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="393,475,497,504"/><area shape="rect" id="node6" href="group__Graphics.html" title="The graphics SPI handles window and graphics system initialization, and rendering." alt="" coords="396,557,495,587"/></map>
+<area shape="rect" id="node1" href="group__Script.html" title="The script SPI handles all communication between the native C++ engine and JavaScript." alt="" coords="404,203,487,232"/><area shape="rect" id="node2" href="group__Core.html" title="The core SPI handles framework initialization (e.g. SDL_Init()) and teardown (e.g. SDL_Quit()) as well as bridges to core engine functionality like filesystem access." alt="" coords="408,277,483,307"/><area shape="rect" id="node3" href="group__Sound.html" title="The sound SPI handles sound system initialization, as well as music and sample loading and playing..." alt="" coords="403,360,488,389"/><area shape="rect" id="node4" href="group__Input.html" title="The input SPI handles user input polling." alt="" coords="407,425,484,455"/><area shape="rect" id="node5" href="group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="356,661,535,691"/><area shape="rect" id="node7" href="group__Timing.html" title="The timing SPI handles measuring time." alt="" coords="403,715,488,744"/><area shape="rect" id="node8" href="group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="393,812,497,841"/><area shape="rect" id="node9" href="group__Graphics.html" title="The graphics SPI handles window and graphics system initialization, and rendering." alt="" coords="396,912,495,941"/></map>
 </td></tr></table></center>
 </div>
 <table class="memberdecls">
@@ -106,9 +106,19 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1v8CoreService.html">avo::v8CoreService</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1v8Counter.html">avo::v8Counter</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1v8GraphicsService.html">avo::v8GraphicsService</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1v8Image.html">avo::v8Image</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1v8Input.html">avo::v8Input</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1v8InputService.html">avo::v8InputService</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1v8Music.html">avo::v8Music</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1v8Sample.html">avo::v8Sample</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1v8Script.html">avo::v8Script</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -117,6 +127,10 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1v8ScriptService.html">avo::v8ScriptService</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1AbstractFactory_3_01v8ScriptService_01_4.html">avo::AbstractFactory&lt; v8ScriptService &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1v8SoundService.html">avo::v8SoundService</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1v8TimingService.html">avo::v8TimingService</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1v8Window.html">avo::v8Window</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -1,3 +1,5 @@
+[Check out the project on github](https://github.com/cha0s/avocado)
+
 ## Table of contents
 
 <dl>

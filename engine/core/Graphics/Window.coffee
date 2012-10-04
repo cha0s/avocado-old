@@ -11,7 +11,7 @@ avo.Window.Flags_Default = 0
 avo.Window.Flags_Fullscreen = 1
 
 # The height of the window.
-avo.Window::height = @size[1]
+avo.Window::height = -> @size()[1]
 
 # Render an Image onto this window.
 avo.Window::render = (image) ->
@@ -41,4 +41,4 @@ avo.Window::setWindowTitle = (window, iconified = window) ->
 avo.Window::size = @['%size']
 
 # The width of the window.
-avo.Window::width = @size[0]
+avo.Window::width = -> @size()[0]

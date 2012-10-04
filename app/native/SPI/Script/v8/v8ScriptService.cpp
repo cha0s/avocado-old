@@ -100,13 +100,7 @@ Script *v8ScriptService::scriptFromCode(const std::string &code, const boost::fi
 	HandleScope scope;
 
 	// Precompile the code.
-	std::string precompiledCode;
-	try {
-		precompiledCode = preCompileCode(code, filename);
-	}
-	catch (script_precompilation_error &e) {
-		throw script_compilation_error(e.what());
-	}
+	std::string precompiledCode = preCompileCode(code, filename);
 
 	// Instantiate the v8 script.
 	TryCatch exception;
@@ -115,7 +109,11 @@ Script *v8ScriptService::scriptFromCode(const std::string &code, const boost::fi
 		String::New(FS::unqualifyPath(FS::engineRoot(), filename).string().c_str())
 	);
 	if (exception.HasCaught()) {
-		throw script_compilation_error(V8::stringifyException(exception));
+
+		throw script_compilation_error(
+			V8::stringifyException(exception),
+			precompiledCode
+		);
 	}
 
 	// Cast and ensure the factory is correct.

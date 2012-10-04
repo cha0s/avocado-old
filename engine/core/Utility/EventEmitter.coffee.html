@@ -2,14 +2,15 @@
 </td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">EventEmitter</span></pre></div></td></tr><tr id="section-2"><td class="docs"><div class="pilwrap"><a href="#section-2" class="pilcrow">&#182;</a></div><p>Keeping track of events registered against this object.</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="err">@</span><span class="o">::</span><span class="nv">events_ = </span><span class="p">{}</span>
   <span class="err">@</span><span class="o">::</span><span class="nv">namespaces_ = </span><span class="p">{}</span>
-  
-  <span class="nv">constructor: </span><span class="o">-&gt;</span>
+  </pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>Make space for the events and event emitters.</p>
+</td><td class="code"><div class="highlight"><pre>  <span class="nv">constructor: </span><span class="o">-&gt;</span>
     
     <span class="vi">@events_ = </span><span class="p">{}</span>
     <span class="vi">@namespaces_ = </span><span class="p">{}</span>
-    
-  <span class="nv">parseEventName = </span><span class="nf">(name) -&gt;</span>
-  </pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>Get the namespace, if any.</p>
+  </pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Helper function for <strong>on</strong> and <strong>off</strong>. Parse the incoming (possibly)
+namespaced event name, and return an object.</p>
+</td><td class="code"><div class="highlight"><pre>  <span class="nv">parseEventName = </span><span class="nf">(name) -&gt;</span>
+  </pre></div></td></tr><tr id="section-5"><td class="docs"><div class="pilwrap"><a href="#section-5" class="pilcrow">&#182;</a></div><p>Get the namespace, if any.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="k">if</span> <span class="o">-</span><span class="mi">1</span> <span class="o">!=</span> <span class="nv">index = </span><span class="nx">name</span><span class="p">.</span><span class="nx">indexOf</span> <span class="s1">&#39;.&#39;</span>
 
       <span class="nv">namespace = </span><span class="nx">name</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
@@ -18,11 +19,12 @@
     <span class="k">else</span>
       <span class="nv">namespace = </span><span class="s1">&#39;&#39;</span>
     
-    <span class="nv">namespace: </span><span class="nx">namespace</span><span class="p">,</span>
-    <span class="nv">event: </span><span class="nx">name</span>
-
-  <span class="kc">on</span><span class="o">:</span> <span class="nf">(eventName, f, that = this) -&gt;</span>
-  
+    <span class="nv">namespace: </span><span class="nx">namespace</span>
+    <span class="nv">event: </span><span class="nx">name</span></pre></div></td></tr><tr id="section-6"><td class="docs"><div class="pilwrap"><a href="#section-6" class="pilcrow">&#182;</a></div><p>Add listeners to an object. <em>eventName</em> is a (possibly) namespaced event
+to listen for. <em>f</em> is a function to be called when the event fires, and
+<em>that</em>, if specified, is the 'this' variable in the callback. 'this'
+defaults to the object upon which the event listener is registered.</p>
+</td><td class="code"><div class="highlight"><pre>  <span class="kc">on</span><span class="o">:</span> <span class="nf">(eventName, f, that = this) -&gt;</span>
     <span class="nv">info = </span><span class="nx">parseEventName</span> <span class="nx">eventName</span>
     
     <span class="nx">@events_</span><span class="p">[</span><span class="nx">info</span><span class="p">.</span><span class="nx">event</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="o">not</span> <span class="nx">@events_</span><span class="p">[</span><span class="nx">info</span><span class="p">.</span><span class="nx">event</span><span class="p">]</span><span class="o">?</span>
@@ -36,7 +38,7 @@
       <span class="nv">event: </span><span class="nx">info</span><span class="p">.</span><span class="nx">event</span>
       
     <span class="k">return</span> <span class="kc">undefined</span>
-    </pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Remove listeners from an object.</p>
+    </pre></div></td></tr><tr id="section-7"><td class="docs"><div class="pilwrap"><a href="#section-7" class="pilcrow">&#182;</a></div><p>Remove listeners from an object.</p>
 
 <p>There are four ways to use avo.EventEmitter.off:</p>
 
@@ -58,7 +60,7 @@ method. <strong><em>Use caution.</em></strong></p></li>
 </ol>
 </td><td class="code"><div class="highlight"><pre>  <span class="kc">off</span><span class="o">:</span> <span class="nf">(eventName, f) -&gt;</span>
     <span class="nv">info = </span><span class="nx">parseEventName</span> <span class="nx">eventName</span>
-    </pre></div></td></tr><tr id="section-5"><td class="docs"><div class="pilwrap"><a href="#section-5" class="pilcrow">&#182;</a></div><p>If we're given the function, our job is easy.</p>
+    </pre></div></td></tr><tr id="section-8"><td class="docs"><div class="pilwrap"><a href="#section-8" class="pilcrow">&#182;</a></div><p>If we're given the function, our job is easy.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="k">if</span> <span class="s1">&#39;function&#39;</span> <span class="o">==</span> <span class="k">typeof</span> <span class="nx">f</span>
       <span class="k">return</span> <span class="k">if</span> <span class="o">not</span> <span class="nx">@events_</span><span class="p">[</span><span class="nx">info</span><span class="p">.</span><span class="nx">event</span><span class="p">]</span><span class="o">?</span>
       
@@ -66,13 +68,13 @@ method. <strong><em>Use caution.</em></strong></p></li>
       <span class="k">delete</span> <span class="nx">@namespaces_</span><span class="p">[</span><span class="nx">info</span><span class="p">.</span><span class="nx">namespace</span><span class="p">][</span><span class="nx">f</span><span class="p">]</span>
       
       <span class="k">return</span>
-    </pre></div></td></tr><tr id="section-6"><td class="docs"><div class="pilwrap"><a href="#section-6" class="pilcrow">&#182;</a></div><p>No namespace? Remove every matching event.</p>
+    </pre></div></td></tr><tr id="section-9"><td class="docs"><div class="pilwrap"><a href="#section-9" class="pilcrow">&#182;</a></div><p>No namespace? Remove every matching event.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="k">if</span> <span class="s1">&#39;&#39;</span> <span class="o">==</span> <span class="nx">info</span><span class="p">.</span><span class="nx">namespace</span>
       <span class="k">for</span> <span class="nx">f</span> <span class="k">of</span> <span class="nx">@events_</span><span class="p">[</span><span class="nx">info</span><span class="p">.</span><span class="nx">event</span><span class="p">]</span>
         <span class="k">delete</span> <span class="nx">@namespaces_</span><span class="p">[</span><span class="nx">@events_</span><span class="p">[</span><span class="nx">info</span><span class="p">.</span><span class="nx">event</span><span class="p">][</span><span class="nx">f</span><span class="p">].</span><span class="nx">namespace</span><span class="p">][</span><span class="nx">f</span><span class="p">]</span>
         <span class="k">delete</span> <span class="nx">@events_</span><span class="p">[</span><span class="nx">info</span><span class="p">.</span><span class="nx">event</span><span class="p">][</span><span class="nx">f</span><span class="p">]</span>
       <span class="k">return</span>
-  </pre></div></td></tr><tr id="section-7"><td class="docs"><div class="pilwrap"><a href="#section-7" class="pilcrow">&#182;</a></div><p>Namespaced event? Remove it.</p>
+  </pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>Namespaced event? Remove it.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="k">if</span> <span class="nx">info</span><span class="p">.</span><span class="nx">event</span>
       <span class="k">for</span> <span class="nx">f</span> <span class="k">of</span> <span class="nx">@events_</span><span class="p">[</span><span class="nx">info</span><span class="p">.</span><span class="nx">event</span><span class="p">]</span>
         <span class="k">if</span> <span class="nx">info</span><span class="p">.</span><span class="nx">namespace</span> <span class="o">!=</span> <span class="nx">@events_</span><span class="p">[</span><span class="nx">info</span><span class="p">.</span><span class="nx">event</span><span class="p">][</span><span class="nx">f</span><span class="p">].</span><span class="nx">namespace</span>
@@ -80,13 +82,13 @@ method. <strong><em>Use caution.</em></strong></p></li>
         <span class="k">delete</span> <span class="nx">@namespaces_</span><span class="p">[</span><span class="nx">info</span><span class="p">.</span><span class="nx">namespace</span><span class="p">][</span><span class="nx">f</span><span class="p">]</span>
         <span class="k">delete</span> <span class="nx">@events_</span><span class="p">[</span><span class="nx">info</span><span class="p">.</span><span class="nx">event</span><span class="p">][</span><span class="nx">f</span><span class="p">]</span>
       <span class="k">return</span>
-    </pre></div></td></tr><tr id="section-8"><td class="docs"><div class="pilwrap"><a href="#section-8" class="pilcrow">&#182;</a></div><p>Only a namespace? Remove all events associated with it.</p>
+    </pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>Only a namespace? Remove all events associated with it.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="k">for</span> <span class="nx">f</span> <span class="k">of</span> <span class="nx">@namespaces_</span><span class="p">[</span><span class="nx">info</span><span class="p">.</span><span class="nx">namespace</span><span class="p">]</span>
       <span class="k">delete</span> <span class="nx">@events_</span><span class="p">[</span><span class="nx">@namespaces_</span><span class="p">[</span><span class="nx">info</span><span class="p">.</span><span class="nx">namespace</span><span class="p">][</span><span class="nx">f</span><span class="p">].</span><span class="nx">event</span><span class="p">][</span><span class="nx">f</span><span class="p">]</span>
       <span class="k">delete</span> <span class="nx">@namespaces_</span><span class="p">[</span><span class="nx">info</span><span class="p">.</span><span class="nx">namespace</span><span class="p">][</span><span class="nx">f</span><span class="p">]</span>
     
     <span class="k">return</span>
-    </pre></div></td></tr><tr id="section-9"><td class="docs"><div class="pilwrap"><a href="#section-9" class="pilcrow">&#182;</a></div><p>Notify ALL the listeners.</p>
+    </pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>Notify ALL the listeners!</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">emit: </span><span class="nf">(eventName, args...) -&gt;</span>
     <span class="k">return</span> <span class="k">if</span> <span class="o">not</span> <span class="nx">@events_</span><span class="p">[</span><span class="nx">eventName</span><span class="p">]</span><span class="o">?</span>
     
@@ -94,4 +96,4 @@ method. <strong><em>Use caution.</em></strong></p></li>
       <span class="nv">f = </span><span class="nx">@events_</span><span class="p">[</span><span class="nx">eventName</span><span class="p">][</span><span class="nx">callback</span><span class="p">].</span><span class="nx">f</span>
       <span class="nx">f</span><span class="p">.</span><span class="nx">apply</span> <span class="nx">f</span><span class="p">,</span> <span class="nx">args</span>
 
-</pre></div></td></tr></tbody></table><div id="generated">generated Thu Oct 04 2012 01:24:18 GMT-0500 (CDT)  </div><div id="projectname"><a href="../../../index.html">Avocado</a></div></div></body></html>
+</pre></div></td></tr></tbody></table><div id="generated">generated Thu Oct 04 2012 01:29:00 GMT-0500 (CDT)  </div><div id="projectname"><a href="../../../index.html">Avocado</a></div></div></body></html>

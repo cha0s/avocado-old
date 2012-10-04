@@ -1,4 +1,5 @@
 <map id="avo::AbstractFactory&lt; Counter &gt;" name="avo::AbstractFactory&lt; Counter &gt;">
-<area shape="rect" id="node3" href="$classavo_1_1AbstractFactory_3_01QtCounter_01_4.html" title="avo::AbstractFactory\l\&lt; QtCounter \&gt;" alt="" coords="5,102,149,149"/>
-<area shape="rect" id="node5" href="$classavo_1_1AbstractFactory_3_01SdlCounter_01_4.html" title="avo::AbstractFactory\l\&lt; SdlCounter \&gt;" alt="" coords="173,102,317,149"/>
+<area shape="rect" id="node3" href="$classavo_1_1AbstractFactory_3_01QtCounter_01_4.html" title="avo::AbstractFactory\l\&lt; QtCounter \&gt;" alt="" coords="197,5,341,51"/>
+<area shape="rect" id="node5" href="$classavo_1_1AbstractFactory_3_01SdlCounter_01_4.html" title="avo::AbstractFactory\l\&lt; SdlCounter \&gt;" alt="" coords="197,74,341,121"/>
+<area shape="rect" id="node7" href="$classavo_1_1AbstractFactory_3_01SfmlCounter_01_4.html" title="avo::AbstractFactory\l\&lt; SfmlCounter \&gt;" alt="" coords="197,143,341,190"/>
 </map>

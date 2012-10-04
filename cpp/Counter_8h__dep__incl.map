@@ -1,12 +1,15 @@
 <map id="SPI/Timing/Counter.h" name="SPI/Timing/Counter.h">
 <area shape="rect" id="node3" href="$v8Counter_8h.html" title="SPI/Script/v8/v8Counter.h" alt="" coords="243,83,416,112"/>
-<area shape="rect" id="node9" href="$Counter_8cpp.html" title="SPI/Timing/Counter.cpp" alt="" coords="480,83,643,112"/>
-<area shape="rect" id="node11" href="$QtCounter_8h.html" title="SPI/Timing/Qt/QtCounter.h" alt="" coords="667,83,845,112"/>
+<area shape="rect" id="node9" href="$Counter_8cpp.html" title="SPI/Timing/Counter.cpp" alt="" coords="521,83,684,112"/>
+<area shape="rect" id="node11" href="$QtCounter_8h.html" title="SPI/Timing/Qt/QtCounter.h" alt="" coords="708,83,887,112"/>
 <area shape="rect" id="node17" href="$SdlCounter_8h.html" title="SPI/Timing/SDL/SdlCounter.h" alt="" coords="943,83,1140,112"/>
+<area shape="rect" id="node23" href="$SfmlCounter_8h.html" title="SPI/Timing/SFML/SfmlCounter.h" alt="" coords="1380,83,1593,112"/>
 <area shape="rect" id="node5" href="$v8Counter_8cpp.html" title="SPI/Script/v8/v8Counter.cpp" alt="" coords="5,169,195,199"/>
 <area shape="rect" id="node7" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="219,169,440,199"/>
 <area shape="rect" id="node13" href="$QtCounter_8cpp.html" title="SPI/Timing/Qt/QtCounter.cpp" alt="" coords="464,169,659,199"/>
 <area shape="rect" id="node15" href="$QtTimingService_8cpp.html" title="SPI/Timing/Qt/QtTimingService.cpp" alt="" coords="683,169,912,199"/>
 <area shape="rect" id="node19" href="$SdlCounter_8cpp.html" title="SPI/Timing/SDL/SdlCounter.cpp" alt="" coords="936,169,1147,199"/>
 <area shape="rect" id="node21" href="$SdlTimingService_8cpp.html" title="SPI/Timing/SDL/SdlTiming\lService.cpp" alt="" coords="1171,161,1349,207"/>
+<area shape="rect" id="node25" href="$SfmlCounter_8cpp.html" title="SPI/Timing/SFML/SfmlCounter.cpp" alt="" coords="1373,169,1600,199"/>
+<area shape="rect" id="node27" href="$SfmlTimingService_8cpp.html" title="SPI/Timing/SFML/SfmlTiming\lService.cpp" alt="" coords="1624,161,1819,207"/>
 </map>

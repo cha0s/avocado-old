@@ -8,7 +8,7 @@
 <area shape="rect" id="node7" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="301,1787,480,1816"/>
 <area shape="rect" id="node8" href="$group__V8.html" title="Avocado&#39;s interface to the V8 JavaScript engine." alt="" coords="312,1887,469,1916"/>
 <area shape="rect" id="node9" href="$group__Resources.html" title="Resources are loaded from the resource root and are managed using reference counting." alt="" coords="312,2229,469,2259"/>
-<area shape="rect" id="node10" href="$group__Timing.html" title="The timing SPI handles measuring time." alt="" coords="348,2468,433,2497"/>
-<area shape="rect" id="node12" href="$group__Graphics.html" title="The graphics SPI handles window and graphics system initialization, and rendering." alt="" coords="341,2776,440,2805"/>
-<area shape="rect" id="node13" href="$group__SFML.html" title="Avocado&#39;s interface to the Simple and Fast Multimedia Library." alt="" coords="299,2902,483,2949"/>
+<area shape="rect" id="node10" href="$group__Timing.html" title="The timing SPI handles measuring time." alt="" coords="348,2537,433,2567"/>
+<area shape="rect" id="node12" href="$group__Graphics.html" title="The graphics SPI handles window and graphics system initialization, and rendering." alt="" coords="341,2845,440,2875"/>
+<area shape="rect" id="node13" href="$group__SFML.html" title="Avocado&#39;s interface to the Simple and Fast Multimedia Library." alt="" coords="299,3041,483,3087"/>
 </map>

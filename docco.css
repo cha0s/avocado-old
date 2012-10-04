@@ -305,3 +305,7 @@ dl {
 #jump_page {
   min-width: 400px;
 }
+
+body .err {
+  border: none;
+}

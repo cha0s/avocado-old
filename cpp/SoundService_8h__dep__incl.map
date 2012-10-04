@@ -1,9 +1,12 @@
 <map id="SPI/Sound/SoundService.h" name="SPI/Sound/SoundService.h">
-<area shape="rect" id="node3" href="$v8SoundService_8h.html" title="SPI/Script/v8/v8SoundService.h" alt="" coords="257,83,468,112"/>
-<area shape="rect" id="node9" href="$SdlSoundService_8h.html" title="SPI/Sound/SDL/SdlSoundService.h" alt="" coords="495,83,724,112"/>
-<area shape="rect" id="node15" href="$SoundService_8cpp.html" title="SPI/Sound/SoundService.cpp" alt="" coords="748,83,943,112"/>
-<area shape="rect" id="node5" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="5,160,227,189"/>
-<area shape="rect" id="node7" href="$v8SoundService_8cpp.html" title="SPI/Script/v8/v8SoundService.cpp" alt="" coords="251,160,475,189"/>
-<area shape="rect" id="node11" href="$Sound_2SDL_2implementSpi_8cpp.html" title="SPI/Sound/SDL/implementSpi.cpp" alt="" coords="499,160,720,189"/>
-<area shape="rect" id="node13" href="$SdlSoundService_8cpp.html" title="SPI/Sound/SDL/SdlSoundService.cpp" alt="" coords="744,160,987,189"/>
+<area shape="rect" id="node3" href="$v8SoundService_8h.html" title="SPI/Script/v8/v8SoundService.h" alt="" coords="257,92,468,121"/>
+<area shape="rect" id="node9" href="$SdlSoundService_8h.html" title="SPI/Sound/SDL/SdlSoundService.h" alt="" coords="751,92,980,121"/>
+<area shape="rect" id="node15" href="$SfmlSoundService_8h.html" title="SPI/Sound/SFML/SfmlSound\lService.h" alt="" coords="1005,83,1197,130"/>
+<area shape="rect" id="node21" href="$SoundService_8cpp.html" title="SPI/Sound/SoundService.cpp" alt="" coords="1221,92,1416,121"/>
+<area shape="rect" id="node5" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="5,188,227,217"/>
+<area shape="rect" id="node7" href="$v8SoundService_8cpp.html" title="SPI/Script/v8/v8SoundService.cpp" alt="" coords="251,188,475,217"/>
+<area shape="rect" id="node11" href="$Sound_2SDL_2implementSpi_8cpp.html" title="SPI/Sound/SDL/implementSpi.cpp" alt="" coords="499,188,720,217"/>
+<area shape="rect" id="node13" href="$SdlSoundService_8cpp.html" title="SPI/Sound/SDL/SdlSoundService.cpp" alt="" coords="744,188,987,217"/>
+<area shape="rect" id="node17" href="$Sound_2SFML_2implementSpi_8cpp.html" title="SPI/Sound/SFML/implement\lSpi.cpp" alt="" coords="1011,179,1197,226"/>
+<area shape="rect" id="node19" href="$SfmlSoundService_8cpp.html" title="SPI/Sound/SFML/SfmlSound\lService.cpp" alt="" coords="1221,179,1413,226"/>
 </map>

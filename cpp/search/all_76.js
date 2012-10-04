@@ -47,5 +47,5 @@ var searchData=
   ['v8window_2ecpp',['v8Window.cpp',['../v8Window_8cpp.html',1,'']]],
   ['v8window_2eh',['v8Window.h',['../v8Window_8h.html',1,'']]],
   ['value',['value',['../structavo_1_1Input_1_1JoyAxis.html#a9ef06352977bbc4d170f53618746a112',1,'avo::Input::JoyAxis']]],
-  ['volume',['volume',['../classavo_1_1Music.html#a844807a5987e7447a66ee196ecf368d7',1,'avo::Music::volume()'],['../classavo_1_1SdlMusic.html#afaabd3fbcf5fb4a395268bb3c40b1d7a',1,'avo::SdlMusic::volume()']]]
+  ['volume',['volume',['../classavo_1_1Music.html#a844807a5987e7447a66ee196ecf368d7',1,'avo::Music::volume()'],['../classavo_1_1SdlMusic.html#afaabd3fbcf5fb4a395268bb3c40b1d7a',1,'avo::SdlMusic::volume()'],['../classavo_1_1SfmlMusic.html#a3942ee66a046c93de306cb5140d9973d',1,'avo::SfmlMusic::volume()']]]
 ];

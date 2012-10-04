@@ -1,3 +1,4 @@
 <map id="avo::Music" name="avo::Music">
 <area shape="rect" id="node3" href="$classavo_1_1SdlMusic.html" title="avo::SdlMusic" alt="" coords="5,83,109,112"/>
+<area shape="rect" id="node5" href="$classavo_1_1SfmlMusic.html" title="avo::SfmlMusic" alt="" coords="133,83,245,112"/>
 </map>

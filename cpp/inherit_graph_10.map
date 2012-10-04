@@ -1,4 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classavo_1_1AbstractFactory_3_01SoundService_01_4.html" title="avo::AbstractFactory\l\&lt; SoundService \&gt;" alt="" coords="5,5,149,51"/>
-<area shape="rect" id="node3" href="$classavo_1_1AbstractFactory_3_01SdlSoundService_01_4.html" title="avo::AbstractFactory\l\&lt; SdlSoundService \&gt;" alt="" coords="197,5,344,51"/>
+<area shape="rect" id="node1" href="$classavo_1_1AbstractFactory_3_01SoundService_01_4.html" title="avo::AbstractFactory\l\&lt; SoundService \&gt;" alt="" coords="5,39,149,86"/>
+<area shape="rect" id="node3" href="$classavo_1_1AbstractFactory_3_01SdlSoundService_01_4.html" title="avo::AbstractFactory\l\&lt; SdlSoundService \&gt;" alt="" coords="201,5,348,51"/>
+<area shape="rect" id="node5" href="$classavo_1_1AbstractFactory_3_01SfmlSoundService_01_4.html" title="avo::AbstractFactory\l\&lt; SfmlSoundService \&gt;" alt="" coords="197,74,352,121"/>
 </map>

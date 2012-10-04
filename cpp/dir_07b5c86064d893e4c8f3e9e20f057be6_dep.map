@@ -1,5 +1,6 @@
 <map id="SPI/Sound" name="SPI/Sound">
-<area shape="rect" id="node4" href="dir_fa553112d182e61da2038efcddf5c9bc.html" title="SDL" alt="" coords="37,65,109,113"/>
-<area shape="rect" id="graph3" href="dir_07b5c86064d893e4c8f3e9e20f057be6.html" alt="" coords="27,55,216,124"/>
-<area shape="rect" id="graph2" href="dir_910ea0c25e40347172401fe3aa070557.html" title="SPI" alt="" coords="16,16,227,135"/>
+<area shape="rect" id="node4" href="dir_fa553112d182e61da2038efcddf5c9bc.html" title="SDL" alt="" coords="133,65,205,113"/>
+<area shape="rect" id="node5" href="dir_aaa4e0f9b7f043f6f844082c7b763cb3.html" title="SFML" alt="" coords="37,65,109,113"/>
+<area shape="rect" id="graph3" href="dir_07b5c86064d893e4c8f3e9e20f057be6.html" alt="" coords="27,55,312,124"/>
+<area shape="rect" id="graph2" href="dir_910ea0c25e40347172401fe3aa070557.html" title="SPI" alt="" coords="16,16,323,135"/>
 </map>

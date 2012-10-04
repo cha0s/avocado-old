@@ -1,13 +1,14 @@
 <map id="Manufacturing" name="Manufacturing">
-<area shape="rect" id="node1" href="$group__Script.html" title="The script SPI handles all communication between the native C++ engine and JavaScript." alt="" coords="348,145,431,175"/>
-<area shape="rect" id="node2" href="$group__Core.html" title="The core SPI handles framework initialization (e.g. SDL_Init()) and teardown (e.g. SDL_Quit()) as well as bridges to core engine functionality like filesystem access." alt="" coords="352,280,427,309"/>
-<area shape="rect" id="node3" href="$group__Sound.html" title="The sound SPI handles sound system initialization, as well as music and sample loading and playing..." alt="" coords="347,623,432,652"/>
-<area shape="rect" id="node4" href="$group__SDL.html" title="Avocado&#39;s interface to the Simple DirectMedia Layer." alt="" coords="321,1009,457,1055"/>
-<area shape="rect" id="node5" href="$group__Input.html" title="The input SPI handles user input polling." alt="" coords="351,1187,428,1216"/>
-<area shape="rect" id="node6" href="$group__Qt.html" title="Avocado&#39;s interface to the Qt development framework." alt="" coords="300,1382,479,1429"/>
-<area shape="rect" id="node7" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="300,1785,479,1815"/>
-<area shape="rect" id="node8" href="$group__V8.html" title="Avocado&#39;s interface to the V8 JavaScript engine." alt="" coords="311,1885,468,1915"/>
-<area shape="rect" id="node9" href="$group__Resources.html" title="Resources are loaded from the resource root and are managed using reference counting." alt="" coords="311,2228,468,2257"/>
-<area shape="rect" id="node10" href="$group__Timing.html" title="The timing SPI handles measuring time." alt="" coords="347,2467,432,2496"/>
-<area shape="rect" id="node12" href="$group__Graphics.html" title="The graphics SPI handles window and graphics system initialization, and rendering." alt="" coords="340,2775,439,2804"/>
+<area shape="rect" id="node1" href="$group__Script.html" title="The script SPI handles all communication between the native C++ engine and JavaScript." alt="" coords="349,147,432,176"/>
+<area shape="rect" id="node2" href="$group__Core.html" title="The core SPI handles framework initialization (e.g. SDL_Init()) and teardown (e.g. SDL_Quit()) as well as bridges to core engine functionality like filesystem access." alt="" coords="353,281,428,311"/>
+<area shape="rect" id="node3" href="$group__Sound.html" title="The sound SPI handles sound system initialization, as well as music and sample loading and playing..." alt="" coords="348,624,433,653"/>
+<area shape="rect" id="node4" href="$group__SDL.html" title="Avocado&#39;s interface to the Simple DirectMedia Layer." alt="" coords="323,1010,459,1057"/>
+<area shape="rect" id="node5" href="$group__Input.html" title="The input SPI handles user input polling." alt="" coords="352,1188,429,1217"/>
+<area shape="rect" id="node6" href="$group__Qt.html" title="Avocado&#39;s interface to the Qt development framework." alt="" coords="301,1383,480,1430"/>
+<area shape="rect" id="node7" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="301,1787,480,1816"/>
+<area shape="rect" id="node8" href="$group__V8.html" title="Avocado&#39;s interface to the V8 JavaScript engine." alt="" coords="312,1887,469,1916"/>
+<area shape="rect" id="node9" href="$group__Resources.html" title="Resources are loaded from the resource root and are managed using reference counting." alt="" coords="312,2229,469,2259"/>
+<area shape="rect" id="node10" href="$group__Timing.html" title="The timing SPI handles measuring time." alt="" coords="348,2468,433,2497"/>
+<area shape="rect" id="node12" href="$group__Graphics.html" title="The graphics SPI handles window and graphics system initialization, and rendering." alt="" coords="341,2776,440,2805"/>
+<area shape="rect" id="node13" href="$group__SFML.html" title="Avocado&#39;s interface to the Simple and Fast Multimedia Library." alt="" coords="299,2902,483,2949"/>
 </map>

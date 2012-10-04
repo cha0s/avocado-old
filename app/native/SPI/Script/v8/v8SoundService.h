@@ -9,6 +9,18 @@
 
 namespace avo {
 
+/**
+ * @addtogroup Script
+ * @{
+ */
+
+/**
+ * %v8SoundService provides the SoundService SPI to V8 JavaScript.
+ *
+ * @ingroup Sound
+ * @ingroup SPI
+ * @ingroup V8
+ */
 class v8SoundService : public ObjectWrap {
 
 public:
@@ -29,6 +41,10 @@ private:
 
 	static v8::Handle<v8::Value> Close(const v8::Arguments &args);
 };
+
+/**
+ * @}
+ */
 
 }
 

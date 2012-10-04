@@ -70,10 +70,7 @@ void v8Sample::initialize(Handle<ObjectTemplate> target) {
 
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%play", v8Sample::Play);
 
-	constructor_template->Set(
-		String::New("%load"),
-		FunctionTemplate::New(v8Sample::Load)
-	);
+	V8_SET_METHOD(constructor_template, "%load", v8Sample::Load);
 
 	target->Set(String::NewSymbol("Sample"), constructor_template);
 }

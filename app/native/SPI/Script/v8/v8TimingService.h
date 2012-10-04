@@ -9,6 +9,18 @@
 
 namespace avo {
 
+/**
+ * @addtogroup Script
+ * @{
+ */
+
+/**
+ * %v8TimingService provides the TimingService SPI to V8 JavaScript.
+ *
+ * @ingroup Graphics
+ * @ingroup SPI
+ * @ingroup V8
+ */
 class v8TimingService : public ObjectWrap {
 
 public:
@@ -33,6 +45,10 @@ private:
 	static v8::Handle<v8::Value> Close(const v8::Arguments &args);
 	static v8::Handle<v8::Value> Sleep(const v8::Arguments &args);
 };
+
+/**
+ * @}
+ */
 
 }
 

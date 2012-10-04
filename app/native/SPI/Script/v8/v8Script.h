@@ -17,6 +17,7 @@ namespace avo {
 /**
  * %v8Script is an executable script wrapping the v8::Script class.
  *
+ * @ingroup SPI
  * @ingroup V8
  */
 class v8Script : public Script {

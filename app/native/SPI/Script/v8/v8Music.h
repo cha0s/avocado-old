@@ -9,6 +9,18 @@
 
 namespace avo {
 
+/**
+ * @addtogroup Script
+ * @{
+ */
+
+/**
+ * %v8Music provides the Music SPI to V8 JavaScript.
+ *
+ * @ingroup Sound
+ * @ingroup SPI
+ * @ingroup V8
+ */
 class v8Music : public ObjectWrap {
 
 public:
@@ -38,6 +50,10 @@ private:
 	Music *music;
 	bool owns;
 };
+
+/**
+ * @}
+ */
 
 }
 

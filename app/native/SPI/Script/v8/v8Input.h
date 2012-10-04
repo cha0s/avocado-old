@@ -9,6 +9,18 @@
 
 namespace avo {
 
+/**
+ * @addtogroup Script
+ * @{
+ */
+
+/**
+ * %v8Input provides the Input SPI to V8 JavaScript.
+ *
+ * @ingroup Input
+ * @ingroup SPI
+ * @ingroup V8
+ */
 class v8Input : public ObjectWrap {
 
 public:

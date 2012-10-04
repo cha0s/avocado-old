@@ -40,10 +40,7 @@ void v8GraphicsService::initialize(Handle<ObjectTemplate> target) {
 
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "close", v8GraphicsService::Close);
 
-	constructor_template->Set(
-		String::New("implementSpi"),
-		FunctionTemplate::New(v8GraphicsService::ImplementSpi)
-	);
+	V8_SET_METHOD(constructor_template, "implementSpi", v8GraphicsService::ImplementSpi);
 
 	target->Set(String::NewSymbol("GraphicsService"), constructor_template);
 }

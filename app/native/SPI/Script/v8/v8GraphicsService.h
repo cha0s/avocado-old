@@ -10,15 +10,17 @@
 namespace avo {
 
 /**
- * @addtogroup Graphics
+ * @addtogroup Script
  * @{
  */
 
 /**
- * %v8GraphicsService handles providing the GraphicsService SPI to V8 JavaScript.
+ * %v8GraphicsService handles providing the GraphicsService SPI to V8
+ * JavaScript.
  *
- * @ingroup V8
+ * @ingroup Graphics
  * @ingroup SPI
+ * @ingroup V8
  */
 class v8GraphicsService : public ObjectWrap {
 

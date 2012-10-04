@@ -15,15 +15,12 @@ namespace avo {
  */
 
 /**
- * @ingroup V8
- * @{
- */
-
-/**
  * @namespace avo::V8
  *
  * @brief Utility functions and embed bindings for
  * [V8](http://code.google.com/p/v8/).
+ *
+ * @ingroup V8
  */
 namespace V8 {
 
@@ -40,15 +37,11 @@ std::string stringToStdString(v8::Handle<v8::String> value);
 
 }
 
-/**
- * @}
- */
-
 }
 
 #define V8_SET_METHOD(obj, name, callback)                     \
   obj->Set(v8::String::NewSymbol(name),                        \
-           v8::FunctionTemplate::New(callback)->GetFunction())
+           v8::FunctionTemplate::New(callback))
 
 #define V8_SET_PROTOTYPE_METHOD(templ, name, callback)                    \
 do {                                                                      \

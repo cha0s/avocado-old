@@ -10,15 +10,16 @@
 namespace avo {
 
 /**
- * @addtogroup Graphics
+ * @addtogroup Script
  * @{
  */
 
 /**
- * %v8Window handles providing the Window SPI to V8 JavaScript.
+ * %v8Window provides the Window SPI to V8 JavaScript.
  *
- * @ingroup V8
+ * @ingroup Graphics
  * @ingroup SPI
+ * @ingroup V8
  */
 class v8Window : public ObjectWrap {
 

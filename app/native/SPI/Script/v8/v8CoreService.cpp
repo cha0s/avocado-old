@@ -39,15 +39,8 @@ void v8CoreService::initialize(Handle<ObjectTemplate> target) {
 	// Set methods.
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "close", v8CoreService::Close);
 
-	constructor_template->Set(
-		String::New("implementSpi"),
-		FunctionTemplate::New(v8CoreService::ImplementSpi)
-	);
-
-	constructor_template->Set(
-		String::New("%writeStderr"),
-		FunctionTemplate::New(v8CoreService::WriteStderr)
-	);
+	V8_SET_METHOD(constructor_template, "implementSpi", v8CoreService::ImplementSpi);
+	V8_SET_METHOD(constructor_template, "%writeStderr", v8CoreService::WriteStderr);
 
 	// Register.
 	target->Set(String::NewSymbol("CoreService"), constructor_template);

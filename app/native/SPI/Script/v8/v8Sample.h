@@ -9,6 +9,18 @@
 
 namespace avo {
 
+/**
+ * @addtogroup Script
+ * @{
+ */
+
+/**
+ * %v8Sample provides the Sample SPI to V8 JavaScript.
+ *
+ * @ingroup Sound
+ * @ingroup SPI
+ * @ingroup V8
+ */
 class v8Sample : public ObjectWrap {
 
 public:
@@ -36,6 +48,10 @@ private:
 	Sample *sample;
 	bool owns;
 };
+
+/**
+ * @}
+ */
 
 }
 

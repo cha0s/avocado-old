@@ -38,10 +38,7 @@ void v8InputService::initialize(Handle<ObjectTemplate> target) {
 
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "close", v8InputService::Close);
 
-	constructor_template->Set(
-		String::New("implementSpi"),
-		FunctionTemplate::New(v8InputService::ImplementSpi)
-	);
+	V8_SET_METHOD(constructor_template, "implementSpi", v8InputService::ImplementSpi);
 
 	target->Set(String::NewSymbol("InputService"), constructor_template);
 }

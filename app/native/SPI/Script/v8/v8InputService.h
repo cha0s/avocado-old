@@ -9,6 +9,18 @@
 
 namespace avo {
 
+/**
+ * @addtogroup Script
+ * @{
+ */
+
+/**
+ * %v8InputService provides the InputService SPI to V8 JavaScript.
+ *
+ * @ingroup Input
+ * @ingroup SPI
+ * @ingroup V8
+ */
 class v8InputService : public ObjectWrap {
 
 public:
@@ -32,6 +44,10 @@ private:
 
 	static v8::Handle<v8::Value> Close(const v8::Arguments &args);
 };
+
+/**
+ * @}
+ */
 
 }
 

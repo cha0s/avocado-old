@@ -56,10 +56,7 @@ void v8Image::initialize(Handle<ObjectTemplate> target) {
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%setPixelAt"   , v8Image::SetPixelAt   );
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%width"        , v8Image::Width        );
 
-	constructor_template->Set(
-		String::New("%load"),
-		FunctionTemplate::New(v8Image::Load)
-	);
+	V8_SET_METHOD(constructor_template, "%load", v8Image::Load);
 
 	target->Set(v8::String::NewSymbol("Image"), constructor_template);
 }

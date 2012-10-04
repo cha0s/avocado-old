@@ -39,10 +39,7 @@ void v8TimingService::initialize(Handle<ObjectTemplate> target) {
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "close", v8TimingService::Close);
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%sleep", v8TimingService::Sleep);
 
-	constructor_template->Set(
-		String::New("implementSpi"),
-		FunctionTemplate::New(v8TimingService::ImplementSpi)
-	);
+	V8_SET_METHOD(constructor_template, "implementSpi", v8TimingService::ImplementSpi);
 
 	target->Set(String::NewSymbol("TimingService"), constructor_template);
 }

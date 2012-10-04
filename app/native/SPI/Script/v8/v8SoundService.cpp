@@ -38,10 +38,7 @@ void v8SoundService::initialize(Handle<ObjectTemplate> target) {
 
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "close", v8SoundService::Close);
 
-	constructor_template->Set(
-		String::New("implementSpi"),
-		FunctionTemplate::New(v8SoundService::ImplementSpi)
-	);
+	V8_SET_METHOD(constructor_template, "implementSpi", v8SoundService::ImplementSpi);
 
 	target->Set(String::NewSymbol("SoundService"), constructor_template);
 }

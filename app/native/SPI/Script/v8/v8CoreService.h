@@ -10,13 +10,14 @@
 namespace avo {
 
 /**
- * @addtogroup Core
+ * @addtogroup Script
  * @{
  */
 
 /**
  * %v8CoreService handles providing the CoreService SPI to V8 JavaScript.
  *
+ * @ingroup Core
  * @ingroup V8
  * @ingroup SPI
  */

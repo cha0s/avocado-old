@@ -9,13 +9,15 @@
 namespace avo {
 
 /**
- * @ingroup V8
+ * @addtogroup Script
  * @{
  */
 
 /**
  * Wrap an object for ease going in/out of v8. Lovingly stolen with highest
  * respect from NodeJS.
+ *
+ * @ingroup V8
  */
 class ObjectWrap {
 

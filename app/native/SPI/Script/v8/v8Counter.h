@@ -9,6 +9,18 @@
 
 namespace avo {
 
+/**
+ * @addtogroup Script
+ * @{
+ */
+
+/**
+ * %v8Counter handles providing the Counter SPI to V8 JavaScript.
+ *
+ * @ingroup SPI
+ * @ingroup Timing
+ * @ingroup V8
+ */
 class v8Counter : public ObjectWrap {
 
 public:
@@ -30,6 +42,10 @@ private:
 
 	Counter *counter;
 };
+
+/**
+ * @}
+ */
 
 }
 

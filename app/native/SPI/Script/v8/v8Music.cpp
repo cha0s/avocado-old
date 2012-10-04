@@ -73,10 +73,7 @@ void v8Music::initialize(Handle<ObjectTemplate> target) {
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%play", v8Music::Play);
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%stop", v8Music::Stop);
 
-	constructor_template->Set(
-		String::New("%load"),
-		FunctionTemplate::New(v8Music::Load)
-	);
+	V8_SET_METHOD(constructor_template, "%load", v8Music::Load);
 
 	target->Set(String::NewSymbol("Music"), constructor_template);
 }

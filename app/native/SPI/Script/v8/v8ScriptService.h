@@ -18,8 +18,8 @@ namespace avo {
  * %v8ScriptService embeds the
  * [V8 JavaScript engine](http://code.google.com/p/v8/).
  *
- * @ingroup V8
  * @ingroup SPI
+ * @ingroup V8
  */
 class v8ScriptService : public ScriptService {
 

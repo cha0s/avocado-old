@@ -4,4 +4,6 @@ cd docs
 
 cd ../app/native
 doxygen avocado.Doxyfile
-cd ../../docs
+cd ../../docs/doxygen
+cp background_navigation.png  doxygen.css  doxygen.png  img_downArrow.png  tabs.css ../output/cpp
+cd ..

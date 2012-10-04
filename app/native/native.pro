@@ -68,6 +68,7 @@ spiis.commands += \
 	echo "Building SPIIs..."; \
 	./build-spi; \
 	echo "Done building SPIIs.";
+spiis.depends = dependencies
 
 everything.depends = dependencies spiis all
 

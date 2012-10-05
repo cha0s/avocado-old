@@ -10,7 +10,7 @@
 namespace avo {
 
 /**
- * @addtogroup Input
+ * @addtogroup Ui
  * @{
  */
 

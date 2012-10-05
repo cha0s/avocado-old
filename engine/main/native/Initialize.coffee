@@ -6,9 +6,9 @@ avo.coreService = new avo.CoreService()
 avo.GraphicsService.implementSpi 'sdl'
 avo.graphicsService = new avo.GraphicsService()
 
-# Use SDL InputService for now.
-avo.InputService.implementSpi 'sdl'
-avo.inputService = new avo.InputService()
+# Use SDL UiService for now.
+avo.UiService.implementSpi 'sdl'
+avo.inputService = new avo.UiService()
 
 # Use SFML TimingService for now.
 avo.TimingService.implementSpi 'sfml'

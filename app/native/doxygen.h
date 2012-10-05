@@ -77,9 +77,10 @@
  */
 
 /**
- * @defgroup Input Input SPI
+ * @defgroup Ui User Interface SPI
  *
- * @brief The input SPI handles user input polling.
+ * @brief The UI SPI handles user interface functionality such as windows
+ * and user input polling.
  */
 
 /**

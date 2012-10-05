@@ -8,7 +8,7 @@
 
 #include "v8CoreService.h"
 #include "v8GraphicsService.h"
-#include "v8InputService.h"
+#include "v8UiService.h"
 #include "v8TimingService.h"
 #include "v8SoundService.h"
 
@@ -40,7 +40,7 @@ v8ScriptService::v8ScriptService()
 
 	v8CoreService::initialize(avo);
 	v8GraphicsService::initialize(avo);
-	v8InputService::initialize(avo);
+	v8UiService::initialize(avo);
 	v8TimingService::initialize(avo);
 	v8SoundService::initialize(avo);
 

@@ -2,7 +2,7 @@
 
 #include <boost/extension/extension.hpp>
 
-#include "SdlInputService.h"
+#include "SdlUiService.h"
 
 /**
  * @addtogroup SPI
@@ -11,9 +11,9 @@
 
 extern "C"
 void BOOST_EXTENSION_EXPORT_DECL
-implementSpi(avo::FactoryManager<AVOCADO_SPI(Input, Sdl)> &manager) {
+implementSpi(avo::FactoryManager<AVOCADO_SPI(Ui, Sdl)> &manager) {
 
-	manager.setInstance(avo::SdlInputService::factory);
+	manager.setInstance(avo::SdlUiService::factory);
 }
 
 /**

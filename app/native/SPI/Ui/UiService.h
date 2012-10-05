@@ -8,30 +8,30 @@
 namespace avo {
 
 /**
- * @addtogroup Input
+ * @addtogroup Ui
  * @{
  */
 
 /**
- * The %InputService SPI handles input framework initialization as well as
+ * The %UiService SPI handles input framework initialization as well as
  * the SPII for Input.
  */
-class InputService {
+class UiService {
 
 public:
 
-	InputService();
-	virtual ~InputService();
+	UiService();
+	virtual ~UiService();
 
 	/**
 	 * Close out the service.
 	 */
 	virtual void close();
 
-	static FactoryManager<InputService> factoryManager;
+	static FactoryManager<UiService> factoryManager;
 
 	static std::string name() {
-		return "InputService";
+		return "UiService";
 	}
 
 };
@@ -41,13 +41,13 @@ public:
  * @ingroup SPI
  */
 template <>
-class AbstractFactory<InputService> {
+class AbstractFactory<UiService> {
 
 public:
 
-	virtual ~AbstractFactory<InputService>() {}
+	virtual ~AbstractFactory<UiService>() {}
 
-	virtual InputService *create() = 0;
+	virtual UiService *create() = 0;
 
 };
 

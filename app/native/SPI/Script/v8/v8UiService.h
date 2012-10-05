@@ -5,7 +5,7 @@
 
 #include "avocado-v8.h"
 #include "ObjectWrap.h"
-#include "../../Input/InputService.h"
+#include "../../Ui/UiService.h"
 
 namespace avo {
 
@@ -15,30 +15,30 @@ namespace avo {
  */
 
 /**
- * %v8InputService provides the InputService SPI to V8 JavaScript.
+ * %v8UiService provides the UiService SPI to V8 JavaScript.
  *
  * @ingroup Input
  * @ingroup SPI
  * @ingroup V8
  */
-class v8InputService : public ObjectWrap {
+class v8UiService : public ObjectWrap {
 
 public:
 
-	~v8InputService();
+	~v8UiService();
 
 	static void initialize(v8::Handle<v8::ObjectTemplate> target);
 
-	InputService *inputService;
+	UiService *inputService;
 
 private:
 
-	v8InputService(v8::Handle<v8::Object> wrapper);
+	v8UiService(v8::Handle<v8::Object> wrapper);
 
 	static v8::Handle<v8::Value> New(const v8::Arguments &args);
 
 	/**
-	 * Manage the InputService SPI implementation.
+	 * Manage the UiService SPI implementation.
 	 */
 	static v8::Handle<v8::Value> ImplementSpi(const v8::Arguments &args);
 

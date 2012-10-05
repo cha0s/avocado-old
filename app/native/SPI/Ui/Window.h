@@ -5,12 +5,12 @@
 
 #include <string>
 
-#include "Image.h"
+#include "../Graphics/Image.h"
 
 namespace avo {
 
 /**
- * @addtogroup Graphics
+ * @addtogroup Ui
  * @{
  */
 

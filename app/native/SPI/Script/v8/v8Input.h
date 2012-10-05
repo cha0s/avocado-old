@@ -5,7 +5,7 @@
 
 #include "avocado-v8.h"
 #include "ObjectWrap.h"
-#include "../..//Input/Input.h"
+#include "../../Ui/Input.h"
 
 namespace avo {
 

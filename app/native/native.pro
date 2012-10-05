@@ -38,6 +38,11 @@ gtest.commands += \
 dependencies.commands += \
 	echo "Building dependencies..."; \
 	#
+	# Test for binaries.
+	#
+	`type git >/dev/null 2>&1` || exit 1; \
+	`type svn >/dev/null 2>&1` || exit 1; \
+	#
 	# V8
 	#
 	echo "Building v8..."; \
@@ -48,7 +53,8 @@ dependencies.commands += \
 	test ! -d v8 \
 		&& git clone git://github.com/v8/v8.git v8 \
 		&& cd v8 \
-		&& patch -p1 < ../v8.patch && make dependencies \
+		&& git apply --ignore-space-change --ignore-whitespace ../v8.patch \
+		&& make dependencies \
 		&& cd ..; \
 	cd v8; \
 	#

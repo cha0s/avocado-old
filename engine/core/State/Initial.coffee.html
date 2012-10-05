@@ -4,11 +4,7 @@
 state needs here. This is the Initial state, so we can also set up
 things specific to our game.</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">initialize: </span><span class="o">-&gt;</span>
-  
-    <span class="nv">d = </span><span class="nx">upon</span><span class="p">.</span><span class="nx">defer</span><span class="p">()</span>
-    <span class="nx">d</span><span class="p">.</span><span class="nx">resolve</span><span class="p">()</span>
-    <span class="k">return</span> <span class="nx">d</span>
-    </pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>Let's move around the avocado! In order to do that, we'll need to
+  </pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>Let's move around the avocado! In order to do that, we'll need to
 keep track of its x, y location.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="p">[</span><span class="nx">@x</span><span class="p">,</span> <span class="nx">@y</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
     </pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Register a player (0) to receive input using the keyboard arrow keys
@@ -41,26 +37,36 @@ as initialize requires. Elegant!</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="nx">upon</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span>
       <span class="nx">imagePromise</span>
       <span class="nx">musicPromise</span>
-    <span class="p">])</span>
-  </pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>Called repeatedly while this state is loaded. You can do things like
+    <span class="p">]).</span><span class="k">then</span> <span class="o">-&gt;</span>
+      </pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>Last, we'll open the window where we show all of the graphics
+stuff. We'll wait so that there isn't a black screen sitting
+there while everything loads.
+Instantiate a Window to receive render events.</p>
+</td><td class="code"><div class="highlight"><pre>      <span class="nb">window</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Window</span><span class="p">()</span>
+      <span class="nb">window</span><span class="p">.</span><span class="nx">set</span> <span class="p">[</span><span class="mi">320</span><span class="p">,</span> <span class="mi">240</span><span class="p">]</span>
+      <span class="nb">window</span><span class="p">.</span><span class="nx">setWindowTitle</span> <span class="s1">&#39;Avocado - Fun Should Be Free&#39;</span>
+      </pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>avo.main lets us know when it has something to render, so we'll
+put it on our window.</p>
+</td><td class="code"><div class="highlight"><pre>      <span class="nx">avo</span><span class="p">.</span><span class="nx">main</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;render&#39;</span><span class="p">,</span> <span class="nf">(buffer) -&gt;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">render</span> <span class="nx">buffer</span>
+      </pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>Called repeatedly while this state is loaded. You can do things like
 update your world here. We'll move the avocado based on movement input.</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">tick: </span><span class="o">-&gt;</span>
-    <span class="k">return</span></pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>Move it 500px a second based on player 0's movement.</p>
+    </pre></div></td></tr><tr id="section-13"><td class="docs"><div class="pilwrap"><a href="#section-13" class="pilcrow">&#182;</a></div><p>Move it 500px a second based on player 0's movement.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="p">[</span><span class="nx">@x</span><span class="p">,</span> <span class="nx">@y</span><span class="p">]</span> <span class="o">=</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span>
       <span class="p">[</span><span class="nx">@x</span><span class="p">,</span> <span class="nx">@y</span><span class="p">]</span>
       <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">scale</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Input</span><span class="p">.</span><span class="nx">playerTickMovement</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">500</span>
     <span class="p">)</span>
-  </pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>Called repeatedly while this state is loaded. You can render all of
+  </pre></div></td></tr><tr id="section-14"><td class="docs"><div class="pilwrap"><a href="#section-14" class="pilcrow">&#182;</a></div><p>Called repeatedly while this state is loaded. You can render all of
 your pretty pictures here!</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">render: </span><span class="nf">(buffer) -&gt;</span>
-    <span class="k">return</span></pre></div></td></tr><tr id="section-13"><td class="docs"><div class="pilwrap"><a href="#section-13" class="pilcrow">&#182;</a></div><p>Fill the screen with white.</p>
+    </pre></div></td></tr><tr id="section-15"><td class="docs"><div class="pilwrap"><a href="#section-15" class="pilcrow">&#182;</a></div><p>Fill the screen with white.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="nx">buffer</span><span class="p">.</span><span class="nx">fill</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span>
-    </pre></div></td></tr><tr id="section-14"><td class="docs"><div class="pilwrap"><a href="#section-14" class="pilcrow">&#182;</a></div><p>Show the avocado at its current x, y location.</p>
+    </pre></div></td></tr><tr id="section-16"><td class="docs"><div class="pilwrap"><a href="#section-16" class="pilcrow">&#182;</a></div><p>Show the avocado at its current x, y location.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="nx">@avocado</span><span class="p">.</span><span class="nx">render</span> <span class="p">[</span><span class="nx">@x</span><span class="p">,</span> <span class="nx">@y</span><span class="p">],</span> <span class="nx">buffer</span>
-    </pre></div></td></tr><tr id="section-15"><td class="docs"><div class="pilwrap"><a href="#section-15" class="pilcrow">&#182;</a></div><p>Called when another state is loaded. This gives you a chance to clean
+    </pre></div></td></tr><tr id="section-17"><td class="docs"><div class="pilwrap"><a href="#section-17" class="pilcrow">&#182;</a></div><p>Called when another state is loaded. This gives you a chance to clean
 up resources and event handlers.</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">leave: </span><span class="nf">(nextStateName) -&gt;</span>
-    <span class="k">return</span></pre></div></td></tr><tr id="section-16"><td class="docs"><div class="pilwrap"><a href="#section-16" class="pilcrow">&#182;</a></div><p>Remove our user input event handler(s).</p>
+    </pre></div></td></tr><tr id="section-18"><td class="docs"><div class="pilwrap"><a href="#section-18" class="pilcrow">&#182;</a></div><p>Remove our user input event handler(s).</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="nx">avo</span><span class="p">.</span><span class="nx">Input</span><span class="p">.</span><span class="kc">off</span> <span class="s1">&#39;.InitialState&#39;</span>
 
 </pre></div></td></tr></tbody></table><div id="projectname"><a href="../../../index.html">Avocado</a></div></div></body></html>

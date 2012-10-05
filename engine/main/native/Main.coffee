@@ -8,12 +8,6 @@ avo.main = new class extends avo.Main
 		
 		super
 		
-		# Instantiate a Window to receive render events.
-		window = new avo.Window()
-		window.set [320, 240]
-		window.setWindowTitle 'Avocado - Fun Should Be Free'
-		@on 'render', (buffer) -> window.render buffer
-		
 		# Catch the quit event from Input (window close event).
 		avo.Input.on 'quit.Engine', => @quit()
 		

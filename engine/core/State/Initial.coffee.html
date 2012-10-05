@@ -4,12 +4,12 @@
 state needs here. This is the Initial state, so we can also set up
 things specific to our game.</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">initialize: </span><span class="o">-&gt;</span>
-  </pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>Let's move around the avocado! In order to do that, we'll need to
-keep track of its x, y location.</p>
+  </pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>Let's move the avocado! In order to do that, we'll need to keep track
+of its x, y location.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="p">[</span><span class="nx">@x</span><span class="p">,</span> <span class="nx">@y</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-    </pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Register a player (0) to receive input using the keyboard arrow keys
-and joystick index 0.</p>
-</td><td class="code"><div class="highlight"><pre>    <span class="nx">avo</span><span class="p">.</span><span class="nx">Input</span><span class="p">.</span><span class="nx">registerPlayerMovement</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[</span>
+    </pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Register a player 'Awesome player' to receive input using the
+keyboard arrow keys and joystick index 0.</p>
+</td><td class="code"><div class="highlight"><pre>    <span class="nx">avo</span><span class="p">.</span><span class="nx">Input</span><span class="p">.</span><span class="nx">registerPlayerMovement</span> <span class="s1">&#39;Awesome player&#39;</span><span class="p">,</span> <span class="p">[</span>
       <span class="nx">avo</span><span class="p">.</span><span class="nx">Input</span><span class="p">.</span><span class="nx">SpecialKeys</span><span class="p">.</span><span class="nx">UpArrow</span>
       <span class="nx">avo</span><span class="p">.</span><span class="nx">Input</span><span class="p">.</span><span class="nx">SpecialKeys</span><span class="p">.</span><span class="nx">RightArrow</span>
       <span class="nx">avo</span><span class="p">.</span><span class="nx">Input</span><span class="p">.</span><span class="nx">SpecialKeys</span><span class="p">.</span><span class="nx">DownArrow</span>
@@ -51,10 +51,10 @@ put it on our window.</p>
       </pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>Called repeatedly while this state is loaded. You can do things like
 update your world here. We'll move the avocado based on movement input.</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">tick: </span><span class="o">-&gt;</span>
-    </pre></div></td></tr><tr id="section-13"><td class="docs"><div class="pilwrap"><a href="#section-13" class="pilcrow">&#182;</a></div><p>Move it 500px a second based on player 0's movement.</p>
+    </pre></div></td></tr><tr id="section-13"><td class="docs"><div class="pilwrap"><a href="#section-13" class="pilcrow">&#182;</a></div><p>Move it 500px a second based on player 'Awesome player's movement.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="p">[</span><span class="nx">@x</span><span class="p">,</span> <span class="nx">@y</span><span class="p">]</span> <span class="o">=</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span>
       <span class="p">[</span><span class="nx">@x</span><span class="p">,</span> <span class="nx">@y</span><span class="p">]</span>
-      <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">scale</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Input</span><span class="p">.</span><span class="nx">playerTickMovement</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">500</span>
+      <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">scale</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Input</span><span class="p">.</span><span class="nx">playerTickMovement</span><span class="p">(</span><span class="s1">&#39;Awesome player&#39;</span><span class="p">),</span> <span class="mi">500</span>
     <span class="p">)</span>
   </pre></div></td></tr><tr id="section-14"><td class="docs"><div class="pilwrap"><a href="#section-14" class="pilcrow">&#182;</a></div><p>Called repeatedly while this state is loaded. You can render all of
 your pretty pictures here!</p>

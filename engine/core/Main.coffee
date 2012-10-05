@@ -49,6 +49,10 @@ class avo.Main
 		@ticksPerSecond = new avo.Cps()
 		@rendersPerSecond = new avo.Cps()
 		
+		# Keep count of tick and render frequencies in milliseconds.
+		@tickFrequency = 1000 / avo.ticksPerSecondTarget
+		@renderFrequency = 1000 / avo.rendersPerSecondTarget
+		
 		# Keep handles for out tick and render loops, so we can GC them on
 		# quit.
 		@tickInterval = null
@@ -63,7 +67,7 @@ class avo.Main
 					@tick()
 				catch error
 					@emit 'error', error
-			1000 / avo.ticksPerSecondTarget
+			@tickFrequency
 		)
 		
 		# Render loop.
@@ -73,7 +77,7 @@ class avo.Main
 					@render()
 				catch error
 					@emit 'error', error
-			1000 / avo.rendersPerSecondTarget
+			@renderFrequency
 		)
 	
 	# Change the State. This isn't immediate, but will be dispatched on the
@@ -129,14 +133,14 @@ class avo.Main
 		# Poll user input.
 		avo.Input.poll()
 		
-		# Track the ticks per second.
-		@ticksPerSecond.tick()
-		
 		# Let the State tick.
 		@stateObject?.tick()
 		
 		# Handle any State change.
 		@handleStateChange()
+		
+		# Track the ticks per second.
+		@ticksPerSecond.tick()
 		
 	render: ->
 		

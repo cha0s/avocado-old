@@ -1,4 +1,4 @@
-<map id="avo::AbstractFactory&lt; Image &gt;" name="avo::AbstractFactory&lt; Image &gt;">
-<area shape="rect" id="node3" href="$classavo_1_1AbstractFactory_3_01QtImage_01_4.html" title="avo::AbstractFactory\l\&lt; QtImage \&gt;" alt="" coords="5,102,149,149"/>
-<area shape="rect" id="node5" href="$classavo_1_1AbstractFactory_3_01SdlImage_01_4.html" title="avo::AbstractFactory\l\&lt; SdlImage \&gt;" alt="" coords="173,102,317,149"/>
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classavo_1_1AbstractFactory_3_01QtImage_01_4.html" title="avo::AbstractFactory\&lt; QtImage \&gt;" alt="" coords="5,83,224,112"/>
+<area shape="rect" id="node5" href="$classavo_1_1AbstractFactory_3_01SdlImage_01_4.html" title="avo::AbstractFactory\&lt; SdlImage \&gt;" alt="" coords="248,83,469,112"/>
 </map>

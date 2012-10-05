@@ -1,7 +1,7 @@
-<map id="Simple and Fast Multimedia Library interface" name="Simple and Fast Multimedia Library interface">
-<area shape="rect" id="node1" href="$group__Sound.html" title="The sound SPI handles sound system initialization, as well as music and sample loading and playing..." alt="" coords="427,157,512,187"/>
-<area shape="rect" id="node2" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="380,413,559,443"/>
-<area shape="rect" id="node3" href="$group__Resources.html" title="Resources are loaded from the resource root and are managed using reference counting." alt="" coords="391,548,548,577"/>
-<area shape="rect" id="node4" href="$group__Timing.html" title="The timing SPI handles measuring time." alt="" coords="427,683,512,712"/>
-<area shape="rect" id="node5" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="417,887,521,916"/>
+<map id="structs" name="structs">
+<area shape="rect" id="node1" href="$group__Sound.html" title="The sound SPI handles sound system initialization, as well as music and sample loading and playing..." alt="" coords="643,111,728,140"/>
+<area shape="rect" id="node2" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="596,280,775,309"/>
+<area shape="rect" id="node3" href="$group__Resources.html" title="Resources are loaded from the resource root and are managed using reference counting." alt="" coords="607,380,764,409"/>
+<area shape="rect" id="node4" href="$group__Timing.html" title="The timing SPI handles measuring time." alt="" coords="643,480,728,509"/>
+<area shape="rect" id="node5" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="633,597,737,627"/>
 </map>

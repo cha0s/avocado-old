@@ -1,8 +1,8 @@
-<map id="Core SPI" name="Core SPI">
-<area shape="rect" id="node1" href="$group__Script.html" title="The script SPI handles all communication between the native C++ engine and JavaScript." alt="" coords="303,17,385,47"/>
-<area shape="rect" id="node3" href="$group__SDL.html" title="Avocado&#39;s interface to the Simple DirectMedia Layer." alt="" coords="276,91,412,138"/>
-<area shape="rect" id="node4" href="$group__Qt.html" title="Avocado&#39;s interface to the Qt development framework." alt="" coords="255,174,433,221"/>
-<area shape="rect" id="node5" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="255,385,433,415"/>
-<area shape="rect" id="node6" href="$group__V8.html" title="Avocado&#39;s interface to the V8 JavaScript engine." alt="" coords="265,439,423,468"/>
-<area shape="rect" id="node7" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="292,572,396,601"/>
+<map id="structs" name="structs">
+<area shape="rect" id="node1" href="$group__Script.html" title="The script SPI handles all communication between the native C++ engine and JavaScript." alt="" coords="444,32,527,61"/>
+<area shape="rect" id="node3" href="$group__SDL.html" title="Avocado&#39;s interface to the [Simple DirectMedia Layer](http://www.libsdl.org/)." alt="" coords="372,97,599,127"/>
+<area shape="rect" id="node4" href="$group__Qt.html" title="Avocado&#39;s interface to the [Qt development framework](http://qt.digia.com/)." alt="" coords="369,163,601,192"/>
+<area shape="rect" id="node5" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="396,313,575,343"/>
+<area shape="rect" id="node6" href="$group__V8.html" title="Avocado&#39;s interface to the [V8 JavaScript engine](http://code.google.com/p/v8/)." alt="" coords="407,367,564,396"/>
+<area shape="rect" id="node7" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="433,448,537,477"/>
 </map>

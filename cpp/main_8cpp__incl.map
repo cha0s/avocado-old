@@ -1,8 +1,8 @@
-<map id="main.cpp" name="main.cpp">
-<area shape="rect" id="node3" href="$avocado-global_8h.html" title="avocado&#45;global.h" alt="" coords="60,333,180,363"/>
-<area shape="rect" id="node11" href="$FS_8h.html" title="FS.h" alt="" coords="348,169,399,199"/>
-<area shape="rect" id="node20" href="$ScriptService_8h.html" title="SPI/Script/ScriptService.h" alt="" coords="115,83,288,112"/>
-<area shape="rect" id="node34" href="$SpiiLoader_8h.html" title="SPI/SpiiLoader.h" alt="" coords="426,83,546,112"/>
-<area shape="rect" id="node26" href="$Factory_8h.html" title="Factory.h" alt="" coords="44,256,122,285"/>
-<area shape="rect" id="node29" href="$Script_8h.html" title="Script.h" alt="" coords="124,169,191,199"/>
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$avocado-global_8h.html" title="avocado&#45;global.h" alt="" coords="57,315,177,344"/>
+<area shape="rect" id="node11" href="$FS_8h.html" title="FS.h" alt="" coords="345,160,396,189"/>
+<area shape="rect" id="node20" href="$ScriptService_8h.html" title="SPI/Script/ScriptService.h" alt="" coords="112,83,285,112"/>
+<area shape="rect" id="node34" href="$SpiiLoader_8h.html" title="SPI/SpiiLoader.h" alt="" coords="440,83,560,112"/>
+<area shape="rect" id="node26" href="$Factory_8h.html" title="Factory.h" alt="" coords="41,237,118,267"/>
+<area shape="rect" id="node29" href="$Script_8h.html" title="Script.h" alt="" coords="121,160,188,189"/>
 </map>

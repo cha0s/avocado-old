@@ -1,5 +1,5 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classavo_1_1AbstractFactory_3_01CoreService_01_4.html" title="avo::AbstractFactory\l\&lt; CoreService \&gt;" alt="" coords="5,39,149,86"/>
-<area shape="rect" id="node3" href="$classavo_1_1AbstractFactory_3_01QtCoreService_01_4.html" title="avo::AbstractFactory\l\&lt; QtCoreService \&gt;" alt="" coords="197,5,341,51"/>
-<area shape="rect" id="node5" href="$classavo_1_1AbstractFactory_3_01SdlCoreService_01_4.html" title="avo::AbstractFactory\l\&lt; SdlCoreService \&gt;" alt="" coords="197,74,341,121"/>
+<map id="G" name="G">
+<area shape="rect" id="node1" href="$classavo_1_1AbstractFactory_3_01CoreService_01_4.html" title="avo::AbstractFactory\&lt; CoreService \&gt;" alt="" coords="5,32,245,61"/>
+<area shape="rect" id="node3" href="$classavo_1_1AbstractFactory_3_01QtCoreService_01_4.html" title="avo::AbstractFactory\&lt; QtCoreService \&gt;" alt="" coords="296,5,549,35"/>
+<area shape="rect" id="node5" href="$classavo_1_1AbstractFactory_3_01SdlCoreService_01_4.html" title="avo::AbstractFactory\&lt; SdlCoreService \&gt;" alt="" coords="293,59,552,88"/>
 </map>

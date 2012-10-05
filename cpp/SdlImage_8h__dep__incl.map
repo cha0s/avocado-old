@@ -1,6 +1,6 @@
-<map id="SPI/Graphics/SDL/SdlImage.h" name="SPI/Graphics/SDL/SdlImage.h">
-<area shape="rect" id="node3" href="$SdlGraphicsService_8cpp.html" title="SPI/Graphics/SDL/SdlGraphics\lService.cpp" alt="" coords="5,161,211,207"/>
-<area shape="rect" id="node5" href="$SdlWindow_8h.html" title="SPI/Graphics/SDL/SdlWindow.h" alt="" coords="145,83,356,112"/>
-<area shape="rect" id="node10" href="$SdlImage_8cpp.html" title="SPI/Graphics/SDL/SdlImage.cpp" alt="" coords="380,83,593,112"/>
-<area shape="rect" id="node8" href="$SdlWindow_8cpp.html" title="SPI/Graphics/SDL/SdlWindow.cpp" alt="" coords="235,169,459,199"/>
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$SdlGraphicsService_8cpp.html" title="SPI/Graphics/SDL/SdlGraphicsService.cpp" alt="" coords="5,160,280,189"/>
+<area shape="rect" id="node5" href="$SdlWindow_8h.html" title="SPI/Graphics/SDL/SdlWindow.h" alt="" coords="180,83,391,112"/>
+<area shape="rect" id="node10" href="$SdlImage_8cpp.html" title="SPI/Graphics/SDL/SdlImage.cpp" alt="" coords="415,83,628,112"/>
+<area shape="rect" id="node8" href="$SdlWindow_8cpp.html" title="SPI/Graphics/SDL/SdlWindow.cpp" alt="" coords="304,160,528,189"/>
 </map>

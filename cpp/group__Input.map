@@ -1,7 +1,7 @@
-<map id="Input SPI" name="Input SPI">
-<area shape="rect" id="node1" href="$group__Script.html" title="The script SPI handles all communication between the native C++ engine and JavaScript." alt="" coords="303,37,385,67"/>
-<area shape="rect" id="node2" href="$group__SDL.html" title="Avocado&#39;s interface to the Simple DirectMedia Layer." alt="" coords="276,163,412,210"/>
-<area shape="rect" id="node4" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="255,376,433,405"/>
-<area shape="rect" id="node5" href="$group__V8.html" title="Avocado&#39;s interface to the V8 JavaScript engine." alt="" coords="265,441,423,471"/>
-<area shape="rect" id="node6" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="292,611,396,640"/>
+<map id="structs" name="structs">
+<area shape="rect" id="node1" href="$group__Script.html" title="The script SPI handles all communication between the native C++ engine and JavaScript." alt="" coords="443,51,525,80"/>
+<area shape="rect" id="node2" href="$group__SDL.html" title="Avocado&#39;s interface to the [Simple DirectMedia Layer](http://www.libsdl.org/)." alt="" coords="371,151,597,180"/>
+<area shape="rect" id="node4" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="395,285,573,315"/>
+<area shape="rect" id="node5" href="$group__V8.html" title="Avocado&#39;s interface to the [V8 JavaScript engine](http://code.google.com/p/v8/)." alt="" coords="405,351,563,380"/>
+<area shape="rect" id="node6" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="432,451,536,480"/>
 </map>

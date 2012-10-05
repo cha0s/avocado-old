@@ -1,4 +1,4 @@
-<map id="avo::AbstractFactory&lt; SoundService &gt;" name="avo::AbstractFactory&lt; SoundService &gt;">
-<area shape="rect" id="node3" href="$classavo_1_1AbstractFactory_3_01SdlSoundService_01_4.html" title="avo::AbstractFactory\l\&lt; SdlSoundService \&gt;" alt="" coords="5,102,152,149"/>
-<area shape="rect" id="node5" href="$classavo_1_1AbstractFactory_3_01SfmlSoundService_01_4.html" title="avo::AbstractFactory\l\&lt; SfmlSoundService \&gt;" alt="" coords="176,102,331,149"/>
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classavo_1_1AbstractFactory_3_01SdlSoundService_01_4.html" title="avo::AbstractFactory\&lt; SdlSoundService \&gt;" alt="" coords="5,83,272,112"/>
+<area shape="rect" id="node5" href="$classavo_1_1AbstractFactory_3_01SfmlSoundService_01_4.html" title="avo::AbstractFactory\&lt; SfmlSoundService \&gt;" alt="" coords="296,83,571,112"/>
 </map>

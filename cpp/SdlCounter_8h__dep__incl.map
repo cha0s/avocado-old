@@ -1,4 +1,4 @@
-<map id="SPI/Timing/SDL/SdlCounter.h" name="SPI/Timing/SDL/SdlCounter.h">
-<area shape="rect" id="node3" href="$SdlCounter_8cpp.html" title="SPI/Timing/SDL/SdlCounter.cpp" alt="" coords="5,92,216,121"/>
-<area shape="rect" id="node5" href="$SdlTimingService_8cpp.html" title="SPI/Timing/SDL/SdlTiming\lService.cpp" alt="" coords="240,83,419,130"/>
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$SdlCounter_8cpp.html" title="SPI/Timing/SDL/SdlCounter.cpp" alt="" coords="5,83,216,112"/>
+<area shape="rect" id="node5" href="$SdlTimingService_8cpp.html" title="SPI/Timing/SDL/SdlTimingService.cpp" alt="" coords="240,83,488,112"/>
 </map>

@@ -55,9 +55,9 @@ dependencies.commands += \
 	# Build V8 if necessary, and rename the libraries as we need.
 	#
 	test ! -f libv8-avocado.a -a ! -f libv8_snapshot-avocado.a \
-		&& make -j 4 ia32.release \
-		&& mv out/ia32.release/obj.target/tools/gyp/libv8_base.a libv8-avocado.a \
-		&& mv out/ia32.release/obj.target/tools/gyp/libv8_snapshot.a libv8_snapshot-avocado.a; \ 
+		&& make -j4 native \
+		&& mv out/native/obj.target/tools/gyp/libv8_base.a libv8-avocado.a \
+		&& mv out/native/obj.target/tools/gyp/libv8_snapshot.a libv8_snapshot-avocado.a; \ 
 	cd ../..; \
 	echo "Done building v8."; \
 	#

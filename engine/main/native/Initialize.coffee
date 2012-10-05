@@ -10,11 +10,11 @@ avo.graphicsService = new avo.GraphicsService()
 avo.InputService.implementSpi 'sdl'
 avo.inputService = new avo.InputService()
 
-# Use SDL TimingService for now.
+# Use SFML TimingService for now.
 avo.TimingService.implementSpi 'sfml'
 avo.timingService = new avo.TimingService()
 
-# Use SDL SoundService for now.
+# Use SFML SoundService for now.
 avo.SoundService.implementSpi 'sfml'
 avo.soundService = new avo.SoundService()
 
@@ -33,7 +33,7 @@ setCallback = (fn, duration, O, isInterval) ->
 	fn: fn
 	O: O ?= this
 	duration: duration / 1000
-	nextCall: avo.TimingService.elapsed()
+	thisCall: avo.TimingService.elapsed()
 	isInterval: isInterval
 
 newHandle = (fn, duration, O, isInterval) ->
@@ -74,7 +74,7 @@ avo.tickTimeouts = ->
 	
 	for id, handle of handles
 		
-		if avo.TimingService.elapsed() >= handle.nextCall + handle.duration
+		if avo.TimingService.elapsed() >= handle.thisCall + handle.duration
 			
 			handle.fn.apply handle.O
 			
@@ -84,4 +84,4 @@ avo.tickTimeouts = ->
 				
 			else
 			
-				handle.nextCall = avo.TimingService.elapsed()
+				handle.thisCall = avo.TimingService.elapsed()

@@ -12,17 +12,9 @@ avo::SpiiLoader<avo::TimingService> timingServiceSpiiLoader;
 
 v8TimingService::v8TimingService(Handle<Object> wrapper)
 {
+	timingService = TimingService::factoryManager.instance()->create();
+
 	Wrap(wrapper);
-
-	try {
-		timingService = TimingService::factoryManager.instance()->create();
-	}
-	catch (FactoryManager<TimingService>::factory_instance_error &e) {
-
-		ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
-			e.what()
-		)));
-	}
 }
 
 v8TimingService::~v8TimingService() {
@@ -47,7 +39,15 @@ void v8TimingService::initialize(Handle<ObjectTemplate> target) {
 v8::Handle<v8::Value> v8TimingService::New(const v8::Arguments &args) {
 	HandleScope scope;
 
-	new v8TimingService(args.Holder());
+	try {
+		new v8TimingService(args.Holder());
+	}
+	catch (FactoryManager<TimingService>::factory_instance_error &e) {
+
+		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
+			e.what()
+		)));
+	}
 
 	return args.Holder();
 }

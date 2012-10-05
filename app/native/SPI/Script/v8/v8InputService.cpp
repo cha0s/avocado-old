@@ -12,17 +12,9 @@ avo::SpiiLoader<avo::InputService> inputServiceSpiiLoader;
 
 v8InputService::v8InputService(Handle<Object> wrapper)
 {
+	inputService = InputService::factoryManager.instance()->create();
+
 	Wrap(wrapper);
-
-	try {
-		inputService = InputService::factoryManager.instance()->create();
-	}
-	catch (FactoryManager<InputService>::factory_instance_error &e) {
-
-		ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
-			e.what()
-		)));
-	}
 }
 
 v8InputService::~v8InputService() {
@@ -46,7 +38,15 @@ void v8InputService::initialize(Handle<ObjectTemplate> target) {
 v8::Handle<v8::Value> v8InputService::New(const v8::Arguments &args) {
 	HandleScope scope;
 
-	new v8InputService(args.Holder());
+	try {
+		new v8InputService(args.Holder());
+	}
+	catch (FactoryManager<InputService>::factory_instance_error &e) {
+
+		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
+			e.what()
+		)));
+	}
 
 	return args.Holder();
 }

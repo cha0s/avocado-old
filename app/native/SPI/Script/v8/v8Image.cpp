@@ -10,26 +10,18 @@ v8Image::v8Image(Handle<Object> wrapper, Image *image)
 	: image(image)
 	, owns(false)
 {
-	Wrap(wrapper);
-
 	if (NULL == this->image) {
 
-		try {
-			this->image = Image::factoryManager.instance()->create();
+		this->image = Image::factoryManager.instance()->create();
 
-			::V8::AdjustAmountOfExternalAllocatedMemory(
-				this->image->sizeInBytes()
-			);
+		::V8::AdjustAmountOfExternalAllocatedMemory(
+			this->image->sizeInBytes()
+		);
 
-			owns = true;
-		}
-		catch (FactoryManager<Image>::factory_instance_error &e) {
-
-			ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
-				e.what()
-			)));
-		}
+		owns = true;
 	}
+
+	Wrap(wrapper);
 }
 
 v8Image::~v8Image() {
@@ -91,11 +83,11 @@ void v8Image::releaseImage() {
 v8::Handle<v8::Value> v8Image::New(const v8::Arguments &args) {
 	HandleScope scope;
 
-	Image *image = NULL;
+	try {
 
-	if (args.Length() > 0) {
+		Image *image = NULL;
 
-		try {
+		if (args.Length() > 0) {
 
 			int width, height;
 
@@ -110,15 +102,15 @@ v8::Handle<v8::Value> v8Image::New(const v8::Arguments &args) {
 
 			image = Image::factoryManager.instance()->create(width, height);
 		}
-		catch (FactoryManager<Image>::factory_instance_error &e) {
 
-			ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
-				e.what()
-			)));
-		}
+		new v8Image(args.Holder(), image);
 	}
+	catch (FactoryManager<Image>::factory_instance_error &e) {
 
-	new v8Image(args.Holder(), image);
+		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
+			e.what()
+		)));
+	}
 
 	return args.This();
 }

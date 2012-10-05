@@ -10,26 +10,18 @@ v8Sample::v8Sample(Handle<Object> wrapper, Sample *sample)
 	: sample(sample)
 	, owns(false)
 {
-	Wrap(wrapper);
-
 	if (NULL == this->sample) {
 
-		try {
-			this->sample = Sample::factoryManager.instance()->create();
+		this->sample = Sample::factoryManager.instance()->create();
 
-			::V8::AdjustAmountOfExternalAllocatedMemory(
-				this->sample->sizeInBytes()
-			);
+		::V8::AdjustAmountOfExternalAllocatedMemory(
+			this->sample->sizeInBytes()
+		);
 
-			owns = true;
-		}
-		catch (FactoryManager<Sample>::factory_instance_error &e) {
-
-			ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
-				e.what()
-			)));
-		}
+		owns = true;
 	}
+
+	Wrap(wrapper);
 }
 
 v8Sample::~v8Sample() {
@@ -78,7 +70,15 @@ void v8Sample::initialize(Handle<ObjectTemplate> target) {
 v8::Handle<v8::Value> v8Sample::New(const v8::Arguments &args) {
 	HandleScope scope;
 
-	new v8Sample(args.Holder());
+	try {
+		new v8Sample(args.Holder());
+	}
+	catch (FactoryManager<Sample>::factory_instance_error &e) {
+
+		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
+			e.what()
+		)));
+	}
 
 	return args.This();
 }

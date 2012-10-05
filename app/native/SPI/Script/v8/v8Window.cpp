@@ -10,17 +10,9 @@ namespace avo {
 
 v8Window::v8Window(Handle<Object> wrapper)
 {
+	window = Window::factoryManager.instance()->create();
+
 	Wrap(wrapper);
-
-	try {
-		window = Window::factoryManager.instance()->create();
-	}
-	catch (FactoryManager<Window>::factory_instance_error &e) {
-
-		ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
-			e.what()
-		)));
-	}
 }
 
 v8Window::~v8Window() {
@@ -46,7 +38,15 @@ void v8Window::initialize(Handle<ObjectTemplate> target) {
 v8::Handle<v8::Value> v8Window::New(const v8::Arguments &args) {
 	HandleScope scope;
 
-	new v8Window(args.Holder());
+	try {
+		new v8Window(args.Holder());
+	}
+	catch (FactoryManager<Window>::factory_instance_error &e) {
+
+		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
+			e.what()
+		)));
+	}
 
 	return args.Holder();
 }

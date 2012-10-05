@@ -10,26 +10,18 @@ v8Music::v8Music(Handle<Object> wrapper, Music *music)
 	: music(music)
 	, owns(false)
 {
-	Wrap(wrapper);
-
 	if (NULL == this->music) {
 
-		try {
-			this->music = Music::factoryManager.instance()->create();
+		this->music = Music::factoryManager.instance()->create();
 
-			::V8::AdjustAmountOfExternalAllocatedMemory(
-				this->music->sizeInBytes()
-			);
+		::V8::AdjustAmountOfExternalAllocatedMemory(
+			this->music->sizeInBytes()
+		);
 
-			owns = true;
-		}
-		catch (FactoryManager<Music>::factory_instance_error &e) {
-
-			ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
-				e.what()
-			)));
-		}
+		owns = true;
 	}
+
+	Wrap(wrapper);
 }
 
 v8Music::~v8Music() {
@@ -81,7 +73,15 @@ void v8Music::initialize(Handle<ObjectTemplate> target) {
 v8::Handle<v8::Value> v8Music::New(const v8::Arguments &args) {
 	HandleScope scope;
 
-	new v8Music(args.Holder());
+	try {
+		new v8Music(args.Holder());
+	}
+	catch (FactoryManager<Music>::factory_instance_error &e) {
+
+		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
+			e.what()
+		)));
+	}
 
 	return args.This();
 }

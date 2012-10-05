@@ -12,17 +12,9 @@ avo::SpiiLoader<avo::GraphicsService> graphicsServiceSpiiLoader;
 
 v8GraphicsService::v8GraphicsService(Handle<Object> wrapper)
 {
+	graphicsService = GraphicsService::factoryManager.instance()->create();
+
 	Wrap(wrapper);
-
-	try {
-		graphicsService = GraphicsService::factoryManager.instance()->create();
-	}
-	catch (FactoryManager<GraphicsService>::factory_instance_error &e) {
-
-		ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
-			e.what()
-		)));
-	}
 }
 
 v8GraphicsService::~v8GraphicsService() {
@@ -48,7 +40,15 @@ void v8GraphicsService::initialize(Handle<ObjectTemplate> target) {
 v8::Handle<v8::Value> v8GraphicsService::New(const v8::Arguments &args) {
 	HandleScope scope;
 
-	new v8GraphicsService(args.Holder());
+	try {
+		new v8GraphicsService(args.Holder());
+	}
+	catch (FactoryManager<GraphicsService>::factory_instance_error &e) {
+
+		ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
+			e.what()
+		)));
+	}
 
 	return args.Holder();
 }

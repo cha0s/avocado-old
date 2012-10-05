@@ -8,17 +8,9 @@ namespace avo {
 
 v8Counter::v8Counter(Handle<Object> wrapper)
 {
+	counter = Counter::factoryManager.instance()->create();
+
 	Wrap(wrapper);
-
-	try {
-		counter = Counter::factoryManager.instance()->create();
-	}
-	catch (FactoryManager<Counter>::factory_instance_error &e) {
-
-		ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
-			e.what()
-		)));
-	}
 }
 
 v8Counter::~v8Counter() {
@@ -45,7 +37,15 @@ Counter *v8Counter::wrappedCounter() {
 v8::Handle<v8::Value> v8Counter::New(const v8::Arguments &args) {
 	HandleScope scope;
 
-	new v8Counter(args.Holder());
+	try {
+		new v8Counter(args.Holder());
+	}
+	catch (FactoryManager<Counter>::factory_instance_error &e) {
+
+		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
+			e.what()
+		)));
+	}
 
 	return args.This();
 }

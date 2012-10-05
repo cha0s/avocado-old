@@ -12,17 +12,9 @@ avo::SpiiLoader<avo::CoreService> coreServiceSpiiLoader;
 
 v8CoreService::v8CoreService(Handle<Object> wrapper)
 {
+	coreService = CoreService::factoryManager.instance()->create();
+
 	Wrap(wrapper);
-
-	try {
-		coreService = CoreService::factoryManager.instance()->create();
-	}
-	catch (FactoryManager<CoreService>::factory_instance_error &e) {
-
-		ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
-			e.what()
-		)));
-	}
 }
 
 v8CoreService::~v8CoreService() {
@@ -49,7 +41,15 @@ void v8CoreService::initialize(Handle<ObjectTemplate> target) {
 v8::Handle<v8::Value> v8CoreService::New(const v8::Arguments &args) {
 	HandleScope scope;
 
-	new v8CoreService(args.Holder());
+	try {
+		new v8CoreService(args.Holder());
+	}
+	catch (FactoryManager<CoreService>::factory_instance_error &e) {
+
+		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
+			e.what()
+		)));
+	}
 
 	return args.Holder();
 }

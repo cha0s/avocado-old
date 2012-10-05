@@ -12,17 +12,9 @@ avo::SpiiLoader<avo::SoundService> soundServiceSpiiLoader;
 
 v8SoundService::v8SoundService(Handle<Object> wrapper)
 {
+	soundService = SoundService::factoryManager.instance()->create();
+
 	Wrap(wrapper);
-
-	try {
-		soundService = SoundService::factoryManager.instance()->create();
-	}
-	catch (FactoryManager<SoundService>::factory_instance_error &e) {
-
-		ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
-			e.what()
-		)));
-	}
 }
 
 v8SoundService::~v8SoundService() {
@@ -46,7 +38,15 @@ void v8SoundService::initialize(Handle<ObjectTemplate> target) {
 v8::Handle<v8::Value> v8SoundService::New(const v8::Arguments &args) {
 	HandleScope scope;
 
-	new v8SoundService(args.Holder());
+	try {
+		new v8SoundService(args.Holder());
+	}
+	catch (FactoryManager<SoundService>::factory_instance_error &e) {
+
+		ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
+			e.what()
+		)));
+	}
 
 	return args.Holder();
 }

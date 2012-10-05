@@ -2,6 +2,8 @@
 
 #include "v8Input.h"
 
+#include <iostream>
+
 using namespace v8;
 
 namespace avo {
@@ -14,17 +16,9 @@ namespace avo {
 
 v8Input::v8Input(Handle<Object> wrapper)
 {
+	input = Input::factoryManager.instance()->create();
+
 	Wrap(wrapper);
-
-	try {
-		input = Input::factoryManager.instance()->create();
-	}
-	catch (FactoryManager<Input>::factory_instance_error &e) {
-
-		ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
-			e.what()
-		)));
-	}
 }
 
 v8Input::~v8Input() {
@@ -46,33 +40,41 @@ void v8Input::initialize(Handle<ObjectTemplate> target) {
 v8::Handle<v8::Value> v8Input::New(const v8::Arguments &args) {
 	HandleScope scope;
 
-	v8Input *inputWrapper = new v8Input(args.Holder());
+	try {
+		v8Input *inputWrapper = new v8Input(args.Holder());
 
-	Handle<Object> avo = Context::GetCurrent()->Global()->Get(
-		String::New("avo")
-	).As<Object>();
+		Handle<Object> avo = Context::GetCurrent()->Global()->Get(
+			String::New("avo")
+		).As<Object>();
 
-	Handle<Function> Mixin = avo->Get(
-		String::New("Mixin")
-	).As<Function>();
+		Handle<Function> Mixin = avo->Get(
+			String::New("Mixin")
+		).As<Function>();
 
-	Handle<Function> EventEmitter = avo->Get(
-		String::New("EventEmitter")
-	).As<Function>();
+		Handle<Function> EventEmitter = avo->Get(
+			String::New("EventEmitter")
+		).As<Function>();
 
-	Handle<Value> argv[] = {args.Holder(), EventEmitter};
-	Mixin->Call(Context::GetCurrent()->Global(), 2, argv);
+		Handle<Value> argv[] = {args.Holder(), EventEmitter};
+		Mixin->Call(Context::GetCurrent()->Global(), 2, argv);
 
-	Input::SpecialKeyMap specialKeyMap = inputWrapper->input->specialKeyMap();
+		Input::SpecialKeyMap specialKeyMap = inputWrapper->input->specialKeyMap();
 
-	Handle<Object> SpecialKeys = Object::New();
+		Handle<Object> SpecialKeys = Object::New();
 
-	SPECIAL_KEY(UpArrow);
-	SPECIAL_KEY(RightArrow);
-	SPECIAL_KEY(DownArrow);
-	SPECIAL_KEY(LeftArrow);
+		SPECIAL_KEY(UpArrow);
+		SPECIAL_KEY(RightArrow);
+		SPECIAL_KEY(DownArrow);
+		SPECIAL_KEY(LeftArrow);
 
-	args.Holder()->Set(String::New("SpecialKeys"), SpecialKeys);
+		args.Holder()->Set(String::New("SpecialKeys"), SpecialKeys);
+	}
+	catch (FactoryManager<Input>::factory_instance_error &e) {
+
+		ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
+			e.what()
+		)));
+	}
 
 	return args.Holder();
 }

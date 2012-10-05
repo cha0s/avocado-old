@@ -1,4 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classavo_1_1Script.html" title="avo::Script" alt="" coords="5,5,91,35"/>
-<area shape="rect" id="node3" href="$classavo_1_1v8Script.html" title="avo::v8Script" alt="" coords="139,5,237,35"/>
+<area shape="rect" id="node1" href="$classavo_1_1Script_1_1script__execution__error.html" title="Thrown when executing a script fails." alt="" coords="5,5,227,35"/>
 </map>

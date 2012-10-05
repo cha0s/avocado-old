@@ -1,10 +1,10 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$GraphicsService_8cpp.html" title="SPI/Graphics/GraphicsService.cpp" alt="" coords="5,83,229,112"/>
-<area shape="rect" id="node5" href="$SdlWindow_8h.html" title="SPI/Graphics/SDL/SdlWindow.h" alt="" coords="253,83,464,112"/>
-<area shape="rect" id="node11" href="$Window_8cpp.html" title="SPI/Graphics/Window.cpp" alt="" coords="488,83,664,112"/>
-<area shape="rect" id="node13" href="$v8Window_8h.html" title="SPI/Script/v8/v8Window.h" alt="" coords="688,83,864,112"/>
-<area shape="rect" id="node7" href="$SdlGraphicsService_8cpp.html" title="SPI/Graphics/SDL/SdlGraphicsService.cpp" alt="" coords="33,160,308,189"/>
-<area shape="rect" id="node9" href="$SdlWindow_8cpp.html" title="SPI/Graphics/SDL/SdlWindow.cpp" alt="" coords="332,160,556,189"/>
-<area shape="rect" id="node15" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="623,160,844,189"/>
-<area shape="rect" id="node17" href="$v8Window_8cpp.html" title="SPI/Script/v8/v8Window.cpp" alt="" coords="868,160,1057,189"/>
+<area shape="rect" id="node3" href="$v8Window_8h.html" title="SPI/Script/v8/v8Window.h" alt="" coords="257,83,433,112"/>
+<area shape="rect" id="node9" href="$SdlWindow_8h.html" title="SPI/Ui/SDL/SdlWindow.h" alt="" coords="476,83,647,112"/>
+<area shape="rect" id="node15" href="$UiService_8cpp.html" title="SPI/Ui/UiService.cpp" alt="" coords="671,83,817,112"/>
+<area shape="rect" id="node17" href="$Window_8cpp.html" title="SPI/Ui/Window.cpp" alt="" coords="841,83,977,112"/>
+<area shape="rect" id="node5" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="5,160,227,189"/>
+<area shape="rect" id="node7" href="$v8Window_8cpp.html" title="SPI/Script/v8/v8Window.cpp" alt="" coords="251,160,440,189"/>
+<area shape="rect" id="node11" href="$SdlUiService_8cpp.html" title="SPI/Ui/SDL/SdlUiService.cpp" alt="" coords="464,160,659,189"/>
+<area shape="rect" id="node13" href="$SdlWindow_8cpp.html" title="SPI/Ui/SDL/SdlWindow.cpp" alt="" coords="683,160,869,189"/>
 </map>

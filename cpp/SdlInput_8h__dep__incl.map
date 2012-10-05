@@ -1,4 +1,4 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$SdlInput_8cpp.html" title="SPI/Input/SDL/SdlInput.cpp" alt="" coords="5,83,189,112"/>
-<area shape="rect" id="node5" href="$SdlInputService_8cpp.html" title="SPI/Input/SDL/SdlInputService.cpp" alt="" coords="213,83,440,112"/>
+<area shape="rect" id="node3" href="$SdlInput_8cpp.html" title="SPI/Ui/SDL/SdlInput.cpp" alt="" coords="5,83,173,112"/>
+<area shape="rect" id="node5" href="$SdlUiService_8cpp.html" title="SPI/Ui/SDL/SdlUiService.cpp" alt="" coords="197,83,392,112"/>
 </map>

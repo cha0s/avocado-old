@@ -1,10 +1,9 @@
 <map id="structs" name="structs">
-<area shape="rect" id="node1" href="$group__Script.html" title="The script SPI handles all communication between the native C++ engine and JavaScript." alt="" coords="503,213,585,243"/>
-<area shape="rect" id="node2" href="$group__Core.html" title="The core SPI handles framework initialization (e.g. SDL_Init()) and teardown (e.g. SDL_Quit()) as well as bridges to core engine functionality like filesystem access." alt="" coords="507,288,581,317"/>
-<area shape="rect" id="node3" href="$group__Sound.html" title="The sound SPI handles sound system initialization, as well as music and sample loading and playing..." alt="" coords="501,371,587,400"/>
-<area shape="rect" id="node4" href="$group__Input.html" title="The input SPI handles user input polling." alt="" coords="505,436,583,465"/>
-<area shape="rect" id="node5" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="455,655,633,684"/>
-<area shape="rect" id="node7" href="$group__Timing.html" title="The timing SPI handles measuring time." alt="" coords="501,708,587,737"/>
-<area shape="rect" id="node8" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="492,771,596,800"/>
-<area shape="rect" id="node9" href="$group__Graphics.html" title="The graphics SPI handles window and graphics system initialization, and rendering." alt="" coords="495,871,593,900"/>
+<area shape="rect" id="node1" href="$group__Script.html" title="The script SPI handles all communication between the native C++ engine and JavaScript." alt="" coords="503,215,585,244"/>
+<area shape="rect" id="node2" href="$group__Core.html" title="The core SPI handles framework initialization (e.g. SDL_Init()) and teardown (e.g. SDL_Quit()) as well as bridges to core engine functionality like filesystem access." alt="" coords="507,289,581,319"/>
+<area shape="rect" id="node3" href="$group__Sound.html" title="The sound SPI handles sound system initialization, as well as music and sample loading and playing..." alt="" coords="501,372,587,401"/>
+<area shape="rect" id="node4" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="455,591,633,620"/>
+<area shape="rect" id="node6" href="$group__Timing.html" title="The timing SPI handles measuring time." alt="" coords="501,644,587,673"/>
+<area shape="rect" id="node7" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="492,707,596,736"/>
+<area shape="rect" id="node8" href="$group__Graphics.html" title="The graphics SPI handles window and graphics system initialization, and rendering." alt="" coords="495,807,593,836"/>
 </map>

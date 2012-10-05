@@ -1,10 +1,9 @@
 <map id="structs" name="structs">
 <area shape="rect" id="node2" href="$group__Core.html" title="The core SPI handles framework initialization (e.g. SDL_Init()) and teardown (e.g. SDL_Quit()) as well as bridges to core engine functionality like filesystem access." alt="" coords="429,36,504,65"/>
 <area shape="rect" id="node3" href="$group__Sound.html" title="The sound SPI handles sound system initialization, as well as music and sample loading and playing..." alt="" coords="424,119,509,148"/>
-<area shape="rect" id="node4" href="$group__Input.html" title="The input SPI handles user input polling." alt="" coords="428,184,505,213"/>
-<area shape="rect" id="node5" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="377,405,556,435"/>
-<area shape="rect" id="node6" href="$group__V8.html" title="Avocado&#39;s interface to the [V8 JavaScript engine](http://code.google.com/p/v8/)." alt="" coords="388,648,545,677"/>
-<area shape="rect" id="node7" href="$group__Timing.html" title="The timing SPI handles measuring time." alt="" coords="424,723,509,752"/>
-<area shape="rect" id="node8" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="415,823,519,852"/>
-<area shape="rect" id="node9" href="$group__Graphics.html" title="The graphics SPI handles window and graphics system initialization, and rendering." alt="" coords="417,923,516,952"/>
+<area shape="rect" id="node4" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="377,340,556,369"/>
+<area shape="rect" id="node5" href="$group__V8.html" title="Avocado&#39;s interface to the [V8 JavaScript engine](http://code.google.com/p/v8/)." alt="" coords="388,583,545,612"/>
+<area shape="rect" id="node6" href="$group__Timing.html" title="The timing SPI handles measuring time." alt="" coords="424,657,509,687"/>
+<area shape="rect" id="node7" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="415,757,519,787"/>
+<area shape="rect" id="node8" href="$group__Graphics.html" title="The graphics SPI handles window and graphics system initialization, and rendering." alt="" coords="417,857,516,887"/>
 </map>

@@ -1,0 +1,14 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$avocado-global_8h.html" title="avocado&#45;global.h" alt="" coords="355,469,475,499"/>
+<area shape="rect" id="node9" href="$SdlUiService_8h.html" title="SdlUiService.h" alt="" coords="92,237,201,267"/>
+<area shape="rect" id="node18" href="$SdlInput_8h.html" title="SdlInput.h" alt="" coords="309,160,389,189"/>
+<area shape="rect" id="node29" href="$SdlWindow_8h.html" title="SdlWindow.h" alt="" coords="553,83,652,112"/>
+<area shape="rect" id="node12" href="$UiService_8h.html" title="../UiService.h" alt="" coords="96,315,197,344"/>
+<area shape="rect" id="node15" href="$Factory_8h.html" title="Factory.h" alt="" coords="224,392,301,421"/>
+<area shape="rect" id="node23" href="$Input_8h.html" title="../Input.h" alt="" coords="237,315,312,344"/>
+<area shape="rect" id="node34" href="$Window_8h.html" title="../Window.h" alt="" coords="756,160,847,189"/>
+<area shape="rect" id="node57" href="$SdlImage_8h.html" title="../../Graphics/SDL/SdlImage.h" alt="" coords="504,160,701,189"/>
+<area shape="rect" id="node38" href="$Image_8h.html" title="../Graphics/Image.h" alt="" coords="640,237,776,267"/>
+<area shape="rect" id="node41" href="$FS_8h.html" title="FS.h" alt="" coords="753,392,804,421"/>
+<area shape="rect" id="node49" href="$ResourceManager_8h.html" title="SPI/ResourceManager.h" alt="" coords="579,315,744,344"/>
+</map>

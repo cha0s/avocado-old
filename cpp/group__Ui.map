@@ -1,0 +1,5 @@
+<map id="structs" name="structs">
+<area shape="rect" id="node1" href="$group__SDL.html" title="Avocado&#39;s interface to the [Simple DirectMedia Layer](http://www.libsdl.org/)." alt="" coords="408,107,635,136"/>
+<area shape="rect" id="node2" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="432,241,611,271"/>
+<area shape="rect" id="node4" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="469,376,573,405"/>
+</map>

@@ -149,31 +149,6 @@ Static Public Attributes</h2></td></tr>
 <div class="fragment"><pre class="fragment">                                       {
 
     <a class="code" href="classavo_1_1Image.html#a99d1bbc316fb27cf9600207f1647625d">Image::factoryManager</a>.<a class="code" href="classavo_1_1FactoryManager.html#a56743fbd3289253612ed8b16facc9b8b">setInstance</a>(<a class="code" href="classavo_1_1SdlImage.html#aeeb0aa4fabacbe9fbe0fb383d3c2d62a">SdlImage::factory</a>);
-    <a class="code" href="classavo_1_1Window.html#a102fbf2bddee9690ce3872f6a87c6067">Window::factoryManager</a>.<a class="code" href="classavo_1_1FactoryManager.html#a56743fbd3289253612ed8b16facc9b8b">setInstance</a>(<a class="code" href="classavo_1_1SdlWindow.html#a929ff9d877582d2d660e9760a15bb3a9">SdlWindow::factory</a>);
-
-    <span class="comment">// Center the window.</span>
-    SDL_putenv(const_cast&lt;char *&gt;(<span class="stringliteral">&quot;SDL_VIDEO_CENTERED=center&quot;</span>));
-
-    <span class="comment">// If any video driver is specified in the environment, save it since</span>
-    <span class="comment">// we&#39;re going to set &#39;dummy&#39;.</span>
-    <span class="keyword">const</span> <span class="keywordtype">char</span> *currentDriver = SDL_getenv(const_cast&lt;char *&gt;(<span class="stringliteral">&quot;SDL_VIDEODRIVER&quot;</span>));
-    <span class="keywordflow">if</span> (currentDriver) {
-
-        <span class="comment">// (Safely) copy the new driver into a C string for SDL_putenv().</span>
-        std::string driver = <span class="stringliteral">&quot;AVOCADO_SDL_VIDEODRIVER=&quot;</span>;
-        driver += currentDriver;
-        <span class="keywordtype">char</span> *driverArray = <span class="keyword">new</span> <span class="keywordtype">char</span>[256];
-        strncpy(driverArray, driver.c_str(), 255);
-        driverArray[255] = 0;
-        SDL_putenv(driverArray);
-    }
-    SDL_putenv(const_cast&lt;char *&gt;(<span class="stringliteral">&quot;AVOCADO_SDL_VIDEORESTORE=1&quot;</span>));
-    SDL_putenv(const_cast&lt;char *&gt;(<span class="stringliteral">&quot;SDL_VIDEODRIVER=dummy&quot;</span>));
-
-    <span class="comment">// Initialize a &#39;dummy&#39; video mode, so we can create SDL surfaces before</span>
-    <span class="comment">// we actually set a window.</span>
-    SDL_InitSubSystem(SDL_INIT_VIDEO);
-    SDL_SetVideoMode(1, 1, 32, 0);
 }
 </pre></div>
 </div>
@@ -215,8 +190,6 @@ Static Public Attributes</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classavo_1_1GraphicsService.html#ab4fe9950c4849eb0c6e2343c6efd6367">avo::GraphicsService</a>.</p>
 <div class="fragment"><pre class="fragment">                               {
     <a class="code" href="classavo_1_1SdlGraphicsService.html#aaf1a4d622964317fcf37618762aeab26">GraphicsService::close</a>();
-
-    SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
 </pre></div>
 </div>

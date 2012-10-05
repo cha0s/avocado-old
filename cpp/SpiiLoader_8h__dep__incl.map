@@ -2,7 +2,7 @@
 <area shape="rect" id="node3" href="$main_8cpp.html" title="main.cpp" alt="" coords="5,83,80,112"/>
 <area shape="rect" id="node5" href="$v8CoreService_8cpp.html" title="SPI/Script/v8/v8CoreService.cpp" alt="" coords="104,83,317,112"/>
 <area shape="rect" id="node7" href="$v8GraphicsService_8cpp.html" title="SPI/Script/v8/v8GraphicsService.cpp" alt="" coords="341,83,579,112"/>
-<area shape="rect" id="node9" href="$v8InputService_8cpp.html" title="SPI/Script/v8/v8InputService.cpp" alt="" coords="603,83,819,112"/>
-<area shape="rect" id="node11" href="$v8SoundService_8cpp.html" title="SPI/Script/v8/v8SoundService.cpp" alt="" coords="843,83,1067,112"/>
-<area shape="rect" id="node13" href="$v8TimingService_8cpp.html" title="SPI/Script/v8/v8TimingService.cpp" alt="" coords="1091,83,1317,112"/>
+<area shape="rect" id="node9" href="$v8SoundService_8cpp.html" title="SPI/Script/v8/v8SoundService.cpp" alt="" coords="603,83,827,112"/>
+<area shape="rect" id="node11" href="$v8TimingService_8cpp.html" title="SPI/Script/v8/v8TimingService.cpp" alt="" coords="851,83,1077,112"/>
+<area shape="rect" id="node13" href="$v8UiService_8cpp.html" title="SPI/Script/v8/v8UiService.cpp" alt="" coords="1101,83,1301,112"/>
 </map>

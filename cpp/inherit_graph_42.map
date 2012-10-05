@@ -1,4 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classavo_1_1ScriptService.html" title="ScriptService manages embedding a JavaScript interpreter within the Avocado engine." alt="" coords="7,5,135,35"/>
-<area shape="rect" id="node3" href="$classavo_1_1v8ScriptService.html" title="avo::v8ScriptService" alt="" coords="185,5,327,35"/>
+<area shape="rect" id="node1" href="$classavo_1_1ScriptService_1_1script__compilation__error.html" title="Thrown when script compilation fails." alt="" coords="5,5,280,35"/>
 </map>

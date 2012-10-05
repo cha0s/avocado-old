@@ -1,8 +1,8 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$avocado-global_8h.html" title="avocado&#45;global.h" alt="" coords="59,392,179,421"/>
-<area shape="rect" id="node9" href="$Window_8h.html" title="Window.h" alt="" coords="120,83,200,112"/>
-<area shape="rect" id="node14" href="$Image_8h.html" title="Image.h" alt="" coords="183,160,252,189"/>
-<area shape="rect" id="node17" href="$FS_8h.html" title="FS.h" alt="" coords="387,315,437,344"/>
-<area shape="rect" id="node25" href="$ResourceManager_8h.html" title="SPI/ResourceManager.h" alt="" coords="201,237,367,267"/>
-<area shape="rect" id="node31" href="$Factory_8h.html" title="Factory.h" alt="" coords="165,315,243,344"/>
+<area shape="rect" id="node3" href="$avocado-global_8h.html" title="avocado&#45;global.h" alt="" coords="37,392,157,421"/>
+<area shape="rect" id="node9" href="$Window_8h.html" title="Window.h" alt="" coords="107,83,187,112"/>
+<area shape="rect" id="node14" href="$Image_8h.html" title="../Graphics/Image.h" alt="" coords="144,160,280,189"/>
+<area shape="rect" id="node17" href="$FS_8h.html" title="FS.h" alt="" coords="365,315,416,344"/>
+<area shape="rect" id="node25" href="$ResourceManager_8h.html" title="SPI/ResourceManager.h" alt="" coords="180,237,345,267"/>
+<area shape="rect" id="node31" href="$Factory_8h.html" title="Factory.h" alt="" coords="144,315,221,344"/>
 </map>

@@ -1,10 +1,10 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$Input_8cpp.html" title="SPI/Input/Input.cpp" alt="" coords="5,83,139,112"/>
-<area shape="rect" id="node5" href="$InputService_8cpp.html" title="SPI/Input/InputService.cpp" alt="" coords="163,83,341,112"/>
-<area shape="rect" id="node7" href="$SdlInput_8h.html" title="SPI/Input/SDL/SdlInput.h" alt="" coords="365,83,536,112"/>
-<area shape="rect" id="node13" href="$v8Input_8h.html" title="SPI/Script/v8/v8Input.h" alt="" coords="595,83,752,112"/>
-<area shape="rect" id="node9" href="$SdlInput_8cpp.html" title="SPI/Input/SDL/SdlInput.cpp" alt="" coords="129,160,313,189"/>
-<area shape="rect" id="node11" href="$SdlInputService_8cpp.html" title="SPI/Input/SDL/SdlInputService.cpp" alt="" coords="337,160,564,189"/>
-<area shape="rect" id="node15" href="$v8Input_8cpp.html" title="SPI/Script/v8/v8Input.cpp" alt="" coords="588,160,759,189"/>
-<area shape="rect" id="node17" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="783,160,1004,189"/>
+<area shape="rect" id="node3" href="$v8Input_8h.html" title="SPI/Script/v8/v8Input.h" alt="" coords="205,83,363,112"/>
+<area shape="rect" id="node9" href="$Input_8cpp.html" title="SPI/Ui/Input.cpp" alt="" coords="387,83,504,112"/>
+<area shape="rect" id="node11" href="$SdlInput_8h.html" title="SPI/Ui/SDL/SdlInput.h" alt="" coords="528,83,683,112"/>
+<area shape="rect" id="node17" href="$UiService_8cpp.html" title="SPI/Ui/UiService.cpp" alt="" coords="707,83,853,112"/>
+<area shape="rect" id="node5" href="$v8Input_8cpp.html" title="SPI/Script/v8/v8Input.cpp" alt="" coords="5,160,176,189"/>
+<area shape="rect" id="node7" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="200,160,421,189"/>
+<area shape="rect" id="node13" href="$SdlInput_8cpp.html" title="SPI/Ui/SDL/SdlInput.cpp" alt="" coords="496,160,664,189"/>
+<area shape="rect" id="node15" href="$SdlUiService_8cpp.html" title="SPI/Ui/SDL/SdlUiService.cpp" alt="" coords="688,160,883,189"/>
 </map>

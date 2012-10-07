@@ -2,6 +2,7 @@ TEMPLATE = lib
 
 CONFIG -= qt
 CONFIG += dll
+CONFIG += debug
 
 QMAKE_LFLAGS += -g
 

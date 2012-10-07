@@ -80,7 +80,7 @@
  * @defgroup Ui User Interface SPI
  *
  * @brief The UI SPI handles user interface functionality such as windows
- * and user input polling.
+ * and user event polling.
  */
 
 /**

@@ -13,8 +13,8 @@ namespace avo {
  */
 
 /**
- * The %UiService SPI handles input framework initialization as well as
- * the SPII for Input.
+ * The %UiService SPI handles UI framework initialization as well as
+ * the SPII for Window.
  */
 class UiService {
 

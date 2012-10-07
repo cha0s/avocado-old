@@ -41,24 +41,24 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 			# stuff. We'll wait so that there isn't a black screen sitting
 			# there while everything loads.
 			# Instantiate a Window to receive render events.
-			window = new avo.uiService.newWindow()
-			window.set [320, 240]
-			window.setWindowTitle 'Avocado - Fun Should Be Free'
+			avo.window = new avo.uiService.newWindow()
+			avo.window.set [320, 240]
+			avo.window.setWindowTitle 'Avocado - Fun Should Be Free'
 			
 			# avo.main lets us know when it has something to render, so we'll
 			# put it on our window.
-			avo.main.on 'render', (buffer) -> window.render buffer
+			avo.main.on 'render', (buffer) -> avo.window.render buffer
 			
-			# Catch the quit event from Input (window close event).
-			window.on 'quit.Engine', => avo.main.quit()
+			# Catch the quit event (window close event).
+			avo.window.on 'quit.Engine', => avo.main.quit()
 			
 			# Allow dragging the avocado around with the left mouse button. Keep
 			# track of where the avocado was when we started dragging.
 			@dragStartAvocadoLocation = []
-			window.on 'mouseButtonDown.InitialState', ({button}) =>
+			avo.window.on 'mouseButtonDown.InitialState', ({button}) =>
 				return unless button is avo.Window.LeftButton
 				@dragStartAvocadoLocation = [@x, @y]
-			window.on 'mouseDrag.InitialState', ({position, button, relative}) =>
+			avo.window.on 'mouseDrag.InitialState', ({position, button, relative}) =>
 				return unless button is avo.Window.LeftButton
 				[@x, @y] = avo.Vector.add @dragStartAvocadoLocation, relative
 				
@@ -86,5 +86,5 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 	# up resources and event handlers.
 	leave: (nextStateName) ->
 		
-		# Remove our user input event handler(s).
-		avo.Input.off '.InitialState'
+		# Remove our event handler(s).
+		avo.window.off '.InitialState'

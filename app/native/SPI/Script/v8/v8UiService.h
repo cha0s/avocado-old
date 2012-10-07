@@ -17,8 +17,8 @@ namespace avo {
 /**
  * %v8UiService provides the UiService SPI to V8 JavaScript.
  *
- * @ingroup Input
  * @ingroup SPI
+ * @ingroup Ui
  * @ingroup V8
  */
 class v8UiService : public ObjectWrap {

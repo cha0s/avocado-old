@@ -21,7 +21,7 @@ class Window {
 
 public:
 
-	/** Input polling results. */
+	/** Event polling. */
 	struct Event {
 
 		/** Standardize mouse buttons. */

@@ -1,12 +1,15 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$CoreService_8cpp.html" title="SPI/Core/CoreService.cpp" alt="" coords="43,83,219,112"/>
-<area shape="rect" id="node5" href="$QtCoreService_8h.html" title="SPI/Core/Qt/QtCoreService.h" alt="" coords="243,83,437,112"/>
-<area shape="rect" id="node11" href="$SdlCoreService_8h.html" title="SPI/Core/SDL/SdlCoreService.h" alt="" coords="465,83,676,112"/>
-<area shape="rect" id="node17" href="$v8CoreService_8h.html" title="SPI/Script/v8/v8CoreService.h" alt="" coords="959,83,1159,112"/>
+<area shape="rect" id="node3" href="$CoreService_8cpp.html" title="SPI/Core/CoreService.cpp" alt="" coords="164,83,340,112"/>
+<area shape="rect" id="node5" href="$QtCoreService_8h.html" title="SPI/Core/Qt/QtCoreService.h" alt="" coords="364,83,559,112"/>
+<area shape="rect" id="node11" href="$SdlCoreService_8h.html" title="SPI/Core/SDL/SdlCoreService.h" alt="" coords="587,83,797,112"/>
+<area shape="rect" id="node17" href="$SfmlCoreService_8h.html" title="SPI/Core/SFML/SfmlCoreService.h" alt="" coords="948,83,1177,112"/>
+<area shape="rect" id="node23" href="$v8CoreService_8h.html" title="SPI/Script/v8/v8CoreService.h" alt="" coords="1471,83,1671,112"/>
 <area shape="rect" id="node7" href="$Core_2Qt_2implementSpi_8cpp.html" title="SPI/Core/Qt/implementSpi.cpp" alt="" coords="5,160,208,189"/>
 <area shape="rect" id="node9" href="$QtCoreService_8cpp.html" title="SPI/Core/Qt/QtCoreService.cpp" alt="" coords="232,160,440,189"/>
 <area shape="rect" id="node13" href="$Core_2SDL_2implementSpi_8cpp.html" title="SPI/Core/SDL/implementSpi.cpp" alt="" coords="464,160,677,189"/>
 <area shape="rect" id="node15" href="$SdlCoreService_8cpp.html" title="SPI/Core/SDL/SdlCoreService.cpp" alt="" coords="701,160,928,189"/>
-<area shape="rect" id="node19" href="$v8CoreService_8cpp.html" title="SPI/Script/v8/v8CoreService.cpp" alt="" coords="952,160,1165,189"/>
-<area shape="rect" id="node21" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="1189,160,1411,189"/>
+<area shape="rect" id="node19" href="$Core_2SFML_2implementSpi_8cpp.html" title="SPI/Core/SFML/implementSpi.cpp" alt="" coords="952,160,1173,189"/>
+<area shape="rect" id="node21" href="$SfmlCoreService_8cpp.html" title="SPI/Core/SFML/SfmlCoreService.cpp" alt="" coords="1197,160,1440,189"/>
+<area shape="rect" id="node25" href="$v8CoreService_8cpp.html" title="SPI/Script/v8/v8CoreService.cpp" alt="" coords="1464,160,1677,189"/>
+<area shape="rect" id="node27" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="1701,160,1923,189"/>
 </map>

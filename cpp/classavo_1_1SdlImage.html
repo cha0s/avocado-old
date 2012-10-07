@@ -190,6 +190,10 @@ Friends</h2></td></tr>
 <div class="fragment"><pre class="fragment">    : <a class="code" href="classavo_1_1Image.html#a6f37ba45c2f5e58d52566657c478756c">Image</a>()
     , surface(NULL)
 {
+    <span class="keywordflow">if</span> (!(SDL_INIT_VIDEO &amp; SDL_WasInit(SDL_INIT_EVERYTHING))) <span class="keywordflow">throw</span> std::runtime_error(
+        <span class="stringliteral">&quot;SdlImage::SdlImage(uri): SDL video not initialized.&quot;</span>
+    );
+
     <span class="comment">// Load the filename.</span>
     SDL_Surface* rawImage = IMG_Load(<a class="code" href="classavo_1_1Image.html#a021f95656c7855b8dfc49596a0a661c1">uri</a>.c_str());
 
@@ -204,12 +208,12 @@ Friends</h2></td></tr>
     <span class="keywordflow">else</span> {
 
         <span class="keywordflow">throw</span> std::runtime_error(
-            <span class="stringliteral">&quot;IMG_Load failed. SDL says: &quot;</span> + std::string(SDL_GetError())
+            <span class="stringliteral">&quot;SdlImage::SdlImage(uri): IMG_Load failed. SDL says: &quot;</span> + std::string(SDL_GetError())
         );
     }
 
     <span class="keywordflow">if</span> (!surface) <span class="keywordflow">throw</span> std::runtime_error(
-        <span class="stringliteral">&quot;SDL_DisplayFormatAlpha failed. SDL says: &quot;</span> + std::string(SDL_GetError())
+        <span class="stringliteral">&quot;SdlImage::SdlImage(uri): SDL_DisplayFormatAlpha failed. SDL says: &quot;</span> + std::string(SDL_GetError())
     );
 
     <a class="code" href="classavo_1_1Image.html#a1d9990a7504c7e84a63f858a46b82bad">setUri</a>(<a class="code" href="classavo_1_1Image.html#a021f95656c7855b8dfc49596a0a661c1">uri</a>);
@@ -243,19 +247,31 @@ Friends</h2></td></tr>
 <div class="memdoc">
 <p>Build an SDL_Surface to given width/height specifcations. </p>
 <div class="fragment"><pre class="fragment">    : <a class="code" href="classavo_1_1Image.html#a6f37ba45c2f5e58d52566657c478756c">Image</a>()
-    , surface(SDL_DisplayFormatAlpha(
-        SDL_CreateRGBSurface(
-            SDL_SRCALPHA,
-            <a class="code" href="classavo_1_1SdlImage.html#a50d2215382a14ae69386c9db5c0497a9">width</a>,
-            <a class="code" href="classavo_1_1SdlImage.html#a8c7cb8a689040e8fe686a4404cbf96cb">height</a>,
-            32,
-            <a class="code" href="SdlImage_8cpp.html#adc87aa1d737507707c54f095089e2952a928216baa5613b262ce4f28192455d13">SDL_ColorMaskRed</a>,
-            <a class="code" href="SdlImage_8cpp.html#adc87aa1d737507707c54f095089e2952a7e56603f2b3c2854806cdf76cdc0cea4">SDL_ColorMaskGreen</a>,
-            <a class="code" href="SdlImage_8cpp.html#adc87aa1d737507707c54f095089e2952a86bd7c46560bce9c511e81f2ef43035c">SDL_ColorMaskBlue</a>,
-            <a class="code" href="SdlImage_8cpp.html#adc87aa1d737507707c54f095089e2952aee0d60968259708f029aec104898d2a3">SDL_ColorMaskAlpha</a>
-        )
-    ))
 {
+    <span class="keywordflow">if</span> (!(SDL_INIT_VIDEO &amp; SDL_WasInit(SDL_INIT_EVERYTHING))) <span class="keywordflow">throw</span> std::runtime_error(
+        <span class="stringliteral">&quot;SdlImage::SdlImage(): SDL video not initialized.&quot;</span>
+    );
+
+    SDL_Surface *unoptimized = SDL_CreateRGBSurface(
+        SDL_SRCALPHA,
+        <a class="code" href="classavo_1_1SdlImage.html#a50d2215382a14ae69386c9db5c0497a9">width</a>,
+        <a class="code" href="classavo_1_1SdlImage.html#a8c7cb8a689040e8fe686a4404cbf96cb">height</a>,
+        32,
+        <a class="code" href="SdlImage_8cpp.html#adc87aa1d737507707c54f095089e2952a928216baa5613b262ce4f28192455d13">SDL_ColorMaskRed</a>,
+        <a class="code" href="SdlImage_8cpp.html#adc87aa1d737507707c54f095089e2952a7e56603f2b3c2854806cdf76cdc0cea4">SDL_ColorMaskGreen</a>,
+        <a class="code" href="SdlImage_8cpp.html#adc87aa1d737507707c54f095089e2952a86bd7c46560bce9c511e81f2ef43035c">SDL_ColorMaskBlue</a>,
+        <a class="code" href="SdlImage_8cpp.html#adc87aa1d737507707c54f095089e2952aee0d60968259708f029aec104898d2a3">SDL_ColorMaskAlpha</a>
+    );
+    <span class="keywordflow">if</span> (NULL == unoptimized) <span class="keywordflow">throw</span> std::runtime_error(
+        <span class="stringliteral">&quot;SdlImage::SdlImage(): SDL_CreateRGBSurface failed. SDL says: &quot;</span> + std::string(SDL_GetError())
+    );
+
+    surface = SDL_DisplayFormatAlpha(unoptimized);
+    <span class="keywordflow">if</span> (NULL == surface) <span class="keywordflow">throw</span> std::runtime_error(
+        <span class="stringliteral">&quot;SdlImage::SdlImage(): SDL_DisplayFormatAlpha failed. SDL says: &quot;</span> + std::string(SDL_GetError())
+    );
+
+    SDL_FreeSurface(unoptimized);
 }
 </pre></div>
 </div>

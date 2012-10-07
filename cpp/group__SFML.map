@@ -1,7 +1,9 @@
 <map id="structs" name="structs">
-<area shape="rect" id="node1" href="$group__Sound.html" title="The sound SPI handles sound system initialization, as well as music and sample loading and playing..." alt="" coords="643,111,728,140"/>
-<area shape="rect" id="node2" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="596,280,775,309"/>
-<area shape="rect" id="node3" href="$group__Resources.html" title="Resources are loaded from the resource root and are managed using reference counting." alt="" coords="607,380,764,409"/>
-<area shape="rect" id="node4" href="$group__Timing.html" title="The timing SPI handles measuring time." alt="" coords="643,480,728,509"/>
-<area shape="rect" id="node5" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="633,597,737,627"/>
+<area shape="rect" id="node1" href="$group__Core.html" title="The core SPI handles framework initialization (e.g. SDL_Init()) and teardown (e.g. SDL_Quit()) as well as bridges to core engine functionality like filesystem access." alt="" coords="648,48,723,77"/>
+<area shape="rect" id="node2" href="$group__Sound.html" title="The sound SPI handles sound system initialization, as well as music and sample loading and playing..." alt="" coords="643,183,728,212"/>
+<area shape="rect" id="node3" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="596,404,775,433"/>
+<area shape="rect" id="node4" href="$group__Ui.html" title="The UI SPI handles user interface functionality such as windows and user event polling." alt="" coords="620,504,751,533"/>
+<area shape="rect" id="node5" href="$group__Resources.html" title="Resources are loaded from the resource root and are managed using reference counting." alt="" coords="607,604,764,633"/>
+<area shape="rect" id="node6" href="$group__Timing.html" title="The timing SPI handles measuring time." alt="" coords="643,704,728,733"/>
+<area shape="rect" id="node7" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="633,873,737,903"/>
 </map>

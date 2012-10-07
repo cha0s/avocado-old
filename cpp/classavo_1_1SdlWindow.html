@@ -203,8 +203,7 @@ Static Public Attributes</h2></td></tr>
 <div class="fragment"><pre class="fragment">                                  {
 
     Event event;
-
-    <span class="keyword">static</span> SDL_Event sdlEvent;
+    SDL_Event sdlEvent;
     <span class="keywordflow">while</span> (SDL_PollEvent(&amp;sdlEvent)) {
 
         <span class="keywordflow">switch</span> (sdlEvent.type) {

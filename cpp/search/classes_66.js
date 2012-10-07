@@ -6,7 +6,6 @@ var searchData=
   ['factorymanager_3c_20counter_20_3e',['FactoryManager< Counter >',['../classavo_1_1FactoryManager.html',1,'avo']]],
   ['factorymanager_3c_20graphicsservice_20_3e',['FactoryManager< GraphicsService >',['../classavo_1_1FactoryManager.html',1,'avo']]],
   ['factorymanager_3c_20image_20_3e',['FactoryManager< Image >',['../classavo_1_1FactoryManager.html',1,'avo']]],
-  ['factorymanager_3c_20input_20_3e',['FactoryManager< Input >',['../classavo_1_1FactoryManager.html',1,'avo']]],
   ['factorymanager_3c_20music_20_3e',['FactoryManager< Music >',['../classavo_1_1FactoryManager.html',1,'avo']]],
   ['factorymanager_3c_20sample_20_3e',['FactoryManager< Sample >',['../classavo_1_1FactoryManager.html',1,'avo']]],
   ['factorymanager_3c_20script_20_3e',['FactoryManager< Script >',['../classavo_1_1FactoryManager.html',1,'avo']]],

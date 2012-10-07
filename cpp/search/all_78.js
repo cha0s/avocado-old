@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['x',['x',['../structavo_1_1Input_1_1MouseButtonDown.html#a38bb91d14c84e7f508f1e333b7f598ff',1,'avo::Input::MouseButtonDown::x()'],['../structavo_1_1Input_1_1MouseButtonUp.html#af4fe84640f9115a0e0c07276e24b08d6',1,'avo::Input::MouseButtonUp::x()'],['../structavo_1_1Input_1_1MouseMove.html#a44e1daa490ed788e89dc3bfb2350276d',1,'avo::Input::MouseMove::x()']]]
+  ['x',['x',['../structavo_1_1Window_1_1Event_1_1MouseButtonDown.html#a08d31095dd300ef182b0817b1521d8db',1,'avo::Window::Event::MouseButtonDown::x()'],['../structavo_1_1Window_1_1Event_1_1MouseButtonUp.html#aa5190e191602c02dbce98252e56a932c',1,'avo::Window::Event::MouseButtonUp::x()'],['../structavo_1_1Window_1_1Event_1_1MouseMove.html#a7f59cb145da14221ca5e97c62cbdd503',1,'avo::Window::Event::MouseMove::x()']]]
 ];

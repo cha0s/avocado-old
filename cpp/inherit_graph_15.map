@@ -1,6 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classavo_1_1Counter.html" title="avo::Counter" alt="" coords="7,59,103,88"/>
-<area shape="rect" id="node3" href="$classavo_1_1QtCounter.html" title="avo::QtCounter" alt="" coords="160,5,269,35"/>
-<area shape="rect" id="node5" href="$classavo_1_1SdlCounter.html" title="avo::SdlCounter" alt="" coords="157,59,272,88"/>
-<area shape="rect" id="node7" href="$classavo_1_1SfmlCounter.html" title="avo::SfmlCounter" alt="" coords="153,112,276,141"/>
+<area shape="rect" id="node1" href="$classavo_1_1FactoryManager.html" title="avo::FactoryManager\&lt; T \&gt;" alt="" coords="7,5,183,35"/>
 </map>

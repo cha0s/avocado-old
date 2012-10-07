@@ -1,5 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classavo_1_1Image.html" title="The Image SPI handles everything related to images." alt="" coords="7,32,92,61"/>
-<area shape="rect" id="node3" href="$classavo_1_1QtImage.html" title="avo::QtImage" alt="" coords="144,5,245,35"/>
-<area shape="rect" id="node5" href="$classavo_1_1SdlImage.html" title="avo::SdlImage" alt="" coords="141,59,248,88"/>
+<area shape="rect" id="node1" href="$classavo_1_1Music.html" title="avo::Music" alt="" coords="7,32,92,61"/>
+<area shape="rect" id="node3" href="$classavo_1_1SdlMusic.html" title="avo::SdlMusic" alt="" coords="147,5,251,35"/>
+<area shape="rect" id="node5" href="$classavo_1_1SfmlMusic.html" title="avo::SfmlMusic" alt="" coords="143,59,255,88"/>
 </map>

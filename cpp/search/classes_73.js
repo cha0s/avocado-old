@@ -11,7 +11,6 @@ var searchData=
   ['sdlcounter',['SdlCounter',['../classavo_1_1SdlCounter.html',1,'avo']]],
   ['sdlgraphicsservice',['SdlGraphicsService',['../classavo_1_1SdlGraphicsService.html',1,'avo']]],
   ['sdlimage',['SdlImage',['../classavo_1_1SdlImage.html',1,'avo']]],
-  ['sdlinput',['SdlInput',['../classavo_1_1SdlInput.html',1,'avo']]],
   ['sdlmusic',['SdlMusic',['../classavo_1_1SdlMusic.html',1,'avo']]],
   ['sdlsample',['SdlSample',['../classavo_1_1SdlSample.html',1,'avo']]],
   ['sdlsoundservice',['SdlSoundService',['../classavo_1_1SdlSoundService.html',1,'avo']]],
@@ -24,7 +23,7 @@ var searchData=
   ['sfmlsoundservice',['SfmlSoundService',['../classavo_1_1SfmlSoundService.html',1,'avo']]],
   ['sfmltimingservice',['SfmlTimingService',['../classavo_1_1SfmlTimingService.html',1,'avo']]],
   ['soundservice',['SoundService',['../classavo_1_1SoundService.html',1,'avo']]],
-  ['specialkeymap',['SpecialKeyMap',['../structavo_1_1Input_1_1SpecialKeyMap.html',1,'avo::Input']]],
+  ['specialkeycodes',['SpecialKeyCodes',['../structavo_1_1UiService_1_1SpecialKeyCodes.html',1,'avo::UiService']]],
   ['spi_5fimplementation_5ferror',['spi_implementation_error',['../classavo_1_1SpiiLoader_1_1spi__implementation__error.html',1,'avo::SpiiLoader']]],
   ['spiiloader',['SpiiLoader',['../classavo_1_1SpiiLoader.html',1,'avo']]]
 ];

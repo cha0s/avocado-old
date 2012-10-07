@@ -83,6 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#define-members">Defines</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">SPI/Script/v8/v8UiService.cpp File Reference</div>  </div>
@@ -104,10 +105,51 @@ Namespaces</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceavo.html">avo</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><p>Everything here is organized underneath the avo namespace. </p>
 <br/></td></tr>
+<tr><td colspan="2"><h2><a name="define-members"></a>
+Defines</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="v8UiService_8cpp.html#ae7e40f2893dd17b78b1bd19b17feebb7">SPECIAL_KEY</a>(Keys, keys, key)</td></tr>
 <tr><td colspan="2"><h2><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classavo_1_1SpiiLoader.html">avo::SpiiLoader</a>&lt; <a class="el" href="classavo_1_1UiService.html">avo::UiService</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceavo.html#acf8ee8f8a9de306e022f324c455885e6">avo::uiServiceSpiiLoader</a></td></tr>
 </table>
+<hr/><h2>Define Documentation</h2>
+<a class="anchor" id="ae7e40f2893dd17b78b1bd19b17feebb7"></a><!-- doxytag: member="v8UiService.cpp::SPECIAL_KEY" ref="ae7e40f2893dd17b78b1bd19b17feebb7" args="(Keys, keys, key)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define <a class="el" href="v8UiService_8cpp.html#ae7e40f2893dd17b78b1bd19b17feebb7">SPECIAL_KEY</a></td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">Keys, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">keys, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">key&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<b>Value:</b><div class="fragment"><pre class="fragment">Keys-&gt;Set(                   \
+        String::New(#key),              \
+        Integer::New(keys.key) \
+    );
+</pre></div>
+</div>
+</div>
 </div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"

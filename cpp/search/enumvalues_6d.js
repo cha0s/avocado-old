@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['middlebutton',['MiddleButton',['../classavo_1_1Input.html#ad8b4168d80ec01500ed7e0b3b8677133af371c2bfb7aa35da3a8b30c102f2211e',1,'avo::Input']]]
+  ['middlebutton',['MiddleButton',['../structavo_1_1Window_1_1Event.html#a2ab3e2e26bbd4429dbfba516bed1d0d7ab5500b37c8e937bb743a0e48c32547ec',1,'avo::Window::Event']]]
 ];

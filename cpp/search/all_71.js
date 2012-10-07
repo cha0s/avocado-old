@@ -20,5 +20,5 @@ var searchData=
   ['qttimingservice_2ecpp',['QtTimingService.cpp',['../QtTimingService_8cpp.html',1,'']]],
   ['qttimingservice_2eh',['QtTimingService.h',['../QtTimingService_8h.html',1,'']]],
   ['qualifypath',['qualifyPath',['../namespaceavo_1_1FS.html#a88f1eb696eaaaab844b476d9d327e949',1,'avo::FS']]],
-  ['quit',['quit',['../structavo_1_1Input_1_1PollResults.html#adfaccd8d6ef5136807dbaa3710fca1db',1,'avo::Input::PollResults']]]
+  ['quit',['quit',['../structavo_1_1Window_1_1Event.html#a9872c1e77f57c2534effbde7117af7e6',1,'avo::Window::Event']]]
 ];

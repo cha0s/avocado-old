@@ -14,8 +14,6 @@ var searchData=
   ['sdlgraphicsservice_2eh',['SdlGraphicsService.h',['../SdlGraphicsService_8h.html',1,'']]],
   ['sdlimage_2ecpp',['SdlImage.cpp',['../SdlImage_8cpp.html',1,'']]],
   ['sdlimage_2eh',['SdlImage.h',['../SdlImage_8h.html',1,'']]],
-  ['sdlinput_2ecpp',['SdlInput.cpp',['../SdlInput_8cpp.html',1,'']]],
-  ['sdlinput_2eh',['SdlInput.h',['../SdlInput_8h.html',1,'']]],
   ['sdlmusic_2ecpp',['SdlMusic.cpp',['../SdlMusic_8cpp.html',1,'']]],
   ['sdlmusic_2eh',['SdlMusic.h',['../SdlMusic_8h.html',1,'']]],
   ['sdlsample_2ecpp',['SdlSample.cpp',['../SdlSample_8cpp.html',1,'']]],

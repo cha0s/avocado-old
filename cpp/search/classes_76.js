@@ -4,7 +4,6 @@ var searchData=
   ['v8counter',['v8Counter',['../classavo_1_1v8Counter.html',1,'avo']]],
   ['v8graphicsservice',['v8GraphicsService',['../classavo_1_1v8GraphicsService.html',1,'avo']]],
   ['v8image',['v8Image',['../classavo_1_1v8Image.html',1,'avo']]],
-  ['v8input',['v8Input',['../classavo_1_1v8Input.html',1,'avo']]],
   ['v8music',['v8Music',['../classavo_1_1v8Music.html',1,'avo']]],
   ['v8sample',['v8Sample',['../classavo_1_1v8Sample.html',1,'avo']]],
   ['v8script',['v8Script',['../classavo_1_1v8Script.html',1,'avo']]],

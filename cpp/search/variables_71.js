@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['quit',['quit',['../structavo_1_1Input_1_1PollResults.html#adfaccd8d6ef5136807dbaa3710fca1db',1,'avo::Input::PollResults']]]
+  ['quit',['quit',['../structavo_1_1Window_1_1Event.html#a9872c1e77f57c2534effbde7117af7e6',1,'avo::Window::Event']]]
 ];

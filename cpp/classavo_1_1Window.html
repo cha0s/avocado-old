@@ -104,6 +104,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a>  </div>
@@ -123,6 +124,9 @@ Inheritance diagram for avo::Window:</div>
 
 <p><a href="classavo_1_1Window-members.html">List of all members.</a></p>
 <table class="memberdecls">
+<tr><td colspan="2"><h2><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structavo_1_1Window_1_1Event.html">Event</a></td></tr>
 <tr><td colspan="2"><h2><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0">WindowFlags</a> { <a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0ab72160693e3a009592e9399c1da4cdf1">Flags_Default</a> =  0, 
@@ -132,6 +136,7 @@ Public Types</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#a2ad0fe38525ddc2d769b0c2b1142f9e6">~Window</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a> () const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structavo_1_1Window_1_1Event.html">Event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#abde8f5d6b0a0f8f94f1b438bed584025">pollEvents</a> ()=0</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#ad3c777c31e1490e752534acd4c4daa7a">render</a> (<a class="el" href="classavo_1_1Image.html">Image</a> *working)=0</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#ad99043fecad1756b6bde9cff80868a27">set</a> (int <a class="el" href="classavo_1_1Window.html#a27bd4cc8d77ede73d295754c9b9389e8">width</a>, int <a class="el" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a>, <a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0">WindowFlags</a> f=<a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0ab72160693e3a009592e9399c1da4cdf1">Flags_Default</a>)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#aa6ef5ee69347b6407e20f072376bb4df">setMouseVisibility</a> (bool visible)=0</td></tr>
@@ -212,6 +217,25 @@ Static Public Attributes</h2></td></tr>
     <span class="keywordflow">return</span> m_height;
 }
 </pre></div>
+</div>
+</div>
+<a class="anchor" id="abde8f5d6b0a0f8f94f1b438bed584025"></a><!-- doxytag: member="avo::Window::pollEvents" ref="abde8f5d6b0a0f8f94f1b438bed584025" args="()=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="structavo_1_1Window_1_1Event.html">Event</a> <a class="el" href="classavo_1_1Window.html#abde8f5d6b0a0f8f94f1b438bed584025">avo::Window::pollEvents</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Poll events. </p>
+
+<p>Implemented in <a class="el" href="classavo_1_1SdlWindow.html#a26333f46ad2a1187fb8fd1cfb93f7058">avo::SdlWindow</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="ad3c777c31e1490e752534acd4c4daa7a"></a><!-- doxytag: member="avo::Window::render" ref="ad3c777c31e1490e752534acd4c4daa7a" args="(Image *working)=0" -->

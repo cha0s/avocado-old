@@ -5,7 +5,6 @@ var searchData=
   ['abstractfactory_3c_20counter_20_3e',['AbstractFactory< Counter >',['../classavo_1_1AbstractFactory_3_01Counter_01_4.html',1,'avo']]],
   ['abstractfactory_3c_20graphicsservice_20_3e',['AbstractFactory< GraphicsService >',['../classavo_1_1AbstractFactory_3_01GraphicsService_01_4.html',1,'avo']]],
   ['abstractfactory_3c_20image_20_3e',['AbstractFactory< Image >',['../classavo_1_1AbstractFactory_3_01Image_01_4.html',1,'avo']]],
-  ['abstractfactory_3c_20input_20_3e',['AbstractFactory< Input >',['../classavo_1_1AbstractFactory_3_01Input_01_4.html',1,'avo']]],
   ['abstractfactory_3c_20music_20_3e',['AbstractFactory< Music >',['../classavo_1_1AbstractFactory_3_01Music_01_4.html',1,'avo']]],
   ['abstractfactory_3c_20qtcoreservice_20_3e',['AbstractFactory< QtCoreService >',['../classavo_1_1AbstractFactory_3_01QtCoreService_01_4.html',1,'avo']]],
   ['abstractfactory_3c_20qtcounter_20_3e',['AbstractFactory< QtCounter >',['../classavo_1_1AbstractFactory_3_01QtCounter_01_4.html',1,'avo']]],
@@ -19,7 +18,6 @@ var searchData=
   ['abstractfactory_3c_20sdlcounter_20_3e',['AbstractFactory< SdlCounter >',['../classavo_1_1AbstractFactory_3_01SdlCounter_01_4.html',1,'avo']]],
   ['abstractfactory_3c_20sdlgraphicsservice_20_3e',['AbstractFactory< SdlGraphicsService >',['../classavo_1_1AbstractFactory_3_01SdlGraphicsService_01_4.html',1,'avo']]],
   ['abstractfactory_3c_20sdlimage_20_3e',['AbstractFactory< SdlImage >',['../classavo_1_1AbstractFactory_3_01SdlImage_01_4.html',1,'avo']]],
-  ['abstractfactory_3c_20sdlinput_20_3e',['AbstractFactory< SdlInput >',['../classavo_1_1AbstractFactory_3_01SdlInput_01_4.html',1,'avo']]],
   ['abstractfactory_3c_20sdlmusic_20_3e',['AbstractFactory< SdlMusic >',['../classavo_1_1AbstractFactory_3_01SdlMusic_01_4.html',1,'avo']]],
   ['abstractfactory_3c_20sdlsample_20_3e',['AbstractFactory< SdlSample >',['../classavo_1_1AbstractFactory_3_01SdlSample_01_4.html',1,'avo']]],
   ['abstractfactory_3c_20sdlsoundservice_20_3e',['AbstractFactory< SdlSoundService >',['../classavo_1_1AbstractFactory_3_01SdlSoundService_01_4.html',1,'avo']]],
@@ -44,7 +42,7 @@ var searchData=
   ['avocado_5fensure_5fstack_5faligned_5ffor_5fsse',['AVOCADO_ENSURE_STACK_ALIGNED_FOR_SSE',['../group__Global.html#ga7505d547e22958d6754892735772fd00',1,'avocado-global.h']]],
   ['avocado_5fspi',['AVOCADO_SPI',['../group__Global.html#ga7dde57e511cc22d6ad4323c57aad007c',1,'avocado-global.h']]],
   ['avocado_5funused',['AVOCADO_UNUSED',['../group__Global.html#ga5091d56fd04fbd991600417b7b946a5a',1,'avocado-global.h']]],
-  ['axis',['axis',['../structavo_1_1Input_1_1JoyAxis.html#a9d7d17404d7f86bf6b1633208ed7d839',1,'avo::Input::JoyAxis']]],
+  ['axis',['axis',['../structavo_1_1Window_1_1Event_1_1JoyAxis.html#a66edbe06b72a6effc3b4fa90af31119c',1,'avo::Window::Event::JoyAxis']]],
   ['fs',['FS',['../namespaceavo_1_1FS.html',1,'avo']]],
   ['v8',['V8',['../namespaceavo_1_1V8.html',1,'avo']]]
 ];

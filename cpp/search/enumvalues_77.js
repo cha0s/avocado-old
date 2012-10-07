@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['wheeldown',['WheelDown',['../classavo_1_1Input.html#ad8b4168d80ec01500ed7e0b3b8677133a0f7cb3be87eea62dcf72202cf526986e',1,'avo::Input']]],
-  ['wheelup',['WheelUp',['../classavo_1_1Input.html#ad8b4168d80ec01500ed7e0b3b8677133a8440dd7213cd72b209aa7a536b4cce53',1,'avo::Input']]]
+  ['wheeldown',['WheelDown',['../structavo_1_1Window_1_1Event.html#a2ab3e2e26bbd4429dbfba516bed1d0d7a67882e74dfde0e6c42be08ca07c92625',1,'avo::Window::Event']]],
+  ['wheelup',['WheelUp',['../structavo_1_1Window_1_1Event.html#a2ab3e2e26bbd4429dbfba516bed1d0d7a4a56184fddc15e3a6b16cea505f03900',1,'avo::Window::Event']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['leftarrow',['LeftArrow',['../structavo_1_1Input_1_1SpecialKeyMap.html#a9960f5947b48a14107beedc0853e4603',1,'avo::Input::SpecialKeyMap']]]
+  ['leftarrow',['LeftArrow',['../structavo_1_1UiService_1_1SpecialKeyCodes.html#afcc94e68f0532c3ba5daacf6e8c28b4b',1,'avo::UiService::SpecialKeyCodes']]]
 ];

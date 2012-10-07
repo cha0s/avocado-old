@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['downarrow',['DownArrow',['../structavo_1_1Input_1_1SpecialKeyMap.html#a5575791299ff3489619f186676f8d3e1',1,'avo::Input::SpecialKeyMap']]],
+  ['downarrow',['DownArrow',['../structavo_1_1UiService_1_1SpecialKeyCodes.html#a169f8fa2b5365f705877f9a8d86eef62',1,'avo::UiService::SpecialKeyCodes']]],
   ['doxygen_2eh',['doxygen.h',['../doxygen_8h.html',1,'']]],
   ['drawcircle',['drawCircle',['../classavo_1_1Image.html#ab2f3acb01bf30aa508ee57384d9ac555',1,'avo::Image::drawCircle()'],['../classavo_1_1QtImage.html#ae0f566717488f46c040df8095f8c3a18',1,'avo::QtImage::drawCircle()'],['../classavo_1_1SdlImage.html#abcf5e6fe5dd5e71c1c1751d356e566e3',1,'avo::SdlImage::drawCircle()']]],
   ['drawfilledbox',['drawFilledBox',['../classavo_1_1Image.html#a2ad32019c320db171463fb9c315758f1',1,'avo::Image::drawFilledBox()'],['../classavo_1_1QtImage.html#a53fe6da48625ca6917eca72f1a0850ea',1,'avo::QtImage::drawFilledBox()'],['../classavo_1_1SdlImage.html#aa5f958ec2917b02f9b24754992c08c83',1,'avo::SdlImage::drawFilledBox()']]],

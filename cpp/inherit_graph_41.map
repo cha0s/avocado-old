@@ -1,4 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classavo_1_1ScriptService.html" title="ScriptService manages embedding a JavaScript interpreter within the Avocado engine." alt="" coords="7,5,135,35"/>
-<area shape="rect" id="node3" href="$classavo_1_1v8ScriptService.html" title="avo::v8ScriptService" alt="" coords="185,5,327,35"/>
+<area shape="rect" id="node1" href="$structavo_1_1Window_1_1Event_1_1JoyButtonUp.html" title="avo::Window::Event::JoyButtonUp" alt="" coords="5,5,229,35"/>
 </map>

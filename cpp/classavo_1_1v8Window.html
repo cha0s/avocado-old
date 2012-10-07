@@ -177,6 +177,7 @@ Public Attributes</h2></td></tr>
     constructor_template-&gt;InstanceTemplate()-&gt;SetInternalFieldCount(1);
     constructor_template-&gt;SetClassName(String::NewSymbol(<span class="stringliteral">&quot;Window&quot;</span>));
 
+    <a class="code" href="avocado-v8_8h.html#a32ad28418d7e48ccde27840235c819cb">V8_SET_PROTOTYPE_METHOD</a>(constructor_template, <span class="stringliteral">&quot;%pollEvents&quot;</span>, v8Window::PollEvents);
     <a class="code" href="avocado-v8_8h.html#a32ad28418d7e48ccde27840235c819cb">V8_SET_PROTOTYPE_METHOD</a>(constructor_template, <span class="stringliteral">&quot;%render&quot;</span>, v8Window::Render);
     <a class="code" href="avocado-v8_8h.html#a32ad28418d7e48ccde27840235c819cb">V8_SET_PROTOTYPE_METHOD</a>(constructor_template, <span class="stringliteral">&quot;%set&quot;</span>, v8Window::Set);
     <a class="code" href="avocado-v8_8h.html#a32ad28418d7e48ccde27840235c819cb">V8_SET_PROTOTYPE_METHOD</a>(constructor_template, <span class="stringliteral">&quot;%setMouseVisibility&quot;</span>, v8Window::SetMouseVisibility);

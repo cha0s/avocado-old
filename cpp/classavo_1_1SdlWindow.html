@@ -126,8 +126,9 @@ Inheritance diagram for avo::SdlWindow:</div>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#a781981e13125276c55c1b2805d568023">SdlWindow</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#ac53d12fbcb8f8e6b5a57f98128e8e182">~SdlWindow</a> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#ad957f9f7b61cf12f96fe1b775350be44">set</a> (int <a class="el" href="classavo_1_1Window.html#a27bd4cc8d77ede73d295754c9b9389e8">width</a>, int <a class="el" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a>, <a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0">WindowFlags</a> f=<a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0ab72160693e3a009592e9399c1da4cdf1">Flags_Default</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structavo_1_1Window_1_1Event.html">Event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#a26333f46ad2a1187fb8fd1cfb93f7058">pollEvents</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#a61297994bdc3eba745788fe04040e134">render</a> (<a class="el" href="classavo_1_1Image.html">Image</a> *working)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#ad957f9f7b61cf12f96fe1b775350be44">set</a> (int <a class="el" href="classavo_1_1Window.html#a27bd4cc8d77ede73d295754c9b9389e8">width</a>, int <a class="el" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a>, <a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0">WindowFlags</a> f=<a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0ab72160693e3a009592e9399c1da4cdf1">Flags_Default</a>)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#a369d682f2e75123361159a5e24e2af77">setMouseVisibility</a> (bool visible)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#aacc1fd9ef6505500ed238c2120f273fb">setWindowTitle</a> (const std::string &amp;window, const std::string &amp;iconified=&quot;&quot;)</td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
@@ -181,6 +182,189 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a26333f46ad2a1187fb8fd1cfb93f7058"></a><!-- doxytag: member="avo::SdlWindow::pollEvents" ref="a26333f46ad2a1187fb8fd1cfb93f7058" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structavo_1_1Window_1_1Event.html">Window::Event</a> <a class="el" href="classavo_1_1SdlWindow.html#a26333f46ad2a1187fb8fd1cfb93f7058">avo::SdlWindow::pollEvents</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Poll events. </p>
+
+<p>Implements <a class="el" href="classavo_1_1Window.html#abde8f5d6b0a0f8f94f1b438bed584025">avo::Window</a>.</p>
+<div class="fragment"><pre class="fragment">                                  {
+
+    Event event;
+
+    <span class="keyword">static</span> SDL_Event sdlEvent;
+    <span class="keywordflow">while</span> (SDL_PollEvent(&amp;sdlEvent)) {
+
+        <span class="keywordflow">switch</span> (sdlEvent.type) {
+
+        <span class="keywordflow">case</span> SDL_KEYDOWN: {
+
+            Event::KeyDown keyDown = {sdlEvent.key.keysym.sym};
+            <span class="keyword">event</span>.keyDown.push_back(keyDown);
+
+            <span class="keywordflow">break</span>;
+        }
+
+        <span class="keywordflow">case</span> SDL_KEYUP: {
+
+            Event::KeyUp keyUp = {sdlEvent.key.keysym.sym};
+            <span class="keyword">event</span>.keyUp.push_back(keyUp);
+
+            <span class="keywordflow">break</span>;
+        }
+
+        <span class="keywordflow">case</span> SDL_JOYAXISMOTION: {
+
+            Event::JoyAxis joyAxis = {
+                sdlEvent.jaxis.which,
+                sdlEvent.jaxis.axis,
+                sdlEvent.jaxis.value / <a class="code" href="SdlWindow_8cpp.html#aced53d41b66c5b8ea75d51b3536e6c36">JoystickMagnitude</a>
+            };
+
+            deque&lt;Event::JoyAxis&gt;::iterator i = find(
+                event.joyAxis.begin(),
+                <span class="keyword">event</span>.joyAxis.end(),
+                joyAxis
+            );
+
+            <span class="keywordflow">if</span> (event.joyAxis.end() == i) {
+                <span class="keyword">event</span>.joyAxis.push_back(joyAxis);
+            }
+            <span class="keywordflow">else</span> {
+                i-&gt;value = joyAxis.value;
+            }
+
+            <span class="keywordflow">break</span>;
+        }
+
+        <span class="keywordflow">case</span> SDL_JOYBUTTONDOWN: {
+
+            Event::JoyButtonDown joyButtonDown = {
+                sdlEvent.jbutton.which,
+                sdlEvent.jbutton.button
+            };
+
+            deque&lt;Event::JoyButtonDown&gt;::iterator i = find(
+                event.joyButtonDown.begin(),
+                <span class="keyword">event</span>.joyButtonDown.end(),
+                joyButtonDown
+            );
+
+            <span class="keywordflow">if</span> (event.joyButtonDown.end() == i) {
+                <span class="keyword">event</span>.joyButtonDown.push_back(joyButtonDown);
+            }
+
+            <span class="keywordflow">break</span>;
+        }
+
+        <span class="keywordflow">case</span> SDL_JOYBUTTONUP: {
+
+            Event::JoyButtonUp joyButtonUp = {
+                sdlEvent.jbutton.which,
+                sdlEvent.jbutton.button
+            };
+
+            deque&lt;Event::JoyButtonUp&gt;::iterator i = find(
+                event.joyButtonUp.begin(),
+                <span class="keyword">event</span>.joyButtonUp.end(),
+                joyButtonUp
+            );
+
+            <span class="keywordflow">if</span> (event.joyButtonUp.end() == i) {
+                <span class="keyword">event</span>.joyButtonUp.push_back(joyButtonUp);
+            }
+
+            <span class="keywordflow">break</span>;
+        }
+
+        <span class="keywordflow">case</span> SDL_MOUSEBUTTONDOWN: {
+
+            <a class="code" href="structavo_1_1Window_1_1Event.html#a2ab3e2e26bbd4429dbfba516bed1d0d7">Event::MouseButtons</a> button;
+            <span class="keywordflow">switch</span> (sdlEvent.button.button) {
+                <span class="keywordflow">case</span> SDL_BUTTON_LEFT: button = <a class="code" href="structavo_1_1Window_1_1Event.html#a2ab3e2e26bbd4429dbfba516bed1d0d7aff6faab5e4ba778dfcbd39f386c87924">Event::LeftButton</a>; <span class="keywordflow">break</span>;
+                <span class="keywordflow">case</span> SDL_BUTTON_MIDDLE: button = <a class="code" href="structavo_1_1Window_1_1Event.html#a2ab3e2e26bbd4429dbfba516bed1d0d7ab5500b37c8e937bb743a0e48c32547ec">Event::MiddleButton</a>; <span class="keywordflow">break</span>;
+                <span class="keywordflow">case</span> SDL_BUTTON_RIGHT: button = <a class="code" href="structavo_1_1Window_1_1Event.html#a2ab3e2e26bbd4429dbfba516bed1d0d7a0f7925e4ec95a295b9dd352a9e796736">Event::RightButton</a>; <span class="keywordflow">break</span>;
+                <span class="keywordflow">case</span> SDL_BUTTON_WHEELUP: button = <a class="code" href="structavo_1_1Window_1_1Event.html#a2ab3e2e26bbd4429dbfba516bed1d0d7a4a56184fddc15e3a6b16cea505f03900">Event::WheelUp</a>; <span class="keywordflow">break</span>;
+                <span class="keywordflow">case</span> SDL_BUTTON_WHEELDOWN: button = <a class="code" href="structavo_1_1Window_1_1Event.html#a2ab3e2e26bbd4429dbfba516bed1d0d7a67882e74dfde0e6c42be08ca07c92625">Event::WheelDown</a>; <span class="keywordflow">break</span>;
+            }
+            Event::MouseButtonDown mouseDown = {
+                sdlEvent.button.x,
+                sdlEvent.button.y,
+                button
+            };
+            <span class="keyword">event</span>.mouseButtonDown.push_back(mouseDown);
+
+            <span class="keywordflow">break</span>;
+        }
+
+        <span class="keywordflow">case</span> SDL_MOUSEBUTTONUP: {
+
+            <a class="code" href="structavo_1_1Window_1_1Event.html#a2ab3e2e26bbd4429dbfba516bed1d0d7">Event::MouseButtons</a> button;
+            <span class="keywordflow">switch</span> (sdlEvent.button.button) {
+                <span class="keywordflow">case</span> SDL_BUTTON_LEFT: button = <a class="code" href="structavo_1_1Window_1_1Event.html#a2ab3e2e26bbd4429dbfba516bed1d0d7aff6faab5e4ba778dfcbd39f386c87924">Event::LeftButton</a>; <span class="keywordflow">break</span>;
+                <span class="keywordflow">case</span> SDL_BUTTON_MIDDLE: button = <a class="code" href="structavo_1_1Window_1_1Event.html#a2ab3e2e26bbd4429dbfba516bed1d0d7ab5500b37c8e937bb743a0e48c32547ec">Event::MiddleButton</a>; <span class="keywordflow">break</span>;
+                <span class="keywordflow">case</span> SDL_BUTTON_RIGHT: button = <a class="code" href="structavo_1_1Window_1_1Event.html#a2ab3e2e26bbd4429dbfba516bed1d0d7a0f7925e4ec95a295b9dd352a9e796736">Event::RightButton</a>; <span class="keywordflow">break</span>;
+                <span class="keywordflow">case</span> SDL_BUTTON_WHEELUP: button = <a class="code" href="structavo_1_1Window_1_1Event.html#a2ab3e2e26bbd4429dbfba516bed1d0d7a4a56184fddc15e3a6b16cea505f03900">Event::WheelUp</a>; <span class="keywordflow">break</span>;
+                <span class="keywordflow">case</span> SDL_BUTTON_WHEELDOWN: button = <a class="code" href="structavo_1_1Window_1_1Event.html#a2ab3e2e26bbd4429dbfba516bed1d0d7a67882e74dfde0e6c42be08ca07c92625">Event::WheelDown</a>; <span class="keywordflow">break</span>;
+            }
+            Event::MouseButtonUp mouseUp = {
+                sdlEvent.button.x,
+                sdlEvent.button.y,
+                button
+            };
+            <span class="keyword">event</span>.mouseButtonUp.push_back(mouseUp);
+
+            <span class="keywordflow">break</span>;
+        }
+
+        <span class="keywordflow">case</span> SDL_MOUSEMOTION: {
+
+            Event::MouseMove mouseMove = {
+                sdlEvent.motion.x,
+                sdlEvent.motion.y
+            };
+            <span class="keyword">event</span>.mouseMove.push_back(mouseMove);
+
+            <span class="keywordflow">break</span>;
+        }
+
+        <span class="keywordflow">case</span> SDL_QUIT: {
+
+            <span class="keyword">event</span>.quit = <span class="keyword">true</span>;
+            <span class="keywordflow">break</span>;
+        }
+
+        <span class="keywordflow">case</span> SDL_VIDEORESIZE: {
+
+            <span class="keyword">event</span>.resize.width = sdlEvent.resize.w;
+            <span class="keyword">event</span>.resize.height = sdlEvent.resize.h;
+
+            <span class="keywordflow">break</span>;
+        }
+
+        <span class="keywordflow">default</span>: {
+            <span class="keywordflow">break</span>;
+
+        }
+
+        }
+    }
+
+    <span class="keywordflow">return</span> event;
+}
+</pre></div>
+</div>
+</div>
 <a class="anchor" id="a61297994bdc3eba745788fe04040e134"></a><!-- doxytag: member="avo::SdlWindow::render" ref="a61297994bdc3eba745788fe04040e134" args="(Image *working)" -->
 <div class="memitem">
 <div class="memproto">

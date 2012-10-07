@@ -1,4 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classavo_1_1AbstractFactory_3_01ScriptService_01_4.html" title="avo::AbstractFactory\&lt; ScriptService \&gt;" alt="" coords="7,5,252,35"/>
-<area shape="rect" id="node3" href="$classavo_1_1AbstractFactory_3_01v8ScriptService_01_4.html" title="avo::AbstractFactory\&lt; v8ScriptService \&gt;" alt="" coords="303,5,561,35"/>
+<area shape="rect" id="node1" href="$classavo_1_1AbstractFactory_3_01SoundService_01_4.html" title="avo::AbstractFactory\&lt; SoundService \&gt;" alt="" coords="7,32,255,61"/>
+<area shape="rect" id="node3" href="$classavo_1_1AbstractFactory_3_01SdlSoundService_01_4.html" title="avo::AbstractFactory\&lt; SdlSoundService \&gt;" alt="" coords="309,5,576,35"/>
+<area shape="rect" id="node5" href="$classavo_1_1AbstractFactory_3_01SfmlSoundService_01_4.html" title="avo::AbstractFactory\&lt; SfmlSoundService \&gt;" alt="" coords="305,59,580,88"/>
 </map>

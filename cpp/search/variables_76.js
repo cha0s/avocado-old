@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['value',['value',['../structavo_1_1Input_1_1JoyAxis.html#a9ef06352977bbc4d170f53618746a112',1,'avo::Input::JoyAxis']]]
+  ['value',['value',['../structavo_1_1Window_1_1Event_1_1JoyAxis.html#a674736a3ed1b519c6220197ab30ae180',1,'avo::Window::Event::JoyAxis']]]
 ];

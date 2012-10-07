@@ -31,25 +31,41 @@ SdlImage::SdlImage()
 
 SdlImage::SdlImage(int width, int height)
 	: Image()
-	, surface(SDL_DisplayFormatAlpha(
-		SDL_CreateRGBSurface(
-			SDL_SRCALPHA,
-			width,
-			height,
-			32,
-			SDL_ColorMaskRed,
-			SDL_ColorMaskGreen,
-			SDL_ColorMaskBlue,
-			SDL_ColorMaskAlpha
-		)
-	))
 {
+	if (!(SDL_INIT_VIDEO & SDL_WasInit(SDL_INIT_EVERYTHING))) throw std::runtime_error(
+		"SdlImage::SdlImage(): SDL video not initialized."
+	);
+
+	SDL_Surface *unoptimized = SDL_CreateRGBSurface(
+		SDL_SRCALPHA,
+		width,
+		height,
+		32,
+		SDL_ColorMaskRed,
+		SDL_ColorMaskGreen,
+		SDL_ColorMaskBlue,
+		SDL_ColorMaskAlpha
+	);
+	if (NULL == unoptimized) throw std::runtime_error(
+		"SdlImage::SdlImage(): SDL_CreateRGBSurface failed. SDL says: " + std::string(SDL_GetError())
+	);
+
+	surface = SDL_DisplayFormatAlpha(unoptimized);
+	if (NULL == surface) throw std::runtime_error(
+		"SdlImage::SdlImage(): SDL_DisplayFormatAlpha failed. SDL says: " + std::string(SDL_GetError())
+	);
+
+	SDL_FreeSurface(unoptimized);
 }
 
 SdlImage::SdlImage(const boost::filesystem::path &uri)
 	: Image()
 	, surface(NULL)
 {
+	if (!(SDL_INIT_VIDEO & SDL_WasInit(SDL_INIT_EVERYTHING))) throw std::runtime_error(
+		"SdlImage::SdlImage(uri): SDL video not initialized."
+	);
+
 	// Load the filename.
 	SDL_Surface* rawImage = IMG_Load(uri.c_str());
 
@@ -64,12 +80,12 @@ SdlImage::SdlImage(const boost::filesystem::path &uri)
 	else {
 
 		throw std::runtime_error(
-			"IMG_Load failed. SDL says: " + std::string(SDL_GetError())
+			"SdlImage::SdlImage(uri): IMG_Load failed. SDL says: " + std::string(SDL_GetError())
 		);
 	}
 
 	if (!surface) throw std::runtime_error(
-		"SDL_DisplayFormatAlpha failed. SDL says: " + std::string(SDL_GetError())
+		"SdlImage::SdlImage(uri): SDL_DisplayFormatAlpha failed. SDL says: " + std::string(SDL_GetError())
 	);
 
 	setUri(uri);

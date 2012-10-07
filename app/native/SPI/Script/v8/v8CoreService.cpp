@@ -44,7 +44,7 @@ v8::Handle<v8::Value> v8CoreService::New(const v8::Arguments &args) {
 	try {
 		new v8CoreService(args.Holder());
 	}
-	catch (FactoryManager<CoreService>::factory_instance_error &e) {
+	catch (std::exception &e) {
 
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			e.what()

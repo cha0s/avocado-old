@@ -41,7 +41,7 @@ v8::Handle<v8::Value> v8SoundService::New(const v8::Arguments &args) {
 	try {
 		new v8SoundService(args.Holder());
 	}
-	catch (FactoryManager<SoundService>::factory_instance_error &e) {
+	catch (std::exception &e) {
 
 		ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			e.what()

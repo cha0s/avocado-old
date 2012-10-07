@@ -105,7 +105,7 @@ v8::Handle<v8::Value> v8Image::New(const v8::Arguments &args) {
 
 		new v8Image(args.Holder(), image);
 	}
-	catch (FactoryManager<Image>::factory_instance_error &e) {
+	catch (std::exception &e) {
 
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			e.what()

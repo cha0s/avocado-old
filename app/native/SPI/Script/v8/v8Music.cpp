@@ -76,7 +76,7 @@ v8::Handle<v8::Value> v8Music::New(const v8::Arguments &args) {
 	try {
 		new v8Music(args.Holder());
 	}
-	catch (FactoryManager<Music>::factory_instance_error &e) {
+	catch (std::exception &e) {
 
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			e.what()

@@ -148,8 +148,7 @@ SdlWindow::~SdlWindow() {
 Window::Event SdlWindow::pollEvents() {
 
 	Event event;
-
-	static SDL_Event sdlEvent;
+	SDL_Event sdlEvent;
 	while (SDL_PollEvent(&sdlEvent)) {
 
 		switch (sdlEvent.type) {

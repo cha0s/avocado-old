@@ -40,7 +40,7 @@ v8::Handle<v8::Value> v8Counter::New(const v8::Arguments &args) {
 	try {
 		new v8Counter(args.Holder());
 	}
-	catch (FactoryManager<Counter>::factory_instance_error &e) {
+	catch (std::exception &e) {
 
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			e.what()

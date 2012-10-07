@@ -57,7 +57,7 @@ v8::Handle<v8::Value> v8UiService::New(const v8::Arguments &args) {
 
 		args.Holder()->Set(String::New("SpecialKeyCodes"), SpecialKeyCodes);
 	}
-	catch (FactoryManager<UiService>::factory_instance_error &e) {
+	catch (std::exception &e) {
 
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			e.what()

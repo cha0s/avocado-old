@@ -43,7 +43,7 @@ v8::Handle<v8::Value> v8GraphicsService::New(const v8::Arguments &args) {
 	try {
 		new v8GraphicsService(args.Holder());
 	}
-	catch (FactoryManager<GraphicsService>::factory_instance_error &e) {
+	catch (std::exception &e) {
 
 		ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			e.what()

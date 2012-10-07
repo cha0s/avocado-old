@@ -30,10 +30,16 @@ avo.Window::render = (image) ->
 	@['%render'] image
 
 # Set the window parameters.
-avo.Window::set = (size, flags = avo.Window.Flags_Default) ->
+avo.Window::setFlags = (flags = avo.Window.Flags_Default) ->
+	return unless flags?
+	
+	@['%setFlags'] flags
+
+# Set the window parameters.
+avo.Window::setSize = (size) ->
 	return unless size?
 	
-	@['%set'] size, flags
+	@['%setSize'] size
 
 # Set whether the mouse is visible while hovering over the window.
 avo.Window::setMouseVisibility = (visibility) ->

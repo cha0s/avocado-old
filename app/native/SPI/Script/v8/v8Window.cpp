@@ -28,7 +28,8 @@ void v8Window::initialize(Handle<ObjectTemplate> target) {
 
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%pollEvents", v8Window::PollEvents);
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%render", v8Window::Render);
-	V8_SET_PROTOTYPE_METHOD(constructor_template, "%set", v8Window::Set);
+	V8_SET_PROTOTYPE_METHOD(constructor_template, "%setFlags", v8Window::SetFlags);
+	V8_SET_PROTOTYPE_METHOD(constructor_template, "%setSize", v8Window::SetSize);
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%setMouseVisibility", v8Window::SetMouseVisibility);
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%setWindowTitle", v8Window::SetWindowTitle);
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%size", v8Window::Size);
@@ -285,23 +286,40 @@ v8::Handle<v8::Value> v8Window::Render(const v8::Arguments &args) {
 	return v8::Undefined();
 }
 
-v8::Handle<v8::Value> v8Window::Set(const v8::Arguments &args) {
+v8::Handle<v8::Value> v8Window::SetFlags(const v8::Arguments &args) {
 	HandleScope scope;
 
 	v8Window *windowWrapper = ObjectWrap::Unwrap<v8Window>(args.Holder());
 
 	if (NULL == windowWrapper) {
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
-			"Window::set(): NULL Holder."
+			"Window::setFlags(): NULL Holder."
+		)));
+	}
+
+	windowWrapper->window->setFlags(
+		static_cast<Window::WindowFlags>(args[1]->Int32Value())
+	);
+
+	return v8::Undefined();
+}
+
+v8::Handle<v8::Value> v8Window::SetSize(const v8::Arguments &args) {
+	HandleScope scope;
+
+	v8Window *windowWrapper = ObjectWrap::Unwrap<v8Window>(args.Holder());
+
+	if (NULL == windowWrapper) {
+		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
+			"Window::setSize(): NULL Holder."
 		)));
 	}
 
 	Handle<Array> dimensions = args[0].As<Array>();
 
-	windowWrapper->window->set(
+	windowWrapper->window->setSize(
 		dimensions->Get(0)->Int32Value(),
-		dimensions->Get(1)->Int32Value(),
-		static_cast<Window::WindowFlags>(args[1]->Int32Value())
+		dimensions->Get(1)->Int32Value()
 	);
 
 	return v8::Undefined();

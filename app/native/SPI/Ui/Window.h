@@ -170,10 +170,17 @@ public:
 		Flags_Fullscreen = 1
 	};
 
+	Window();
+
 	/**
 	 * Destroy the window.
 	 */
 	virtual ~Window() {}
+
+	/**
+	 * %Window flags.
+	 */
+	int flags() const;
 
 	/**
 	 * %Window height.
@@ -191,9 +198,14 @@ public:
 	virtual void render(Image *working) = 0;
 
 	/**
-	 * Set the window parameters.
+	 * Set the window flags.
 	 */
-	virtual void set(int width, int height, WindowFlags f = Flags_Default);
+	virtual void setFlags(WindowFlags flags = Flags_Default);
+
+	/**
+	 * Set the window size.
+	 */
+	virtual void setSize(int width, int height);
 
 	/**
 	 * Set whether the mouse is visible while hovering over the window.
@@ -219,6 +231,8 @@ private:
 
 	int m_width;
 	int m_height;
+
+	int m_flags;
 };
 
 /**

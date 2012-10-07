@@ -41,8 +41,7 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 			# stuff. We'll wait so that there isn't a black screen sitting
 			# there while everything loads.
 			# Instantiate a Window to receive render events.
-			avo.window = new avo.uiService.newWindow()
-			avo.window.set [320, 240]
+			avo.window = new avo.uiService.newWindow [320, 240]
 			avo.window.setWindowTitle 'Avocado - Fun Should Be Free'
 			
 			# avo.main lets us know when it has something to render, so we'll

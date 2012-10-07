@@ -39,7 +39,8 @@ private:
 
 	static v8::Handle<v8::Value> PollEvents(const v8::Arguments &args);
 	static v8::Handle<v8::Value> Render(const v8::Arguments &args);
-	static v8::Handle<v8::Value> Set(const v8::Arguments &args);
+	static v8::Handle<v8::Value> SetFlags(const v8::Arguments &args);
+	static v8::Handle<v8::Value> SetSize(const v8::Arguments &args);
 	static v8::Handle<v8::Value> SetMouseVisibility(const v8::Arguments &args);
 	static v8::Handle<v8::Value> SetWindowTitle(const v8::Arguments &args);
 	static v8::Handle<v8::Value> Size(const v8::Arguments &args);

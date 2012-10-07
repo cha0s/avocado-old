@@ -32,7 +32,9 @@ public:
 
 	void render(Image *working);
 
-	void set(int width, int height, WindowFlags f = Flags_Default);
+	void setFlags(WindowFlags flags = Flags_Default);
+
+	void setSize(int width, int height);
 
 	void setMouseVisibility(bool visible);
 
@@ -41,6 +43,8 @@ public:
 	static AbstractFactory<SdlWindow> *factory;
 
 private:
+
+	void set();
 
 	SdlImage *image;
 };

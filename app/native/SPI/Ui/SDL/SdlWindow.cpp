@@ -132,7 +132,8 @@ namespace avo {
 AbstractFactory<SdlWindow> *SdlWindow::factory = new AbstractFactory<SdlWindow>();
 
 SdlWindow::SdlWindow()
-	: image(new SdlImage())
+	: Window()
+	, image(new SdlImage())
 {
 }
 
@@ -346,8 +347,7 @@ void SdlWindow::render(Image *working) {
 	SDL_Flip(imageSurface);
 }
 
-void SdlWindow::set(int width, int height, WindowFlags f) {
-	Window::set(width, height, f);
+void SdlWindow::set() {
 
 	// We have to restore the video mode at least once, since we set dummy
 	// during SPII initialization (to allow images to be created before we
@@ -390,10 +390,22 @@ void SdlWindow::set(int width, int height, WindowFlags f) {
 
 	// Translate Window flags to SDL flags.
 	int sdlFlags = 0;
-	if (f & Flags_Fullscreen) sdlFlags |= SDL_FULLSCREEN;
+	if (flags() & Flags_Fullscreen) sdlFlags |= SDL_FULLSCREEN;
 
 	// Access the image internals to directly set the screen buffer.
-	image->surface = SDL_SetVideoMode(width, height, 32, sdlFlags);
+	image->surface = SDL_SetVideoMode(width(), height(), 32, sdlFlags);
+}
+
+void SdlWindow::setFlags(WindowFlags flags) {
+	Window::setFlags(flags);
+
+	set();
+}
+
+void SdlWindow::setSize(int width, int height) {
+	Window::setSize(width, height);
+
+	set();
 }
 
 void SdlWindow::setMouseVisibility(bool visible) {

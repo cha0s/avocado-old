@@ -20,19 +20,23 @@
   <span class="k">return</span> <span class="nx">unless</span> <span class="nx">image</span><span class="o">?</span>
   
   <span class="err">@</span><span class="p">[</span><span class="s1">&#39;%render&#39;</span><span class="p">]</span> <span class="nx">image</span></pre></div></td></tr><tr id="section-8"><td class="docs"><div class="pilwrap"><a href="#section-8" class="pilcrow">&#182;</a></div><p>Set the window parameters.</p>
-</td><td class="code"><div class="highlight"><pre><span class="nv">avo.Window::set = </span><span class="nf">(size, flags = avo.Window.Flags_Default) -&gt;</span>
+</td><td class="code"><div class="highlight"><pre><span class="nv">avo.Window::setFlags = </span><span class="nf">(flags = avo.Window.Flags_Default) -&gt;</span>
+  <span class="k">return</span> <span class="nx">unless</span> <span class="nx">flags</span><span class="o">?</span>
+  
+  <span class="err">@</span><span class="p">[</span><span class="s1">&#39;%setFlags&#39;</span><span class="p">]</span> <span class="nx">flags</span></pre></div></td></tr><tr id="section-9"><td class="docs"><div class="pilwrap"><a href="#section-9" class="pilcrow">&#182;</a></div><p>Set the window parameters.</p>
+</td><td class="code"><div class="highlight"><pre><span class="nv">avo.Window::setSize = </span><span class="nf">(size) -&gt;</span>
   <span class="k">return</span> <span class="nx">unless</span> <span class="nx">size</span><span class="o">?</span>
   
-  <span class="err">@</span><span class="p">[</span><span class="s1">&#39;%set&#39;</span><span class="p">]</span> <span class="nx">size</span><span class="p">,</span> <span class="nx">flags</span></pre></div></td></tr><tr id="section-9"><td class="docs"><div class="pilwrap"><a href="#section-9" class="pilcrow">&#182;</a></div><p>Set whether the mouse is visible while hovering over the window.</p>
+  <span class="err">@</span><span class="p">[</span><span class="s1">&#39;%setSize&#39;</span><span class="p">]</span> <span class="nx">size</span></pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>Set whether the mouse is visible while hovering over the window.</p>
 </td><td class="code"><div class="highlight"><pre><span class="nv">avo.Window::setMouseVisibility = </span><span class="nf">(visibility) -&gt;</span>
   <span class="k">return</span> <span class="nx">unless</span> <span class="nx">visibility</span><span class="o">?</span>
   
-  <span class="err">@</span><span class="p">[</span><span class="s1">&#39;%setMouseVisibility&#39;</span><span class="p">]</span> <span class="nx">visibility</span></pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>Set the window title.</p>
+  <span class="err">@</span><span class="p">[</span><span class="s1">&#39;%setMouseVisibility&#39;</span><span class="p">]</span> <span class="nx">visibility</span></pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>Set the window title.</p>
 </td><td class="code"><div class="highlight"><pre><span class="nv">avo.Window::setWindowTitle = </span><span class="nf">(window, iconified = window) -&gt;</span>
   <span class="k">return</span> <span class="nx">unless</span> <span class="nb">window</span><span class="o">?</span>
   
-  <span class="err">@</span><span class="p">[</span><span class="s1">&#39;%setWindowTitle&#39;</span><span class="p">]</span> <span class="nb">window</span><span class="p">,</span> <span class="nx">iconified</span></pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>The size of the window.</p>
-</td><td class="code"><div class="highlight"><pre><span class="nv">avo.Window::size = </span><span class="err">@</span><span class="p">[</span><span class="s1">&#39;%size&#39;</span><span class="p">]</span></pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>The width of the window.</p>
+  <span class="err">@</span><span class="p">[</span><span class="s1">&#39;%setWindowTitle&#39;</span><span class="p">]</span> <span class="nb">window</span><span class="p">,</span> <span class="nx">iconified</span></pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>The size of the window.</p>
+</td><td class="code"><div class="highlight"><pre><span class="nv">avo.Window::size = </span><span class="err">@</span><span class="p">[</span><span class="s1">&#39;%size&#39;</span><span class="p">]</span></pre></div></td></tr><tr id="section-13"><td class="docs"><div class="pilwrap"><a href="#section-13" class="pilcrow">&#182;</a></div><p>The width of the window.</p>
 </td><td class="code"><div class="highlight"><pre><span class="nv">avo.Window::width = </span><span class="o">-&gt;</span> <span class="nx">@size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 
 </pre></div></td></tr></tbody></table><div id="projectname"><a href="../../../index.html">Avocado</a></div></div></body></html>

@@ -134,11 +134,14 @@ Public Types</h2></td></tr>
  }</td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#a484fb06f6a59e9d270f3ae1cd7e92d64">Window</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#a2ad0fe38525ddc2d769b0c2b1142f9e6">~Window</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#a52cc4219dc6806a2caa0a68a22bcdf44">flags</a> () const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a> () const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structavo_1_1Window_1_1Event.html">Event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#abde8f5d6b0a0f8f94f1b438bed584025">pollEvents</a> ()=0</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#ad3c777c31e1490e752534acd4c4daa7a">render</a> (<a class="el" href="classavo_1_1Image.html">Image</a> *working)=0</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#ad99043fecad1756b6bde9cff80868a27">set</a> (int <a class="el" href="classavo_1_1Window.html#a27bd4cc8d77ede73d295754c9b9389e8">width</a>, int <a class="el" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a>, <a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0">WindowFlags</a> f=<a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0ab72160693e3a009592e9399c1da4cdf1">Flags_Default</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#ab519ee61f25af5661264537cecd8b745">setFlags</a> (<a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0">WindowFlags</a> <a class="el" href="classavo_1_1Window.html#a52cc4219dc6806a2caa0a68a22bcdf44">flags</a>=<a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0ab72160693e3a009592e9399c1da4cdf1">Flags_Default</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#a0b65552b2e5dd8435049f2793f0bd7a5">setSize</a> (int <a class="el" href="classavo_1_1Window.html#a27bd4cc8d77ede73d295754c9b9389e8">width</a>, int <a class="el" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a>)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#aa6ef5ee69347b6407e20f072376bb4df">setMouseVisibility</a> (bool visible)=0</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#ae154ba23f1b111fd5a8f223a675c370c">setWindowTitle</a> (const std::string &amp;window, const std::string &amp;iconified=&quot;&quot;)=0</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#a27bd4cc8d77ede73d295754c9b9389e8">width</a> () const </td></tr>
@@ -180,6 +183,27 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a484fb06f6a59e9d270f3ae1cd7e92d64"></a><!-- doxytag: member="avo::Window::Window" ref="a484fb06f6a59e9d270f3ae1cd7e92d64" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classavo_1_1Window.html#a484fb06f6a59e9d270f3ae1cd7e92d64">avo::Window::Window</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<div class="fragment"><pre class="fragment">    : m_width(0)
+    , m_height(0)
+    , m_flags(0)
+{
+}
+</pre></div>
+</div>
+</div>
 <a class="anchor" id="a2ad0fe38525ddc2d769b0c2b1142f9e6"></a><!-- doxytag: member="avo::Window::~Window" ref="a2ad0fe38525ddc2d769b0c2b1142f9e6" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -199,6 +223,26 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a52cc4219dc6806a2caa0a68a22bcdf44"></a><!-- doxytag: member="avo::Window::flags" ref="a52cc4219dc6806a2caa0a68a22bcdf44" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classavo_1_1Window.html#a52cc4219dc6806a2caa0a68a22bcdf44">avo::Window::flags</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Window flags. </p>
+<div class="fragment"><pre class="fragment">                        {
+    <span class="keywordflow">return</span> m_flags;
+}
+</pre></div>
+</div>
+</div>
 <a class="anchor" id="a301814abda3421e167f4843743154c70"></a><!-- doxytag: member="avo::Window::height" ref="a301814abda3421e167f4843743154c70" args="() const " -->
 <div class="memitem">
 <div class="memproto">
@@ -258,44 +302,25 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad99043fecad1756b6bde9cff80868a27"></a><!-- doxytag: member="avo::Window::set" ref="ad99043fecad1756b6bde9cff80868a27" args="(int width, int height, WindowFlags f=Flags_Default)" -->
+<a class="anchor" id="ab519ee61f25af5661264537cecd8b745"></a><!-- doxytag: member="avo::Window::setFlags" ref="ab519ee61f25af5661264537cecd8b745" args="(WindowFlags flags=Flags_Default)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classavo_1_1Window.html#ad99043fecad1756b6bde9cff80868a27">avo::Window::set</a> </td>
+          <td class="memname">void <a class="el" href="classavo_1_1Window.html#ab519ee61f25af5661264537cecd8b745">avo::Window::setFlags</a> </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>width</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>height</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype"><a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0">WindowFlags</a>&#160;</td>
-          <td class="paramname"><em>f</em> = <code><a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0ab72160693e3a009592e9399c1da4cdf1">Flags_Default</a></code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td><code> [virtual]</code></td>
+          <td class="paramname"><em>flags</em> = <code><a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0ab72160693e3a009592e9399c1da4cdf1">Flags_Default</a></code></td><td>)</td>
+          <td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Set the window parameters. </p>
+<p>Set the window flags. </p>
 
-<p>Reimplemented in <a class="el" href="classavo_1_1SdlWindow.html#ad957f9f7b61cf12f96fe1b775350be44">avo::SdlWindow</a>.</p>
-<div class="fragment"><pre class="fragment">                                                     {
-    <a class="code" href="group__Global.html#ga5091d56fd04fbd991600417b7b946a5a">AVOCADO_UNUSED</a>(f);
-
-    m_width = <a class="code" href="classavo_1_1Window.html#a27bd4cc8d77ede73d295754c9b9389e8">width</a>;
-    m_height = <a class="code" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a>;
+<p>Reimplemented in <a class="el" href="classavo_1_1SdlWindow.html#afaee45a183d6cf272156e06bd856de60">avo::SdlWindow</a>.</p>
+<div class="fragment"><pre class="fragment">                                       {
+    m_flags = <a class="code" href="classavo_1_1Window.html#a52cc4219dc6806a2caa0a68a22bcdf44">flags</a>;
 }
 </pre></div>
 </div>
@@ -318,6 +343,40 @@ Static Public Attributes</h2></td></tr>
 
 <p>Implemented in <a class="el" href="classavo_1_1SdlWindow.html#a369d682f2e75123361159a5e24e2af77">avo::SdlWindow</a>.</p>
 
+</div>
+</div>
+<a class="anchor" id="a0b65552b2e5dd8435049f2793f0bd7a5"></a><!-- doxytag: member="avo::Window::setSize" ref="a0b65552b2e5dd8435049f2793f0bd7a5" args="(int width, int height)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classavo_1_1Window.html#a0b65552b2e5dd8435049f2793f0bd7a5">avo::Window::setSize</a> </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>height</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Set the window size. </p>
+
+<p>Reimplemented in <a class="el" href="classavo_1_1SdlWindow.html#ac53e465b9e3b5ab548c6680232157c29">avo::SdlWindow</a>.</p>
+<div class="fragment"><pre class="fragment">                                          {
+    m_width = <a class="code" href="classavo_1_1Window.html#a27bd4cc8d77ede73d295754c9b9389e8">width</a>;
+    m_height = <a class="code" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a>;
+}
+</pre></div>
 </div>
 </div>
 <a class="anchor" id="ae154ba23f1b111fd5a8f223a675c370c"></a><!-- doxytag: member="avo::Window::setWindowTitle" ref="ae154ba23f1b111fd5a8f223a675c370c" args="(const std::string &amp;window, const std::string &amp;iconified=&quot;&quot;)=0" -->

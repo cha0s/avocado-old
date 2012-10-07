@@ -48,10 +48,13 @@ joystick movement, making sure that combined they never exceed 1.</p>
 
 <span class="nv">windows = </span><span class="p">[]</span>
 
-<span class="nv">avo.UiService::newWindow = </span><span class="o">-&gt;</span>
-
+<span class="nv">avo.UiService::newWindow = </span><span class="nf">(size, flags) -&gt;</span>
+  
   <span class="nb">window</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Window</span><span class="p">()</span>
   <span class="nx">windows</span><span class="p">.</span><span class="nx">push</span> <span class="nb">window</span>
+  
+  <span class="nb">window</span><span class="p">.</span><span class="nx">setSize</span> <span class="nx">size</span> <span class="k">if</span> <span class="nx">size</span><span class="o">?</span>
+  <span class="nb">window</span><span class="p">.</span><span class="nx">setFlags</span> <span class="nx">flags</span> <span class="k">if</span> <span class="nx">flags</span><span class="o">?</span>
   </pre></div></td></tr><tr id="section-6"><td class="docs"><div class="pilwrap"><a href="#section-6" class="pilcrow">&#182;</a></div><p>Joystick movement.</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="nb">window</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;joyAxis.Avocado&#39;</span><span class="p">,</span> <span class="nf">({stickIndex, axis, value}) -&gt;</span>
     <span class="k">return</span> <span class="k">if</span> <span class="nx">axis</span> <span class="o">&gt;</span> <span class="mi">1</span>

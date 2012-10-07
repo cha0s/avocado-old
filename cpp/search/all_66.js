@@ -22,6 +22,7 @@ var searchData=
   ['fadeout',['fadeOut',['../classavo_1_1Music.html#af32e71fbd4198a64760fd02924b69474',1,'avo::Music::fadeOut()'],['../classavo_1_1SdlMusic.html#aa36b1b8aa5232303f787746cf27748fd',1,'avo::SdlMusic::fadeOut()'],['../classavo_1_1SfmlMusic.html#a7361dc87d2f054494ec6ba64f2a4601f',1,'avo::SfmlMusic::fadeOut()']]],
   ['fill',['fill',['../classavo_1_1Image.html#a7b2f2577f7f81015403afb6fd1dbff3e',1,'avo::Image::fill()'],['../classavo_1_1QtImage.html#a90dd202759e8dfbcddcaaee44aff17ab',1,'avo::QtImage::fill()'],['../classavo_1_1SdlImage.html#afe5890c79509d5dcc42455cbe275f329',1,'avo::SdlImage::fill()']]],
   ['findfilenames',['findFilenames',['../namespaceavo_1_1FS.html#aa9fee26bf0c1e6367812a005d76317d2',1,'avo::FS']]],
+  ['flags',['flags',['../classavo_1_1Window.html#a52cc4219dc6806a2caa0a68a22bcdf44',1,'avo::Window']]],
   ['flags_5fdefault',['Flags_Default',['../classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0ab72160693e3a009592e9399c1da4cdf1',1,'avo::Window']]],
   ['flags_5ffullscreen',['Flags_Fullscreen',['../classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0a381aa866e88df37518371bae19f59a4e',1,'avo::Window']]],
   ['forcereleaseall',['forceReleaseAll',['../classavo_1_1ResourceManager.html#aade670321db257a78eeedc07cadc2f26',1,'avo::ResourceManager']]],

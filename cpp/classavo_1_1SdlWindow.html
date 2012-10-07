@@ -128,7 +128,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#ac53d12fbcb8f8e6b5a57f98128e8e182">~SdlWindow</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structavo_1_1Window_1_1Event.html">Event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#a26333f46ad2a1187fb8fd1cfb93f7058">pollEvents</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#a61297994bdc3eba745788fe04040e134">render</a> (<a class="el" href="classavo_1_1Image.html">Image</a> *working)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#ad957f9f7b61cf12f96fe1b775350be44">set</a> (int <a class="el" href="classavo_1_1Window.html#a27bd4cc8d77ede73d295754c9b9389e8">width</a>, int <a class="el" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a>, <a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0">WindowFlags</a> f=<a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0ab72160693e3a009592e9399c1da4cdf1">Flags_Default</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#afaee45a183d6cf272156e06bd856de60">setFlags</a> (<a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0">WindowFlags</a> <a class="el" href="classavo_1_1Window.html#a52cc4219dc6806a2caa0a68a22bcdf44">flags</a>=<a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0ab72160693e3a009592e9399c1da4cdf1">Flags_Default</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#ac53e465b9e3b5ab548c6680232157c29">setSize</a> (int <a class="el" href="classavo_1_1Window.html#a27bd4cc8d77ede73d295754c9b9389e8">width</a>, int <a class="el" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a>)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#a369d682f2e75123361159a5e24e2af77">setMouseVisibility</a> (bool visible)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#aacc1fd9ef6505500ed238c2120f273fb">setWindowTitle</a> (const std::string &amp;window, const std::string &amp;iconified=&quot;&quot;)</td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
@@ -152,7 +153,8 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<div class="fragment"><pre class="fragment">    : image(<span class="keyword">new</span> SdlImage())
+<div class="fragment"><pre class="fragment">    : <a class="code" href="classavo_1_1Window.html#a484fb06f6a59e9d270f3ae1cd7e92d64">Window</a>()
+    , image(<span class="keyword">new</span> SdlImage())
 {
 }
 </pre></div>
@@ -421,87 +423,27 @@ Static Public Attributes</h2></td></tr>
 </pre></div>
 </div>
 </div>
-<a class="anchor" id="ad957f9f7b61cf12f96fe1b775350be44"></a><!-- doxytag: member="avo::SdlWindow::set" ref="ad957f9f7b61cf12f96fe1b775350be44" args="(int width, int height, WindowFlags f=Flags_Default)" -->
+<a class="anchor" id="afaee45a183d6cf272156e06bd856de60"></a><!-- doxytag: member="avo::SdlWindow::setFlags" ref="afaee45a183d6cf272156e06bd856de60" args="(WindowFlags flags=Flags_Default)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classavo_1_1SdlWindow.html#ad957f9f7b61cf12f96fe1b775350be44">avo::SdlWindow::set</a> </td>
+          <td class="memname">void <a class="el" href="classavo_1_1SdlWindow.html#afaee45a183d6cf272156e06bd856de60">avo::SdlWindow::setFlags</a> </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>width</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>height</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype"><a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0">WindowFlags</a>&#160;</td>
-          <td class="paramname"><em>f</em> = <code><a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0ab72160693e3a009592e9399c1da4cdf1">Flags_Default</a></code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td><code> [virtual]</code></td>
+          <td class="paramname"><em>flags</em> = <code><a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0ab72160693e3a009592e9399c1da4cdf1">Flags_Default</a></code></td><td>)</td>
+          <td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Set the window parameters. </p>
+<p>Set the window flags. </p>
 
-<p>Reimplemented from <a class="el" href="classavo_1_1Window.html#ad99043fecad1756b6bde9cff80868a27">avo::Window</a>.</p>
-<div class="fragment"><pre class="fragment">                                                        {
-    <a class="code" href="classavo_1_1SdlWindow.html#ad957f9f7b61cf12f96fe1b775350be44">Window::set</a>(<a class="code" href="classavo_1_1Window.html#a27bd4cc8d77ede73d295754c9b9389e8">width</a>, <a class="code" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a>, f);
+<p>Reimplemented from <a class="el" href="classavo_1_1Window.html#ab519ee61f25af5661264537cecd8b745">avo::Window</a>.</p>
+<div class="fragment"><pre class="fragment">                                          {
+    <a class="code" href="classavo_1_1SdlWindow.html#afaee45a183d6cf272156e06bd856de60">Window::setFlags</a>(<a class="code" href="classavo_1_1Window.html#a52cc4219dc6806a2caa0a68a22bcdf44">flags</a>);
 
-    <span class="comment">// We have to restore the video mode at least once, since we set dummy</span>
-    <span class="comment">// during SPII initialization (to allow images to be created before we</span>
-    <span class="comment">// get to this call).</span>
-    <span class="keywordflow">if</span> (SDL_getenv(const_cast&lt;char *&gt;(<span class="stringliteral">&quot;AVOCADO_SDL_VIDEORESTORE&quot;</span>))) {
-        SDL_QuitSubSystem(SDL_INIT_VIDEO);
-
-        <span class="comment">// Get the current driver, if any.</span>
-        <span class="keyword">const</span> <span class="keywordtype">char</span> *currentDriver = SDL_getenv(const_cast&lt;char *&gt;(<span class="stringliteral">&quot;AVOCADO_SDL_VIDEODRIVER&quot;</span>));
-        <span class="keywordflow">if</span> (currentDriver &amp;&amp; <span class="stringliteral">&quot;&quot;</span> != std::string(currentDriver)) {
-            std::string driver = <span class="stringliteral">&quot;SDL_VIDEODRIVER=&quot;</span>;
-            driver += currentDriver;
-
-            <span class="comment">// (Safely) copy the new driver into a C string for SDL_putenv().</span>
-            <span class="keywordtype">char</span> *driverArray = <span class="keyword">new</span> <span class="keywordtype">char</span>[256];
-            strncpy(driverArray, driver.c_str(), 255);
-            driverArray[255] = 0;
-            SDL_putenv(driverArray);
-        }
-
-        <span class="comment">// Otherwise, let SDL decide which driver to use.</span>
-        <span class="keywordflow">else</span> {
-<span class="preprocessor">#ifdef __MINGW32__</span>
-<span class="preprocessor"></span>            SDL_putenv(const_cast&lt;char *&gt;(<span class="stringliteral">&quot;SDL_VIDEODRIVER=&quot;</span>));
-<span class="preprocessor">#else</span>
-<span class="preprocessor"></span>            unsetenv(<span class="stringliteral">&quot;SDL_VIDEODRIVER&quot;</span>);
-<span class="preprocessor">#endif</span>
-<span class="preprocessor"></span>        }
-
-        SDL_InitSubSystem(SDL_INIT_VIDEO);
-
-        <span class="comment">// We only want to restore the video driver once.</span>
-<span class="preprocessor">#ifdef __MINGW32__</span>
-<span class="preprocessor"></span>        SDL_putenv(const_cast&lt;char *&gt;(<span class="stringliteral">&quot;AVOCADO_SDL_VIDEODRIVER=&quot;</span>));
-<span class="preprocessor">#else</span>
-<span class="preprocessor"></span>        unsetenv(<span class="stringliteral">&quot;AVOCADO_SDL_VIDEODRIVER&quot;</span>);
-<span class="preprocessor">#endif</span>
-<span class="preprocessor"></span>
-    }
-
-    <span class="comment">// Translate Window flags to SDL flags.</span>
-    <span class="keywordtype">int</span> sdlFlags = 0;
-    <span class="keywordflow">if</span> (f &amp; <a class="code" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0a381aa866e88df37518371bae19f59a4e">Flags_Fullscreen</a>) sdlFlags |= SDL_FULLSCREEN;
-
-    <span class="comment">// Access the image internals to directly set the screen buffer.</span>
-    image-&gt;surface = SDL_SetVideoMode(<a class="code" href="classavo_1_1Window.html#a27bd4cc8d77ede73d295754c9b9389e8">width</a>, <a class="code" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a>, 32, sdlFlags);
+    <span class="keyword">set</span>();
 }
 </pre></div>
 </div>
@@ -525,6 +467,41 @@ Static Public Attributes</h2></td></tr>
 <p>Implements <a class="el" href="classavo_1_1Window.html#aa6ef5ee69347b6407e20f072376bb4df">avo::Window</a>.</p>
 <div class="fragment"><pre class="fragment">                                               {
     SDL_ShowCursor(visible ? SDL_ENABLE : SDL_DISABLE);
+}
+</pre></div>
+</div>
+</div>
+<a class="anchor" id="ac53e465b9e3b5ab548c6680232157c29"></a><!-- doxytag: member="avo::SdlWindow::setSize" ref="ac53e465b9e3b5ab548c6680232157c29" args="(int width, int height)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classavo_1_1SdlWindow.html#ac53e465b9e3b5ab548c6680232157c29">avo::SdlWindow::setSize</a> </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>height</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Set the window size. </p>
+
+<p>Reimplemented from <a class="el" href="classavo_1_1Window.html#a0b65552b2e5dd8435049f2793f0bd7a5">avo::Window</a>.</p>
+<div class="fragment"><pre class="fragment">                                             {
+    <a class="code" href="classavo_1_1SdlWindow.html#ac53e465b9e3b5ab548c6680232157c29">Window::setSize</a>(<a class="code" href="classavo_1_1Window.html#a27bd4cc8d77ede73d295754c9b9389e8">width</a>, <a class="code" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a>);
+
+    <span class="keyword">set</span>();
 }
 </pre></div>
 </div>

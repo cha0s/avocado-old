@@ -2,7 +2,6 @@
 
 #include "SdlUiService.h"
 
-#include "SdlInput.h"
 #include "SdlWindow.h"
 
 namespace avo {
@@ -11,7 +10,6 @@ AbstractFactory<SdlUiService> *SdlUiService::factory = new AbstractFactory<SdlUi
 
 SdlUiService::SdlUiService() {
 
-	Input::factoryManager.setInstance(SdlInput::factory);
 	Window::factoryManager.setInstance(SdlWindow::factory);
 
 	// Center the window.
@@ -37,6 +35,15 @@ SdlUiService::SdlUiService() {
 	// we actually set a window.
 	SDL_InitSubSystem(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK);
 	SDL_SetVideoMode(1, 1, 32, 0);
+
+	// Initialize any joysticks/gamepads.
+	if ((numJoysticks = SDL_NumJoysticks()) > 0) {
+	    SDL_JoystickEventState(SDL_ENABLE);
+	    joystick = new SDL_Joystick *[numJoysticks];
+	    for (int i = 0; i < numJoysticks; i++) {
+		    joystick[i] = SDL_JoystickOpen(i);
+	    }
+	}
 }
 
 SdlUiService::~SdlUiService() {
@@ -45,6 +52,18 @@ SdlUiService::~SdlUiService() {
 
 void SdlUiService::close() {
 	UiService::close();
+}
+
+SdlUiService::SpecialKeyCodes SdlUiService::specialKeyCodes() {
+
+	SpecialKeyCodes keyMap;
+
+	keyMap.UpArrow = SDLK_UP;
+	keyMap.RightArrow = SDLK_RIGHT;
+	keyMap.DownArrow = SDLK_DOWN;
+	keyMap.LeftArrow = SDLK_LEFT;
+
+	return keyMap;
 }
 
 }

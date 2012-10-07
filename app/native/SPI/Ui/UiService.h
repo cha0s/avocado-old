@@ -23,6 +23,19 @@ public:
 	UiService();
 	virtual ~UiService();
 
+	/** Standardize special key codes. */
+	struct SpecialKeyCodes {
+		int UpArrow;
+		int RightArrow;
+		int DownArrow;
+		int LeftArrow;
+	};
+
+	/**
+	 * Standardized special keys.
+	 */
+	virtual SpecialKeyCodes specialKeyCodes() = 0;
+
 	/**
 	 * Close out the service.
 	 */

@@ -130,8 +130,8 @@ class avo.Main
 		# Store the time passed since the last tick.
 		avo.TimingService.tick()
 		
-		# Poll user input.
-		avo.Input.poll()
+		# Poll events.
+		avo.uiService.pollEvents()
 		
 		# Let the State tick.
 		@stateObject?.tick()

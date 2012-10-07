@@ -10,8 +10,18 @@
 avo.Window.Flags_Default = 0
 avo.Window.Flags_Fullscreen = 1
 
+# Mouse button constants.
+avo.Window.LeftButton   = 1
+avo.Window.MiddleButton = 2
+avo.Window.RightButton  = 3
+avo.Window.WheelUp      = 4
+avo.Window.WheelDown    = 5
+
 # The height of the window.
 avo.Window::height = -> @size()[1]
+
+# Poll for events sent to this window.
+avo.Window::pollEvents = avo.Window::['%pollEvents']
 
 # Render an Image onto this window.
 avo.Window::render = (image) ->

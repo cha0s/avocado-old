@@ -6,7 +6,7 @@ SOURCES += \
 	\
 	SdlUiService.cpp \
 	\
-	SdlInput.cpp SdlWindow.cpp \
+	SdlWindow.cpp \
 	\
 	../../Graphics/SDL/SdlImage.cpp
 
@@ -16,7 +16,7 @@ HEADERS += \
 	\
 	../../Graphics/SDL/Image.h \
 	\
-	SdlInput.h SdlWindow.h \
+	SdlWindow.h \
 	\
 	../../Graphics/SDL/SdlImage.h
 	

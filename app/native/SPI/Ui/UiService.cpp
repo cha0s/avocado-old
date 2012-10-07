@@ -2,7 +2,6 @@
 
 #include "UiService.h"
 
-#include "Input.h"
 #include "Window.h"
 
 namespace avo {
@@ -17,7 +16,6 @@ UiService::~UiService() {
 }
 
 void UiService::close() {
-	Input::factoryManager.setInstance(NULL);
 	Window::factoryManager.setInstance(NULL);
 }
 

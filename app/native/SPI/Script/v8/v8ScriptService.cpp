@@ -14,7 +14,6 @@
 
 #include "v8Counter.h"
 #include "v8Image.h"
-#include "v8Input.h"
 #include "v8Window.h"
 #include "v8Music.h"
 #include "v8Sample.h"
@@ -46,7 +45,6 @@ v8ScriptService::v8ScriptService()
 
 	v8Counter::initialize(avo);
 	v8Image::initialize(avo);
-	v8Input::initialize(avo);
 	v8Window::initialize(avo);
 	v8Music::initialize(avo);
 	v8Sample::initialize(avo);

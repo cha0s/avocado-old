@@ -8,6 +8,12 @@ using namespace v8;
 
 namespace avo {
 
+#define SPECIAL_KEY(Keys, keys, key)                \
+    Keys->Set(                   \
+        String::New(#key),              \
+        Integer::New(keys.key) \
+    );
+
 avo::SpiiLoader<avo::UiService> uiServiceSpiiLoader;
 
 v8UiService::v8UiService(Handle<Object> wrapper)
@@ -39,7 +45,17 @@ v8::Handle<v8::Value> v8UiService::New(const v8::Arguments &args) {
 	HandleScope scope;
 
 	try {
-		new v8UiService(args.Holder());
+		v8UiService *uiServiceWrapper = new v8UiService(args.Holder());
+
+		Handle<Object> SpecialKeyCodes = Object::New();
+		UiService::SpecialKeyCodes specialKeys = uiServiceWrapper->uiService->specialKeyCodes();
+
+		SPECIAL_KEY(SpecialKeyCodes, specialKeys, UpArrow);
+		SPECIAL_KEY(SpecialKeyCodes, specialKeys, RightArrow);
+		SPECIAL_KEY(SpecialKeyCodes, specialKeys, DownArrow);
+		SPECIAL_KEY(SpecialKeyCodes, specialKeys, LeftArrow);
+
+		args.Holder()->Set(String::New("SpecialKeyCodes"), SpecialKeyCodes);
 	}
 	catch (FactoryManager<UiService>::factory_instance_error &e) {
 

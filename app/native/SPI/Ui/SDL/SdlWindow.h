@@ -7,12 +7,12 @@
 
 #include "../Window.h"
 
-#include "SdlImage.h"
+#include "../../Graphics/SDL/SdlImage.h"
 
 namespace avo {
 
 /**
- * @addtogroup Graphics
+ * @addtogroup Ui
  * @{
  */
 
@@ -28,8 +28,11 @@ public:
 	SdlWindow();
 	~SdlWindow();
 
-	void set(int width, int height, WindowFlags f = Flags_Default);
+	Event pollEvents();
+
 	void render(Image *working);
+
+	void set(int width, int height, WindowFlags f = Flags_Default);
 
 	void setMouseVisibility(bool visible);
 

@@ -4,4 +4,4 @@ HEADERS += \
 	\
 	../../../Factory.h \
 	\
-	../InputService.h ../Input.h
+	../UiService.h ../Window.h

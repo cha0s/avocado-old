@@ -8,13 +8,12 @@
 
 #include "v8CoreService.h"
 #include "v8GraphicsService.h"
-#include "v8InputService.h"
+#include "v8UiService.h"
 #include "v8TimingService.h"
 #include "v8SoundService.h"
 
 #include "v8Counter.h"
 #include "v8Image.h"
-#include "v8Input.h"
 #include "v8Window.h"
 #include "v8Music.h"
 #include "v8Sample.h"
@@ -40,13 +39,12 @@ v8ScriptService::v8ScriptService()
 
 	v8CoreService::initialize(avo);
 	v8GraphicsService::initialize(avo);
-	v8InputService::initialize(avo);
+	v8UiService::initialize(avo);
 	v8TimingService::initialize(avo);
 	v8SoundService::initialize(avo);
 
 	v8Counter::initialize(avo);
 	v8Image::initialize(avo);
-	v8Input::initialize(avo);
 	v8Window::initialize(avo);
 	v8Music::initialize(avo);
 	v8Sample::initialize(avo);

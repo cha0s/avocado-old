@@ -26,6 +26,7 @@ void v8Window::initialize(Handle<ObjectTemplate> target) {
 	constructor_template->InstanceTemplate()->SetInternalFieldCount(1);
 	constructor_template->SetClassName(String::NewSymbol("Window"));
 
+	V8_SET_PROTOTYPE_METHOD(constructor_template, "%pollEvents", v8Window::PollEvents);
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%render", v8Window::Render);
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%set", v8Window::Set);
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%setMouseVisibility", v8Window::SetMouseVisibility);
@@ -40,6 +41,21 @@ v8::Handle<v8::Value> v8Window::New(const v8::Arguments &args) {
 
 	try {
 		new v8Window(args.Holder());
+
+		Handle<Object> avo = Context::GetCurrent()->Global()->Get(
+			String::New("avo")
+		).As<Object>();
+
+		Handle<Function> Mixin = avo->Get(
+			String::New("Mixin")
+		).As<Function>();
+
+		Handle<Function> EventEmitter = avo->Get(
+			String::New("EventEmitter")
+		).As<Function>();
+
+		Handle<Value> argv[] = {args.Holder(), EventEmitter};
+		Mixin->Call(Context::GetCurrent()->Global(), 2, argv);
 	}
 	catch (FactoryManager<Window>::factory_instance_error &e) {
 
@@ -49,6 +65,198 @@ v8::Handle<v8::Value> v8Window::New(const v8::Arguments &args) {
 	}
 
 	return args.Holder();
+}
+
+v8::Handle<v8::Value> v8Window::PollEvents(const v8::Arguments &args) {
+	HandleScope scope;
+
+	Handle<Object> holder = args.Holder();
+	v8Window *windowWrapper = ObjectWrap::Unwrap<v8Window>(args.Holder());
+
+	if (NULL == windowWrapper) {
+		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
+			"Window::pollEvents(): NULL Holder."
+		)));
+	}
+
+	Window::Event event = windowWrapper->window->pollEvents();
+	if (!event.empty()) {
+
+		Handle<Function> emitFunction = args.Holder()->Get(
+			String::New("emit")
+		).As<Function>();
+
+		Handle<Value> argv[2];
+		Handle<Object> inputEvent;
+
+		if (event.keyDown.size() > 0) {
+			argv[0] = String::New("keyDown");
+			for (unsigned int i = 0; i < event.keyDown.size(); i++) {
+				inputEvent = Object::New();
+				inputEvent->Set(
+					String::NewSymbol("code"),
+					Integer::New(event.keyDown[i].code)
+				);
+				argv[1] = inputEvent;
+				emitFunction->Call(holder, 2, argv);
+			}
+		}
+
+		if (event.keyUp.size() > 0) {
+			argv[0] = String::New("keyUp");
+			for (unsigned int i = 0; i < event.keyUp.size(); i++) {
+				inputEvent = Object::New();
+				inputEvent->Set(
+					String::NewSymbol("code"),
+					Integer::New(event.keyUp[i].code)
+				);
+				argv[1] = inputEvent;
+				emitFunction->Call(holder, 2, argv);
+			}
+		}
+
+		if (event.joyAxis.size() > 0) {
+			argv[0] = String::New("joyAxis");
+			for (unsigned int i = 0; i < event.joyAxis.size(); i++) {
+				inputEvent = Object::New();
+				inputEvent->Set(
+					String::NewSymbol("stickIndex"),
+					Integer::New(event.joyAxis[i].stickIndex)
+				);
+				inputEvent->Set(
+					String::NewSymbol("axis"),
+					Integer::New(event.joyAxis[i].axis)
+				);
+				inputEvent->Set(
+					String::NewSymbol("value"),
+					Integer::New(event.joyAxis[i].value)
+				);
+				argv[1] = inputEvent;
+				emitFunction->Call(holder, 2, argv);
+			}
+		}
+
+		if (event.joyButtonDown.size() > 0) {
+			argv[0] = String::New("joyButtonDown");
+			for (unsigned int i = 0; i < event.joyButtonDown.size(); i++) {
+				inputEvent = Object::New();
+				inputEvent->Set(
+					String::NewSymbol("stickIndex"),
+					Integer::New(event.joyButtonDown[i].stickIndex)
+				);
+				inputEvent->Set(
+					String::NewSymbol("button"),
+					Integer::New(event.joyButtonDown[i].button)
+				);
+				argv[1] = inputEvent;
+				emitFunction->Call(holder, 2, argv);
+			}
+		}
+
+		if (event.joyButtonUp.size() > 0) {
+			argv[0] = String::New("joyButtonUp");
+			for (unsigned int i = 0; i < event.joyButtonUp.size(); i++) {
+				inputEvent = Object::New();
+				inputEvent->Set(
+					String::NewSymbol("stickIndex"),
+					Integer::New(event.joyButtonUp[i].stickIndex)
+				);
+				inputEvent->Set(
+					String::NewSymbol("button"),
+					Integer::New(event.joyButtonUp[i].button)
+				);
+				argv[1] = inputEvent;
+				emitFunction->Call(holder, 2, argv);
+			}
+		}
+
+		if (event.mouseButtonDown.size() > 0) {
+			argv[0] = String::New("mouseButtonDown");
+			for (unsigned int i = 0; i < event.mouseButtonDown.size(); i++) {
+				inputEvent = Object::New();
+				inputEvent->Set(
+					String::NewSymbol("button"),
+					Integer::New(event.mouseButtonDown[i].button)
+				);
+				inputEvent->Set(
+					String::NewSymbol("x"),
+					Integer::New(event.mouseButtonDown[i].x)
+				);
+				inputEvent->Set(
+					String::NewSymbol("y"),
+					Integer::New(event.mouseButtonDown[i].y)
+				);
+				argv[1] = inputEvent;
+				emitFunction->Call(holder, 2, argv);
+			}
+		}
+
+		if (event.mouseButtonUp.size() > 0) {
+			argv[0] = String::New("mouseButtonUp");
+			for (unsigned int i = 0; i < event.mouseButtonUp.size(); i++) {
+				inputEvent = Object::New();
+				inputEvent->Set(
+					String::NewSymbol("button"),
+					Integer::New(event.mouseButtonUp[i].button)
+				);
+				inputEvent->Set(
+					String::NewSymbol("x"),
+					Integer::New(event.mouseButtonUp[i].x)
+				);
+				inputEvent->Set(
+					String::NewSymbol("y"),
+					Integer::New(event.mouseButtonUp[i].y)
+				);
+				argv[1] = inputEvent;
+				emitFunction->Call(holder, 2, argv);
+			}
+		}
+
+		if (event.mouseMove.size() > 0) {
+			argv[0] = String::New("mouseMove");
+			for (unsigned int i = 0; i < event.mouseMove.size(); i++) {
+				inputEvent = Object::New();
+				inputEvent->Set(
+					String::NewSymbol("x"),
+					Integer::New(event.mouseMove[i].x)
+				);
+				inputEvent->Set(
+					String::NewSymbol("y"),
+					Integer::New(event.mouseMove[i].y)
+				);
+				argv[1] = inputEvent;
+				emitFunction->Call(holder, 2, argv);
+			}
+		}
+
+		if (event.resize.width && event.resize.height) {
+			argv[0] = String::New("resize");
+			inputEvent = Object::New();
+			inputEvent->Set(
+				String::NewSymbol("x"),
+				Integer::New(event.resize.width)
+			);
+			inputEvent->Set(
+				String::NewSymbol("y"),
+				Integer::New(event.resize.height)
+			);
+			argv[1] = inputEvent;
+			emitFunction->Call(holder, 2, argv);
+		}
+
+		if (event.quit) {
+			argv[0] = String::New("quit");
+			inputEvent = Object::New();
+			inputEvent->Set(
+				String::NewSymbol("quit"),
+				Boolean::New(true)
+			);
+			argv[1] = inputEvent;
+			emitFunction->Call(holder, 2, argv);
+		}
+	}
+
+	return scope.Close(Undefined());
 }
 
 v8::Handle<v8::Value> v8Window::Render(const v8::Arguments &args) {

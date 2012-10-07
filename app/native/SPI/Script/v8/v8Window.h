@@ -5,7 +5,7 @@
 
 #include "avocado-v8.h"
 #include "ObjectWrap.h"
-#include "../../Graphics/Window.h"
+#include "../../Ui/Window.h"
 
 namespace avo {
 
@@ -37,6 +37,7 @@ private:
 
 	static v8::Handle<v8::Value> New(const v8::Arguments &args);
 
+	static v8::Handle<v8::Value> PollEvents(const v8::Arguments &args);
 	static v8::Handle<v8::Value> Render(const v8::Arguments &args);
 	static v8::Handle<v8::Value> Set(const v8::Arguments &args);
 	static v8::Handle<v8::Value> SetMouseVisibility(const v8::Arguments &args);

@@ -23,14 +23,13 @@
 			</dd>
 			
 			<dt>
-				The Graphics SPI handles window and graphics system
-				initialization, and rendering.
+				The Graphics SPI handles graphics system initialization, and
+				rendering, as well as image manipulation functionality.
 			</dt>
 			<dd>
 				Graphics
 				<dl>
 					<dd><a href="engine/core/Graphics/Image.coffee.html">Image</a></dd>
-					<dd><a href="engine/core/Graphics/Window.coffee.html">Window</a></dd>
 				</dl>
 			</dd>
 			
@@ -60,12 +59,14 @@
 			</dd>
 			
 			<dt>
-				The Input SPI handles user input polling.
+				The User Interface SPI handles window creation and user input
+				polling.
 			</dt>
 			<dd>
-				Input
+				User Interface
 				<dl>
-					<dd><a href="engine/core/Input/Input.coffee.html">Input</a></dd>
+					<dd><a href="engine/core/Ui/Input.coffee.html">Input</a></dd>
+					<dd><a href="engine/core/Ui/Window.coffee.html">Window</a></dd>
 				</dl>
 			</dd>
 		</dl>

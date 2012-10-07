@@ -29,7 +29,7 @@ public:
 
 	static void initialize(v8::Handle<v8::ObjectTemplate> target);
 
-	UiService *inputService;
+	UiService *uiService;
 
 private:
 

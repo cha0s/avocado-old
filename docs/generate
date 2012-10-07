@@ -3,7 +3,7 @@ cd ..
 cd docs
 
 cd ../app/native
-doxygen avocado.Doxyfile
+doxygen avocado.Doxyfile 2>&1 > /dev/null
 cd ../../docs/doxygen
 cp background_navigation.png  doxygen.css  doxygen.png  img_downArrow.png  tabs.css ../output/cpp
 cd ..

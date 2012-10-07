@@ -8,17 +8,17 @@ using namespace v8;
 
 namespace avo {
 
-avo::SpiiLoader<avo::UiService> inputServiceSpiiLoader;
+avo::SpiiLoader<avo::UiService> uiServiceSpiiLoader;
 
 v8UiService::v8UiService(Handle<Object> wrapper)
 {
-	inputService = UiService::factoryManager.instance()->create();
+	uiService = UiService::factoryManager.instance()->create();
 
 	Wrap(wrapper);
 }
 
 v8UiService::~v8UiService() {
-	delete inputService;
+	delete uiService;
 }
 
 void v8UiService::initialize(Handle<ObjectTemplate> target) {
@@ -59,7 +59,7 @@ v8::Handle<v8::Value> v8UiService::ImplementSpi(const v8::Arguments &args) {
 	try {
 
 		// Attempt to load the SPII.
-		inputServiceSpiiLoader.implementSpi(
+		uiServiceSpiiLoader.implementSpi(
 			V8::stringToStdString(args[0]->ToString())
 		);
 	}
@@ -77,15 +77,15 @@ v8::Handle<v8::Value> v8UiService::ImplementSpi(const v8::Arguments &args) {
 v8::Handle<v8::Value> v8UiService::Close(const v8::Arguments &args) {
 	HandleScope scope;
 
-	v8UiService *inputServiceWrapper = ObjectWrap::Unwrap<v8UiService>(args.Holder());
+	v8UiService *uiServiceWrapper = ObjectWrap::Unwrap<v8UiService>(args.Holder());
 
-	if (NULL == inputServiceWrapper) {
+	if (NULL == uiServiceWrapper) {
 		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
 			"UiService::close(): NULL Holder."
 		)));
 	}
 
-	inputServiceWrapper->inputService->close();
+	uiServiceWrapper->uiService->close();
 
 	return v8::Undefined();
 }

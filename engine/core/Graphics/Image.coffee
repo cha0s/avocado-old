@@ -78,7 +78,7 @@ avo.Image::fill = (r, g, b, a = 255) ->
 	@['%fill'] r, g, b, a
 
 # Get the height of the image.	
-avo.Image::height = @['%height']
+avo.Image::height = avo.Image::['%height']
 
 avo.Image::lockPixels = -> @['%lockPixels']?()
 
@@ -107,7 +107,7 @@ avo.Image::size = -> [@width(), @height()]
 avo.Image::unlockPixels = -> @['%unlockPixels']?()
 
 # Get the URI (if any) used to load this image.
-avo.Image::uri = @['%uri']
+avo.Image::uri = avo.Image::['%uri']
 
 # Get the width of the image.
-avo.Image::width = @['%width']
+avo.Image::width = avo.Image::['%width']

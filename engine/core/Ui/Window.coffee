@@ -57,7 +57,7 @@ avo.Window::setWindowTitle = (window, iconified = window) ->
 	@['%setWindowTitle'] window, iconified
 
 # The size of the window.
-avo.Window::size = @['%size']
+avo.Window::size = avo.Window::['%size']
 
 # The width of the window.
 avo.Window::width = -> @size()[0]

@@ -909,17 +909,19 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classavo_1_1Image.html#a7fce4c1ad9eace0a443e11875d3a2a07">avo::Image</a>.</p>
 <div class="fragment"><div class="line">                                                                                                                       {</div>
-<div class="line">    <a class="code" href="group__Global.html#ga5091d56fd04fbd991600417b7b946a5a">AVOCADO_UNUSED</a>(alpha);</div>
-<div class="line">    <a class="code" href="group__Global.html#ga5091d56fd04fbd991600417b7b946a5a">AVOCADO_UNUSED</a>(sx);</div>
-<div class="line">    <a class="code" href="group__Global.html#ga5091d56fd04fbd991600417b7b946a5a">AVOCADO_UNUSED</a>(sy);</div>
-<div class="line">    <a class="code" href="group__Global.html#ga5091d56fd04fbd991600417b7b946a5a">AVOCADO_UNUSED</a>(sw);</div>
-<div class="line">    <a class="code" href="group__Global.html#ga5091d56fd04fbd991600417b7b946a5a">AVOCADO_UNUSED</a>(sh);</div>
-<div class="line">    <a class="code" href="group__Global.html#ga5091d56fd04fbd991600417b7b946a5a">AVOCADO_UNUSED</a>(mode);</div>
 <div class="line"></div>
 <div class="line">    sf::Sprite sprite;</div>
 <div class="line">    sprite.setTexture(renderTexture-&gt;getTexture());</div>
 <div class="line">    sprite.setPosition(sf::Vector2f(x, y));</div>
 <div class="line">    sprite.setColor(sf::Color(255, 255, 255, alpha));</div>
+<div class="line">    sf::IntRect rect(sx, sy, sw, sh);</div>
+<div class="line">    <span class="keywordflow">if</span> (0 == rect.width) {</div>
+<div class="line">        rect.width = <a class="code" href="classavo_1_1SfmlImage.html#af203ac1f0655dbd7828200c7ba18c760">width</a>();</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">if</span> (0 == rect.height) {</div>
+<div class="line">        rect.height = <a class="code" href="classavo_1_1SfmlImage.html#a5b3bfd976b3026aca151c105ab5e20bb">height</a>();</div>
+<div class="line">    }</div>
+<div class="line">    sprite.setTextureRect(rect);</div>
 <div class="line"></div>
 <div class="line">    sf::RenderStates renderStates;</div>
 <div class="line"></div>

@@ -234,11 +234,13 @@ Additional Inherited Members</h2></td></tr>
 <div class="line">    <span class="keywordflow">if</span> (!texture.loadFromFile(<a class="code" href="classavo_1_1Image.html#a021f95656c7855b8dfc49596a0a661c1">uri</a>.c_str())) <span class="keywordflow">throw</span> std::runtime_error(</div>
 <div class="line">        <span class="stringliteral">&quot;SfmlImage::SfmlImage(uri): SFML couldn&#39;t load image.&quot;</span></div>
 <div class="line">    );</div>
-<div class="line">    sf::Sprite sprite(texture);</div>
 <div class="line">    sf::Vector2u vector = texture.getSize();</div>
 <div class="line">    renderTexture-&gt;create(vector.x, vector.y);</div>
 <div class="line">    renderTexture-&gt;clear();</div>
-<div class="line">    renderTexture-&gt;draw(sprite, sf::RenderStates(sf::BlendNone));</div>
+<div class="line">    renderTexture-&gt;draw(</div>
+<div class="line">        sf::Sprite(texture),</div>
+<div class="line">        sf::RenderStates(sf::BlendNone)</div>
+<div class="line">    );</div>
 <div class="line">    renderTexture-&gt;display();</div>
 <div class="line"></div>
 <div class="line">    <a class="code" href="classavo_1_1Image.html#a1d9990a7504c7e84a63f858a46b82bad">setUri</a>(<a class="code" href="classavo_1_1Image.html#a021f95656c7855b8dfc49596a0a661c1">uri</a>);</div>
@@ -924,7 +926,6 @@ Additional Inherited Members</h2></td></tr>
 <div class="line">    sprite.setTextureRect(rect);</div>
 <div class="line"></div>
 <div class="line">    sf::RenderStates renderStates;</div>
-<div class="line"></div>
 <div class="line">    <span class="keywordflow">switch</span> (mode) {</div>
 <div class="line">    <span class="keywordflow">case</span> <a class="code" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375a56dd6df6e829050ac137b8b938064f2a">DrawMode_Replace</a>:</div>
 <div class="line">        renderStates.blendMode = sf::BlendNone;</div>

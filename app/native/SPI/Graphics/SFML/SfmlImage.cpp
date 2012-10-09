@@ -32,11 +32,13 @@ SfmlImage::SfmlImage(const boost::filesystem::path &uri)
 	if (!texture.loadFromFile(uri.c_str())) throw std::runtime_error(
 		"SfmlImage::SfmlImage(uri): SFML couldn't load image."
 	);
-	sf::Sprite sprite(texture);
 	sf::Vector2u vector = texture.getSize();
 	renderTexture->create(vector.x, vector.y);
 	renderTexture->clear();
-	renderTexture->draw(sprite, sf::RenderStates(sf::BlendNone));
+	renderTexture->draw(
+		sf::Sprite(texture),
+		sf::RenderStates(sf::BlendNone)
+	);
 	renderTexture->display();
 
 	setUri(uri);
@@ -128,7 +130,6 @@ void SfmlImage::render(int x, int y, Image *destination, int alpha, DrawMode mod
 	sprite.setTextureRect(rect);
 
 	sf::RenderStates renderStates;
-
 	switch (mode) {
 	case DrawMode_Replace:
 		renderStates.blendMode = sf::BlendNone;

@@ -26,10 +26,10 @@ GraphicsService::SpecialKeyCodes SfmlGraphicsService::specialKeyCodes() {
 
 	SpecialKeyCodes keyMap;
 
-//	keyMap.UpArrow = SFMLK_UP;
-//	keyMap.RightArrow = SFMLK_RIGHT;
-//	keyMap.DownArrow = SFMLK_DOWN;
-//	keyMap.LeftArrow = SFMLK_LEFT;
+	keyMap.UpArrow = 73;
+	keyMap.RightArrow = 72;
+	keyMap.DownArrow = 74;
+	keyMap.LeftArrow = 71;
 
 	return keyMap;
 }

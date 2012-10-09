@@ -19,6 +19,8 @@ SfmlImage::SfmlImage(int width, int height)
 	if (!renderTexture->create(width, height)) throw std::runtime_error(
 		"sf::RenderTexture::create(width, height) failed."
 	);
+	renderTexture->clear();
+	renderTexture->display();
 }
 
 SfmlImage::SfmlImage(const boost::filesystem::path &uri)
@@ -26,14 +28,16 @@ SfmlImage::SfmlImage(const boost::filesystem::path &uri)
 	, renderTexture(new sf::RenderTexture())
 {
 
-    sf::Texture texture;
-    if (!texture.loadFromFile(uri.c_str())) throw std::runtime_error(
+	sf::Texture texture;
+	if (!texture.loadFromFile(uri.c_str())) throw std::runtime_error(
 		"SfmlImage::SfmlImage(uri): SFML couldn't load image."
 	);
-    sf::Sprite sprite(texture);
-    sf::Vector2u vector = texture.getSize();
-    renderTexture->create(vector.x, vector.y);
-    renderTexture->draw(sprite);
+	sf::Sprite sprite(texture);
+	sf::Vector2u vector = texture.getSize();
+	renderTexture->create(vector.x, vector.y);
+	renderTexture->clear();
+	renderTexture->draw(sprite, sf::RenderStates(sf::BlendNone));
+	renderTexture->display();
 
 	setUri(uri);
 }
@@ -109,17 +113,33 @@ int SfmlImage::height() const {
 }
 
 void SfmlImage::render(int x, int y, Image *destination, int alpha, DrawMode mode, int sx, int sy, int sw, int sh) const {
-	AVOCADO_UNUSED(x);
-	AVOCADO_UNUSED(y);
-	AVOCADO_UNUSED(alpha);
-	AVOCADO_UNUSED(sx);
-	AVOCADO_UNUSED(sy);
-	AVOCADO_UNUSED(sw);
-	AVOCADO_UNUSED(sh);
-	AVOCADO_UNUSED(mode);
+
+	sf::Sprite sprite;
+	sprite.setTexture(renderTexture->getTexture());
+	sprite.setPosition(sf::Vector2f(x, y));
+	sprite.setColor(sf::Color(255, 255, 255, alpha));
+	sf::IntRect rect(sx, sy, sw, sh);
+	if (0 == rect.width) {
+		rect.width = width();
+	}
+	if (0 == rect.height) {
+		rect.height = height();
+	}
+	sprite.setTextureRect(rect);
+
+	sf::RenderStates renderStates;
+
+	switch (mode) {
+	case DrawMode_Replace:
+		renderStates.blendMode = sf::BlendNone;
+		break;
+	default:
+		break;
+	}
 
 	superCast<SfmlImage>(destination)->renderTexture->draw(
-		sf::Sprite(renderTexture->getTexture())
+		sprite,
+		renderStates
 	);
 }
 
@@ -134,4 +154,3 @@ int SfmlImage::width() const {
 }
 
 }
-

@@ -24,6 +24,7 @@ SfmlWindow::~SfmlWindow() {
 
 void SfmlWindow::display() {
 	window->display();
+	window->clear();
 }
 
 Window::Event SfmlWindow::pollEvents() {

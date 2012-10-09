@@ -178,6 +178,11 @@ public:
 	virtual ~Window() {}
 
 	/**
+	 * Show the window.
+	 */
+	virtual void display() {}
+
+	/**
 	 * %Window flags.
 	 */
 	int flags() const;

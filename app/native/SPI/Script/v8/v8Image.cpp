@@ -37,6 +37,7 @@ void v8Image::initialize(Handle<ObjectTemplate> target) {
 	constructor_template->InstanceTemplate()->SetInternalFieldCount(1);
 	constructor_template->SetClassName(String::NewSymbol("Image"));
 
+	V8_SET_PROTOTYPE_METHOD(constructor_template, "%display"      , v8Image::Display      );
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%drawFilledBox", v8Image::DrawFilledBox);
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%drawCircle"   , v8Image::DrawCircle   );
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%drawLineBox"  , v8Image::DrawLineBox  );
@@ -165,6 +166,22 @@ v8::Handle<v8::Value> v8Image::Load(const v8::Arguments &args) {
 	}
 
 	return scope.Close(defer->Get(String::NewSymbol("promise")));
+}
+
+v8::Handle<v8::Value> v8Image::Display(const v8::Arguments &args) {
+	HandleScope scope;
+
+	v8Image *imageWrapper = ObjectWrap::Unwrap<v8Image>(args.Holder());
+
+	if (NULL == imageWrapper) {
+		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
+			"Image::display(): NULL Holder."
+		)));
+	}
+
+	imageWrapper->image->display();
+
+	return v8::Undefined();
 }
 
 v8::Handle<v8::Value> v8Image::DrawCircle(const v8::Arguments &args) {

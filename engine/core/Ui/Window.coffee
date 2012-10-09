@@ -17,6 +17,9 @@ avo.Window.RightButton  = 3
 avo.Window.WheelUp      = 4
 avo.Window.WheelDown    = 5
 
+# Show the window.
+avo.Window::display = avo.Window::['%display']
+
 # The height of the window.
 avo.Window::height = -> @size()[1]
 

@@ -37,6 +37,7 @@ private:
 
 	static v8::Handle<v8::Value> New(const v8::Arguments &args);
 
+	static v8::Handle<v8::Value> Display(const v8::Arguments &args);
 	static v8::Handle<v8::Value> PollEvents(const v8::Arguments &args);
 	static v8::Handle<v8::Value> Render(const v8::Arguments &args);
 	static v8::Handle<v8::Value> SetFlags(const v8::Arguments &args);

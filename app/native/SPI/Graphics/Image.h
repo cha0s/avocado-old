@@ -55,6 +55,11 @@ public:
 	virtual ~Image() {}
 
 	/**
+	 * Show the image.
+	 */
+	virtual void display() {}
+
+	/**
 	 * Draw a circle at the given x, y with the given radius. Draw it with the
 	 * given RGBA color, and with the given draw mode.
 	 */

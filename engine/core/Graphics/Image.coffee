@@ -40,6 +40,9 @@ avo.Image.load = (uri) ->
 	
 	avo.Image['%load'] uri
 
+# Show the image.
+avo.Image::display = avo.Image::['%display']
+
 # Draw a circle at the given x, y with the given radius. Draw it with the given
 # RGBA color, and with the given draw mode.
 avo.Image::drawCircle = (point, radius, r, g, b, a = 255, mode = avo.Image.DrawMode_Blend) ->

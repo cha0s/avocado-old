@@ -26,6 +26,7 @@ void v8Window::initialize(Handle<ObjectTemplate> target) {
 	constructor_template->InstanceTemplate()->SetInternalFieldCount(1);
 	constructor_template->SetClassName(String::NewSymbol("Window"));
 
+	V8_SET_PROTOTYPE_METHOD(constructor_template, "%display", v8Window::Display);
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%pollEvents", v8Window::PollEvents);
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%render", v8Window::Render);
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%setFlags", v8Window::SetFlags);
@@ -66,6 +67,21 @@ v8::Handle<v8::Value> v8Window::New(const v8::Arguments &args) {
 	}
 
 	return args.Holder();
+}
+
+v8::Handle<v8::Value> v8Window::Display(const v8::Arguments &args) {
+	HandleScope scope;
+
+	v8Window *windowWrapper = ObjectWrap::Unwrap<v8Window>(args.Holder());
+	if (NULL == windowWrapper) {
+		return ThrowException(v8::Exception::ReferenceError(String::NewSymbol(
+			"Window::display(): NULL Holder."
+		)));
+	}
+
+	windowWrapper->window->display();
+
+	return v8::Undefined();
 }
 
 v8::Handle<v8::Value> v8Window::PollEvents(const v8::Arguments &args) {

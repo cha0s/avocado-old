@@ -46,8 +46,13 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 			
 			# avo.main lets us know when it has something to render, so we'll
 			# put it on our window.
-			avo.main.on 'render', (buffer) -> avo.window.render buffer
+			avo.main.on 'render', (buffer) ->
+				
+				avo.window.render buffer
 			
+				# Display the changes to the window.
+				avo.window.display()
+				
 			# Catch the quit event (window close event).
 			avo.window.on 'quit.Engine', => avo.main.quit()
 			
@@ -80,6 +85,9 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 		
 		# Show the avocado at its current x, y location.
 		@avocado.render [@x, @y], buffer
+		
+		# Display the changes to the buffer.
+		buffer.display()
 		
 	# Called when another state is loaded. This gives you a chance to clean
 	# up resources and event handlers.

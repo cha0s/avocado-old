@@ -1,4 +1,5 @@
-<map id="G" name="G">
+<map id="avo::Image" name="avo::Image">
 <area shape="rect" id="node3" href="$classavo_1_1QtImage.html" title="avo::QtImage" alt="" coords="5,83,107,112"/>
 <area shape="rect" id="node5" href="$classavo_1_1SdlImage.html" title="avo::SdlImage" alt="" coords="131,83,237,112"/>
+<area shape="rect" id="node7" href="$classavo_1_1SfmlImage.html" title="avo::SfmlImage" alt="" coords="261,83,376,112"/>
 </map>

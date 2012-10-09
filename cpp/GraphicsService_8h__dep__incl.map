@@ -1,12 +1,15 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$GraphicsService_8cpp.html" title="SPI/Graphics/GraphicsService.cpp" alt="" coords="15,83,239,112"/>
-<area shape="rect" id="node5" href="$QtGraphicsService_8h.html" title="SPI/Graphics/Qt/QtGraphicsService.h" alt="" coords="263,83,505,112"/>
-<area shape="rect" id="node11" href="$SdlGraphicsService_8h.html" title="SPI/Graphics/SDL/SdlGraphicsService.h" alt="" coords="529,83,788,112"/>
-<area shape="rect" id="node17" href="$v8GraphicsService_8h.html" title="SPI/Script/v8/v8GraphicsService.h" alt="" coords="1103,83,1327,112"/>
-<area shape="rect" id="node7" href="$Graphics_2Qt_2implementSpi_8cpp.html" title="SPI/Graphics/Qt/implementSpi.cpp" alt="" coords="5,160,232,189"/>
-<area shape="rect" id="node9" href="$QtGraphicsService_8cpp.html" title="SPI/Graphics/Qt/QtGraphicsService.cpp" alt="" coords="256,160,512,189"/>
-<area shape="rect" id="node13" href="$Graphics_2SDL_2implementSpi_8cpp.html" title="SPI/Graphics/SDL/implementSpi.cpp" alt="" coords="536,160,773,189"/>
-<area shape="rect" id="node15" href="$SdlGraphicsService_8cpp.html" title="SPI/Graphics/SDL/SdlGraphicsService.cpp" alt="" coords="797,160,1072,189"/>
-<area shape="rect" id="node19" href="$v8GraphicsService_8cpp.html" title="SPI/Script/v8/v8GraphicsService.cpp" alt="" coords="1096,160,1333,189"/>
-<area shape="rect" id="node21" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="1357,160,1579,189"/>
+<map id="SPI/Graphics/GraphicsService.h" name="SPI/Graphics/GraphicsService.h">
+<area shape="rect" id="node3" href="$GraphicsService_8cpp.html" title="SPI/Graphics/GraphicsService.cpp" alt="" coords="15,92,239,121"/>
+<area shape="rect" id="node5" href="$QtGraphicsService_8h.html" title="SPI/Graphics/Qt/QtGraphics\lService.h" alt="" coords="263,83,449,130"/>
+<area shape="rect" id="node11" href="$SdlGraphicsService_8h.html" title="SPI/Graphics/SDL/SdlGraphics\lService.h" alt="" coords="577,83,783,130"/>
+<area shape="rect" id="node17" href="$SfmlGraphicsService_8h.html" title="SPI/Graphics/SFML/SfmlGraphics\lService.h" alt="" coords="860,83,1081,130"/>
+<area shape="rect" id="node23" href="$v8GraphicsService_8h.html" title="SPI/Script/v8/v8Graphics\lService.h" alt="" coords="1341,83,1512,130"/>
+<area shape="rect" id="node7" href="$Graphics_2Qt_2implementSpi_8cpp.html" title="SPI/Graphics/Qt/implement\lSpi.cpp" alt="" coords="5,179,187,226"/>
+<area shape="rect" id="node9" href="$QtGraphicsService_8cpp.html" title="SPI/Graphics/Qt/QtGraphics\lService.cpp" alt="" coords="211,179,397,226"/>
+<area shape="rect" id="node13" href="$Graphics_2SDL_2implementSpi_8cpp.html" title="SPI/Graphics/SDL/implement\lSpi.cpp" alt="" coords="421,179,616,226"/>
+<area shape="rect" id="node15" href="$SdlGraphicsService_8cpp.html" title="SPI/Graphics/SDL/SdlGraphics\lService.cpp" alt="" coords="640,179,845,226"/>
+<area shape="rect" id="node19" href="$Graphics_2SFML_2implementSpi_8cpp.html" title="SPI/Graphics/SFML/implement\lSpi.cpp" alt="" coords="869,179,1072,226"/>
+<area shape="rect" id="node21" href="$SfmlGraphicsService_8cpp.html" title="SPI/Graphics/SFML/SfmlGraphics\lService.cpp" alt="" coords="1096,179,1317,226"/>
+<area shape="rect" id="node25" href="$v8GraphicsService_8cpp.html" title="SPI/Script/v8/v8Graphics\lService.cpp" alt="" coords="1341,179,1512,226"/>
+<area shape="rect" id="node27" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="1536,188,1757,217"/>
 </map>

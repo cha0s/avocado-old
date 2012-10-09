@@ -37,10 +37,14 @@ Instantiate a Window to receive render events.</p>
       <span class="nx">avo</span><span class="p">.</span><span class="nb">window</span><span class="p">.</span><span class="nx">setWindowTitle</span> <span class="s1">&#39;Avocado - Fun Should Be Free&#39;</span>
       </pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>avo.main lets us know when it has something to render, so we'll
 put it on our window.</p>
-</td><td class="code"><div class="highlight"><pre>      <span class="nx">avo</span><span class="p">.</span><span class="nx">main</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;render&#39;</span><span class="p">,</span> <span class="nf">(buffer) -&gt;</span> <span class="nx">avo</span><span class="p">.</span><span class="nb">window</span><span class="p">.</span><span class="nx">render</span> <span class="nx">buffer</span>
-      </pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>Catch the quit event (window close event).</p>
+</td><td class="code"><div class="highlight"><pre>      <span class="nx">avo</span><span class="p">.</span><span class="nx">main</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;render&#39;</span><span class="p">,</span> <span class="nf">(buffer) -&gt;</span>
+        
+        <span class="nx">avo</span><span class="p">.</span><span class="nb">window</span><span class="p">.</span><span class="nx">render</span> <span class="nx">buffer</span>
+      </pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>Display the changes to the window.</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="nx">avo</span><span class="p">.</span><span class="nb">window</span><span class="p">.</span><span class="nx">display</span><span class="p">()</span>
+        </pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>Catch the quit event (window close event).</p>
 </td><td class="code"><div class="highlight"><pre>      <span class="nx">avo</span><span class="p">.</span><span class="nb">window</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;quit.Engine&#39;</span><span class="p">,</span> <span class="o">=&gt;</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">main</span><span class="p">.</span><span class="nx">quit</span><span class="p">()</span>
-      </pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>Allow dragging the avocado around with the left mouse button. Keep
+      </pre></div></td></tr><tr id="section-13"><td class="docs"><div class="pilwrap"><a href="#section-13" class="pilcrow">&#182;</a></div><p>Allow dragging the avocado around with the left mouse button. Keep
 track of where the avocado was when we started dragging.</p>
 </td><td class="code"><div class="highlight"><pre>      <span class="vi">@dragStartAvocadoLocation = </span><span class="p">[]</span>
       <span class="nx">avo</span><span class="p">.</span><span class="nb">window</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;mouseButtonDown.InitialState&#39;</span><span class="p">,</span> <span class="p">({</span><span class="nx">button</span><span class="p">})</span> <span class="o">=&gt;</span>
@@ -49,25 +53,27 @@ track of where the avocado was when we started dragging.</p>
       <span class="nx">avo</span><span class="p">.</span><span class="nb">window</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;mouseDrag.InitialState&#39;</span><span class="p">,</span> <span class="p">({</span><span class="nx">position</span><span class="p">,</span> <span class="nx">button</span><span class="p">,</span> <span class="nx">relative</span><span class="p">})</span> <span class="o">=&gt;</span>
         <span class="k">return</span> <span class="nx">unless</span> <span class="nx">button</span> <span class="o">is</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Window</span><span class="p">.</span><span class="nx">LeftButton</span>
         <span class="p">[</span><span class="nx">@x</span><span class="p">,</span> <span class="nx">@y</span><span class="p">]</span> <span class="o">=</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@dragStartAvocadoLocation</span><span class="p">,</span> <span class="nx">relative</span>
-        </pre></div></td></tr><tr id="section-13"><td class="docs"><div class="pilwrap"><a href="#section-13" class="pilcrow">&#182;</a></div><p>Called repeatedly while this state is loaded. You can do things like
+        </pre></div></td></tr><tr id="section-14"><td class="docs"><div class="pilwrap"><a href="#section-14" class="pilcrow">&#182;</a></div><p>Called repeatedly while this state is loaded. You can do things like
 update your world here. We'll move the avocado based on movement input.</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">tick: </span><span class="o">-&gt;</span>
-    </pre></div></td></tr><tr id="section-14"><td class="docs"><div class="pilwrap"><a href="#section-14" class="pilcrow">&#182;</a></div><p>Move it 500px a second based on player 'Awesome player's movement.</p>
+    </pre></div></td></tr><tr id="section-15"><td class="docs"><div class="pilwrap"><a href="#section-15" class="pilcrow">&#182;</a></div><p>Move it 500px a second based on player 'Awesome player's movement.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="p">[</span><span class="nx">@x</span><span class="p">,</span> <span class="nx">@y</span><span class="p">]</span> <span class="o">=</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span>
       <span class="p">[</span><span class="nx">@x</span><span class="p">,</span> <span class="nx">@y</span><span class="p">]</span>
       <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">scale</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">uiService</span><span class="p">.</span><span class="nx">playerTickMovement</span><span class="p">(</span><span class="s1">&#39;Awesome player&#39;</span><span class="p">),</span> <span class="mi">500</span>
     <span class="p">)</span>
-  </pre></div></td></tr><tr id="section-15"><td class="docs"><div class="pilwrap"><a href="#section-15" class="pilcrow">&#182;</a></div><p>Called repeatedly while this state is loaded. You can render all of
+  </pre></div></td></tr><tr id="section-16"><td class="docs"><div class="pilwrap"><a href="#section-16" class="pilcrow">&#182;</a></div><p>Called repeatedly while this state is loaded. You can render all of
 your pretty pictures here!</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">render: </span><span class="nf">(buffer) -&gt;</span>
-    </pre></div></td></tr><tr id="section-16"><td class="docs"><div class="pilwrap"><a href="#section-16" class="pilcrow">&#182;</a></div><p>Fill the screen with white.</p>
+    </pre></div></td></tr><tr id="section-17"><td class="docs"><div class="pilwrap"><a href="#section-17" class="pilcrow">&#182;</a></div><p>Fill the screen with white.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="nx">buffer</span><span class="p">.</span><span class="nx">fill</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span>
-    </pre></div></td></tr><tr id="section-17"><td class="docs"><div class="pilwrap"><a href="#section-17" class="pilcrow">&#182;</a></div><p>Show the avocado at its current x, y location.</p>
+    </pre></div></td></tr><tr id="section-18"><td class="docs"><div class="pilwrap"><a href="#section-18" class="pilcrow">&#182;</a></div><p>Show the avocado at its current x, y location.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="nx">@avocado</span><span class="p">.</span><span class="nx">render</span> <span class="p">[</span><span class="nx">@x</span><span class="p">,</span> <span class="nx">@y</span><span class="p">],</span> <span class="nx">buffer</span>
-    </pre></div></td></tr><tr id="section-18"><td class="docs"><div class="pilwrap"><a href="#section-18" class="pilcrow">&#182;</a></div><p>Called when another state is loaded. This gives you a chance to clean
+    </pre></div></td></tr><tr id="section-19"><td class="docs"><div class="pilwrap"><a href="#section-19" class="pilcrow">&#182;</a></div><p>Display the changes to the buffer.</p>
+</td><td class="code"><div class="highlight"><pre>    <span class="nx">buffer</span><span class="p">.</span><span class="nx">display</span><span class="p">()</span>
+    </pre></div></td></tr><tr id="section-20"><td class="docs"><div class="pilwrap"><a href="#section-20" class="pilcrow">&#182;</a></div><p>Called when another state is loaded. This gives you a chance to clean
 up resources and event handlers.</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">leave: </span><span class="nf">(nextStateName) -&gt;</span>
-    </pre></div></td></tr><tr id="section-19"><td class="docs"><div class="pilwrap"><a href="#section-19" class="pilcrow">&#182;</a></div><p>Remove our event handler(s).</p>
+    </pre></div></td></tr><tr id="section-21"><td class="docs"><div class="pilwrap"><a href="#section-21" class="pilcrow">&#182;</a></div><p>Remove our event handler(s).</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="nx">avo</span><span class="p">.</span><span class="nb">window</span><span class="p">.</span><span class="kc">off</span> <span class="s1">&#39;.InitialState&#39;</span>
 
 </pre></div></td></tr></tbody></table><div id="projectname"><a href="../../../index.html">Avocado</a></div></div></body></html>

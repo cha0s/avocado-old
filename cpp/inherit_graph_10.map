@@ -1,6 +1,6 @@
-<map id="G" name="G">
-<area shape="rect" id="node1" href="$classavo_1_1AbstractFactory_3_01TimingService_01_4.html" title="avo::AbstractFactory\&lt; TimingService \&gt;" alt="" coords="5,59,256,88"/>
-<area shape="rect" id="node3" href="$classavo_1_1AbstractFactory_3_01QtTimingService_01_4.html" title="avo::AbstractFactory\&lt; QtTimingService \&gt;" alt="" coords="312,5,576,35"/>
-<area shape="rect" id="node5" href="$classavo_1_1AbstractFactory_3_01SdlTimingService_01_4.html" title="avo::AbstractFactory\&lt; SdlTimingService \&gt;" alt="" coords="309,59,579,88"/>
-<area shape="rect" id="node7" href="$classavo_1_1AbstractFactory_3_01SfmlTimingService_01_4.html" title="avo::AbstractFactory\&lt; SfmlTimingService \&gt;" alt="" coords="305,112,583,141"/>
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classavo_1_1AbstractFactory_3_01TimingService_01_4.html" title="avo::AbstractFactory\l\&lt; TimingService \&gt;" alt="" coords="5,74,149,121"/>
+<area shape="rect" id="node3" href="$classavo_1_1AbstractFactory_3_01QtTimingService_01_4.html" title="avo::AbstractFactory\l\&lt; QtTimingService \&gt;" alt="" coords="204,5,348,51"/>
+<area shape="rect" id="node5" href="$classavo_1_1AbstractFactory_3_01SdlTimingService_01_4.html" title="avo::AbstractFactory\l\&lt; SdlTimingService \&gt;" alt="" coords="203,74,349,121"/>
+<area shape="rect" id="node7" href="$classavo_1_1AbstractFactory_3_01SfmlTimingService_01_4.html" title="avo::AbstractFactory\l\&lt; SfmlTimingService \&gt;" alt="" coords="199,143,353,190"/>
 </map>

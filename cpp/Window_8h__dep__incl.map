@@ -1,4 +1,4 @@
-<map id="G" name="G">
+<map id="SPI/Ui/Window.h" name="SPI/Ui/Window.h">
 <area shape="rect" id="node3" href="$v8Window_8h.html" title="SPI/Script/v8/v8Window.h" alt="" coords="257,83,433,112"/>
 <area shape="rect" id="node9" href="$SdlWindow_8h.html" title="SPI/Ui/SDL/SdlWindow.h" alt="" coords="691,83,861,112"/>
 <area shape="rect" id="node15" href="$SfmlWindow_8h.html" title="SPI/Ui/SFML/SfmlWindow.h" alt="" coords="895,83,1084,112"/>

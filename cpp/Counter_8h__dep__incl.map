@@ -1,16 +1,16 @@
-<map id="G" name="G">
+<map id="SPI/Timing/Counter.h" name="SPI/Timing/Counter.h">
 <area shape="rect" id="node3" href="$v8Counter_8h.html" title="SPI/Script/v8/v8Counter.h" alt="" coords="243,83,416,112"/>
 <area shape="rect" id="node9" href="$Counter_8cpp.html" title="SPI/Timing/Counter.cpp" alt="" coords="537,83,700,112"/>
 <area shape="rect" id="node11" href="$QtCounter_8h.html" title="SPI/Timing/Qt/QtCounter.h" alt="" coords="724,83,903,112"/>
 <area shape="rect" id="node17" href="$SdlCounter_8h.html" title="SPI/Timing/SDL/SdlCounter.h" alt="" coords="943,83,1140,112"/>
-<area shape="rect" id="node23" href="$SfmlCounter_8h.html" title="SPI/Timing/SFML/SfmlCounter.h" alt="" coords="1307,83,1520,112"/>
-<area shape="rect" id="node29" href="$TimingService_8cpp.html" title="SPI/Timing/TimingService.cpp" alt="" coords="1544,83,1741,112"/>
-<area shape="rect" id="node5" href="$v8Counter_8cpp.html" title="SPI/Script/v8/v8Counter.cpp" alt="" coords="5,160,195,189"/>
-<area shape="rect" id="node7" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="219,160,440,189"/>
-<area shape="rect" id="node13" href="$QtCounter_8cpp.html" title="SPI/Timing/Qt/QtCounter.cpp" alt="" coords="464,160,659,189"/>
-<area shape="rect" id="node15" href="$QtTimingService_8cpp.html" title="SPI/Timing/Qt/QtTimingService.cpp" alt="" coords="683,160,912,189"/>
-<area shape="rect" id="node19" href="$SdlCounter_8cpp.html" title="SPI/Timing/SDL/SdlCounter.cpp" alt="" coords="936,160,1147,189"/>
-<area shape="rect" id="node21" href="$SdlTimingService_8cpp.html" title="SPI/Timing/SDL/SdlTimingService.cpp" alt="" coords="1171,160,1419,189"/>
-<area shape="rect" id="node25" href="$SfmlCounter_8cpp.html" title="SPI/Timing/SFML/SfmlCounter.cpp" alt="" coords="1443,160,1669,189"/>
-<area shape="rect" id="node27" href="$SfmlTimingService_8cpp.html" title="SPI/Timing/SFML/SfmlTimingService.cpp" alt="" coords="1693,160,1957,189"/>
+<area shape="rect" id="node23" href="$SfmlCounter_8h.html" title="SPI/Timing/SFML/SfmlCounter.h" alt="" coords="1272,83,1485,112"/>
+<area shape="rect" id="node29" href="$TimingService_8cpp.html" title="SPI/Timing/TimingService.cpp" alt="" coords="1509,83,1707,112"/>
+<area shape="rect" id="node5" href="$v8Counter_8cpp.html" title="SPI/Script/v8/v8Counter.cpp" alt="" coords="5,169,195,199"/>
+<area shape="rect" id="node7" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="219,169,440,199"/>
+<area shape="rect" id="node13" href="$QtCounter_8cpp.html" title="SPI/Timing/Qt/QtCounter.cpp" alt="" coords="464,169,659,199"/>
+<area shape="rect" id="node15" href="$QtTimingService_8cpp.html" title="SPI/Timing/Qt/QtTimingService.cpp" alt="" coords="683,169,912,199"/>
+<area shape="rect" id="node19" href="$SdlCounter_8cpp.html" title="SPI/Timing/SDL/SdlCounter.cpp" alt="" coords="936,169,1147,199"/>
+<area shape="rect" id="node21" href="$SdlTimingService_8cpp.html" title="SPI/Timing/SDL/SdlTiming\lService.cpp" alt="" coords="1171,161,1349,207"/>
+<area shape="rect" id="node25" href="$SfmlCounter_8cpp.html" title="SPI/Timing/SFML/SfmlCounter.cpp" alt="" coords="1373,169,1600,199"/>
+<area shape="rect" id="node27" href="$SfmlTimingService_8cpp.html" title="SPI/Timing/SFML/SfmlTiming\lService.cpp" alt="" coords="1624,161,1819,207"/>
 </map>

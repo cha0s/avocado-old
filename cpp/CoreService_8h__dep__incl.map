@@ -1,4 +1,4 @@
-<map id="G" name="G">
+<map id="SPI/Core/CoreService.h" name="SPI/Core/CoreService.h">
 <area shape="rect" id="node3" href="$CoreService_8cpp.html" title="SPI/Core/CoreService.cpp" alt="" coords="164,83,340,112"/>
 <area shape="rect" id="node5" href="$QtCoreService_8h.html" title="SPI/Core/Qt/QtCoreService.h" alt="" coords="364,83,559,112"/>
 <area shape="rect" id="node11" href="$SdlCoreService_8h.html" title="SPI/Core/SDL/SdlCoreService.h" alt="" coords="587,83,797,112"/>

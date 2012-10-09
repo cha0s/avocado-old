@@ -1,6 +1,6 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$avocado-global_8h.html" title="../../../avocado&#45;global.h" alt="" coords="151,315,305,344"/>
-<area shape="rect" id="node11" href="$SdlGraphicsService_8h.html" title="SdlGraphicsService.h" alt="" coords="247,83,393,112"/>
-<area shape="rect" id="node14" href="$GraphicsService_8h.html" title="../GraphicsService.h" alt="" coords="249,160,391,189"/>
-<area shape="rect" id="node17" href="$Factory_8h.html" title="Factory.h" alt="" coords="291,237,368,267"/>
+<map id="SPI/Graphics/SDL/implementSpi.cpp" name="SPI/Graphics/SDL/implementSpi.cpp">
+<area shape="rect" id="node3" href="$avocado-global_8h.html" title="../../../avocado&#45;global.h" alt="" coords="146,333,301,363"/>
+<area shape="rect" id="node11" href="$SdlGraphicsService_8h.html" title="SdlGraphicsService.h" alt="" coords="242,101,389,131"/>
+<area shape="rect" id="node14" href="$GraphicsService_8h.html" title="../GraphicsService.h" alt="" coords="245,179,386,208"/>
+<area shape="rect" id="node17" href="$Factory_8h.html" title="Factory.h" alt="" coords="286,256,363,285"/>
 </map>

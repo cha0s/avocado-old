@@ -1,3 +1,6 @@
-<map id="G" name="G">
-<area shape="rect" id="node1" href="$classavo_1_1ScriptService_1_1script__precompilation__error.html" title="Thrown when script precompilation fails." alt="" coords="5,5,299,35"/>
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classavo_1_1GraphicsService.html" title="avo::GraphicsService" alt="" coords="5,59,152,88"/>
+<area shape="rect" id="node3" href="$classavo_1_1QtGraphicsService.html" title="avo::QtGraphicsService" alt="" coords="208,5,368,35"/>
+<area shape="rect" id="node5" href="$classavo_1_1SdlGraphicsService.html" title="avo::SdlGraphicsService" alt="" coords="205,59,371,88"/>
+<area shape="rect" id="node7" href="$classavo_1_1SfmlGraphicsService.html" title="avo::SfmlGraphicsService" alt="" coords="201,112,375,141"/>
 </map>

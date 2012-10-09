@@ -1,5 +1,5 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$classavo_1_1AbstractFactory_3_01QtCoreService_01_4.html" title="avo::AbstractFactory\&lt; QtCoreService \&gt;" alt="" coords="300,5,553,35"/>
-<area shape="rect" id="node5" href="$classavo_1_1AbstractFactory_3_01SdlCoreService_01_4.html" title="avo::AbstractFactory\&lt; SdlCoreService \&gt;" alt="" coords="297,59,556,88"/>
-<area shape="rect" id="node7" href="$classavo_1_1AbstractFactory_3_01SfmlCoreService_01_4.html" title="avo::AbstractFactory\&lt; SfmlCoreService \&gt;" alt="" coords="293,112,560,141"/>
+<map id="avo::AbstractFactory&lt; CoreService &gt;" name="avo::AbstractFactory&lt; CoreService &gt;">
+<area shape="rect" id="node3" href="$classavo_1_1AbstractFactory_3_01QtCoreService_01_4.html" title="avo::AbstractFactory\l\&lt; QtCoreService \&gt;" alt="" coords="199,5,343,51"/>
+<area shape="rect" id="node5" href="$classavo_1_1AbstractFactory_3_01SdlCoreService_01_4.html" title="avo::AbstractFactory\l\&lt; SdlCoreService \&gt;" alt="" coords="199,74,343,121"/>
+<area shape="rect" id="node7" href="$classavo_1_1AbstractFactory_3_01SfmlCoreService_01_4.html" title="avo::AbstractFactory\l\&lt; SfmlCoreService \&gt;" alt="" coords="199,143,343,190"/>
 </map>

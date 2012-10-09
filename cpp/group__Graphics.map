@@ -1,9 +1,10 @@
-<map id="structs" name="structs">
-<area shape="rect" id="node1" href="$group__Script.html" title="The script SPI handles all communication between the native C++ engine and JavaScript." alt="" coords="492,92,575,121"/>
-<area shape="rect" id="node2" href="$group__SDL.html" title="Avocado&#39;s interface to the [Simple DirectMedia Layer](http://www.libsdl.org/)." alt="" coords="420,192,647,221"/>
-<area shape="rect" id="node3" href="$group__Qt.html" title="Avocado&#39;s interface to the [Qt development framework](http://qt.digia.com/)." alt="" coords="417,275,649,304"/>
-<area shape="rect" id="node4" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="444,496,623,525"/>
-<area shape="rect" id="node5" href="$group__V8.html" title="Avocado&#39;s interface to the [V8 JavaScript engine](http://code.google.com/p/v8/)." alt="" coords="455,596,612,625"/>
-<area shape="rect" id="node6" href="$group__Resources.html" title="Resources are loaded from the resource root and are managed using reference counting." alt="" coords="455,731,612,760"/>
-<area shape="rect" id="node7" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="481,865,585,895"/>
+<map id="Graphics SPI" name="Graphics SPI">
+<area shape="rect" id="node1" href="$group__Script.html" title="The script SPI handles all communication between the native C++ engine and JavaScript." alt="" coords="360,77,443,107"/>
+<area shape="rect" id="node2" href="$group__SDL.html" title="Avocado&#39;s interface to the Simple DirectMedia Layer." alt="" coords="333,203,469,250"/>
+<area shape="rect" id="node3" href="$group__Qt.html" title="Avocado&#39;s interface to the Qt development framework." alt="" coords="312,321,491,367"/>
+<area shape="rect" id="node4" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="312,689,491,719"/>
+<area shape="rect" id="node5" href="$group__V8.html" title="Avocado&#39;s interface to the V8 JavaScript engine." alt="" coords="323,789,480,819"/>
+<area shape="rect" id="node6" href="$group__Resources.html" title="Resources are loaded from the resource root and are managed using reference counting." alt="" coords="323,1028,480,1057"/>
+<area shape="rect" id="node7" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="349,1336,453,1365"/>
+<area shape="rect" id="node9" href="$group__SFML.html" title="Avocado&#39;s interface to the Simple and Fast Multimedia Library." alt="" coords="309,1462,493,1509"/>
 </map>

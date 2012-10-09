@@ -1,4 +1,4 @@
-<map id="G" name="G">
+<map id="avo::Window" name="avo::Window">
 <area shape="rect" id="node3" href="$classavo_1_1SdlWindow.html" title="avo::SdlWindow" alt="" coords="5,83,123,112"/>
 <area shape="rect" id="node5" href="$classavo_1_1SfmlWindow.html" title="avo::SfmlWindow" alt="" coords="147,83,272,112"/>
 </map>

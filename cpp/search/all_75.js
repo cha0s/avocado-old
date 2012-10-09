@@ -1,7 +1,8 @@
 var searchData=
 [
+  ['user_20interface_20spi',['User Interface SPI',['../group__Ui.html',1,'']]],
   ['uiservice',['UiService',['../classavo_1_1UiService.html',1,'avo']]],
-  ['uiservice',['uiService',['../classavo_1_1v8UiService.html#aeed6c33b0cde68e95a17ecca9fcdbf03',1,'avo::v8UiService::uiService()'],['../classavo_1_1UiService.html#aea6fa0d71d4f1142d06a4f44e685007b',1,'avo::UiService::UiService()']]],
+  ['uiservice',['UiService',['../classavo_1_1UiService.html#aea6fa0d71d4f1142d06a4f44e685007b',1,'avo::UiService::UiService()'],['../classavo_1_1v8UiService.html#aeed6c33b0cde68e95a17ecca9fcdbf03',1,'avo::v8UiService::uiService()']]],
   ['uiservice_2ecpp',['UiService.cpp',['../UiService_8cpp.html',1,'']]],
   ['uiservice_2eh',['UiService.h',['../UiService_8h.html',1,'']]],
   ['uiservicespiiloader',['uiServiceSpiiLoader',['../namespaceavo.html#acf8ee8f8a9de306e022f324c455885e6',1,'avo']]],

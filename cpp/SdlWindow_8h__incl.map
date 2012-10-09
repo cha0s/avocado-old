@@ -1,9 +1,9 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$avocado-global_8h.html" title="avocado&#45;global.h" alt="" coords="80,392,200,421"/>
-<area shape="rect" id="node11" href="$Window_8h.html" title="../Window.h" alt="" coords="83,83,173,112"/>
-<area shape="rect" id="node36" href="$SdlImage_8h.html" title="../../Graphics/SDL/SdlImage.h" alt="" coords="197,83,395,112"/>
-<area shape="rect" id="node15" href="$Image_8h.html" title="../Graphics/Image.h" alt="" coords="207,160,343,189"/>
-<area shape="rect" id="node18" href="$FS_8h.html" title="FS.h" alt="" coords="416,315,467,344"/>
-<area shape="rect" id="node26" href="$ResourceManager_8h.html" title="SPI/ResourceManager.h" alt="" coords="232,237,397,267"/>
-<area shape="rect" id="node32" href="$Factory_8h.html" title="Factory.h" alt="" coords="195,315,272,344"/>
+<map id="SPI/Ui/SDL/SdlWindow.h" name="SPI/Ui/SDL/SdlWindow.h">
+<area shape="rect" id="node3" href="$avocado-global_8h.html" title="avocado&#45;global.h" alt="" coords="80,411,200,440"/>
+<area shape="rect" id="node11" href="$Window_8h.html" title="../Window.h" alt="" coords="89,92,180,121"/>
+<area shape="rect" id="node36" href="$SdlImage_8h.html" title="../../Graphics/SDL\l/SdlImage.h" alt="" coords="204,83,332,130"/>
+<area shape="rect" id="node15" href="$Image_8h.html" title="../Graphics/Image.h" alt="" coords="172,179,308,208"/>
+<area shape="rect" id="node18" href="$FS_8h.html" title="FS.h" alt="" coords="416,333,467,363"/>
+<area shape="rect" id="node26" href="$ResourceManager_8h.html" title="SPI/ResourceManager.h" alt="" coords="232,256,397,285"/>
+<area shape="rect" id="node32" href="$Factory_8h.html" title="Factory.h" alt="" coords="195,333,272,363"/>
 </map>

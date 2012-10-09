@@ -19,6 +19,8 @@ var searchData=
   ['sdlwindow',['SdlWindow',['../classavo_1_1SdlWindow.html',1,'avo']]],
   ['sfmlcoreservice',['SfmlCoreService',['../classavo_1_1SfmlCoreService.html',1,'avo']]],
   ['sfmlcounter',['SfmlCounter',['../classavo_1_1SfmlCounter.html',1,'avo']]],
+  ['sfmlgraphicsservice',['SfmlGraphicsService',['../classavo_1_1SfmlGraphicsService.html',1,'avo']]],
+  ['sfmlimage',['SfmlImage',['../classavo_1_1SfmlImage.html',1,'avo']]],
   ['sfmlmusic',['SfmlMusic',['../classavo_1_1SfmlMusic.html',1,'avo']]],
   ['sfmlsample',['SfmlSample',['../classavo_1_1SfmlSample.html',1,'avo']]],
   ['sfmlsoundservice',['SfmlSoundService',['../classavo_1_1SfmlSoundService.html',1,'avo']]],

@@ -1,12 +1,12 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$avocado-global_8h.html" title="avocado&#45;global.h" alt="" coords="225,469,345,499"/>
-<area shape="rect" id="node9" href="$SdlUiService_8h.html" title="SdlUiService.h" alt="" coords="52,160,161,189"/>
-<area shape="rect" id="node20" href="$SdlWindow_8h.html" title="SdlWindow.h" alt="" coords="356,83,455,112"/>
-<area shape="rect" id="node14" href="$UiService_8h.html" title="../UiService.h" alt="" coords="93,315,195,344"/>
-<area shape="rect" id="node17" href="$Factory_8h.html" title="Factory.h" alt="" coords="155,392,232,421"/>
-<area shape="rect" id="node25" href="$Window_8h.html" title="../Window.h" alt="" coords="572,160,663,189"/>
-<area shape="rect" id="node48" href="$SdlImage_8h.html" title="../../Graphics/SDL/SdlImage.h" alt="" coords="307,160,504,189"/>
-<area shape="rect" id="node29" href="$Image_8h.html" title="../Graphics/Image.h" alt="" coords="423,237,559,267"/>
-<area shape="rect" id="node32" href="$FS_8h.html" title="FS.h" alt="" coords="583,392,633,421"/>
-<area shape="rect" id="node40" href="$ResourceManager_8h.html" title="SPI/ResourceManager.h" alt="" coords="408,315,573,344"/>
+<map id="SPI/Ui/SDL/SdlUiService.cpp" name="SPI/Ui/SDL/SdlUiService.cpp">
+<area shape="rect" id="node3" href="$avocado-global_8h.html" title="avocado&#45;global.h" alt="" coords="225,488,345,517"/>
+<area shape="rect" id="node9" href="$SdlUiService_8h.html" title="SdlUiService.h" alt="" coords="52,169,161,199"/>
+<area shape="rect" id="node20" href="$SdlWindow_8h.html" title="SdlWindow.h" alt="" coords="321,83,420,112"/>
+<area shape="rect" id="node14" href="$UiService_8h.html" title="../UiService.h" alt="" coords="93,333,195,363"/>
+<area shape="rect" id="node17" href="$Factory_8h.html" title="Factory.h" alt="" coords="155,411,232,440"/>
+<area shape="rect" id="node25" href="$Window_8h.html" title="../Window.h" alt="" coords="537,169,628,199"/>
+<area shape="rect" id="node48" href="$SdlImage_8h.html" title="../../Graphics/SDL\l/SdlImage.h" alt="" coords="307,161,435,207"/>
+<area shape="rect" id="node29" href="$Image_8h.html" title="../Graphics/Image.h" alt="" coords="423,256,559,285"/>
+<area shape="rect" id="node32" href="$FS_8h.html" title="FS.h" alt="" coords="583,411,633,440"/>
+<area shape="rect" id="node40" href="$ResourceManager_8h.html" title="SPI/ResourceManager.h" alt="" coords="408,333,573,363"/>
 </map>

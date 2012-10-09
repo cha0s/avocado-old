@@ -24,6 +24,8 @@ public:
 
 	void close();
 
+	SpecialKeyCodes specialKeyCodes();
+
 	static AbstractFactory<SfmlGraphicsService> *factory;
 
 };

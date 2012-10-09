@@ -22,6 +22,8 @@ public:
 	QtGraphicsService();
 	~QtGraphicsService();
 
+	SpecialKeyCodes specialKeyCodes();
+
 	static AbstractFactory<QtGraphicsService> *factory;
 
 };

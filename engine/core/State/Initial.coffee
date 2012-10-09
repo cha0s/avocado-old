@@ -12,11 +12,11 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 		
 		# Register a player 'Awesome player' to receive input using the
 		# keyboard arrow keys and joystick index 0.
-		avo.uiService.registerPlayerMovement 'Awesome player', [
-			avo.uiService.SpecialKeyCodes.UpArrow
-			avo.uiService.SpecialKeyCodes.RightArrow
-			avo.uiService.SpecialKeyCodes.DownArrow
-			avo.uiService.SpecialKeyCodes.LeftArrow
+		avo.graphicsService.registerPlayerMovement 'Awesome player', [
+			avo.graphicsService.SpecialKeyCodes.UpArrow
+			avo.graphicsService.SpecialKeyCodes.RightArrow
+			avo.graphicsService.SpecialKeyCodes.DownArrow
+			avo.graphicsService.SpecialKeyCodes.LeftArrow
 		], 0
 		
 		# Yum, an avocado!
@@ -41,7 +41,7 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 			# stuff. We'll wait so that there isn't a black screen sitting
 			# there while everything loads.
 			# Instantiate a Window to receive render events.
-			avo.window = new avo.uiService.newWindow [320, 240]
+			avo.window = new avo.graphicsService.newWindow [320, 240]
 			avo.window.setWindowTitle 'Avocado - Fun Should Be Free'
 			
 			# avo.main lets us know when it has something to render, so we'll
@@ -73,7 +73,7 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 		# Move it 500px a second based on player 'Awesome player's movement.
 		[@x, @y] = avo.Vector.add(
 			[@x, @y]
-			avo.Vector.scale avo.uiService.playerTickMovement('Awesome player'), 500
+			avo.Vector.scale avo.graphicsService.playerTickMovement('Awesome player'), 500
 		)
 	
 	# Called repeatedly while this state is loaded. You can render all of

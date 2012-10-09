@@ -3,6 +3,8 @@
 
 #include "avocado-global.h"
 
+#include <SDL/SDL.h>
+
 #include "../GraphicsService.h"
 
 namespace avo {
@@ -24,7 +26,14 @@ public:
 
 	void close();
 
+	SpecialKeyCodes specialKeyCodes();
+
 	static AbstractFactory<SdlGraphicsService> *factory;
+
+private:
+
+	int numJoysticks;
+	SDL_Joystick **joystick;
 
 };
 

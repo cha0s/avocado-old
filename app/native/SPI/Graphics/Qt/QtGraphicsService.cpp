@@ -16,4 +16,11 @@ QtGraphicsService::QtGraphicsService() {
 QtGraphicsService::~QtGraphicsService() {
 }
 
+GraphicsService::SpecialKeyCodes QtGraphicsService::specialKeyCodes() {
+
+	SpecialKeyCodes keyMap;
+
+	return keyMap;
+}
+
 }

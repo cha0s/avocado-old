@@ -10,9 +10,7 @@ SOURCES += \
 	\
 	v8CoreService.cpp \
 	\
-	v8GraphicsService.cpp v8Image.cpp \
-	\
-	v8UiService.cpp v8Window.cpp \
+	v8GraphicsService.cpp v8Image.cpp v8Window.cpp \
 	\
 	v8TimingService.cpp v8Counter.cpp \
 	\
@@ -26,9 +24,7 @@ HEADERS += \
 	\
 	../../Core/CoreService.h v8CoreService.h \
 	\
-	../../Graphics/GraphicsService.h v8GraphicsService.h ../../Graphics/Image.h v8Image.h \
-	\
-	v8UiService.h ../../Graphics/Window.h v8Window.h \
+	../../Graphics/GraphicsService.h v8GraphicsService.h ../../Graphics/Image.h v8Image.h ../../Graphics/Window.h v8Window.h \
 	\
 	v8TimingService.h ../../Timing/Counter.h v8Counter.h \
 	\

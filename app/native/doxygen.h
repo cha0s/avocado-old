@@ -77,13 +77,6 @@
  */
 
 /**
- * @defgroup Ui User Interface SPI
- *
- * @brief The UI SPI handles user interface functionality such as windows
- * and user event polling.
- */
-
-/**
  * @defgroup Sound Sound SPI
  *
  * @brief The sound SPI handles sound system initialization, as well as

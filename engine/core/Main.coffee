@@ -131,7 +131,7 @@ class avo.Main
 		avo.TimingService.tick()
 		
 		# Poll events.
-		avo.uiService.pollEvents()
+		avo.graphicsService.pollEvents()
 		
 		# Let the State tick.
 		@stateObject?.tick()

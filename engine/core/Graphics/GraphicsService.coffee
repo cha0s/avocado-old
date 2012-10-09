@@ -8,7 +8,7 @@ stickIndexMap = {}
 # associate this movement, as well as a 4-element array of key codes to use
 # for the movement. The key codes represent up, right, down, left
 # respectively. Also, specify a joystick index to assign to this player.
-avo.UiService::registerPlayerMovement = (player, keyCodes, stickIndex) ->
+avo.GraphicsService::registerPlayerMovement = (player, keyCodes, stickIndex) ->
 	
 	# Map the key code and joystick index to the player so we can look 'em up
 	# quick when a key code or joystick movement comes in.
@@ -22,7 +22,7 @@ avo.UiService::registerPlayerMovement = (player, keyCodes, stickIndex) ->
 		joyState: [0, 0, 0, 0]
 
 # Get a unit movement vector for a player scaled by the time passed this tick.
-avo.UiService::playerTickMovement = (player) ->
+avo.GraphicsService::playerTickMovement = (player) ->
 	
 	return [0, 0] unless movement[player]?
 	
@@ -55,7 +55,7 @@ registerMovement = (player) ->
 
 windows = []
 
-avo.UiService::newWindow = (size, flags) ->
+avo.GraphicsService::newWindow = (size, flags) ->
 	
 	window = new avo.Window()
 	windows.push window
@@ -141,7 +141,7 @@ avo.UiService::newWindow = (size, flags) ->
 				
 	window
 	
-avo.UiService::pollEvents = ->
+avo.GraphicsService::pollEvents = ->
 	
 	for window in windows
 		

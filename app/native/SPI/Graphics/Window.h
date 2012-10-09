@@ -10,7 +10,7 @@
 namespace avo {
 
 /**
- * @addtogroup Ui
+ * @addtogroup Graphics
  * @{
  */
 

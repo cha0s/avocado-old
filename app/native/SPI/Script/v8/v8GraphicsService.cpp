@@ -8,6 +8,12 @@ using namespace v8;
 
 namespace avo {
 
+#define SPECIAL_KEY(Keys, keys, key)                \
+    Keys->Set(                   \
+        String::New(#key),              \
+        Integer::New(keys.key) \
+    );
+
 avo::SpiiLoader<avo::GraphicsService> graphicsServiceSpiiLoader;
 
 v8GraphicsService::v8GraphicsService(Handle<Object> wrapper)
@@ -41,7 +47,18 @@ v8::Handle<v8::Value> v8GraphicsService::New(const v8::Arguments &args) {
 	HandleScope scope;
 
 	try {
-		new v8GraphicsService(args.Holder());
+		v8GraphicsService *graphicsServiceWrapper = new v8GraphicsService(args.Holder());
+
+		Handle<Object> SpecialKeyCodes = Object::New();
+		GraphicsService::SpecialKeyCodes specialKeys = graphicsServiceWrapper->graphicsService->specialKeyCodes();
+
+		SPECIAL_KEY(SpecialKeyCodes, specialKeys, UpArrow);
+		SPECIAL_KEY(SpecialKeyCodes, specialKeys, RightArrow);
+		SPECIAL_KEY(SpecialKeyCodes, specialKeys, DownArrow);
+		SPECIAL_KEY(SpecialKeyCodes, specialKeys, LeftArrow);
+
+		args.Holder()->Set(String::New("SpecialKeyCodes"), SpecialKeyCodes);
+
 	}
 	catch (std::exception &e) {
 

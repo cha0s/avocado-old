@@ -7,12 +7,12 @@
 
 #include "../Window.h"
 
-#include "../../Graphics/SDL/SdlImage.h"
+#include "SdlImage.h"
 
 namespace avo {
 
 /**
- * @addtogroup Ui
+ * @addtogroup Graphics
  * @{
  */
 

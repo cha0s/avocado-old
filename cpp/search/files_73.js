@@ -26,7 +26,6 @@ var searchData=
   ['sdluiservice_2eh',['SdlUiService.h',['../SdlUiService_8h.html',1,'']]],
   ['sdlwindow_2ecpp',['SdlWindow.cpp',['../SdlWindow_8cpp.html',1,'']]],
   ['sdlwindow_2eh',['SdlWindow.h',['../SdlWindow_8h.html',1,'']]],
-  ['sfml_2dtest_2ecpp',['sfml-test.cpp',['../sfml-test_8cpp.html',1,'']]],
   ['sfmlcoreservice_2ecpp',['SfmlCoreService.cpp',['../SfmlCoreService_8cpp.html',1,'']]],
   ['sfmlcoreservice_2eh',['SfmlCoreService.h',['../SfmlCoreService_8h.html',1,'']]],
   ['sfmlcounter_2ecpp',['SfmlCounter.cpp',['../SfmlCounter_8cpp.html',1,'']]],

@@ -991,26 +991,22 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"></div>
 <div class="line">        src += sIdx;</div>
 <div class="line">        dst += dIdx;</div>
-<div class="line">        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> colorKey = surface-&gt;format-&gt;colorkey;</div>
 <div class="line"></div>
 <div class="line">        <span class="comment">// For each pixel from the source image, make it a</span></div>
 <div class="line">        <span class="comment">// 2 x 2 block in the destination.</span></div>
 <div class="line">        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> y = 0; y &lt; sh; ++y) {</div>
 <div class="line">            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; sw; ++x) {</div>
 <div class="line"></div>
-<div class="line">                <span class="keywordflow">if</span> (colorKey != *src) {</div>
+<div class="line">                sc = <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *<span class="keyword">&gt;</span>(src);</div>
 <div class="line"></div>
-<div class="line">                    sc = <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *<span class="keyword">&gt;</span>(src);</div>
-<div class="line"></div>
-<div class="line">                    <span class="keywordflow">if</span> (<a class="code" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375a56dd6df6e829050ac137b8b938064f2a">DrawMode_Replace</a> == mode || (255 == alpha &amp;&amp; 255 == sc[3])) {</div>
-<div class="line"></div>
-<div class="line">                        *dst = *src;</div>
-<div class="line">                    }</div>
-<div class="line">                    <span class="keywordflow">else</span> {</div>
-<div class="line"></div>
-<div class="line">                        *dst = <a class="code" href="classavo_1_1Image.html#a44395937ac779e9a6bd279a5f491da36">blendPixel</a>(*src, *dst, alpha);</div>
-<div class="line">                    }</div>
+<div class="line">                <span class="keywordtype">int</span> dstColor;</div>
+<div class="line">                <span class="keywordflow">if</span> (<a class="code" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375a56dd6df6e829050ac137b8b938064f2a">DrawMode_Replace</a> == mode || (255 == alpha &amp;&amp; 255 == sc[3])) {</div>
+<div class="line">                    dstColor = 255 &lt;&lt; 24;</div>
 <div class="line">                }</div>
+<div class="line">                <span class="keywordflow">else</span> {</div>
+<div class="line">                    dstColor = *dst;</div>
+<div class="line">                }</div>
+<div class="line">                *dst = <a class="code" href="classavo_1_1Image.html#a44395937ac779e9a6bd279a5f491da36">blendPixel</a>(*src, dstColor, alpha);</div>
 <div class="line"></div>
 <div class="line">                src++;</div>
 <div class="line">                dst++;</div>

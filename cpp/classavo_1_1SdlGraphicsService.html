@@ -113,6 +113,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab232540cf9868800ba4ecc7b930e1ac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf1a4d622964317fcf37618762aeab26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlGraphicsService.html#aaf1a4d622964317fcf37618762aeab26">close</a> ()</td></tr>
 <tr class="separator:aaf1a4d622964317fcf37618762aeab26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7157d736a9ba6c3f7c574e8f4437b4ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structavo_1_1GraphicsService_1_1SpecialKeyCodes.html">SpecialKeyCodes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlGraphicsService.html#a7157d736a9ba6c3f7c574e8f4437b4ea">specialKeyCodes</a> ()</td></tr>
+<tr class="separator:a7157d736a9ba6c3f7c574e8f4437b4ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classavo_1_1GraphicsService"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classavo_1_1GraphicsService')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classavo_1_1GraphicsService.html">avo::GraphicsService</a></td></tr>
 <tr class="memitem:a75531e2b2a6a2d4036d75fb5faa5c555 inherit pub_methods_classavo_1_1GraphicsService"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1GraphicsService.html#a75531e2b2a6a2d4036d75fb5faa5c555">GraphicsService</a> ()</td></tr>
 <tr class="separator:a75531e2b2a6a2d4036d75fb5faa5c555 inherit pub_methods_classavo_1_1GraphicsService"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -151,6 +153,40 @@ Additional Inherited Members</h2></td></tr>
 <div class="fragment"><div class="line">                                       {</div>
 <div class="line"></div>
 <div class="line">    <a class="code" href="classavo_1_1Image.html#a99d1bbc316fb27cf9600207f1647625d">Image::factoryManager</a>.<a class="code" href="classavo_1_1FactoryManager.html#a56743fbd3289253612ed8b16facc9b8b">setInstance</a>(<a class="code" href="classavo_1_1SdlImage.html#aeeb0aa4fabacbe9fbe0fb383d3c2d62a">SdlImage::factory</a>);</div>
+<div class="line">    <a class="code" href="classavo_1_1Window.html#a102fbf2bddee9690ce3872f6a87c6067">Window::factoryManager</a>.<a class="code" href="classavo_1_1FactoryManager.html#a56743fbd3289253612ed8b16facc9b8b">setInstance</a>(<a class="code" href="classavo_1_1SdlWindow.html#a929ff9d877582d2d660e9760a15bb3a9">SdlWindow::factory</a>);</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Center the window.</span></div>
+<div class="line">    SDL_putenv(const_cast&lt;char *&gt;(<span class="stringliteral">&quot;SDL_VIDEO_CENTERED=center&quot;</span>));</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// If any video driver is specified in the environment, save it since</span></div>
+<div class="line">    <span class="comment">// we&#39;re going to set &#39;dummy&#39;.</span></div>
+<div class="line">    <span class="keyword">const</span> <span class="keywordtype">char</span> *currentDriver = SDL_getenv(const_cast&lt;char *&gt;(<span class="stringliteral">&quot;SDL_VIDEODRIVER&quot;</span>));</div>
+<div class="line">    <span class="keywordflow">if</span> (currentDriver) {</div>
+<div class="line"></div>
+<div class="line">        <span class="comment">// (Safely) copy the new driver into a C string for SDL_putenv().</span></div>
+<div class="line">        std::string driver = <span class="stringliteral">&quot;AVOCADO_SDL_VIDEODRIVER=&quot;</span>;</div>
+<div class="line">        driver += currentDriver;</div>
+<div class="line">        <span class="keywordtype">char</span> *driverArray = <span class="keyword">new</span> <span class="keywordtype">char</span>[256];</div>
+<div class="line">        strncpy(driverArray, driver.c_str(), 255);</div>
+<div class="line">        driverArray[255] = 0;</div>
+<div class="line">        SDL_putenv(driverArray);</div>
+<div class="line">    }</div>
+<div class="line">    SDL_putenv(const_cast&lt;char *&gt;(<span class="stringliteral">&quot;AVOCADO_SDL_VIDEORESTORE=1&quot;</span>));</div>
+<div class="line">    SDL_putenv(const_cast&lt;char *&gt;(<span class="stringliteral">&quot;SDL_VIDEODRIVER=dummy&quot;</span>));</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Initialize a &#39;dummy&#39; video mode, so we can create SDL surfaces before</span></div>
+<div class="line">    <span class="comment">// we actually set a window.</span></div>
+<div class="line">    SDL_InitSubSystem(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK);</div>
+<div class="line">    SDL_SetVideoMode(1, 1, 32, 0);</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Initialize any joysticks/gamepads.</span></div>
+<div class="line">    <span class="keywordflow">if</span> ((numJoysticks = SDL_NumJoysticks()) &gt; 0) {</div>
+<div class="line">        SDL_JoystickEventState(SDL_ENABLE);</div>
+<div class="line">        joystick = <span class="keyword">new</span> SDL_Joystick *[numJoysticks];</div>
+<div class="line">        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numJoysticks; i++) {</div>
+<div class="line">            joystick[i] = SDL_JoystickOpen(i);</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
 <div class="line">}</div>
 </div><!-- fragment -->
 </div>
@@ -168,6 +204,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <div class="fragment"><div class="line">                                        {</div>
+<div class="line">    SDL_QuitSubSystem(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK);</div>
 <div class="line">}</div>
 </div><!-- fragment -->
 </div>
@@ -198,6 +235,43 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classavo_1_1GraphicsService.html#ab4fe9950c4849eb0c6e2343c6efd6367">avo::GraphicsService</a>.</p>
 <div class="fragment"><div class="line">                               {</div>
 <div class="line">    <a class="code" href="classavo_1_1GraphicsService.html#ab4fe9950c4849eb0c6e2343c6efd6367">GraphicsService::close</a>();</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a7157d736a9ba6c3f7c574e8f4437b4ea"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structavo_1_1GraphicsService_1_1SpecialKeyCodes.html">GraphicsService::SpecialKeyCodes</a> avo::SdlGraphicsService::specialKeyCodes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Standardized special keys. </p>
+
+<p>Implements <a class="el" href="classavo_1_1GraphicsService.html#a5bb666bf8e95808c012c4bfa55d5d4cc">avo::GraphicsService</a>.</p>
+<div class="fragment"><div class="line">                                                                   {</div>
+<div class="line"></div>
+<div class="line">    SpecialKeyCodes keyMap;</div>
+<div class="line"></div>
+<div class="line">    keyMap.UpArrow = SDLK_UP;</div>
+<div class="line">    keyMap.RightArrow = SDLK_RIGHT;</div>
+<div class="line">    keyMap.DownArrow = SDLK_DOWN;</div>
+<div class="line">    keyMap.LeftArrow = SDLK_LEFT;</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">return</span> keyMap;</div>
 <div class="line">}</div>
 </div><!-- fragment -->
 </div>

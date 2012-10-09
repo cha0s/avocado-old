@@ -5,10 +5,9 @@
 <area shape="rect" id="node4" href="$group__SDL.html" title="Avocado&#39;s interface to the Simple DirectMedia Layer." alt="" coords="408,1149,544,1195"/>
 <area shape="rect" id="node5" href="$group__Qt.html" title="Avocado&#39;s interface to the Qt development framework." alt="" coords="387,1387,565,1434"/>
 <area shape="rect" id="node7" href="$group__V8.html" title="Avocado&#39;s interface to the V8 JavaScript engine." alt="" coords="397,1652,555,1681"/>
-<area shape="rect" id="node8" href="$group__Ui.html" title="The UI SPI handles user interface functionality such as windows and user event polling." alt="" coords="411,1908,541,1937"/>
-<area shape="rect" id="node9" href="$group__Resources.html" title="Resources are loaded from the resource root and are managed using reference counting." alt="" coords="397,2303,555,2332"/>
-<area shape="rect" id="node10" href="$group__Timing.html" title="The timing SPI handles measuring time." alt="" coords="433,2593,519,2623"/>
-<area shape="rect" id="node11" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="424,2988,528,3017"/>
-<area shape="rect" id="node12" href="$group__Graphics.html" title="The graphics SPI handles window and graphics system initialization, and rendering." alt="" coords="427,3348,525,3377"/>
-<area shape="rect" id="node13" href="$group__SFML.html" title="Avocado&#39;s interface to the Simple and Fast Multimedia Library." alt="" coords="384,3682,568,3729"/>
+<area shape="rect" id="node8" href="$group__Resources.html" title="Resources are loaded from the resource root and are managed using reference counting." alt="" coords="397,2047,555,2076"/>
+<area shape="rect" id="node9" href="$group__Timing.html" title="The timing SPI handles measuring time." alt="" coords="433,2337,519,2367"/>
+<area shape="rect" id="node10" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="424,2732,528,2761"/>
+<area shape="rect" id="node11" href="$group__Graphics.html" title="The graphics SPI handles window and graphics system initialization, and rendering." alt="" coords="427,3109,525,3139"/>
+<area shape="rect" id="node12" href="$group__SFML.html" title="Avocado&#39;s interface to the Simple and Fast Multimedia Library." alt="" coords="384,3443,568,3490"/>
 </map>

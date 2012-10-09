@@ -2,9 +2,8 @@
 <area shape="rect" id="node1" href="$group__Core.html" title="The core SPI handles framework initialization (e.g. SDL_Init()) and teardown (e.g. SDL_Quit()) as well as bridges to core engine functionality like filesystem access." alt="" coords="445,59,520,88"/>
 <area shape="rect" id="node2" href="$group__Sound.html" title="The sound SPI handles sound system initialization, as well as music and sample loading and playing..." alt="" coords="440,245,525,275"/>
 <area shape="rect" id="node3" href="$group__SPI.html" title="Simply put, SPI implementations (SPIIs) provide an way for the engine to do interesting and dynamic t..." alt="" coords="393,588,572,617"/>
-<area shape="rect" id="node4" href="$group__Ui.html" title="The UI SPI handles user interface functionality such as windows and user event polling." alt="" coords="417,723,548,752"/>
-<area shape="rect" id="node5" href="$group__Resources.html" title="Resources are loaded from the resource root and are managed using reference counting." alt="" coords="404,909,561,939"/>
-<area shape="rect" id="node6" href="$group__Timing.html" title="The timing SPI handles measuring time." alt="" coords="440,1044,525,1073"/>
-<area shape="rect" id="node7" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="431,1439,535,1468"/>
-<area shape="rect" id="node8" href="$group__Graphics.html" title="The graphics SPI handles window and graphics system initialization, and rendering." alt="" coords="433,1573,532,1603"/>
+<area shape="rect" id="node4" href="$group__Resources.html" title="Resources are loaded from the resource root and are managed using reference counting." alt="" coords="404,775,561,804"/>
+<area shape="rect" id="node5" href="$group__Timing.html" title="The timing SPI handles measuring time." alt="" coords="440,909,525,939"/>
+<area shape="rect" id="node6" href="$group__Manufacturing.html" title="Manufacturing functionality handles abstract factory &#160;definition and managing concrete factory instan..." alt="" coords="431,1252,535,1281"/>
+<area shape="rect" id="node7" href="$group__Graphics.html" title="The graphics SPI handles window and graphics system initialization, and rendering." alt="" coords="433,1439,532,1468"/>
 </map>

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['display',['display',['../classavo_1_1Image.html#a1d322c7194070827045ad6ba3c95de9c',1,'avo::Image::display()'],['../classavo_1_1SfmlImage.html#a70bd90d421befd3231b320a628675aff',1,'avo::SfmlImage::display()'],['../classavo_1_1SfmlWindow.html#a789e55286b25d7f0bfe8e130c89dd5a0',1,'avo::SfmlWindow::display()'],['../classavo_1_1Window.html#a61e571badc7e7132299d6fc417adfd63',1,'avo::Window::display()']]],
-  ['downarrow',['DownArrow',['../structavo_1_1UiService_1_1SpecialKeyCodes.html#a169f8fa2b5365f705877f9a8d86eef62',1,'avo::UiService::SpecialKeyCodes']]],
+  ['downarrow',['DownArrow',['../structavo_1_1GraphicsService_1_1SpecialKeyCodes.html#ad5501d309c31b7bc6a5e3ef95fc3eacb',1,'avo::GraphicsService::SpecialKeyCodes']]],
   ['doxygen_2eh',['doxygen.h',['../doxygen_8h.html',1,'']]],
   ['drawcircle',['drawCircle',['../classavo_1_1Image.html#ab2f3acb01bf30aa508ee57384d9ac555',1,'avo::Image::drawCircle()'],['../classavo_1_1QtImage.html#ae0f566717488f46c040df8095f8c3a18',1,'avo::QtImage::drawCircle()'],['../classavo_1_1SdlImage.html#abcf5e6fe5dd5e71c1c1751d356e566e3',1,'avo::SdlImage::drawCircle()'],['../classavo_1_1SfmlImage.html#a4f7c510674a8cea7628b5c6866ad5ef8',1,'avo::SfmlImage::drawCircle()']]],
   ['drawfilledbox',['drawFilledBox',['../classavo_1_1Image.html#a2ad32019c320db171463fb9c315758f1',1,'avo::Image::drawFilledBox()'],['../classavo_1_1QtImage.html#a53fe6da48625ca6917eca72f1a0850ea',1,'avo::QtImage::drawFilledBox()'],['../classavo_1_1SdlImage.html#aa5f958ec2917b02f9b24754992c08c83',1,'avo::SdlImage::drawFilledBox()'],['../classavo_1_1SfmlImage.html#a2f2a5dc817784acb137a2544c1cb99d8',1,'avo::SfmlImage::drawFilledBox()']]],

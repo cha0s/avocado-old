@@ -15,7 +15,6 @@ var searchData=
   ['sdlsample',['SdlSample',['../classavo_1_1SdlSample.html',1,'avo']]],
   ['sdlsoundservice',['SdlSoundService',['../classavo_1_1SdlSoundService.html',1,'avo']]],
   ['sdltimingservice',['SdlTimingService',['../classavo_1_1SdlTimingService.html',1,'avo']]],
-  ['sdluiservice',['SdlUiService',['../classavo_1_1SdlUiService.html',1,'avo']]],
   ['sdlwindow',['SdlWindow',['../classavo_1_1SdlWindow.html',1,'avo']]],
   ['sfmlcoreservice',['SfmlCoreService',['../classavo_1_1SfmlCoreService.html',1,'avo']]],
   ['sfmlcounter',['SfmlCounter',['../classavo_1_1SfmlCounter.html',1,'avo']]],
@@ -25,10 +24,9 @@ var searchData=
   ['sfmlsample',['SfmlSample',['../classavo_1_1SfmlSample.html',1,'avo']]],
   ['sfmlsoundservice',['SfmlSoundService',['../classavo_1_1SfmlSoundService.html',1,'avo']]],
   ['sfmltimingservice',['SfmlTimingService',['../classavo_1_1SfmlTimingService.html',1,'avo']]],
-  ['sfmluiservice',['SfmlUiService',['../classavo_1_1SfmlUiService.html',1,'avo']]],
   ['sfmlwindow',['SfmlWindow',['../classavo_1_1SfmlWindow.html',1,'avo']]],
   ['soundservice',['SoundService',['../classavo_1_1SoundService.html',1,'avo']]],
-  ['specialkeycodes',['SpecialKeyCodes',['../structavo_1_1UiService_1_1SpecialKeyCodes.html',1,'avo::UiService']]],
+  ['specialkeycodes',['SpecialKeyCodes',['../structavo_1_1GraphicsService_1_1SpecialKeyCodes.html',1,'avo::GraphicsService']]],
   ['spi_5fimplementation_5ferror',['spi_implementation_error',['../classavo_1_1SpiiLoader_1_1spi__implementation__error.html',1,'avo::SpiiLoader']]],
   ['spiiloader',['SpiiLoader',['../classavo_1_1SpiiLoader.html',1,'avo']]]
 ];

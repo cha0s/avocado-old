@@ -12,7 +12,6 @@ var searchData=
   ['factorymanager_3c_20scriptservice_20_3e',['FactoryManager&lt; ScriptService &gt;',['../classavo_1_1FactoryManager.html',1,'avo']]],
   ['factorymanager_3c_20soundservice_20_3e',['FactoryManager&lt; SoundService &gt;',['../classavo_1_1FactoryManager.html',1,'avo']]],
   ['factorymanager_3c_20timingservice_20_3e',['FactoryManager&lt; TimingService &gt;',['../classavo_1_1FactoryManager.html',1,'avo']]],
-  ['factorymanager_3c_20uiservice_20_3e',['FactoryManager&lt; UiService &gt;',['../classavo_1_1FactoryManager.html',1,'avo']]],
   ['factorymanager_3c_20window_20_3e',['FactoryManager&lt; Window &gt;',['../classavo_1_1FactoryManager.html',1,'avo']]],
   ['fs',['FS',['../classavo_1_1FS_1_1FS.html',1,'avo::FS']]]
 ];

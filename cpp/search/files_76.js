@@ -20,8 +20,6 @@ var searchData=
   ['v8soundservice_2eh',['v8SoundService.h',['../v8SoundService_8h.html',1,'']]],
   ['v8timingservice_2ecpp',['v8TimingService.cpp',['../v8TimingService_8cpp.html',1,'']]],
   ['v8timingservice_2eh',['v8TimingService.h',['../v8TimingService_8h.html',1,'']]],
-  ['v8uiservice_2ecpp',['v8UiService.cpp',['../v8UiService_8cpp.html',1,'']]],
-  ['v8uiservice_2eh',['v8UiService.h',['../v8UiService_8h.html',1,'']]],
   ['v8window_2ecpp',['v8Window.cpp',['../v8Window_8cpp.html',1,'']]],
   ['v8window_2eh',['v8Window.h',['../v8Window_8h.html',1,'']]]
 ];

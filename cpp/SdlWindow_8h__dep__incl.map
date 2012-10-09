@@ -1,4 +1,4 @@
-<map id="SPI/Ui/SDL/SdlWindow.h" name="SPI/Ui/SDL/SdlWindow.h">
-<area shape="rect" id="node3" href="$SdlUiService_8cpp.html" title="SPI/Ui/SDL/SdlUiService.cpp" alt="" coords="5,83,200,112"/>
-<area shape="rect" id="node5" href="$SdlWindow_8cpp.html" title="SPI/Ui/SDL/SdlWindow.cpp" alt="" coords="224,83,411,112"/>
+<map id="SPI/Graphics/SDL/SdlWindow.h" name="SPI/Graphics/SDL/SdlWindow.h">
+<area shape="rect" id="node3" href="$SdlGraphicsService_8cpp.html" title="SPI/Graphics/SDL/SdlGraphics\lService.cpp" alt="" coords="5,83,211,130"/>
+<area shape="rect" id="node5" href="$SdlWindow_8cpp.html" title="SPI/Graphics/SDL/SdlWindow.cpp" alt="" coords="235,92,459,121"/>
 </map>

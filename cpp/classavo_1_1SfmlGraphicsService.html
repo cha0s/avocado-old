@@ -113,6 +113,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a750ce9672b5e09bfbc9b1d92fa9d9cde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c44ef3a17c214258c9542ea6210be0f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SfmlGraphicsService.html#a7c44ef3a17c214258c9542ea6210be0f">close</a> ()</td></tr>
 <tr class="separator:a7c44ef3a17c214258c9542ea6210be0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e421c77b2b51e1d6cb5ed15cb3ec83f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structavo_1_1GraphicsService_1_1SpecialKeyCodes.html">SpecialKeyCodes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SfmlGraphicsService.html#a5e421c77b2b51e1d6cb5ed15cb3ec83f">specialKeyCodes</a> ()</td></tr>
+<tr class="separator:a5e421c77b2b51e1d6cb5ed15cb3ec83f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classavo_1_1GraphicsService"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classavo_1_1GraphicsService')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classavo_1_1GraphicsService.html">avo::GraphicsService</a></td></tr>
 <tr class="memitem:a75531e2b2a6a2d4036d75fb5faa5c555 inherit pub_methods_classavo_1_1GraphicsService"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1GraphicsService.html#a75531e2b2a6a2d4036d75fb5faa5c555">GraphicsService</a> ()</td></tr>
 <tr class="separator:a75531e2b2a6a2d4036d75fb5faa5c555 inherit pub_methods_classavo_1_1GraphicsService"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -151,6 +153,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="fragment"><div class="line">                                         {</div>
 <div class="line"></div>
 <div class="line">    <a class="code" href="classavo_1_1Image.html#a99d1bbc316fb27cf9600207f1647625d">Image::factoryManager</a>.<a class="code" href="classavo_1_1FactoryManager.html#a56743fbd3289253612ed8b16facc9b8b">setInstance</a>(<a class="code" href="classavo_1_1SfmlImage.html#a61e7a9322d499b997fde1ff8648de6e9">SfmlImage::factory</a>);</div>
+<div class="line">    <a class="code" href="classavo_1_1Window.html#a102fbf2bddee9690ce3872f6a87c6067">Window::factoryManager</a>.<a class="code" href="classavo_1_1FactoryManager.html#a56743fbd3289253612ed8b16facc9b8b">setInstance</a>(<a class="code" href="classavo_1_1SfmlWindow.html#a7da7ada76c939aa1ca47192126075c45">SfmlWindow::factory</a>);</div>
 <div class="line">}</div>
 </div><!-- fragment -->
 </div>
@@ -198,6 +201,43 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classavo_1_1GraphicsService.html#ab4fe9950c4849eb0c6e2343c6efd6367">avo::GraphicsService</a>.</p>
 <div class="fragment"><div class="line">                                {</div>
 <div class="line">    <a class="code" href="classavo_1_1GraphicsService.html#ab4fe9950c4849eb0c6e2343c6efd6367">GraphicsService::close</a>();</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a5e421c77b2b51e1d6cb5ed15cb3ec83f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structavo_1_1GraphicsService_1_1SpecialKeyCodes.html">GraphicsService::SpecialKeyCodes</a> avo::SfmlGraphicsService::specialKeyCodes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Standardized special keys. </p>
+
+<p>Implements <a class="el" href="classavo_1_1GraphicsService.html#a5bb666bf8e95808c012c4bfa55d5d4cc">avo::GraphicsService</a>.</p>
+<div class="fragment"><div class="line">                                                                    {</div>
+<div class="line"></div>
+<div class="line">    SpecialKeyCodes keyMap;</div>
+<div class="line"></div>
+<div class="line"><span class="comment">//  keyMap.UpArrow = SFMLK_UP;</span></div>
+<div class="line"><span class="comment">//  keyMap.RightArrow = SFMLK_RIGHT;</span></div>
+<div class="line"><span class="comment">//  keyMap.DownArrow = SFMLK_DOWN;</span></div>
+<div class="line"><span class="comment">//  keyMap.LeftArrow = SFMLK_LEFT;</span></div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">return</span> keyMap;</div>
 <div class="line">}</div>
 </div><!-- fragment -->
 </div>

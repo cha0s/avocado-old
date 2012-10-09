@@ -10,6 +10,5 @@ var searchData=
   ['v8scriptservice',['v8ScriptService',['../classavo_1_1v8ScriptService.html',1,'avo']]],
   ['v8soundservice',['v8SoundService',['../classavo_1_1v8SoundService.html',1,'avo']]],
   ['v8timingservice',['v8TimingService',['../classavo_1_1v8TimingService.html',1,'avo']]],
-  ['v8uiservice',['v8UiService',['../classavo_1_1v8UiService.html',1,'avo']]],
   ['v8window',['v8Window',['../classavo_1_1v8Window.html',1,'avo']]]
 ];

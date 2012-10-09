@@ -88,12 +88,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classavo_1_1GraphicsService-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">avo::GraphicsService Class Reference<div class="ingroups"><a class="el" href="group__Graphics.html">Graphics SPI</a> &#124; <a class="el" href="group__SPI.html">Service Provider Interfaces</a></div></div>  </div>
+<div class="title">avo::GraphicsService Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span><div class="ingroups"><a class="el" href="group__Graphics.html">Graphics SPI</a> &#124; <a class="el" href="group__SPI.html">Service Provider Interfaces</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -106,6 +107,11 @@ Inheritance diagram for avo::GraphicsService:</div>
 <area shape="rect" id="node3" href="classavo_1_1QtGraphicsService.html" title="avo::QtGraphicsService" alt="" coords="5,83,165,112"/><area shape="rect" id="node5" href="classavo_1_1SdlGraphicsService.html" title="avo::SdlGraphicsService" alt="" coords="189,83,355,112"/><area shape="rect" id="node7" href="classavo_1_1SfmlGraphicsService.html" title="avo::SfmlGraphicsService" alt="" coords="379,83,552,112"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structavo_1_1GraphicsService_1_1SpecialKeyCodes.html">SpecialKeyCodes</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a75531e2b2a6a2d4036d75fb5faa5c555"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1GraphicsService.html#a75531e2b2a6a2d4036d75fb5faa5c555">GraphicsService</a> ()</td></tr>
@@ -114,6 +120,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a84d78d5e761f57e8c69cc6e8f3a8092d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4fe9950c4849eb0c6e2343c6efd6367"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1GraphicsService.html#ab4fe9950c4849eb0c6e2343c6efd6367">close</a> ()</td></tr>
 <tr class="separator:ab4fe9950c4849eb0c6e2343c6efd6367"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bb666bf8e95808c012c4bfa55d5d4cc"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structavo_1_1GraphicsService_1_1SpecialKeyCodes.html">SpecialKeyCodes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1GraphicsService.html#a5bb666bf8e95808c012c4bfa55d5d4cc">specialKeyCodes</a> ()=0</td></tr>
+<tr class="separator:a5bb666bf8e95808c012c4bfa55d5d4cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -226,6 +234,32 @@ Static Public Attributes</h2></td></tr>
 <div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;GraphicsService&quot;</span>;</div>
 <div class="line">    }</div>
 </div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a5bb666bf8e95808c012c4bfa55d5d4cc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="structavo_1_1GraphicsService_1_1SpecialKeyCodes.html">SpecialKeyCodes</a> avo::GraphicsService::specialKeyCodes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Standardized special keys. </p>
+
+<p>Implemented in <a class="el" href="classavo_1_1SdlGraphicsService.html#a7157d736a9ba6c3f7c574e8f4437b4ea">avo::SdlGraphicsService</a>, <a class="el" href="classavo_1_1SfmlGraphicsService.html#a5e421c77b2b51e1d6cb5ed15cb3ec83f">avo::SfmlGraphicsService</a>, and <a class="el" href="classavo_1_1QtGraphicsService.html#a640164dac26acffbea3ccd4d46b7a8f6">avo::QtGraphicsService</a>.</p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>

@@ -4,7 +4,7 @@
 <area shape="rect" id="node50" href="$v8Image_8h.html" title="v8Image.h" alt="" coords="59,160,141,189"/>
 <area shape="rect" id="node12" href="$avocado-v8_8h.html" title="avocado&#45;v8.h" alt="" coords="93,315,192,344"/>
 <area shape="rect" id="node19" href="$ObjectWrap_8h.html" title="ObjectWrap.h" alt="" coords="216,237,317,267"/>
-<area shape="rect" id="node25" href="$Window_8h.html" title="../../Ui/Window.h" alt="" coords="601,160,721,189"/>
+<area shape="rect" id="node25" href="$Window_8h.html" title="../../Graphics/Window.h" alt="" coords="581,160,741,189"/>
 <area shape="rect" id="node29" href="$Image_8h.html" title="../Graphics/Image.h" alt="" coords="508,237,644,267"/>
 <area shape="rect" id="node32" href="$FS_8h.html" title="FS.h" alt="" coords="835,392,885,421"/>
 <area shape="rect" id="node40" href="$ResourceManager_8h.html" title="SPI/ResourceManager.h" alt="" coords="493,315,659,344"/>

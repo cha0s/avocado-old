@@ -6,10 +6,9 @@
 <area shape="rect" id="node21" href="$v8Image_8h.html" title="SPI/Script/v8/v8Image.h" alt="" coords="865,92,1031,121"/>
 <area shape="rect" id="node28" href="$v8Music_8h.html" title="SPI/Script/v8/v8Music.h" alt="" coords="1255,92,1417,121"/>
 <area shape="rect" id="node33" href="$v8Sample_8h.html" title="SPI/Script/v8/v8Sample.h" alt="" coords="1441,92,1615,121"/>
-<area shape="rect" id="node38" href="$v8UiService_8h.html" title="SPI/Script/v8/v8UiService.h" alt="" coords="1639,92,1825,121"/>
-<area shape="rect" id="node43" href="$v8TimingService_8h.html" title="SPI/Script/v8/v8TimingService.h" alt="" coords="1849,92,2060,121"/>
-<area shape="rect" id="node48" href="$v8SoundService_8h.html" title="SPI/Script/v8/v8SoundService.h" alt="" coords="2084,92,2295,121"/>
-<area shape="rect" id="node53" href="$v8Window_8h.html" title="SPI/Script/v8/v8Window.h" alt="" coords="1055,92,1231,121"/>
+<area shape="rect" id="node38" href="$v8TimingService_8h.html" title="SPI/Script/v8/v8TimingService.h" alt="" coords="1639,92,1849,121"/>
+<area shape="rect" id="node43" href="$v8SoundService_8h.html" title="SPI/Script/v8/v8SoundService.h" alt="" coords="1873,92,2084,121"/>
+<area shape="rect" id="node48" href="$v8Window_8h.html" title="SPI/Script/v8/v8Window.h" alt="" coords="1055,92,1231,121"/>
 <area shape="rect" id="node7" href="$v8CoreService_8cpp.html" title="SPI/Script/v8/v8CoreService.cpp" alt="" coords="5,188,219,217"/>
 <area shape="rect" id="node9" href="$v8ScriptService_8cpp.html" title="SPI/Script/v8/v8ScriptService.cpp" alt="" coords="1067,188,1288,217"/>
 <area shape="rect" id="node13" href="$v8Counter_8cpp.html" title="SPI/Script/v8/v8Counter.cpp" alt="" coords="243,188,432,217"/>
@@ -18,7 +17,6 @@
 <area shape="rect" id="node26" href="$v8Window_8cpp.html" title="SPI/Script/v8/v8Window.cpp" alt="" coords="853,188,1043,217"/>
 <area shape="rect" id="node30" href="$v8Music_8cpp.html" title="SPI/Script/v8/v8Music.cpp" alt="" coords="1312,188,1491,217"/>
 <area shape="rect" id="node35" href="$v8Sample_8cpp.html" title="SPI/Script/v8/v8Sample.cpp" alt="" coords="1515,188,1701,217"/>
-<area shape="rect" id="node41" href="$v8UiService_8cpp.html" title="SPI/Script/v8/v8UiService.cpp" alt="" coords="1725,188,1925,217"/>
-<area shape="rect" id="node46" href="$v8TimingService_8cpp.html" title="SPI/Script/v8/v8TimingService.cpp" alt="" coords="1949,188,2176,217"/>
-<area shape="rect" id="node51" href="$v8SoundService_8cpp.html" title="SPI/Script/v8/v8SoundService.cpp" alt="" coords="2200,188,2424,217"/>
+<area shape="rect" id="node41" href="$v8TimingService_8cpp.html" title="SPI/Script/v8/v8TimingService.cpp" alt="" coords="1725,188,1952,217"/>
+<area shape="rect" id="node46" href="$v8SoundService_8cpp.html" title="SPI/Script/v8/v8SoundService.cpp" alt="" coords="1976,188,2200,217"/>
 </map>

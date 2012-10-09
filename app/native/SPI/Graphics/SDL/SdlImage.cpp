@@ -237,26 +237,22 @@ void SdlImage::render(int x, int y, Image *destination, int alpha, DrawMode mode
 
 		src += sIdx;
 		dst += dIdx;
-		unsigned int colorKey = surface->format->colorkey;
 
 		// For each pixel from the source image, make it a
 		// 2 x 2 block in the destination.
 		for (int y = 0; y < sh; ++y) {
 			for (int x = 0; x < sw; ++x) {
 
-				if (colorKey != *src) {
+				sc = reinterpret_cast<unsigned char *>(src);
 
-					sc = reinterpret_cast<unsigned char *>(src);
-
-					if (DrawMode_Replace == mode || (255 == alpha && 255 == sc[3])) {
-
-						*dst = *src;
-					}
-					else {
-
-						*dst = blendPixel(*src, *dst, alpha);
-					}
+				int dstColor;
+				if (DrawMode_Replace == mode || (255 == alpha && 255 == sc[3])) {
+					dstColor = 255 << 24;
 				}
+				else {
+					dstColor = *dst;
+				}
+				*dst = blendPixel(*src, dstColor, alpha);
 
 				src++;
 				dst++;

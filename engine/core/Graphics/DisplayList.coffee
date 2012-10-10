@@ -141,7 +141,7 @@ class avo.DisplayCommand
 		
 	setRectangle: (rectangle) ->
 		
-		@rectangle_ = avo.Rectangle.floor rectangle
+		@rectangle_ = avo.Rectangle.round rectangle
 		@setDirty()
 		
 	rectangle: -> @rectangle_
@@ -152,10 +152,17 @@ class avo.DisplayCommand
 			position
 			avo.Rectangle.size @rectangle_
 		)
-		
 	position: -> avo.Rectangle.position @rectangle_
 	
-	setLastRectangle: (lastRectangle) -> @lastRectangle_ = avo.Rectangle.floor lastRectangle
+	setSize: (size) ->
+		
+		@setRectangle avo.Rectangle.compose(
+			avo.Rectangle.position @rectangle_
+			size
+		)
+	size: -> avo.Rectangle.size @rectangle_
+	
+	setLastRectangle: (lastRectangle) -> @lastRectangle_ = avo.Rectangle.round lastRectangle
 	lastRectangle: -> @lastRectangle_
 	
 	render: (position, clip, destination) ->

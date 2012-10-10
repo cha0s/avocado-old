@@ -468,22 +468,14 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classavo_1_1Window.html#a1fd64bcfe7588df228db51e6b005a91d">avo::Window</a>.</p>
 <div class="fragment"><div class="line">                                                                  {</div>
-<div class="line"></div>
+<div class="line">    <a class="code" href="group__Global.html#ga5091d56fd04fbd991600417b7b946a5a">AVOCADO_UNUSED</a>(x);</div>
+<div class="line">    <a class="code" href="group__Global.html#ga5091d56fd04fbd991600417b7b946a5a">AVOCADO_UNUSED</a>(y);</div>
+<div class="line">    <a class="code" href="group__Global.html#ga5091d56fd04fbd991600417b7b946a5a">AVOCADO_UNUSED</a>(w);</div>
+<div class="line">    <a class="code" href="group__Global.html#ga5091d56fd04fbd991600417b7b946a5a">AVOCADO_UNUSED</a>(h);</div>
 <div class="line">    sf::Sprite sprite(</div>
 <div class="line">        Image::superCast&lt;SfmlImage&gt;(working)-&gt;renderTexture-&gt;getTexture()</div>
 <div class="line">    );</div>
-<div class="line"></div>
-<div class="line">    sprite.setPosition(sf::Vector2f(x, y));</div>
-<div class="line">    sf::IntRect rect(x, y, w, h);</div>
-<div class="line">    <span class="keywordflow">if</span> (0 == rect.width) {</div>
-<div class="line">        rect.width = <a class="code" href="classavo_1_1Window.html#a27bd4cc8d77ede73d295754c9b9389e8">width</a>();</div>
-<div class="line">    }</div>
-<div class="line">    <span class="keywordflow">if</span> (0 == rect.height) {</div>
-<div class="line">        rect.height = <a class="code" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a>();</div>
-<div class="line">    }</div>
-<div class="line">    sprite.setTextureRect(rect);</div>
-<div class="line"></div>
-<div class="line"></div>
+<div class="line">    window-&gt;clear();</div>
 <div class="line">    window-&gt;draw(sprite);</div>
 <div class="line">}</div>
 </div><!-- fragment -->

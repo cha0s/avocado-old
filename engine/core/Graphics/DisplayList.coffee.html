@@ -123,7 +123,7 @@ command.</p>
     
   <span class="nv">setRectangle: </span><span class="nf">(rectangle) -&gt;</span>
     
-    <span class="vi">@rectangle_ = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">floor</span> <span class="nx">rectangle</span>
+    <span class="vi">@rectangle_ = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">round</span> <span class="nx">rectangle</span>
     <span class="nx">@setDirty</span><span class="p">()</span>
     
   <span class="nv">rectangle: </span><span class="o">-&gt;</span> <span class="nx">@rectangle_</span>
@@ -134,10 +134,17 @@ command.</p>
       <span class="nx">position</span>
       <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">size</span> <span class="nx">@rectangle_</span>
     <span class="p">)</span>
-    
   <span class="nv">position: </span><span class="o">-&gt;</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">@rectangle_</span>
   
-  <span class="nv">setLastRectangle: </span><span class="nf">(lastRectangle) -&gt;</span> <span class="vi">@lastRectangle_ = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">floor</span> <span class="nx">lastRectangle</span>
+  <span class="nv">setSize: </span><span class="nf">(size) -&gt;</span>
+    
+    <span class="nx">@setRectangle</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">compose</span><span class="p">(</span>
+      <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">@rectangle_</span>
+      <span class="nx">size</span>
+    <span class="p">)</span>
+  <span class="nv">size: </span><span class="o">-&gt;</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">size</span> <span class="nx">@rectangle_</span>
+  
+  <span class="nv">setLastRectangle: </span><span class="nf">(lastRectangle) -&gt;</span> <span class="vi">@lastRectangle_ = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">round</span> <span class="nx">lastRectangle</span>
   <span class="nv">lastRectangle: </span><span class="o">-&gt;</span> <span class="nx">@lastRectangle_</span>
   
   <span class="nv">render: </span><span class="nf">(position, clip, destination) -&gt;</span>

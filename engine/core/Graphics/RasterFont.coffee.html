@@ -1,59 +1,68 @@
 <!DOCTYPE html><html><head><title>RasterFont.coffee</title><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><link rel="stylesheet" media="all" href="../../../docco.css"></head><body><div id="container"><div id="background"></div><div id="jump_to">Jump To &hellip;<div id="jump_wrapper"><div id="jump_page"><a href="../../../index.html" class="source"><span class="file_name">README</span></a><a href="../../../engine/core/CoreService.coffee.html" class="source "><span class="base_path">engine / core / </span><span class="file_name">CoreService.coffee</span></a><a href="../../../engine/core/Extension/Rectangle.coffee.html" class="source "><span class="base_path">engine / core / Extension / </span><span class="file_name">Rectangle.coffee</span></a><a href="../../../engine/core/Extension/String.coffee.html" class="source "><span class="base_path">engine / core / Extension / </span><span class="file_name">String.coffee</span></a><a href="../../../engine/core/Extension/Vector.coffee.html" class="source "><span class="base_path">engine / core / Extension / </span><span class="file_name">Vector.coffee</span></a><a href="../../../engine/core/Graphics/DisplayList.coffee.html" class="source "><span class="base_path">engine / core / Graphics / </span><span class="file_name">DisplayList.coffee</span></a><a href="../../../engine/core/Graphics/GraphicsService.coffee.html" class="source "><span class="base_path">engine / core / Graphics / </span><span class="file_name">GraphicsService.coffee</span></a><a href="../../../engine/core/Graphics/Image.coffee.html" class="source "><span class="base_path">engine / core / Graphics / </span><span class="file_name">Image.coffee</span></a><a href="../../../engine/core/Graphics/RasterFont.coffee.html" class="source selected"><span class="base_path">engine / core / Graphics / </span><span class="file_name">RasterFont.coffee</span></a><a href="../../../engine/core/Graphics/Window.coffee.html" class="source "><span class="base_path">engine / core / Graphics / </span><span class="file_name">Window.coffee</span></a><a href="../../../engine/core/Main.coffee.html" class="source "><span class="base_path">engine / core / </span><span class="file_name">Main.coffee</span></a><a href="../../../engine/core/Sound/Music.coffee.html" class="source "><span class="base_path">engine / core / Sound / </span><span class="file_name">Music.coffee</span></a><a href="../../../engine/core/Sound/Sample.coffee.html" class="source "><span class="base_path">engine / core / Sound / </span><span class="file_name">Sample.coffee</span></a><a href="../../../engine/core/State/AbstractState.coffee.html" class="source "><span class="base_path">engine / core / State / </span><span class="file_name">AbstractState.coffee</span></a><a href="../../../engine/core/State/Initial.coffee.html" class="source "><span class="base_path">engine / core / State / </span><span class="file_name">Initial.coffee</span></a><a href="../../../engine/core/Timing/Counter.coffee.html" class="source "><span class="base_path">engine / core / Timing / </span><span class="file_name">Counter.coffee</span></a><a href="../../../engine/core/Timing/Cps.coffee.html" class="source "><span class="base_path">engine / core / Timing / </span><span class="file_name">Cps.coffee</span></a><a href="../../../engine/core/Timing/Ticker.coffee.html" class="source "><span class="base_path">engine / core / Timing / </span><span class="file_name">Ticker.coffee</span></a><a href="../../../engine/core/Timing/TimingService.coffee.html" class="source "><span class="base_path">engine / core / Timing / </span><span class="file_name">TimingService.coffee</span></a><a href="../../../engine/core/Utility/EventEmitter.coffee.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">EventEmitter.coffee</span></a><a href="../../../engine/core/Utility/Logger.coffee.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">Logger.coffee</span></a><a href="../../../engine/core/Utility/Mixin.coffee.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">Mixin.coffee</span></a><a href="../../../engine/core/Utility/Transition.coffee.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">Transition.coffee</span></a><a href="../../../engine/core/Utility/underscore-min.js.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">underscore-min.js</span></a><a href="../../../engine/core/Utility/upon.js.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">upon.js</span></a><a href="../../../engine/main/native/Finish.coffee.html" class="source "><span class="base_path">engine / main / native / </span><span class="file_name">Finish.coffee</span></a><a href="../../../engine/main/native/Initialize.coffee.html" class="source "><span class="base_path">engine / main / native / </span><span class="file_name">Initialize.coffee</span></a><a href="../../../engine/main/native/Main.coffee.html" class="source "><span class="base_path">engine / main / native / </span><span class="file_name">Main.coffee</span></a></div></div></div><table cellpadding="0" cellspacing="0"><thead><tr><th class="docs"><h1>RasterFont.coffee</h1><div class="filepath">engine/core/Graphics/</div></th><th class="code"></th></tr></thead><tbody><tr id="section-1"><td class="docs"><div class="pilwrap"><a href="#section-1" class="pilcrow">&#182;</a></div>
-</td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nx">@Font</span>
+</td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">RasterFont</span>
   
   <span class="vi">@load = </span><span class="nf">(uri) -&gt;</span>
     
-    <span class="nv">defer = </span><span class="nx">when_</span><span class="p">.</span><span class="nx">defer</span><span class="p">()</span>
+    <span class="nv">defer = </span><span class="nx">upon</span><span class="p">.</span><span class="nx">defer</span><span class="p">()</span>
     
-    <span class="nv">font = </span><span class="k">new</span> <span class="nx">Font</span><span class="p">()</span>
-    
-    <span class="nv">imagePromise = </span><span class="nx">Image</span><span class="p">.</span><span class="nx">load</span> <span class="nx">uri</span>
-    
-    <span class="nx">imagePromise</span><span class="p">.</span><span class="k">then</span> <span class="nf">(image) -&gt;</span>
-      
-      <span class="nv">font.image.uri = </span><span class="nx">uri</span>
-      
-      <span class="nv">font.charSize = </span><span class="nx">font</span><span class="p">.</span><span class="nx">image</span><span class="p">.</span><span class="nx">size</span><span class="p">().</span><span class="nx">divVector</span> <span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-      
+    <span class="nx">avo</span><span class="p">.</span><span class="nx">Image</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="nx">uri</span><span class="p">).</span><span class="k">then</span> <span class="nf">(image) -&gt;</span>
+      <span class="nv">font = </span><span class="k">new</span> <span class="nx">RasterFont</span><span class="p">()</span>
+      <span class="nv">font.image_ = </span><span class="nx">image</span>
+      <span class="nv">font.charSize_ = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">div</span> <span class="nx">font</span><span class="p">.</span><span class="nx">image_</span><span class="p">.</span><span class="nx">size</span><span class="p">(),</span> <span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
       <span class="nx">defer</span><span class="p">.</span><span class="nx">resolve</span> <span class="nx">font</span>
-    
+      
     <span class="nx">defer</span><span class="p">.</span><span class="nx">promise</span>
   
-  <span class="nv">textWidth: </span><span class="nf">(text) -&gt;</span> <span class="nx">text</span><span class="p">.</span><span class="nx">length</span> <span class="o">*</span> <span class="nx">@charSize</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="nv">textWidth: </span><span class="nf">(text) -&gt;</span> <span class="nx">text</span><span class="p">.</span><span class="nx">length</span> <span class="o">*</span> <span class="nx">@charSize_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
   
-  <span class="nv">textHeight: </span><span class="nf">(text) -&gt;</span> <span class="nx">@charSize</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="nv">textHeight: </span><span class="nf">(text) -&gt;</span> <span class="nx">@charSize_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
   
   <span class="nv">textSize: </span><span class="nf">(text) -&gt;</span> <span class="p">[</span>
     <span class="nx">@textWidth</span> <span class="nx">text</span>
     <span class="nx">@textHeight</span> <span class="nx">text</span>
   <span class="p">]</span>
   
-  <span class="nv">render: </span><span class="nf">(location, destination, message, alpha = 255, effect = null) -&gt;</span>
+  <span class="nv">render: </span><span class="nf">(location, destination, text, alpha = 255, effect = null) -&gt;</span>
     
-    <span class="nv">location = </span><span class="nx">location</span><span class="p">.</span><span class="nx">slice</span> <span class="mi">0</span>
+    <span class="nv">location = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">copy</span> <span class="nx">location</span>
     
     <span class="nv">rect = </span><span class="p">(</span><span class="nx">character</span><span class="p">)</span> <span class="o">=&gt;</span>
-      </pre></div></td></tr><tr id="section-2"><td class="docs"><div class="pilwrap"><a href="#section-2" class="pilcrow">&#182;</a></div><p>Clamp the character to 0-255.</p>
-</td><td class="code"><div class="highlight"><pre>      <span class="nv">character = </span><span class="nb">Math</span><span class="p">.</span><span class="nx">min</span> <span class="mi">255</span><span class="p">,</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">character</span>
-      </pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>Get the current area of the Image to render, based on the current
+      </pre></div></td></tr><tr id="section-2"><td class="docs"><div class="pilwrap"><a href="#section-2" class="pilcrow">&#182;</a></div><p>Get the current area of the Image to render, based on the current
 character, as well as the frame size.</p>
 </td><td class="code"><div class="highlight"><pre>      <span class="k">return</span> <span class="p">[</span>
-        <span class="nx">character</span> <span class="o">*</span> <span class="nx">@charSize</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span>
-        <span class="nx">@charSize</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">@charSize</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="nx">character</span> <span class="o">*</span> <span class="nx">@charSize_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span>
+        <span class="nx">@charSize_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">@charSize_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
       <span class="p">]</span>
-    </pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Pre-calc the length. Iterate over the string's characters.</p>
+    </pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>Pre-calc the length. Iterate over the string's characters.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="nv">x = </span><span class="nx">location</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">for</span> <span class="nx">i</span> <span class="k">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">...</span><span class="nx">message</span><span class="p">.</span><span class="nx">length</span><span class="p">]</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="k">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">...</span><span class="nx">text</span><span class="p">.</span><span class="nx">length</span><span class="p">]</span>
     
-      <span class="nv">effectedLocation = </span><span class="nx">location</span>
-      <span class="nv">effectedLocation = </span><span class="nx">effectedLocation</span><span class="p">.</span><span class="nx">addVector</span> <span class="nx">effect</span><span class="p">.</span><span class="nx">apply</span> <span class="nx">i</span> <span class="k">if</span> <span class="nx">effect</span><span class="o">?</span></pre></div></td></tr><tr id="section-5"><td class="docs"><div class="pilwrap"><a href="#section-5" class="pilcrow">&#182;</a></div><p>Render the character.</p>
-</td><td class="code"><div class="highlight"><pre>      <span class="nx">@image</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+      <span class="nv">effectedLocation = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">copy</span> <span class="nx">location</span>
+      <span class="nv">effectedLocation = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">add</span> <span class="nx">effectedLocation</span><span class="p">,</span> <span class="nx">effect</span><span class="p">.</span><span class="nx">apply</span> <span class="nx">i</span> <span class="k">if</span> <span class="nx">effect</span><span class="o">?</span></pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Render the character.</p>
+</td><td class="code"><div class="highlight"><pre>      <span class="nx">@image_</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
         <span class="nx">effectedLocation</span>
         <span class="nx">destination</span>
         <span class="nx">alpha</span>
-        <span class="nx">Image</span><span class="p">.</span><span class="nx">DrawMode_Blend</span>
-        <span class="nx">rect</span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">i</span><span class="p">))</span>
-      <span class="p">)</span></pre></div></td></tr><tr id="section-6"><td class="docs"><div class="pilwrap"><a href="#section-6" class="pilcrow">&#182;</a></div><p>Move right the width of the font.</p>
-</td><td class="code"><div class="highlight"><pre>      <span class="nx">location</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">@charSize</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nx">avo</span><span class="p">.</span><span class="nx">Image</span><span class="p">.</span><span class="nx">DrawMode_Blend</span>
+        <span class="nx">rect</span><span class="p">(</span><span class="nx">text</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">i</span><span class="p">))</span>
+      <span class="p">)</span></pre></div></td></tr><tr id="section-5"><td class="docs"><div class="pilwrap"><a href="#section-5" class="pilcrow">&#182;</a></div><p>Move right the width of the font.</p>
+</td><td class="code"><div class="highlight"><pre>      <span class="nx">location</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">@charSize_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="k">class</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">FontDisplayCommand</span> <span class="k">extends</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">DisplayCommand</span>
+  
+  <span class="nv">constructor: </span><span class="nf">(list, font, text, rectangle = [0, 0, 0, 0]) -&gt;</span>
+    <span class="k">super</span> <span class="nx">list</span><span class="p">,</span> <span class="nx">rectangle</span>
+    
+    <span class="vi">@font_ = </span><span class="nx">font</span>
+    <span class="nx">@setText</span> <span class="nx">text</span>
+    
+  <span class="nv">setText: </span><span class="nf">(text) -&gt;</span>
+    
+    <span class="vi">@text_ = </span><span class="nx">text</span>
+    <span class="nx">@setSize</span> <span class="nx">@font_</span><span class="p">.</span><span class="nx">textSize</span> <span class="nx">text</span>
+    
+  <span class="nv">render: </span><span class="nf">(position, clip, destination) -&gt;</span>
+    
+    <span class="nx">@font_</span><span class="p">.</span><span class="nx">render</span> <span class="nx">@position</span><span class="p">(),</span> <span class="nx">destination</span><span class="p">,</span> <span class="nx">@text_</span>
 
 </pre></div></td></tr></tbody></table><div id="projectname"><a href="../../../index.html">Avocado</a></div></div></body></html>

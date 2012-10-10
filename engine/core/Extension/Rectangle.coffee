@@ -93,7 +93,7 @@ avo.Rectangle =
 	#     true
 	isNull: (rectangle) ->
 		
-		avo.Vector.isZero avo.Rectangle.size rectangle
+		rectangle[2] is 0 or rectangle[3] is 0
 
 	# Returns a rectangle that is the united area of two rectangles.
 	#

@@ -133,8 +133,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a301814abda3421e167f4843743154c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abde8f5d6b0a0f8f94f1b438bed584025"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structavo_1_1Window_1_1Event.html">Event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#abde8f5d6b0a0f8f94f1b438bed584025">pollEvents</a> ()=0</td></tr>
 <tr class="separator:abde8f5d6b0a0f8f94f1b438bed584025"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3c777c31e1490e752534acd4c4daa7a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#ad3c777c31e1490e752534acd4c4daa7a">render</a> (<a class="el" href="classavo_1_1Image.html">Image</a> *working)=0</td></tr>
-<tr class="separator:ad3c777c31e1490e752534acd4c4daa7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fd64bcfe7588df228db51e6b005a91d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#a1fd64bcfe7588df228db51e6b005a91d">render</a> (<a class="el" href="classavo_1_1Image.html">Image</a> *working, int x, int y, int w, int h)=0</td></tr>
+<tr class="separator:a1fd64bcfe7588df228db51e6b005a91d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab519ee61f25af5661264537cecd8b745"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#ab519ee61f25af5661264537cecd8b745">setFlags</a> (<a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0">WindowFlags</a> <a class="el" href="classavo_1_1Window.html#a52cc4219dc6806a2caa0a68a22bcdf44">flags</a>=<a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0ab72160693e3a009592e9399c1da4cdf1">Flags_Default</a>)</td></tr>
 <tr class="separator:ab519ee61f25af5661264537cecd8b745"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b65552b2e5dd8435049f2793f0bd7a5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Window.html#a0b65552b2e5dd8435049f2793f0bd7a5">setSize</a> (int <a class="el" href="classavo_1_1Window.html#a27bd4cc8d77ede73d295754c9b9389e8">width</a>, int <a class="el" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a>)</td></tr>
@@ -321,7 +321,7 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad3c777c31e1490e752534acd4c4daa7a"></a>
+<a class="anchor" id="a1fd64bcfe7588df228db51e6b005a91d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -332,8 +332,36 @@ Static Public Attributes</h2></td></tr>
           <td class="memname">virtual void avo::Window::render </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classavo_1_1Image.html">Image</a> *&#160;</td>
-          <td class="paramname"><em>working</em></td><td>)</td>
+          <td class="paramname"><em>working</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>w</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>h</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -344,7 +372,7 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Render an <a class="el" href="classavo_1_1Image.html" title="The Image SPI handles everything related to images.">Image</a> onto this window. </p>
 
-<p>Implemented in <a class="el" href="classavo_1_1SfmlWindow.html#af8a17b62f8379759ce07980ce542a94d">avo::SfmlWindow</a>, and <a class="el" href="classavo_1_1SdlWindow.html#a61297994bdc3eba745788fe04040e134">avo::SdlWindow</a>.</p>
+<p>Implemented in <a class="el" href="classavo_1_1SfmlWindow.html#a0f8fed3691dee896a38830fc5373d186">avo::SfmlWindow</a>, and <a class="el" href="classavo_1_1SdlWindow.html#a84deb524e560374185042f9e9f5090e0">avo::SdlWindow</a>.</p>
 
 </div>
 </div>

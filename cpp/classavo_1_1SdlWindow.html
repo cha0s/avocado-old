@@ -113,8 +113,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac53d12fbcb8f8e6b5a57f98128e8e182"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a26333f46ad2a1187fb8fd1cfb93f7058"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structavo_1_1Window_1_1Event.html">Event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#a26333f46ad2a1187fb8fd1cfb93f7058">pollEvents</a> ()</td></tr>
 <tr class="separator:a26333f46ad2a1187fb8fd1cfb93f7058"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61297994bdc3eba745788fe04040e134"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#a61297994bdc3eba745788fe04040e134">render</a> (<a class="el" href="classavo_1_1Image.html">Image</a> *working)</td></tr>
-<tr class="separator:a61297994bdc3eba745788fe04040e134"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84deb524e560374185042f9e9f5090e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#a84deb524e560374185042f9e9f5090e0">render</a> (<a class="el" href="classavo_1_1Image.html">Image</a> *working, int x, int y, int w, int h)</td></tr>
+<tr class="separator:a84deb524e560374185042f9e9f5090e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afaee45a183d6cf272156e06bd856de60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#afaee45a183d6cf272156e06bd856de60">setFlags</a> (<a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0">WindowFlags</a> <a class="el" href="classavo_1_1Window.html#a52cc4219dc6806a2caa0a68a22bcdf44">flags</a>=<a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0ab72160693e3a009592e9399c1da4cdf1">Flags_Default</a>)</td></tr>
 <tr class="separator:afaee45a183d6cf272156e06bd856de60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac53e465b9e3b5ab548c6680232157c29"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SdlWindow.html#ac53e465b9e3b5ab548c6680232157c29">setSize</a> (int <a class="el" href="classavo_1_1Window.html#a27bd4cc8d77ede73d295754c9b9389e8">width</a>, int <a class="el" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a>)</td></tr>
@@ -388,7 +388,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- fragment -->
 </div>
 </div>
-<a class="anchor" id="a61297994bdc3eba745788fe04040e134"></a>
+<a class="anchor" id="a84deb524e560374185042f9e9f5090e0"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -399,8 +399,36 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">void avo::SdlWindow::render </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classavo_1_1Image.html">Image</a> *&#160;</td>
-          <td class="paramname"><em>working</em></td><td>)</td>
+          <td class="paramname"><em>working</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>w</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>h</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -411,42 +439,10 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Render an <a class="el" href="classavo_1_1Image.html" title="The Image SPI handles everything related to images.">Image</a> onto this window. </p>
 
-<p>Implements <a class="el" href="classavo_1_1Window.html#ad3c777c31e1490e752534acd4c4daa7a">avo::Window</a>.</p>
-<div class="fragment"><div class="line">                                     {</div>
-<div class="line"></div>
-<div class="line">    SDL_Surface *imageSurface = image-&gt;surface;</div>
-<div class="line">    SDL_Surface *workingSurface = Image::superCast&lt;SdlImage&gt;(working)-&gt;surface;</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// Scale the offscreen buffer to the visible buffer.</span></div>
-<div class="line">    <span class="comment">// @todo The scale factor needs to be dynamically set. Also, if the</span></div>
-<div class="line">    <span class="comment">// source is the same as the destination, we need to skip</span></div>
-<div class="line">    <span class="comment">// this call altogether, for speed.</span></div>
-<div class="line">    <span class="keywordflow">switch</span> (image-&gt;<a class="code" href="classavo_1_1SdlImage.html#a50d2215382a14ae69386c9db5c0497a9">width</a>()) {</div>
-<div class="line"></div>
-<div class="line">        <span class="keywordflow">case</span> 320:</div>
-<div class="line">            <a class="code" href="SdlWindow_8cpp.html#a7cd2088c9af8a1c6bb0797d9e7692ebd">scale_1</a>(imageSurface, workingSurface);</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line"></div>
-<div class="line">        <span class="keywordflow">case</span> 640:</div>
-<div class="line">            <a class="code" href="SdlWindow_8cpp.html#ab8e844941b80ba15c1d9f32ffe6d8f65">scale_2</a>(imageSurface, workingSurface);</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line"></div>
-<div class="line">        <span class="keywordflow">case</span> 800:</div>
-<div class="line">            <a class="code" href="SdlWindow_8cpp.html#ac2691bf2a8ad46d7d515b20c7760c8d5">scale_2_5</a>(imageSurface, workingSurface);</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line"></div>
-<div class="line">        <span class="keywordflow">case</span> 960:</div>
-<div class="line">            <a class="code" href="SdlWindow_8cpp.html#a243ae0df4e0d7b1749f0ba2ea8d1d803">scale_3</a>(imageSurface, workingSurface);</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line"></div>
-<div class="line">        <span class="keywordflow">default</span>:</div>
-<div class="line"></div>
-<div class="line">            <span class="keywordflow">throw</span> std::runtime_error(</div>
-<div class="line">                <span class="stringliteral">&quot;Unsupported graphics resolution encountered.&quot;</span></div>
-<div class="line">            );</div>
-<div class="line">    }</div>
-<div class="line"></div>
-<div class="line">    SDL_Flip(imageSurface);</div>
+<p>Implements <a class="el" href="classavo_1_1Window.html#a1fd64bcfe7588df228db51e6b005a91d">avo::Window</a>.</p>
+<div class="fragment"><div class="line">                                                                 {</div>
+<div class="line">    working-&gt;render(x, y, image, 255, <a class="code" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375a0d273d85b1f1331c144e117eb784ec61">Image::DrawMode_PixelCopy</a>, x, y, w, h);</div>
+<div class="line">    SDL_UpdateRect(image-&gt;surface, x, y, w, h);</div>
 <div class="line">}</div>
 </div><!-- fragment -->
 </div>

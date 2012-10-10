@@ -1,11 +1,6 @@
 var searchData=
 [
   ['sample',['Sample',['../classavo_1_1Sample.html#a7fcd868806f37f20d3934a4909a0d45d',1,'avo::Sample']]],
-  ['scale_5f1',['scale_1',['../SdlWindow_8cpp.html#a7cd2088c9af8a1c6bb0797d9e7692ebd',1,'SdlWindow.cpp']]],
-  ['scale_5f2',['scale_2',['../SdlWindow_8cpp.html#ab8e844941b80ba15c1d9f32ffe6d8f65',1,'SdlWindow.cpp']]],
-  ['scale_5f2_5f5',['scale_2_5',['../SdlWindow_8cpp.html#ac2691bf2a8ad46d7d515b20c7760c8d5',1,'SdlWindow.cpp']]],
-  ['scale_5f3',['scale_3',['../SdlWindow_8cpp.html#a243ae0df4e0d7b1749f0ba2ea8d1d803',1,'SdlWindow.cpp']]],
-  ['scale_5f4',['scale_4',['../SdlWindow_8cpp.html#a32604174202cbe4a460b5dd844a9deb9',1,'SdlWindow.cpp']]],
   ['script',['Script',['../classavo_1_1Script.html#a7e3a468937dd4bb9142588b1daba9e41',1,'avo::Script']]],
   ['script_5fcompilation_5ferror',['script_compilation_error',['../classavo_1_1ScriptService_1_1script__compilation__error.html#a4f4bbffa63de734449ff9afdc474b8be',1,'avo::ScriptService::script_compilation_error']]],
   ['script_5fexecution_5ferror',['script_execution_error',['../classavo_1_1Script_1_1script__execution__error.html#aaaa976f938b0c2565dcbb7b24808a873',1,'avo::Script::script_execution_error']]],

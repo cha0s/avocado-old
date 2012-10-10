@@ -2,7 +2,7 @@ var searchData=
 [
   ['globals_20and_20miscellany',['Globals and miscellany',['../group__Global.html',1,'']]],
   ['graphics_20spi',['Graphics SPI',['../group__Graphics.html',1,'']]],
-  ['graphicsservice',['GraphicsService',['../classavo_1_1GraphicsService.html#a75531e2b2a6a2d4036d75fb5faa5c555',1,'avo::GraphicsService::GraphicsService()'],['../classavo_1_1v8GraphicsService.html#ad2678828c37d62249d536725f9c85452',1,'avo::v8GraphicsService::graphicsService()']]],
+  ['graphicsservice',['graphicsService',['../classavo_1_1v8GraphicsService.html#ad2678828c37d62249d536725f9c85452',1,'avo::v8GraphicsService::graphicsService()'],['../classavo_1_1GraphicsService.html#a75531e2b2a6a2d4036d75fb5faa5c555',1,'avo::GraphicsService::GraphicsService()']]],
   ['graphicsservice',['GraphicsService',['../classavo_1_1GraphicsService.html',1,'avo']]],
   ['graphicsservice_2ecpp',['GraphicsService.cpp',['../GraphicsService_8cpp.html',1,'']]],
   ['graphicsservice_2eh',['GraphicsService.h',['../GraphicsService_8h.html',1,'']]],

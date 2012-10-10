@@ -114,7 +114,8 @@ Inheritance diagram for avo::Image:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a94a3112168fa6cb724b3872b66d55375"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375">DrawMode</a> { <a class="el" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375a56dd6df6e829050ac137b8b938064f2a">DrawMode_Replace</a> = 0, 
-<a class="el" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375a92834c2d6b14428059c8a46aa06752da">DrawMode_Blend</a> = 1
+<a class="el" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375a92834c2d6b14428059c8a46aa06752da">DrawMode_Blend</a> = 1, 
+<a class="el" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375a0d273d85b1f1331c144e117eb784ec61">DrawMode_PixelCopy</a> = 2
  }</td></tr>
 <tr class="separator:a94a3112168fa6cb724b3872b66d55375"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -197,6 +198,8 @@ Protected Member Functions</h2></td></tr>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="a94a3112168fa6cb724b3872b66d55375a92834c2d6b14428059c8a46aa06752da"></a>DrawMode_Blend</em>&nbsp;</td><td>
 </td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a94a3112168fa6cb724b3872b66d55375a0d273d85b1f1331c144e117eb784ec61"></a>DrawMode_PixelCopy</em>&nbsp;</td><td>
+</td></tr>
 </table>
 </dd>
 </dl>
@@ -205,6 +208,8 @@ Protected Member Functions</h2></td></tr>
 <div class="line">        <a class="code" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375a56dd6df6e829050ac137b8b938064f2a">DrawMode_Replace</a> = 0</div>
 <div class="line"></div>
 <div class="line">        , <a class="code" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375a92834c2d6b14428059c8a46aa06752da">DrawMode_Blend</a> = 1</div>
+<div class="line"></div>
+<div class="line">        , <a class="code" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375a0d273d85b1f1331c144e117eb784ec61">DrawMode_PixelCopy</a> = 2</div>
 <div class="line">    };</div>
 </div><!-- fragment -->
 </div>
@@ -343,9 +348,9 @@ Protected Member Functions</h2></td></tr>
 <div class="line">        <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *dc = <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *<span class="keyword">&gt;</span>(&amp;dst);</div>
 <div class="line"></div>
 <div class="line">        <span class="keywordtype">int</span> pAlpha = sc[3] * (alpha / 255.0);</div>
-<div class="line">        dc[0] = (sc[0] * pAlpha + dc[0] * (255 - pAlpha)) / 256;</div>
-<div class="line">        dc[1] = (sc[1] * pAlpha + dc[1] * (255 - pAlpha)) / 256;</div>
-<div class="line">        dc[2] = (sc[2] * pAlpha + dc[2] * (255 - pAlpha)) / 256;</div>
+<div class="line">        dc[0] = (sc[0] * pAlpha + dc[0] * (255 - pAlpha)) / 255;</div>
+<div class="line">        dc[1] = (sc[1] * pAlpha + dc[1] * (255 - pAlpha)) / 255;</div>
+<div class="line">        dc[2] = (sc[2] * pAlpha + dc[2] * (255 - pAlpha)) / 255;</div>
 <div class="line"></div>
 <div class="line">        <span class="comment">// ???</span></div>
 <div class="line">        dc[3] = pAlpha;</div>

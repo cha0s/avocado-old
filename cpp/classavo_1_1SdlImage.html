@@ -176,7 +176,8 @@ Friends</h2></td></tr>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_types_classavo_1_1Image"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classavo_1_1Image')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classavo_1_1Image.html">avo::Image</a></td></tr>
 <tr class="memitem:a94a3112168fa6cb724b3872b66d55375 inherit pub_types_classavo_1_1Image"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375">DrawMode</a> { <a class="el" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375a56dd6df6e829050ac137b8b938064f2a">DrawMode_Replace</a> = 0, 
-<a class="el" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375a92834c2d6b14428059c8a46aa06752da">DrawMode_Blend</a> = 1
+<a class="el" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375a92834c2d6b14428059c8a46aa06752da">DrawMode_Blend</a> = 1, 
+<a class="el" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375a0d273d85b1f1331c144e117eb784ec61">DrawMode_PixelCopy</a> = 2
  }</td></tr>
 <tr class="separator:a94a3112168fa6cb724b3872b66d55375 inherit pub_types_classavo_1_1Image"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_methods_classavo_1_1Image"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classavo_1_1Image')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classavo_1_1Image.html">avo::Image</a></td></tr>
@@ -1000,13 +1001,17 @@ Additional Inherited Members</h2></td></tr>
 <div class="line">                sc = <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *<span class="keyword">&gt;</span>(src);</div>
 <div class="line"></div>
 <div class="line">                <span class="keywordtype">int</span> dstColor;</div>
-<div class="line">                <span class="keywordflow">if</span> (<a class="code" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375a56dd6df6e829050ac137b8b938064f2a">DrawMode_Replace</a> == mode || (255 == alpha &amp;&amp; 255 == sc[3])) {</div>
-<div class="line">                    dstColor = 255 &lt;&lt; 24;</div>
+<div class="line">                <span class="keywordflow">if</span> (<a class="code" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375a0d273d85b1f1331c144e117eb784ec61">DrawMode_PixelCopy</a> == mode) {</div>
+<div class="line">                    *dst = *src;</div>
+<div class="line">                }</div>
+<div class="line">                <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="classavo_1_1Image.html#a94a3112168fa6cb724b3872b66d55375a56dd6df6e829050ac137b8b938064f2a">DrawMode_Replace</a> == mode || (255 == alpha &amp;&amp; 255 == sc[3])) {</div>
+<div class="line">                    dstColor = 255 &lt;&lt; 24 | 255 &lt;&lt; 16;</div>
+<div class="line">                    *dst = <a class="code" href="classavo_1_1Image.html#a44395937ac779e9a6bd279a5f491da36">blendPixel</a>(*src, dstColor, alpha);</div>
 <div class="line">                }</div>
 <div class="line">                <span class="keywordflow">else</span> {</div>
 <div class="line">                    dstColor = *dst;</div>
+<div class="line">                    *dst = <a class="code" href="classavo_1_1Image.html#a44395937ac779e9a6bd279a5f491da36">blendPixel</a>(*src, dstColor, alpha);</div>
 <div class="line">                }</div>
-<div class="line">                *dst = <a class="code" href="classavo_1_1Image.html#a44395937ac779e9a6bd279a5f491da36">blendPixel</a>(*src, dstColor, alpha);</div>
 <div class="line"></div>
 <div class="line">                src++;</div>
 <div class="line">                dst++;</div>

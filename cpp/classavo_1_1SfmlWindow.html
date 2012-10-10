@@ -115,8 +115,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a789e55286b25d7f0bfe8e130c89dd5a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c00a8b4979e07d92e267e0cf02b99ee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structavo_1_1Window_1_1Event.html">Event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SfmlWindow.html#a9c00a8b4979e07d92e267e0cf02b99ee">pollEvents</a> ()</td></tr>
 <tr class="separator:a9c00a8b4979e07d92e267e0cf02b99ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8a17b62f8379759ce07980ce542a94d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SfmlWindow.html#af8a17b62f8379759ce07980ce542a94d">render</a> (<a class="el" href="classavo_1_1Image.html">Image</a> *working)</td></tr>
-<tr class="separator:af8a17b62f8379759ce07980ce542a94d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f8fed3691dee896a38830fc5373d186"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SfmlWindow.html#a0f8fed3691dee896a38830fc5373d186">render</a> (<a class="el" href="classavo_1_1Image.html">Image</a> *working, int x, int y, int w, int h)</td></tr>
+<tr class="separator:a0f8fed3691dee896a38830fc5373d186"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff4f661e1c4d97a4c7fc468a384134ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SfmlWindow.html#aff4f661e1c4d97a4c7fc468a384134ec">setFlags</a> (<a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0">WindowFlags</a> <a class="el" href="classavo_1_1Window.html#a52cc4219dc6806a2caa0a68a22bcdf44">flags</a>=<a class="el" href="classavo_1_1Window.html#a0d38c9ca9885e42fdd854e3ded3618f0ab72160693e3a009592e9399c1da4cdf1">Flags_Default</a>)</td></tr>
 <tr class="separator:aff4f661e1c4d97a4c7fc468a384134ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5537399c27abee8d7110f735a120b1ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classavo_1_1SfmlWindow.html#a5537399c27abee8d7110f735a120b1ad">setSize</a> (int <a class="el" href="classavo_1_1Window.html#a27bd4cc8d77ede73d295754c9b9389e8">width</a>, int <a class="el" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a>)</td></tr>
@@ -415,7 +415,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- fragment -->
 </div>
 </div>
-<a class="anchor" id="af8a17b62f8379759ce07980ce542a94d"></a>
+<a class="anchor" id="a0f8fed3691dee896a38830fc5373d186"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -426,8 +426,36 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">void avo::SfmlWindow::render </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classavo_1_1Image.html">Image</a> *&#160;</td>
-          <td class="paramname"><em>working</em></td><td>)</td>
+          <td class="paramname"><em>working</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>w</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>h</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -438,12 +466,23 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Render an <a class="el" href="classavo_1_1Image.html" title="The Image SPI handles everything related to images.">Image</a> onto this window. </p>
 
-<p>Implements <a class="el" href="classavo_1_1Window.html#ad3c777c31e1490e752534acd4c4daa7a">avo::Window</a>.</p>
-<div class="fragment"><div class="line">                                      {</div>
+<p>Implements <a class="el" href="classavo_1_1Window.html#a1fd64bcfe7588df228db51e6b005a91d">avo::Window</a>.</p>
+<div class="fragment"><div class="line">                                                                  {</div>
 <div class="line"></div>
 <div class="line">    sf::Sprite sprite(</div>
 <div class="line">        Image::superCast&lt;SfmlImage&gt;(working)-&gt;renderTexture-&gt;getTexture()</div>
 <div class="line">    );</div>
+<div class="line"></div>
+<div class="line">    sprite.setPosition(sf::Vector2f(x, y));</div>
+<div class="line">    sf::IntRect rect(x, y, w, h);</div>
+<div class="line">    <span class="keywordflow">if</span> (0 == rect.width) {</div>
+<div class="line">        rect.width = <a class="code" href="classavo_1_1Window.html#a27bd4cc8d77ede73d295754c9b9389e8">width</a>();</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">if</span> (0 == rect.height) {</div>
+<div class="line">        rect.height = <a class="code" href="classavo_1_1Window.html#a301814abda3421e167f4843743154c70">height</a>();</div>
+<div class="line">    }</div>
+<div class="line">    sprite.setTextureRect(rect);</div>
+<div class="line"></div>
 <div class="line"></div>
 <div class="line">    window-&gt;draw(sprite);</div>
 <div class="line">}</div>

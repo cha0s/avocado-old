@@ -60,11 +60,16 @@ class avo.Main
 		# quit.
 		@tickInterval = null
 		@renderInterval = null
+		
+		# [Fix your timestep!](http://gafferongames.com/game-physics/fix-your-timestep/)
+		@tickTargetSeconds = 1 / avo.ticksPerSecondTarget
+		@lastElapsed = 0
+		@elapsedRemainder = 0
 	
 	begin: ->
 		
 		# Tick loop.
-		setInterval(
+		@tickInterval = setInterval(
 			=>
 				try 
 					@tick()
@@ -74,7 +79,7 @@ class avo.Main
 		)
 		
 		# Render loop.
-		setInterval(
+		@renderInterval = setInterval(
 			=>
 				try
 					@render()
@@ -131,26 +136,32 @@ class avo.Main
 		
 	tick: ->
 		
-		# Store the time passed since the last tick.
-		avo.TimingService.tick()
+		delta = avo.TimingService.elapsed() - @lastElapsed
+		delta += @elapsedRemainder
 		
 		# Poll events.
 		avo.graphicsService.pollEvents()
 		
-		# Let the State tick.
-		@stateObject?.tick()
+		while delta > @tickTargetSeconds
+			delta -= @tickTargetSeconds
+			
+			avo.TimingService.setTickElapsed @tickTargetSeconds
 		
-		# Handle any State change.
-		@handleStateChange()
+			# Let the State tick.
+			@stateObject?.tick()
+			
+			# Handle any State change.
+			@handleStateChange()
+			
+			# Track the ticks per second.
+			@ticksPerSecond.tick()
+			
+		@elapsedRemainder = delta
 		
-		# Track the ticks per second.
-		@ticksPerSecond.tick()
-		
+		@lastElapsed = avo.TimingService.elapsed()
+	
 	render: ->
 		
-#		# Let the State render to the back buffer.
-#		@stateObject?.render @backBuffer
-
 		# Notify any listeners if there's something to render.
 		rectangle = @displayList.render [0, 0, 800, 600], @backBuffer
 		unless avo.Rectangle.isNull rectangle

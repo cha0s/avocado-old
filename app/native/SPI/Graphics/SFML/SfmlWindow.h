@@ -32,7 +32,7 @@ public:
 
 	Event pollEvents();
 
-	void render(Image *working);
+	void render(Image *working, int x, int y, int w, int h);
 
 	void setFlags(WindowFlags flags = Flags_Default);
 

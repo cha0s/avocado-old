@@ -192,11 +192,22 @@ Window::Event SfmlWindow::pollEvents() {
 	return event;
 }
 
-void SfmlWindow::render(Image *working) {
+void SfmlWindow::render(Image *working, int x, int y, int w, int h) {
 
 	sf::Sprite sprite(
 		Image::superCast<SfmlImage>(working)->renderTexture->getTexture()
 	);
+
+	sprite.setPosition(sf::Vector2f(x, y));
+	sf::IntRect rect(x, y, w, h);
+	if (0 == rect.width) {
+		rect.width = width();
+	}
+	if (0 == rect.height) {
+		rect.height = height();
+	}
+	sprite.setTextureRect(rect);
+
 
 	window->draw(sprite);
 }
@@ -212,6 +223,8 @@ void SfmlWindow::set() {
 		m_title,
 		sfmlStyle
 	);
+
+	window->setVerticalSyncEnabled(true);
 
 	window->clear();
 }

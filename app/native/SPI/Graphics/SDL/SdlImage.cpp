@@ -246,13 +246,17 @@ void SdlImage::render(int x, int y, Image *destination, int alpha, DrawMode mode
 				sc = reinterpret_cast<unsigned char *>(src);
 
 				int dstColor;
-				if (DrawMode_Replace == mode || (255 == alpha && 255 == sc[3])) {
-					dstColor = 255 << 24;
+				if (DrawMode_PixelCopy == mode) {
+					*dst = *src;
+				}
+				else if (DrawMode_Replace == mode || (255 == alpha && 255 == sc[3])) {
+					dstColor = 255 << 24 | 255 << 16;
+					*dst = blendPixel(*src, dstColor, alpha);
 				}
 				else {
 					dstColor = *dst;
+					*dst = blendPixel(*src, dstColor, alpha);
 				}
-				*dst = blendPixel(*src, dstColor, alpha);
 
 				src++;
 				dst++;

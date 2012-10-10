@@ -6,9 +6,12 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 	# things specific to our game.
 	initialize: ->
 	
-		# Let's move the avocado! In order to do that, we'll need to keep track
-		# of its x, y location.
-		[@x, @y] = [0, 0]
+		# Add a display command to white out the background.
+		new avo.FillDisplayCommand(
+			@main.displayList
+			255, 255, 255, 255
+			[0, 0, 800, 600]
+		)
 		
 		# Register a player 'Awesome player' to receive input using the
 		# keyboard arrow keys and joystick index 0.
@@ -20,7 +23,14 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 		], 0
 		
 		# Yum, an avocado!
-		imagePromise = avo.Image.load('/image/avocado.png').then (@avocado) =>
+		imagePromise = avo.Image.load('/image/avocado.png').then (image) =>
+			
+			# Add a display command to show the yummy avocado.
+			@avocado = new avo.ImageDisplayCommand(
+				@main.displayList
+				image
+				avo.Rectangle.compose [0, 0], image.size()
+			)
 		
 		# Happy music!
 		musicPromise = avo.Music.load('/music/smile.ogg').then (@music) =>
@@ -41,53 +51,44 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 			# stuff. We'll wait so that there isn't a black screen sitting
 			# there while everything loads.
 			# Instantiate a Window to receive render events.
-			avo.window = new avo.graphicsService.newWindow [320, 240]
+			avo.window = new avo.graphicsService.newWindow [800, 600]
 			avo.window.setWindowTitle 'Avocado - Fun Should Be Free'
 			
-			# avo.main lets us know when it has something to render, so we'll
+			# @main lets us know when it has something to render, so we'll
 			# put it on our window.
-			avo.main.on 'render', (buffer) ->
+			@main.on 'render', (buffer, rectangle) ->
 				
-				avo.window.render buffer
-			
-				# Display the changes to the window.
+				# Render and display the changes to the window.
+				avo.window.render buffer, rectangle
 				avo.window.display()
 				
 			# Catch the quit event (window close event).
-			avo.window.on 'quit.Engine', => avo.main.quit()
+			avo.window.on 'quit.Engine', => @main.quit()
 			
 			# Allow dragging the avocado around with the left mouse button. Keep
 			# track of where the avocado was when we started dragging.
 			@dragStartAvocadoLocation = []
 			avo.window.on 'mouseButtonDown.InitialState', ({button}) =>
 				return unless button is avo.Window.LeftButton
-				@dragStartAvocadoLocation = [@x, @y]
+				@dragStartAvocadoLocation = @avocado.position()
 			avo.window.on 'mouseDrag.InitialState', ({position, button, relative}) =>
 				return unless button is avo.Window.LeftButton
-				[@x, @y] = avo.Vector.add @dragStartAvocadoLocation, relative
+				@avocado.setPosition avo.Vector.add @dragStartAvocadoLocation, relative
 				
 	# Called repeatedly while this state is loaded. You can do things like
 	# update your world here. We'll move the avocado based on movement input.
 	tick: ->
 		
-		# Move it 500px a second based on player 'Awesome player's movement.
-		[@x, @y] = avo.Vector.add(
-			[@x, @y]
-			avo.Vector.scale avo.graphicsService.playerTickMovement('Awesome player'), 500
+		# Any movement input?
+		movement = avo.graphicsService.playerTickMovement('Awesome player')
+		return if avo.Vector.isZero movement
+		
+		# Move the avocado 250px a second based on player 'Awesome player's
+		# movement.
+		@avocado.setPosition avo.Vector.add(
+			@avocado.position()
+			avo.Vector.scale movement, 250
 		)
-	
-	# Called repeatedly while this state is loaded. You can render all of
-	# your pretty pictures here!
-	render: (buffer) ->
-		
-		# Fill the screen with white.
-		buffer.fill 255, 255, 255
-		
-		# Show the avocado at its current x, y location.
-		@avocado.render [@x, @y], buffer
-		
-		# Display the changes to the buffer.
-		buffer.display()
 		
 	# Called when another state is loaded. This gives you a chance to clean
 	# up resources and event handlers.

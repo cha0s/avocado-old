@@ -1,8 +1,8 @@
-# Use SDL CoreService for now.
+# Use SFML CoreService for now.
 avo.CoreService.implementSpi 'sfml'
 avo.coreService = new avo.CoreService()
 
-# Use SDL GraphicsService for now.
+# Use SFML GraphicsService for now.
 avo.GraphicsService.implementSpi 'sfml'
 avo.graphicsService = new avo.GraphicsService()
 
@@ -10,12 +10,12 @@ avo.graphicsService = new avo.GraphicsService()
 avo.TimingService.implementSpi 'sfml'
 avo.timingService = new avo.TimingService()
 
-# Use SDL SoundService for now.
+# Use SFML SoundService for now.
 avo.SoundService.implementSpi 'sfml'
 avo.soundService = new avo.SoundService()
 
 # Shoot for 60 FPS input and render.
-avo.ticksPerSecondTarget = 60
+avo.ticksPerSecondTarget = 120
 avo.rendersPerSecondTarget = 60
 
 handles = {}

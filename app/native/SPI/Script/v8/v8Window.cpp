@@ -295,8 +295,14 @@ v8::Handle<v8::Value> v8Window::Render(const v8::Arguments &args) {
 		)));
 	}
 
+	Handle<Array> rectangle = args[1].As<Array>();
+
 	windowWrapper->window->render(
-		source->wrappedImage()
+		source->wrappedImage(),
+		rectangle->Get(0)->Int32Value(),
+		rectangle->Get(1)->Int32Value(),
+		rectangle->Get(2)->Int32Value(),
+		rectangle->Get(3)->Int32Value()
 	);
 
 	return v8::Undefined();

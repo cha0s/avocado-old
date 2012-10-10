@@ -39,14 +39,22 @@ registerMovement = (player) ->
 	m.tickUnit = [
 		Math.max(
 			Math.min(
-				(m.keyState[1] - m.keyState[3]) + (m.joyState[1] - m.joyState[3])
+				(
+					m.keyState[1] - m.keyState[3]
+				) + (
+					m.joyState[1] - m.joyState[3]
+				)
 				1
 			)
 			-1
 		)
 		Math.max(
 			Math.min(
-				(m.keyState[2] - m.keyState[0]) + (m.joyState[2] - m.joyState[0])
+				(
+					m.keyState[2] - m.keyState[0]
+				) + (
+					m.joyState[2] - m.joyState[0]
+				)
 				1
 			)
 			-1
@@ -102,8 +110,8 @@ avo.GraphicsService::newWindow = (size, flags) ->
 		
 		registerMovement player
 	
-	# Mouse dragging is a bit of a higher-level concept. We'll implement it using
-	# the low-level API.
+	# Mouse dragging is a bit of a higher-level concept. We'll implement it
+	# using the low-level API.
 	buttons = {}
 	dragStartLocation = {}
 	mouseLocation = [0, 0]
@@ -136,14 +144,12 @@ avo.GraphicsService::newWindow = (size, flags) ->
 					'mouseDrag'
 						position: mouseLocation
 						button: parseInt key
-						relative: avo.Vector.sub mouseLocation, dragStartLocation[key]
+						relative: avo.Vector.sub(
+							mouseLocation
+							dragStartLocation[key]
+						)
 				)
 				
 	window
 	
-avo.GraphicsService::pollEvents = ->
-	
-	for window in windows
-		
-		window.pollEvents()
-
+avo.GraphicsService::pollEvents = -> window.pollEvents() for window in windows

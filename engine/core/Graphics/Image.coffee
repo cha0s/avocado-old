@@ -111,3 +111,34 @@ avo.Image::uri = avo.Image::['%uri']
 
 # Get the width of the image.
 avo.Image::width = avo.Image::['%width']
+
+class avo.ImageDisplayCommand extends avo.DisplayCommand
+	
+	constructor: (list, image, rectangle = [0, 0, 0, 0]) ->
+		super list, rectangle
+		
+		@image_ = image
+		
+	render: (position, clip, destination) ->
+		
+		@image_.render(
+			position
+			destination
+			255
+			avo.Image.DrawMode_Blend
+			clip
+		)
+
+class avo.FillDisplayCommand extends avo.DisplayCommand
+	
+	constructor: (list, r, g, b, a = 255, rectangle = [0, 0, 0, 0]) ->
+		super list, rectangle
+		
+		[@r_, @g_, @b_, @a_] = [r, g, b, a]
+		
+	render: (position, clip, destination) ->
+		
+		destination.drawFilledBox(
+			clip
+			@r_, @g_, @b_, @a_
+		)

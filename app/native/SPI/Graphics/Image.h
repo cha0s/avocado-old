@@ -35,6 +35,9 @@ public:
 
 		/** Blend the destination pixels into the source pixels. */
 		, DrawMode_Blend = 1
+
+		/** Copy raw pixel data. */
+		, DrawMode_PixelCopy = 2
 	};
 
 	/**
@@ -155,9 +158,9 @@ public:
 		unsigned char *dc = reinterpret_cast<unsigned char *>(&dst);
 
 		int pAlpha = sc[3] * (alpha / 255.0);
-		dc[0] = (sc[0] * pAlpha + dc[0] * (255 - pAlpha)) / 256;
-		dc[1] = (sc[1] * pAlpha + dc[1] * (255 - pAlpha)) / 256;
-		dc[2] = (sc[2] * pAlpha + dc[2] * (255 - pAlpha)) / 256;
+		dc[0] = (sc[0] * pAlpha + dc[0] * (255 - pAlpha)) / 255;
+		dc[1] = (sc[1] * pAlpha + dc[1] * (255 - pAlpha)) / 255;
+		dc[2] = (sc[2] * pAlpha + dc[2] * (255 - pAlpha)) / 255;
 
 		// ???
 		dc[3] = pAlpha;

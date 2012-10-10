@@ -71,15 +71,14 @@ void SfmlImage::drawCircle(int x, int y, int radius, int r, int g, int b, int a,
 }
 
 void SfmlImage::drawFilledBox(int x, int y, int w, int h, int r, int g, int b, int a, DrawMode drawMode) {
-	AVOCADO_UNUSED(x);
-	AVOCADO_UNUSED(y);
-	AVOCADO_UNUSED(w);
-	AVOCADO_UNUSED(h);
-	AVOCADO_UNUSED(r);
-	AVOCADO_UNUSED(g);
-	AVOCADO_UNUSED(b);
-	AVOCADO_UNUSED(a);
 	AVOCADO_UNUSED(drawMode);
+
+	sf::RectangleShape box;
+	box.setSize(sf::Vector2f(w, h));
+	box.setOutlineColor(sf::Color(r, g, b, a));
+	box.setFillColor(sf::Color(r, g, b, a));
+	box.setPosition(x, y);
+	renderTexture->draw(box);
 }
 
 void SfmlImage::drawLine(int x1, int y1, int x2, int y2, int r, int g, int b, int a, DrawMode drawMode) {

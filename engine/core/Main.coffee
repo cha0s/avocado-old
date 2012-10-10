@@ -22,7 +22,10 @@ class avo.Main
 		avo.Mixin this, avo.EventEmitter
 		
 		# Keep a back buffer to receive all rendering from the current State.
-		@backBuffer = new avo.Image [320, 240]
+		@backBuffer = new avo.Image [800, 600]
+		
+		# Keep a global display list to optimize rendering.
+		@displayList = new avo.DisplayList()
 		
 		# Holds the current State's name.
 		@stateName = ''
@@ -113,6 +116,7 @@ class avo.Main
 		# promise is State::initialize's promise.
 		else
 			@states[stateName] = new avo.Main.States[stateName]
+			@states[stateName].main = this
 			initializationPromise = @states[stateName].initialize()
 			
 		# When the State is finished initializing,
@@ -144,11 +148,14 @@ class avo.Main
 		
 	render: ->
 		
-		# Let the State render to the back buffer.
-		@stateObject?.render @backBuffer
-		
-		# Notify any listeners that there's something to render.
-		@emit 'render', @backBuffer
+#		# Let the State render to the back buffer.
+#		@stateObject?.render @backBuffer
+
+		# Notify any listeners if there's something to render.
+		rectangle = @displayList.render [0, 0, 800, 600], @backBuffer
+		unless avo.Rectangle.isNull rectangle
+			
+			@emit 'render', @backBuffer, rectangle
 		
 		# Track the renders per second.
 		@rendersPerSecond.tick()

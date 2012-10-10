@@ -200,7 +200,7 @@ public:
 	/**
 	 * Render an Image onto this window.
 	 */
-	virtual void render(Image *working) = 0;
+	virtual void render(Image *working, int x, int y, int w, int h) = 0;
 
 	/**
 	 * Set the window flags.

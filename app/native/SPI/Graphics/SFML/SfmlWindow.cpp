@@ -224,8 +224,8 @@ void SfmlWindow::set() {
 		sfmlStyle
 	);
 
+	window->setKeyRepeatEnabled(false);
 	window->setVerticalSyncEnabled(true);
-
 	window->clear();
 }
 

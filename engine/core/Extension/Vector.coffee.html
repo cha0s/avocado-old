@@ -55,7 +55,25 @@ false
       <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span> <span class="nx">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
       <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span> <span class="nx">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="p">]</span>
-  </pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>Floor both axes of a vector.</p>
+  
+  <span class="nv">dotProduct: </span><span class="nf">(l, r) -&gt;</span> <span class="nx">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nx">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nx">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nx">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  
+  <span class="nv">hypotenuse: </span><span class="nf">(l, r, relative = false) -&gt;</span>
+    
+    <span class="nv">distance = </span><span class="nx">r</span>
+    <span class="nv">distance = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span> <span class="nx">distance</span><span class="p">,</span> <span class="nx">l</span> <span class="nx">unless</span> <span class="nx">relative</span>
+    
+    <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="mi">0</span> <span class="o">is</span> <span class="nv">dp = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">dotProduct</span> <span class="nx">distance</span><span class="p">,</span> <span class="nx">distance</span>
+    <span class="nv">hypotenuse = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">scale</span><span class="p">(</span>
+      <span class="nx">distance</span>
+      <span class="mi">1</span> <span class="o">/</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">sqrt</span> <span class="nx">dp</span>
+    <span class="p">)</span>
+    </pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>Don't let NaN poison our equations.</p>
+</td><td class="code"><div class="highlight"><pre>    <span class="nx">hypotenuse</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="kc">NaN</span> <span class="o">is</span> <span class="nx">hypotenuse</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nx">hypotenuse</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="kc">NaN</span> <span class="o">is</span> <span class="nx">hypotenuse</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="nx">hypotenuse</span>
+  </pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>Floor both axes of a vector.</p>
 
 <pre><code>avocado&gt; avo.Vector.floor [3.14, 4.70]
 [3, 4]
@@ -65,7 +83,7 @@ false
     <span class="p">[</span>
       <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span> <span class="nx">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
       <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span> <span class="nx">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="p">]</span></pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>Mix the vector methods into a vector instance.</p>
+    <span class="p">]</span></pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>Mix the vector methods into a vector instance.</p>
 
 <pre><code>avocado&gt; v = avo.Vector.mixin [3, 4]
 avocado&gt; v.add [4, 5]

@@ -146,7 +146,7 @@ v8::Handle<v8::Value> v8Window::PollEvents(const v8::Arguments &args) {
 				);
 				inputEvent->Set(
 					String::NewSymbol("value"),
-					Integer::New(event.joyAxis[i].value)
+					Number::New(event.joyAxis[i].value)
 				);
 				argv[1] = inputEvent;
 				emitFunction->Call(holder, 2, argv);

@@ -60,6 +60,10 @@ registerMovement = (player) ->
 			-1
 		)
 	]
+	m.tickUnit = avo.Vector.mul(
+		m.tickUnit
+		avo.Vector.hypotenuse avo.Vector.abs m.tickUnit
+	)
 
 windows = []
 

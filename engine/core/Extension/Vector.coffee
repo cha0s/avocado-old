@@ -22,6 +22,12 @@ avo.Vector =
 	#     [4, 3]
 	sub: (l, r) -> [l[0] - r[0], l[1] - r[1]]
 	
+	# Multiply two vectors. 
+	#
+	#     avocado> avo.Vector.mul [3, 5], [5, 5]
+	#     [15, 25]
+	mul: (l, r) -> [l[0] * r[0], l[1] * r[1]]
+	
 	# Divide two vectors. 
 	#
 	#     avocado> avo.Vector.div [15, 5], [5, 5]
@@ -58,6 +64,48 @@ avo.Vector =
 			Math.round vector[1]
 		]
 	
+	# Get the dot product of two vectors.
+	#
+	#     avocado> avo.Vector.dot [2, 3], [4, 5]
+	#     23
+	dot: (l, r) -> l[0] * r[0] + l[1] * r[1]
+	
+	# Get a hypotenuse unit vector. If an origin vector is passed in, the
+	# hypotenuse is derived from the distance to the origin.
+	#
+	#     avocado> avo.Vector.hypotenuse [5, 5], [6, 7]
+	#     [0.4472135954999579, 0.8944271909999159]
+	#
+	#     avocado> avo.Vector.hypotenuse [.5, .7]
+	#     [0.5812381937190965, 0.813733471206735]
+	hypotenuse: (unitOrDestination, origin = null) ->
+		
+		distanceOrUnit = unitOrDestination
+		distanceOrUnit = avo.Vector.sub distanceOrUnit, origin if origin?
+		
+		return [0, 0] if 0 is dp = avo.Vector.dot distanceOrUnit, distanceOrUnit
+		hypotenuse = avo.Vector.scale(
+			distanceOrUnit
+			1 / Math.sqrt dp
+		)
+		
+		# Don't let NaN poison our equations.
+		[
+			if NaN is hypotenuse[0] then 0 else hypotenuse[0]
+			if NaN is hypotenuse[1] then 0 else hypotenuse[1]
+		]
+	
+	# Get the absolute values of the axes of a vector.
+	#
+	#     avocado> avo.Vector.abs [23, -5.20]
+	#     [23, 5.20]
+	abs: (vector) ->
+		
+		[
+			Math.abs vector[0]
+			Math.abs vector[1]
+		]
+
 	# Floor both axes of a vector.
 	#
 	#     avocado> avo.Vector.floor [3.14, 4.70]

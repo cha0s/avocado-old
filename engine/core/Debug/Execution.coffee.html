@@ -5,23 +5,13 @@
   
   <span class="nv">haltUntil: </span><span class="nf">(f) -&gt;</span>
     
-    <span class="nx">avo</span><span class="p">.</span><span class="nx">Logger</span><span class="p">.</span><span class="nx">info</span> <span class="mi">1</span>
-    
     <span class="nx">until</span> <span class="nx">f</span><span class="p">()</span>
-      
-      <span class="nx">avo</span><span class="p">.</span><span class="nx">Logger</span><span class="p">.</span><span class="nx">info</span> <span class="mi">2</span>
       
       <span class="nx">avo</span><span class="p">.</span><span class="nx">timingService</span><span class="p">.</span><span class="nx">sleep</span> <span class="mi">100</span>
       
-      <span class="nx">avo</span><span class="p">.</span><span class="nx">Logger</span><span class="p">.</span><span class="nx">info</span> <span class="mi">3</span>
-      
       <span class="nx">avo</span><span class="p">.</span><span class="nx">tickTimeouts</span><span class="p">()</span>
       
-      <span class="nx">avo</span><span class="p">.</span><span class="nx">Logger</span><span class="p">.</span><span class="nx">info</span> <span class="mi">4</span>
-      
       <span class="nx">avo</span><span class="p">.</span><span class="nx">graphicsService</span><span class="p">.</span><span class="nx">pollEvents</span><span class="p">()</span>
-      
-      <span class="nx">avo</span><span class="p">.</span><span class="nx">Logger</span><span class="p">.</span><span class="nx">info</span> <span class="mi">5</span>
       
     <span class="kc">undefined</span>
 

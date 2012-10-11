@@ -44,22 +44,6 @@ keyboard arrow keys and joystick index 0.</p>
       <span class="o">=&gt;</span> <span class="nx">@main</span><span class="p">.</span><span class="nx">displayList</span><span class="p">.</span><span class="nx">setDirty</span><span class="p">()</span>
       <span class="mi">100</span>
     <span class="p">)</span>
-    
-    <span class="nx">setTimeout</span><span class="p">(</span>
-      <span class="o">=&gt;</span>
-        
-        <span class="nv">f = </span><span class="o">-&gt;</span>
-          
-          <span class="nv">clicked = </span><span class="kc">false</span>
-          <span class="nx">avo</span><span class="p">.</span><span class="nb">window</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;mouseButtonDown&#39;</span><span class="p">,</span> <span class="o">-&gt;</span>
-            <span class="nx">avo</span><span class="p">.</span><span class="nx">Logger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;hi&#39;</span>
-            <span class="nv">clicked = </span><span class="kc">true</span>
-          
-          <span class="o">-&gt;</span> <span class="nx">clicked</span>
-        
-        <span class="nx">avo</span><span class="p">.</span><span class="nx">Debug</span><span class="p">.</span><span class="nx">Execution</span><span class="p">.</span><span class="nx">haltUntil</span> <span class="nx">f</span><span class="p">()</span>
-      <span class="mi">2000</span>
-    <span class="p">)</span>
     </pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>When the image and music are done loading, then we're done
 initializing. Remember - with CoffeeScript, the last statement in
 a function is the return value. And upon.all returns a promise, just

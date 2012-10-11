@@ -28,7 +28,7 @@ only renders the changes.</p>
       <span class="nx">@dirtyCommands_</span><span class="p">.</span><span class="nx">push</span> <span class="nx">command</span>
     
   <span class="nv">setDirty: </span><span class="o">-&gt;</span> <span class="nx">command</span><span class="p">.</span><span class="nx">setDirty</span><span class="p">()</span> <span class="k">for</span> <span class="nx">command</span> <span class="k">in</span> <span class="nx">@commands_</span>
-    
+  
   <span class="nv">render: </span><span class="nf">(visibleRectangle, destination) -&gt;</span>
     <span class="nv">renderRectangle = </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
     </pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Nothing to render?</p>
@@ -57,80 +57,85 @@ only renders the changes.</p>
         
     <span class="k">else</span>
     
-      <span class="k">for</span> <span class="nx">dirtyCommand</span> <span class="k">in</span> <span class="nx">@dirtyCommands_</span>
-        </pre></div></td></tr><tr id="section-8"><td class="docs"><div class="pilwrap"><a href="#section-8" class="pilcrow">&#182;</a></div><p>Make sure the command is visible.</p>
-</td><td class="code"><div class="highlight"><pre>        <span class="k">if</span> <span class="nx">_</span><span class="p">.</span><span class="nx">any</span><span class="p">(</span>
-          <span class="p">[</span><span class="nx">dirtyCommand</span><span class="p">.</span><span class="nx">rectangle</span><span class="p">(),</span> <span class="nx">dirtyCommand</span><span class="p">.</span><span class="nx">lastRectangle</span><span class="p">()]</span>
-          <span class="nf">(rectangle) -&gt;</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersects</span><span class="p">(</span>
+      <span class="nv">renderCommands = </span><span class="nf">(commands, rectangle) -&gt;</span>
+        <span class="k">for</span> <span class="nx">command</span> <span class="k">in</span> <span class="nx">_</span><span class="p">.</span><span class="nx">sortBy</span> <span class="nx">commands</span><span class="p">,</span> <span class="s1">&#39;commandId_&#39;</span>
+        </pre></div></td></tr><tr id="section-8"><td class="docs"><div class="pilwrap"><a href="#section-8" class="pilcrow">&#182;</a></div><p>Make sure this command intersects the current
+rectangle.</p>
+</td><td class="code"><div class="highlight"><pre>          <span class="nv">dirtyIntersection = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersection</span><span class="p">(</span>
             <span class="nx">rectangle</span>
+            <span class="nx">command</span><span class="p">.</span><span class="nx">rectangle</span><span class="p">()</span>
+          <span class="p">)</span>
+          <span class="k">continue</span> <span class="k">if</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">isNull</span> <span class="nx">dirtyIntersection</span>
+          </pre></div></td></tr><tr id="section-9"><td class="docs"><div class="pilwrap"><a href="#section-9" class="pilcrow">&#182;</a></div><p>Make sure this command is actually visible.</p>
+</td><td class="code"><div class="highlight"><pre>          <span class="nv">intersection = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersection</span><span class="p">(</span>
+            <span class="nx">dirtyIntersection</span>
             <span class="nx">visibleRectangle</span>
           <span class="p">)</span>
-        <span class="p">)</span> 
-          </pre></div></td></tr><tr id="section-9"><td class="docs"><div class="pilwrap"><a href="#section-9" class="pilcrow">&#182;</a></div><p>Get any clean commands intersecting this dirty command.</p>
-</td><td class="code"><div class="highlight"><pre>          <span class="nv">commandsToRender = </span><span class="nx">_</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span>
-            <span class="nx">cleanCommands</span>
-            <span class="nf">(command) -&gt;</span> <span class="nx">_</span><span class="p">.</span><span class="nx">any</span><span class="p">(</span>
-              <span class="p">[</span>
-                <span class="nx">dirtyCommand</span><span class="p">.</span><span class="nx">rectangle</span><span class="p">()</span>
-                <span class="nx">dirtyCommand</span><span class="p">.</span><span class="nx">lastRectangle</span><span class="p">()</span>
-              <span class="p">]</span>
-              <span class="nf">(rectangle) -&gt;</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersects</span><span class="p">(</span>
-                <span class="nx">command</span><span class="p">.</span><span class="nx">rectangle</span><span class="p">()</span>
-                <span class="nx">rectangle</span>
+          <span class="k">continue</span> <span class="k">if</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">isNull</span> <span class="nx">intersection</span>
+          </pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>Add this command's rectangle to the rendering
+rectangle.</p>
+</td><td class="code"><div class="highlight"><pre>          <span class="nv">renderRectangle = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">united</span><span class="p">(</span>
+            <span class="nx">renderRectangle</span>
+            <span class="nx">intersection</span>
+          <span class="p">)</span>
+          </pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>The actual position where rendering occurs.</p>
+</td><td class="code"><div class="highlight"><pre>          <span class="nv">position = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">intersection</span>
+          </pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>The clipping rectangle for rendering this command.</p>
+</td><td class="code"><div class="highlight"><pre>          <span class="nv">clip = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">compose</span><span class="p">(</span>
+            <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span>
+              <span class="nx">position</span>
+              <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span>
+                <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">command</span><span class="p">.</span><span class="nx">rectangle</span><span class="p">()</span>
+                <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">visibleRectangle</span>
               <span class="p">)</span>
             <span class="p">)</span>
+            <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">size</span> <span class="nx">intersection</span>
           <span class="p">)</span>
-          </pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>Render over (clear) the area of the last rectangle of the
-dirty command, and then under the dirty command.</p>
-</td><td class="code"><div class="highlight"><pre>          <span class="k">for</span> <span class="nx">rectangle</span> <span class="k">in</span> <span class="p">[</span>
-            <span class="nx">dirtyCommand</span><span class="p">.</span><span class="nx">lastRectangle</span><span class="p">()</span>
-            <span class="nx">dirtyCommand</span><span class="p">.</span><span class="nx">rectangle</span><span class="p">()</span>
-          <span class="p">]</span>
-            
-            <span class="k">for</span> <span class="nx">command</span> <span class="k">in</span> <span class="nx">_</span><span class="p">.</span><span class="nx">sortBy</span> <span class="nx">commandsToRender</span><span class="p">,</span> <span class="s1">&#39;commandId_&#39;</span>
-            </pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>Make sure this command intersects the current
-rectangle.</p>
-</td><td class="code"><div class="highlight"><pre>              <span class="nv">dirtyIntersection = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersection</span><span class="p">(</span>
-                <span class="nx">rectangle</span>
-                <span class="nx">command</span><span class="p">.</span><span class="nx">rectangle</span><span class="p">()</span>
-              <span class="p">)</span>
-              <span class="k">continue</span> <span class="k">if</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">isNull</span> <span class="nx">dirtyIntersection</span>
-              </pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>Make sure this command is actually visible.</p>
-</td><td class="code"><div class="highlight"><pre>              <span class="nv">intersection = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersection</span><span class="p">(</span>
-                <span class="nx">dirtyIntersection</span>
-                <span class="nx">visibleRectangle</span>
-              <span class="p">)</span>
-              <span class="k">continue</span> <span class="k">if</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">isNull</span> <span class="nx">intersection</span>
-              </pre></div></td></tr><tr id="section-13"><td class="docs"><div class="pilwrap"><a href="#section-13" class="pilcrow">&#182;</a></div><p>Add this command's rectangle to the rendering
-rectangle.</p>
-</td><td class="code"><div class="highlight"><pre>              <span class="nv">renderRectangle = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">united</span><span class="p">(</span>
-                <span class="nx">renderRectangle</span>
-                <span class="nx">intersection</span>
-              <span class="p">)</span>
-              </pre></div></td></tr><tr id="section-14"><td class="docs"><div class="pilwrap"><a href="#section-14" class="pilcrow">&#182;</a></div><p>The actual position where rendering occurs.</p>
-</td><td class="code"><div class="highlight"><pre>              <span class="nv">position = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">intersection</span>
-              </pre></div></td></tr><tr id="section-15"><td class="docs"><div class="pilwrap"><a href="#section-15" class="pilcrow">&#182;</a></div><p>The clipping rectangle for rendering this command.</p>
-</td><td class="code"><div class="highlight"><pre>              <span class="nv">clip = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">compose</span><span class="p">(</span>
-                <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span>
-                  <span class="nx">position</span>
-                  <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span>
-                    <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">command</span><span class="p">.</span><span class="nx">rectangle</span><span class="p">()</span>
-                    <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">visibleRectangle</span>
-                  <span class="p">)</span>
-                <span class="p">)</span>
-                <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">size</span> <span class="nx">intersection</span>
-              <span class="p">)</span>
-              </pre></div></td></tr><tr id="section-16"><td class="docs"><div class="pilwrap"><a href="#section-16" class="pilcrow">&#182;</a></div><p>Render this command.</p>
-</td><td class="code"><div class="highlight"><pre>              <span class="nx">command</span><span class="p">.</span><span class="nx">render</span> <span class="nx">position</span><span class="p">,</span> <span class="nx">clip</span><span class="p">,</span> <span class="nx">destination</span>
-              </pre></div></td></tr><tr id="section-17"><td class="docs"><div class="pilwrap"><a href="#section-17" class="pilcrow">&#182;</a></div><p>Add the dirty command on the second time around.</p>
-</td><td class="code"><div class="highlight"><pre>            <span class="nx">commandsToRender</span><span class="p">.</span><span class="nx">push</span> <span class="nx">dirtyCommand</span>
-        </pre></div></td></tr><tr id="section-18"><td class="docs"><div class="pilwrap"><a href="#section-18" class="pilcrow">&#182;</a></div><p>Update the current rectangle.</p>
-</td><td class="code"><div class="highlight"><pre>        <span class="nx">dirtyCommand</span><span class="p">.</span><span class="nx">setLastRectangle</span> <span class="nx">dirtyCommand</span><span class="p">.</span><span class="nx">rectangle</span><span class="p">()</span>
-      </pre></div></td></tr><tr id="section-19"><td class="docs"><div class="pilwrap"><a href="#section-19" class="pilcrow">&#182;</a></div><p>Clean ALL the commands!</p>
+          </pre></div></td></tr><tr id="section-13"><td class="docs"><div class="pilwrap"><a href="#section-13" class="pilcrow">&#182;</a></div><p>Render this command.</p>
+</td><td class="code"><div class="highlight"><pre>          <span class="nx">command</span><span class="p">.</span><span class="nx">render</span> <span class="nx">position</span><span class="p">,</span> <span class="nx">clip</span><span class="p">,</span> <span class="nx">destination</span>
+      </pre></div></td></tr><tr id="section-14"><td class="docs"><div class="pilwrap"><a href="#section-14" class="pilcrow">&#182;</a></div><p>Render all clean commands that intersect all 'last' dirty
+rectangles.</p>
+</td><td class="code"><div class="highlight"><pre>      <span class="k">for</span> <span class="nx">dirtyCommand</span> <span class="k">in</span> <span class="nx">@dirtyCommands_</span>
+        
+        <span class="nv">rectangle = </span><span class="nx">dirtyCommand</span><span class="p">.</span><span class="nx">lastRectangle</span><span class="p">()</span>
+        
+        <span class="k">continue</span> <span class="nx">unless</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersects</span><span class="p">(</span>
+          <span class="nx">rectangle</span>
+          <span class="nx">visibleRectangle</span>
+        <span class="p">)</span>
+      
+        <span class="nx">renderCommands</span> <span class="nx">_</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span>
+          <span class="nx">cleanCommands</span>
+          <span class="nf">(command) -&gt;</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersects</span><span class="p">(</span>
+            <span class="nx">command</span><span class="p">.</span><span class="nx">rectangle</span><span class="p">()</span>
+            <span class="nx">rectangle</span>
+          <span class="p">)</span>
+        <span class="p">),</span> <span class="nx">rectangle</span>
+        </pre></div></td></tr><tr id="section-15"><td class="docs"><div class="pilwrap"><a href="#section-15" class="pilcrow">&#182;</a></div><p>Render all clean and dirty commands that intersect all dirty
+rectangles.</p>
+</td><td class="code"><div class="highlight"><pre>      <span class="k">for</span> <span class="nx">dirtyCommand</span> <span class="k">in</span> <span class="nx">@dirtyCommands_</span>
+      
+        <span class="nv">rectangle = </span><span class="nx">dirtyCommand</span><span class="p">.</span><span class="nx">rectangle</span><span class="p">()</span>
+        <span class="nx">dirtyCommand</span><span class="p">.</span><span class="nx">setLastRectangle</span> <span class="nx">dirtyCommand</span><span class="p">.</span><span class="nx">rectangle</span><span class="p">()</span>
+        
+        <span class="k">continue</span> <span class="nx">unless</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersects</span><span class="p">(</span>
+          <span class="nx">rectangle</span>
+          <span class="nx">visibleRectangle</span>
+        <span class="p">)</span>
+      
+        <span class="nv">commands = </span><span class="nx">_</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span>
+          <span class="nx">cleanCommands</span><span class="p">.</span><span class="nx">concat</span> <span class="nx">@dirtyCommands_</span>
+          <span class="nf">(command) -&gt;</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersects</span><span class="p">(</span>
+            <span class="nx">command</span><span class="p">.</span><span class="nx">rectangle</span><span class="p">()</span>
+            <span class="nx">rectangle</span>
+          <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="nx">renderCommands</span> <span class="nx">commands</span><span class="p">,</span> <span class="nx">rectangle</span>
+    </pre></div></td></tr><tr id="section-16"><td class="docs"><div class="pilwrap"><a href="#section-16" class="pilcrow">&#182;</a></div><p>Clean ALL the commands!</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="vi">@dirtyCommands_ = </span><span class="p">[]</span>
-    </pre></div></td></tr><tr id="section-20"><td class="docs"><div class="pilwrap"><a href="#section-20" class="pilcrow">&#182;</a></div><p>Let caller know which area is actually dirty.</p>
+    </pre></div></td></tr><tr id="section-17"><td class="docs"><div class="pilwrap"><a href="#section-17" class="pilcrow">&#182;</a></div><p>Let caller know which area is actually dirty.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="nx">renderRectangle</span>
-    </pre></div></td></tr><tr id="section-21"><td class="docs"><div class="pilwrap"><a href="#section-21" class="pilcrow">&#182;</a></div><p>avo.<strong>DisplayCommand</strong> is an abstract base class to implement a display
+    </pre></div></td></tr><tr id="section-18"><td class="docs"><div class="pilwrap"><a href="#section-18" class="pilcrow">&#182;</a></div><p>avo.<strong>DisplayCommand</strong> is an abstract base class to implement a display
 command.</p>
 </td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">DisplayCommand</span>
 

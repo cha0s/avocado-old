@@ -6,12 +6,12 @@ things specific to our game.</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">initialize: </span><span class="o">-&gt;</span>
     </pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>Since we can't rely on graphics SPIIs letting us know when our
 graphics need to be rewritten, we'll force redrawing the entire
-screen 10 times a second.</p>
-</td><td class="code"><div class="highlight"><pre>    <span class="nx">setInterval</span> <span class="p">(</span><span class="o">=&gt;</span> <span class="nx">@main</span><span class="p">.</span><span class="nx">displayList</span><span class="p">.</span><span class="nx">setDirty</span><span class="p">()),</span> <span class="mi">100</span>
-    </pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Add a display command to white out the background.</p>
+screen 10 times a second.
+    setInterval (=> @main.displayList.setDirty()), 100</p>
+</td><td class="code"><div class="highlight"><pre>    </pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Add a display command to white out the background.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="k">new</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">FillDisplayCommand</span><span class="p">(</span>
       <span class="nx">@main</span><span class="p">.</span><span class="nx">displayList</span>
-      <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span>
+      <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span>
       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">]</span>
     <span class="p">)</span>
     </pre></div></td></tr><tr id="section-5"><td class="docs"><div class="pilwrap"><a href="#section-5" class="pilcrow">&#182;</a></div><p>Register a player 'Awesome player' to receive input using the

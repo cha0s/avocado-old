@@ -46,7 +46,10 @@ only renders the changes.</p>
       <span class="k">for</span> <span class="nx">command</span> <span class="k">in</span> <span class="nx">_</span><span class="p">.</span><span class="nx">sortBy</span> <span class="nx">@dirtyCommands_</span><span class="p">,</span> <span class="s1">&#39;commandId_&#39;</span>
         </pre></div></td></tr><tr id="section-7"><td class="docs"><div class="pilwrap"><a href="#section-7" class="pilcrow">&#182;</a></div><p>Render this command.</p>
 </td><td class="code"><div class="highlight"><pre>        <span class="nx">command</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
-          <span class="nx">command</span><span class="p">.</span><span class="nx">position</span><span class="p">()</span>
+          <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span>
+            <span class="nx">command</span><span class="p">.</span><span class="nx">position</span><span class="p">()</span>
+            <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">visibleRectangle</span>
+          <span class="p">)</span>
           <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">compose</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="nx">command</span><span class="p">.</span><span class="nx">size</span><span class="p">()</span>
           <span class="nx">destination</span>
         <span class="p">)</span>
@@ -80,6 +83,10 @@ rectangle.</p>
           <span class="p">)</span>
           </pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>The actual position where rendering occurs.</p>
 </td><td class="code"><div class="highlight"><pre>          <span class="nv">position = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">intersection</span>
+          <span class="nv">position = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span>
+            <span class="nx">position</span>
+            <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">visibleRectangle</span>
+          <span class="p">)</span>
           </pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>The clipping rectangle for rendering this command.</p>
 </td><td class="code"><div class="highlight"><pre>          <span class="nv">clip = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">compose</span><span class="p">(</span>
             <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span>
@@ -123,14 +130,13 @@ rectangles.</p>
           <span class="nx">visibleRectangle</span>
         <span class="p">)</span>
       
-        <span class="nv">commands = </span><span class="nx">_</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span>
+        <span class="nx">renderCommands</span> <span class="nx">_</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span>
           <span class="nx">cleanCommands</span><span class="p">.</span><span class="nx">concat</span> <span class="nx">@dirtyCommands_</span>
           <span class="nf">(command) -&gt;</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersects</span><span class="p">(</span>
             <span class="nx">command</span><span class="p">.</span><span class="nx">rectangle</span><span class="p">()</span>
             <span class="nx">rectangle</span>
           <span class="p">)</span>
-        <span class="p">)</span>
-        <span class="nx">renderCommands</span> <span class="nx">commands</span><span class="p">,</span> <span class="nx">rectangle</span>
+        <span class="p">),</span> <span class="nx">rectangle</span>
     </pre></div></td></tr><tr id="section-16"><td class="docs"><div class="pilwrap"><a href="#section-16" class="pilcrow">&#182;</a></div><p>Clean ALL the commands!</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="vi">@dirtyCommands_ = </span><span class="p">[]</span>
     </pre></div></td></tr><tr id="section-17"><td class="docs"><div class="pilwrap"><a href="#section-17" class="pilcrow">&#182;</a></div><p>Let caller know which area is actually dirty.</p>

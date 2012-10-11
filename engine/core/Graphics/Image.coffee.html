@@ -109,7 +109,10 @@ and draw mode, using the given sx, sy, sw, sh source rectangle to clip.</p>
   <span class="nv">render: </span><span class="nf">(position, clip, destination) -&gt;</span>
     
     <span class="nx">destination</span><span class="p">.</span><span class="nx">drawFilledBox</span><span class="p">(</span>
-      <span class="nx">clip</span>
+      <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">compose</span><span class="p">(</span>
+        <span class="nx">position</span>
+        <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">size</span> <span class="nx">clip</span>
+      <span class="p">)</span>
       <span class="nx">@r_</span><span class="p">,</span> <span class="nx">@g_</span><span class="p">,</span> <span class="nx">@b_</span><span class="p">,</span> <span class="nx">@a_</span>
     <span class="p">)</span>
 

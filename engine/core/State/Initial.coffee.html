@@ -6,9 +6,9 @@ things specific to our game.</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">initialize: </span><span class="o">-&gt;</span>
     </pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>Since we can't rely on graphics SPIIs letting us know when our
 graphics need to be rewritten, we'll force redrawing the entire
-screen 10 times a second.
-    setInterval (=> @main.displayList.setDirty()), 100</p>
-</td><td class="code"><div class="highlight"><pre>    </pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Add a display command to white out the background.</p>
+screen 10 times a second.</p>
+</td><td class="code"><div class="highlight"><pre>    <span class="nx">setInterval</span> <span class="p">(</span><span class="o">=&gt;</span> <span class="nx">@main</span><span class="p">.</span><span class="nx">displayList</span><span class="p">.</span><span class="nx">setDirty</span><span class="p">()),</span> <span class="mi">100</span>
+    </pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Add a display command to white out the background.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="k">new</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">FillDisplayCommand</span><span class="p">(</span>
       <span class="nx">@main</span><span class="p">.</span><span class="nx">displayList</span>
       <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span>
@@ -30,20 +30,11 @@ keyboard arrow keys and joystick index 0.</p>
         <span class="nx">image</span>
         <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">compose</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="nx">image</span><span class="p">.</span><span class="nx">size</span><span class="p">()</span>
       <span class="p">)</span>
-      
-    <span class="nx">avo</span><span class="p">.</span><span class="nx">RasterFont</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="s1">&#39;/font/worlds-beyond.png&#39;</span><span class="p">).</span><span class="k">then</span> <span class="p">(</span><span class="nx">font</span><span class="p">)</span> <span class="o">=&gt;</span>
-    </pre></div></td></tr><tr id="section-8"><td class="docs"><div class="pilwrap"><a href="#section-8" class="pilcrow">&#182;</a></div><p>Add a display command to white out the background.</p>
-</td><td class="code"><div class="highlight"><pre>      <span class="vi">@font = </span><span class="k">new</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">FontDisplayCommand</span><span class="p">(</span>
-        <span class="nx">@main</span><span class="p">.</span><span class="nx">displayList</span>
-        <span class="nx">font</span>
-        <span class="s2">&quot;Hey hey&quot;</span>
-        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
-      <span class="p">)</span>
-    </pre></div></td></tr><tr id="section-9"><td class="docs"><div class="pilwrap"><a href="#section-9" class="pilcrow">&#182;</a></div><p>Happy music!</p>
+      </pre></div></td></tr><tr id="section-8"><td class="docs"><div class="pilwrap"><a href="#section-8" class="pilcrow">&#182;</a></div><p>Happy music!</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="nv">musicPromise = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Music</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="s1">&#39;/music/smile.ogg&#39;</span><span class="p">).</span><span class="k">then</span> <span class="p">(</span><span class="nx">@music</span><span class="p">)</span> <span class="o">=&gt;</span>
-    </pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>Start it as soon as it loads.</p>
+    </pre></div></td></tr><tr id="section-9"><td class="docs"><div class="pilwrap"><a href="#section-9" class="pilcrow">&#182;</a></div><p>Start it as soon as it loads.</p>
 </td><td class="code"><div class="highlight"><pre>      <span class="nx">@music</span><span class="p">.</span><span class="nx">play</span><span class="p">()</span>
-      </pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>When the image and music are done loading, then we're done
+      </pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>When the image and music are done loading, then we're done
 initializing. Remember - with CoffeeScript, the last statement in
 a function is the return value. And upon.all returns a promise, just
 as initialize requires. Elegant!</p>
@@ -51,21 +42,21 @@ as initialize requires. Elegant!</p>
       <span class="nx">imagePromise</span>
       <span class="nx">musicPromise</span>
     <span class="p">]).</span><span class="k">then</span> <span class="o">=&gt;</span>
-      </pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>Last, we'll open the window where we show all of the graphics
+      </pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>Last, we'll open the window where we show all of the graphics
 stuff. We'll wait so that there isn't a black screen sitting
 there while everything loads.
 Instantiate a Window to receive render events.</p>
 </td><td class="code"><div class="highlight"><pre>      <span class="nv">avo.window = </span><span class="k">new</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">graphicsService</span><span class="p">.</span><span class="nx">newWindow</span> <span class="p">[</span><span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">]</span>
       <span class="nx">avo</span><span class="p">.</span><span class="nb">window</span><span class="p">.</span><span class="nx">setWindowTitle</span> <span class="s1">&#39;Avocado - Fun Should Be Free&#39;</span>
-      </pre></div></td></tr><tr id="section-13"><td class="docs"><div class="pilwrap"><a href="#section-13" class="pilcrow">&#182;</a></div><p>@main lets us know when it has something to render, so we'll
+      </pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>@main lets us know when it has something to render, so we'll
 put it on our window.</p>
 </td><td class="code"><div class="highlight"><pre>      <span class="nx">@main</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;render&#39;</span><span class="p">,</span> <span class="nf">(buffer, rectangle) -&gt;</span>
-        </pre></div></td></tr><tr id="section-14"><td class="docs"><div class="pilwrap"><a href="#section-14" class="pilcrow">&#182;</a></div><p>Render and display the changes to the window.</p>
+        </pre></div></td></tr><tr id="section-13"><td class="docs"><div class="pilwrap"><a href="#section-13" class="pilcrow">&#182;</a></div><p>Render and display the changes to the window.</p>
 </td><td class="code"><div class="highlight"><pre>        <span class="nx">avo</span><span class="p">.</span><span class="nb">window</span><span class="p">.</span><span class="nx">render</span> <span class="nx">buffer</span><span class="p">,</span> <span class="nx">rectangle</span>
         <span class="nx">avo</span><span class="p">.</span><span class="nb">window</span><span class="p">.</span><span class="nx">display</span><span class="p">()</span>
-        </pre></div></td></tr><tr id="section-15"><td class="docs"><div class="pilwrap"><a href="#section-15" class="pilcrow">&#182;</a></div><p>Catch the quit event (window close event).</p>
+        </pre></div></td></tr><tr id="section-14"><td class="docs"><div class="pilwrap"><a href="#section-14" class="pilcrow">&#182;</a></div><p>Catch the quit event (window close event).</p>
 </td><td class="code"><div class="highlight"><pre>      <span class="nx">avo</span><span class="p">.</span><span class="nb">window</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;quit.Engine&#39;</span><span class="p">,</span> <span class="o">=&gt;</span> <span class="nx">@main</span><span class="p">.</span><span class="nx">quit</span><span class="p">()</span>
-      </pre></div></td></tr><tr id="section-16"><td class="docs"><div class="pilwrap"><a href="#section-16" class="pilcrow">&#182;</a></div><p>Allow dragging the avocado around with the left mouse button. Keep
+      </pre></div></td></tr><tr id="section-15"><td class="docs"><div class="pilwrap"><a href="#section-15" class="pilcrow">&#182;</a></div><p>Allow dragging the avocado around with the left mouse button. Keep
 track of where the avocado was when we started dragging.</p>
 </td><td class="code"><div class="highlight"><pre>      <span class="vi">@dragStartAvocadoLocation = </span><span class="p">[]</span>
       <span class="nx">avo</span><span class="p">.</span><span class="nb">window</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;mouseButtonDown.InitialState&#39;</span><span class="p">,</span> <span class="p">({</span><span class="nx">button</span><span class="p">})</span> <span class="o">=&gt;</span>
@@ -74,25 +65,22 @@ track of where the avocado was when we started dragging.</p>
       <span class="nx">avo</span><span class="p">.</span><span class="nb">window</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;mouseDrag.InitialState&#39;</span><span class="p">,</span> <span class="p">({</span><span class="nx">position</span><span class="p">,</span> <span class="nx">button</span><span class="p">,</span> <span class="nx">relative</span><span class="p">})</span> <span class="o">=&gt;</span>
         <span class="k">return</span> <span class="nx">unless</span> <span class="nx">button</span> <span class="o">is</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Window</span><span class="p">.</span><span class="nx">LeftButton</span>
         <span class="nx">@avocado</span><span class="p">.</span><span class="nx">setPosition</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@dragStartAvocadoLocation</span><span class="p">,</span> <span class="nx">relative</span>
-        <span class="nx">@font</span><span class="p">.</span><span class="nx">setText</span> <span class="s2">&quot;[#{@avocado.position()[0]}, #{@avocado.position()[1]}]&quot;</span>
-        </pre></div></td></tr><tr id="section-17"><td class="docs"><div class="pilwrap"><a href="#section-17" class="pilcrow">&#182;</a></div><p>Called repeatedly while this state is loaded. You can do things like
+        </pre></div></td></tr><tr id="section-16"><td class="docs"><div class="pilwrap"><a href="#section-16" class="pilcrow">&#182;</a></div><p>Called repeatedly while this state is loaded. You can do things like
 update your world here. We'll move the avocado based on movement input.</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">tick: </span><span class="o">-&gt;</span>
-    </pre></div></td></tr><tr id="section-18"><td class="docs"><div class="pilwrap"><a href="#section-18" class="pilcrow">&#182;</a></div><p>Any movement input?</p>
+    </pre></div></td></tr><tr id="section-17"><td class="docs"><div class="pilwrap"><a href="#section-17" class="pilcrow">&#182;</a></div><p>Any movement input?</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="nv">movement = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">graphicsService</span><span class="p">.</span><span class="nx">playerTickMovement</span><span class="p">(</span><span class="s1">&#39;Awesome player&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="k">if</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">isZero</span> <span class="nx">movement</span>
-    </pre></div></td></tr><tr id="section-19"><td class="docs"><div class="pilwrap"><a href="#section-19" class="pilcrow">&#182;</a></div><p>Move the avocado 250px a second based on player 'Awesome player's
+    </pre></div></td></tr><tr id="section-18"><td class="docs"><div class="pilwrap"><a href="#section-18" class="pilcrow">&#182;</a></div><p>Move the avocado 250px a second based on player 'Awesome player's
 movement.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="nx">@avocado</span><span class="p">.</span><span class="nx">setPosition</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span>
       <span class="nx">@avocado</span><span class="p">.</span><span class="nx">position</span><span class="p">()</span>
       <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">scale</span> <span class="nx">movement</span><span class="p">,</span> <span class="mi">250</span>
     <span class="p">)</span>
-    
-    <span class="nx">@font</span><span class="p">.</span><span class="nx">setText</span> <span class="s2">&quot;[#{@avocado.position()[0]}, #{@avocado.position()[1]}]&quot;</span>
-    </pre></div></td></tr><tr id="section-20"><td class="docs"><div class="pilwrap"><a href="#section-20" class="pilcrow">&#182;</a></div><p>Called when another state is loaded. This gives you a chance to clean
+    </pre></div></td></tr><tr id="section-19"><td class="docs"><div class="pilwrap"><a href="#section-19" class="pilcrow">&#182;</a></div><p>Called when another state is loaded. This gives you a chance to clean
 up resources and event handlers.</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">leave: </span><span class="nf">(nextStateName) -&gt;</span>
-    </pre></div></td></tr><tr id="section-21"><td class="docs"><div class="pilwrap"><a href="#section-21" class="pilcrow">&#182;</a></div><p>Remove our event handler(s).</p>
+    </pre></div></td></tr><tr id="section-20"><td class="docs"><div class="pilwrap"><a href="#section-20" class="pilcrow">&#182;</a></div><p>Remove our event handler(s).</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="nx">avo</span><span class="p">.</span><span class="nb">window</span><span class="p">.</span><span class="kc">off</span> <span class="s1">&#39;.InitialState&#39;</span>
 
 </pre></div></td></tr></tbody></table><div id="projectname"><a href="../../../index.html">Avocado</a></div></div></body></html>

@@ -150,17 +150,17 @@ rectangles.</p>
           <span class="nx">rectangle</span>
         <span class="p">)</span>
 
-      <span class="nx">renderRectangles</span><span class="p">.</span><span class="nx">push</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersection</span><span class="p">(</span>
-        <span class="nx">currentDirtyRectangle</span>
-        <span class="nx">@rectangle_</span>
-      <span class="p">)</span>
       <span class="nx">renderCommands</span> <span class="nx">_</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span>
         <span class="nx">cleanCommands</span><span class="p">.</span><span class="nx">concat</span> <span class="nx">dirtyCommands</span>
         <span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersects</span><span class="p">(</span>
           <span class="nx">command</span><span class="p">.</span><span class="nx">relativeRectangle</span> <span class="nx">@rectangle_</span>
-          <span class="nx">lastDirtyRectangle</span>
+          <span class="nx">currentDirtyRectangle</span>
         <span class="p">)</span>
-      <span class="p">),</span> <span class="nx">lastDirtyRectangle</span>
+      <span class="p">),</span> <span class="nx">currentDirtyRectangle</span>
+      <span class="nx">renderRectangles</span><span class="p">.</span><span class="nx">push</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersection</span><span class="p">(</span>
+        <span class="nx">currentDirtyRectangle</span>
+        <span class="nx">@rectangle_</span>
+      <span class="p">)</span>
         </pre></div></td></tr><tr id="section-17"><td class="docs"><div class="pilwrap"><a href="#section-17" class="pilcrow">&#182;</a></div><p>Clean ALL the commands!</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="vi">@dirtyCommands_ = </span><span class="p">[]</span>
     </pre></div></td></tr><tr id="section-18"><td class="docs"><div class="pilwrap"><a href="#section-18" class="pilcrow">&#182;</a></div><p>Let caller know which areas are actually dirty.</p>

@@ -27,10 +27,10 @@ avo.Window::height = -> @size()[1]
 avo.Window::pollEvents = avo.Window::['%pollEvents']
 
 # Render an Image onto this window.
-avo.Window::render = (image, rectangle = [0, 0, 0, 0]) ->
+avo.Window::render = (image, rectangles = [[0, 0, 0, 0]]) ->
 	return unless image?
 	
-	@['%render'] image, rectangle
+	@['%render'] image, rectangle for rectangle in rectangles
 
 # Set the window parameters.
 avo.Window::setFlags = (flags = avo.Window.Flags_Default) ->

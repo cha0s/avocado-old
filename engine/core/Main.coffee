@@ -163,10 +163,10 @@ class avo.Main
 	render: ->
 		
 		# Notify any listeners if there's something to render.
-		rectangle = @displayList.render [0, 0, 800, 600], @backBuffer
-		unless avo.Rectangle.isNull rectangle
+		rectangles = @displayList.render [0, 0, 800, 600], @backBuffer
+		if rectangles.length > 0
 			
-			@emit 'render', @backBuffer, rectangle
+			@emit 'render', @backBuffer, rectangles
 		
 		# Track the renders per second.
 		@rendersPerSecond.tick()

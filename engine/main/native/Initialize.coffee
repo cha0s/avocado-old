@@ -72,8 +72,6 @@ avo.tickTimeouts = ->
 		
 		if avo.TimingService.elapsed() >= handle.thisCall + handle.duration
 			
-			handle.fn.apply handle.O
-			
 			if not handle.isInterval
 			
 				clearHandle {id: parseInt id}
@@ -81,3 +79,6 @@ avo.tickTimeouts = ->
 			else
 			
 				handle.thisCall = avo.TimingService.elapsed()
+
+			handle.fn.apply handle.O
+			

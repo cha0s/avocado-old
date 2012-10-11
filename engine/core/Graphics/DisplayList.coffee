@@ -57,6 +57,8 @@ class avo.DisplayList
 					destination
 				)
 				
+				command.setLastRectangle command.rectangle()
+				
 			renderRectangle = visibleRectangle
 				
 		else

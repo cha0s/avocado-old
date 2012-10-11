@@ -8,7 +8,7 @@ avo.Vector =
 	#
 	#     avocado> avo.Vector.scale [.5, 1.5], 2
 	#     [1, 3]
-	scale: (array, k) -> [array[0] * k, array[1] * k]
+	scale: (vector, k) -> [vector[0] * k, vector[1] * k]
 	
 	# Add two vectors.
 	#
@@ -68,4 +68,21 @@ avo.Vector =
 			Math.floor vector[0]
 			Math.floor vector[1]
 		]
+
+	# Mix the vector methods into a vector instance.
+	#
+	#     avocado> v = avo.Vector.mixin [3, 4]
+	#     avocado> v.add [4, 5]
+	#     [7, 9]
+	mixin: (v) ->
 		
+		for own method, f of avo.Vector
+			continue if _.contains ['mixin'], method
+			
+			v[method] = _.bind f, v, v
+		
+		v[method] = _.compose avo.Vector.mixin, v[method] for method in [
+			'scale', 'add', 'sub', 'div', 'copy', 'isZero', 'round', 'floor'
+		]
+			
+		v

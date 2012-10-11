@@ -1,7 +1,7 @@
 # Rectangle operations.
 
 # avo.**Rectangle** is a utility class to help with rectangle operations. A
-# rectangle is implemented as a 2-element array. Element 0 is *x*, element
+# rectangle is implemented as a 4-element array. Element 0 is *x*, element
 # 1 is *y*, element 2 is *width* and element 3 is *height*.
 avo.Rectangle = 
 
@@ -129,7 +129,7 @@ avo.Rectangle =
 		
 	# Floor the position and size of a rectangle.
 	#
-	#     avocado> avo.Rectangle.round [3.14, 4.70, 5.32, 1.8]
+	#     avocado> avo.Rectangle.floor [3.14, 4.70, 5.32, 1.8]
 	#     [3, 4, 5, 1]
 	floor: (rectangle) ->
 		
@@ -138,3 +138,24 @@ avo.Rectangle =
 			avo.Vector.floor avo.Rectangle.size rectangle
 		)
 		
+	# Mix the rectangle methods into a rectangle instance.
+	#
+	#     avocado> r = avo.Rectangle.mixin [3, 4, 5, 6]
+	#     avocado> r.size()
+	#     [5, 6]
+	mixin: (r) ->
+		
+		for own method, f of avo.Rectangle
+			continue if _.contains ['mixin', 'compose'], method
+			
+			r[method] = _.bind f, r, r
+		
+		r[method] = _.compose avo.Vector.mixin, r[method] for method in [
+			'position', 'size'
+		]
+			
+		r[method] = _.compose avo.Rectangle.mixin, r[method] for method in [
+			'intersection', 'translated', 'united', 'round', 'floor'
+		]
+			
+		r

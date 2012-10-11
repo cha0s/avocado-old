@@ -52,7 +52,10 @@ class avo.DisplayList
 				
 				# Render this command.
 				command.render(
-					command.position()
+					avo.Vector.sub(
+						command.position()
+						avo.Rectangle.position visibleRectangle
+					)
 					avo.Rectangle.compose [0, 0], command.size()
 					destination
 				)
@@ -90,6 +93,10 @@ class avo.DisplayList
 					
 					# The actual position where rendering occurs.
 					position = avo.Rectangle.position intersection
+					position = avo.Vector.sub(
+						position
+						avo.Rectangle.position visibleRectangle
+					)
 					
 					# The clipping rectangle for rendering this command.
 					clip = avo.Rectangle.compose(
@@ -137,14 +144,13 @@ class avo.DisplayList
 					visibleRectangle
 				)
 			
-				commands = _.filter(
+				renderCommands _.filter(
 					cleanCommands.concat @dirtyCommands_
 					(command) -> avo.Rectangle.intersects(
 						command.rectangle()
 						rectangle
 					)
-				)
-				renderCommands commands, rectangle
+				), rectangle
 		
 		# Clean ALL the commands!
 		@dirtyCommands_ = []

@@ -6,7 +6,7 @@ is implemented as a 2-element array. Element 0 is <em>x</em> and element 1 is <e
 <pre><code>avocado&gt; avo.Vector.scale [.5, 1.5], 2
 [1, 3]
 </code></pre>
-</td><td class="code"><div class="highlight"><pre>  <span class="nv">scale: </span><span class="nf">(array, k) -&gt;</span> <span class="p">[</span><span class="nx">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">array</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nx">k</span><span class="p">]</span>
+</td><td class="code"><div class="highlight"><pre>  <span class="nv">scale: </span><span class="nf">(vector, k) -&gt;</span> <span class="p">[</span><span class="nx">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nx">k</span><span class="p">]</span>
   </pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Add two vectors.</p>
 
 <pre><code>avocado&gt; avo.Vector.add [1, 2], [1, 1]
@@ -66,6 +66,18 @@ false
       <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span> <span class="nx">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
       <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span> <span class="nx">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="p">]</span>
+
+  <span class="nv">mixin: </span><span class="nf">(v) -&gt;</span>
     
+    <span class="k">for</span> <span class="nx">own</span> <span class="nx">method</span><span class="p">,</span> <span class="nx">f</span> <span class="k">of</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span>
+      <span class="k">continue</span> <span class="k">if</span> <span class="nx">_</span><span class="p">.</span><span class="nx">contains</span> <span class="p">[</span><span class="s1">&#39;mixin&#39;</span><span class="p">],</span> <span class="nx">method</span>
+      
+      <span class="nx">v</span><span class="p">[</span><span class="nx">method</span><span class="p">]</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">bind</span> <span class="nx">f</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">v</span>
+    
+    <span class="nx">v</span><span class="p">[</span><span class="nx">method</span><span class="p">]</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">compose</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">mixin</span><span class="p">,</span> <span class="nx">v</span><span class="p">[</span><span class="nx">method</span><span class="p">]</span> <span class="k">for</span> <span class="nx">method</span> <span class="k">in</span> <span class="p">[</span>
+      <span class="s1">&#39;scale&#39;</span><span class="p">,</span> <span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="s1">&#39;sub&#39;</span><span class="p">,</span> <span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="s1">&#39;copy&#39;</span><span class="p">,</span> <span class="s1">&#39;isZero&#39;</span><span class="p">,</span> <span class="s1">&#39;round&#39;</span><span class="p">,</span> <span class="s1">&#39;floor&#39;</span>
+    <span class="p">]</span>
+      
+    <span class="nx">v</span>
 
 </pre></div></td></tr></tbody></table><div id="projectname"><a href="../../../index.html">Avocado</a></div></div></body></html>

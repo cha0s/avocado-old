@@ -5,7 +5,7 @@ state needs here. This is the Initial state, so we can also set up
 things specific to our game.</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">initialize: </span><span class="o">-&gt;</span>
     </pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>Keep a display list to optimize rendering.</p>
-</td><td class="code"><div class="highlight"><pre>    <span class="vi">@displayList = </span><span class="k">new</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">DisplayList</span><span class="p">()</span>
+</td><td class="code"><div class="highlight"><pre>    <span class="vi">@displayList = </span><span class="k">new</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">DisplayList</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">]</span>
     </pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Since we can't rely on graphics SPIIs letting us know when our
 graphics need to be rewritten, we'll force redrawing the entire
 screen 10 times a second.</p>
@@ -32,7 +32,7 @@ keyboard arrow keys and joystick index 0.</p>
         <span class="nx">image</span>
         <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">compose</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="nx">image</span><span class="p">.</span><span class="nx">size</span><span class="p">()</span>
       <span class="p">)</span>
-      </pre></div></td></tr><tr id="section-9"><td class="docs"><div class="pilwrap"><a href="#section-9" class="pilcrow">&#182;</a></div><p>Happy music!</p>
+    </pre></div></td></tr><tr id="section-9"><td class="docs"><div class="pilwrap"><a href="#section-9" class="pilcrow">&#182;</a></div><p>Happy music!</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="nv">musicPromise = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Music</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="s1">&#39;/music/smile.ogg&#39;</span><span class="p">).</span><span class="k">then</span> <span class="p">(</span><span class="nx">@music</span><span class="p">)</span> <span class="o">=&gt;</span>
     </pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>Start it as soon as it loads.</p>
 </td><td class="code"><div class="highlight"><pre>      <span class="nx">@music</span><span class="p">.</span><span class="nx">play</span><span class="p">()</span>
@@ -79,10 +79,10 @@ movement.</p>
       <span class="nx">@avocado</span><span class="p">.</span><span class="nx">position</span><span class="p">()</span>
       <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">scale</span> <span class="nx">movement</span><span class="p">,</span> <span class="mi">250</span>
     <span class="p">)</span>
-    </pre></div></td></tr><tr id="section-20"><td class="docs"><div class="pilwrap"><a href="#section-20" class="pilcrow">&#182;</a></div><p>Called repeatedly to allow the state to render graphics.</p>
+  </pre></div></td></tr><tr id="section-20"><td class="docs"><div class="pilwrap"><a href="#section-20" class="pilcrow">&#182;</a></div><p>Called repeatedly to allow the state to render graphics.</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">render: </span><span class="nf">(buffer) -&gt;</span>
-    </pre></div></td></tr><tr id="section-21"><td class="docs"><div class="pilwrap"><a href="#section-21" class="pilcrow">&#182;</a></div><p>Notify any listeners if there's something to render.</p>
-</td><td class="code"><div class="highlight"><pre>    <span class="nx">@displayList</span><span class="p">.</span><span class="nx">render</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">],</span> <span class="nx">buffer</span>
+    </pre></div></td></tr><tr id="section-21"><td class="docs"><div class="pilwrap"><a href="#section-21" class="pilcrow">&#182;</a></div><p>Render the anything dirty. This will also pass back the dirty areas.</p>
+</td><td class="code"><div class="highlight"><pre>    <span class="nx">@displayList</span><span class="p">.</span><span class="nx">render</span> <span class="nx">buffer</span>
     </pre></div></td></tr><tr id="section-22"><td class="docs"><div class="pilwrap"><a href="#section-22" class="pilcrow">&#182;</a></div><p>Called when another state is loaded. This gives you a chance to clean
 up resources and event handlers.</p>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">leave: </span><span class="nf">(nextStateName) -&gt;</span>

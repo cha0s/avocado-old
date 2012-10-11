@@ -7,7 +7,7 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 	initialize: ->
 		
 		# Keep a display list to optimize rendering.
-		@displayList = new avo.DisplayList()
+		@displayList = new avo.DisplayList [0, 0, 800, 600]
 		
 		# Since we can't rely on graphics SPIIs letting us know when our
 		# graphics need to be rewritten, we'll force redrawing the entire
@@ -39,7 +39,7 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 				image
 				avo.Rectangle.compose [0, 0], image.size()
 			)
-			
+		
 		# Happy music!
 		musicPromise = avo.Music.load('/music/smile.ogg').then (@music) =>
 		
@@ -97,12 +97,12 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 			@avocado.position()
 			avo.Vector.scale movement, 250
 		)
-		
+	
 	# Called repeatedly to allow the state to render graphics.
 	render: (buffer) ->
 		
-		# Notify any listeners if there's something to render.
-		@displayList.render [0, 0, 800, 600], buffer
+		# Render the anything dirty. This will also pass back the dirty areas.
+		@displayList.render buffer
 		
 	# Called when another state is loaded. This gives you a chance to clean
 	# up resources and event handlers.

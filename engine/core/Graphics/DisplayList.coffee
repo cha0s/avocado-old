@@ -6,8 +6,9 @@
 # only renders the changes.
 class avo.DisplayList
 	
-	constructor: ->
+	constructor: (rectangle) ->
 		
+		@rectangle_ = rectangle
 		@clear()
 	
 	addCommand: (command) ->
@@ -26,12 +27,12 @@ class avo.DisplayList
 	setCommandDirty: (command) ->
 		
 		# Add the command if it hasn't been yet.
-		unless  _.contains @dirtyCommands_, command
+		unless _.contains @dirtyCommands_, command
 			@dirtyCommands_.push command
 		
 	setDirty: -> command.setDirty() for command in @commands_
 	
-	render: (visibleRectangle, destination) ->
+	render: (destination) ->
 		renderRectangles = []
 		
 		# Nothing to render?
@@ -40,16 +41,16 @@ class avo.DisplayList
 		# Keep track of the display offset so we can translate the resulting
 		# dirty rectangle back later.
 		offset = avo.Vector.scale(
-			avo.Rectangle.position visibleRectangle
+			avo.Rectangle.position @rectangle_
 			-1
 		)
 		
 		# Separate the visible clean commands so we have less to check.
 		cleanCommands = _.difference @commands_, @dirtyCommands_
-		cleanCommands = _.filter cleanCommands, (command) ->
+		cleanCommands = _.filter cleanCommands, (command) =>
 			avo.Rectangle.intersects(
-				command.relativeRectangle visibleRectangle
-				visibleRectangle
+				command.relativeRectangle @rectangle_
+				@rectangle_
 			)
 			
 		# All commands are dirty? Just render everything!
@@ -60,8 +61,8 @@ class avo.DisplayList
 				# Render this command.
 				command.render(
 					avo.Vector.sub(
-						command.relativePosition visibleRectangle
-						avo.Rectangle.position visibleRectangle
+						command.relativePosition @rectangle_
+						avo.Rectangle.position @rectangle_
 					)
 					avo.Rectangle.compose [0, 0], command.size()
 					destination
@@ -70,25 +71,25 @@ class avo.DisplayList
 				command.setLastRectangle command.rectangle()
 				
 			# Refresh everything.
-			renderRectangles.push visibleRectangle
+			renderRectangles.push @rectangle_
 				
 		else
 		
-			renderCommands = (commands, rectangle) ->
+			renderCommands = (commands, rectangle) =>
 				for command in _.sortBy commands, 'commandId_'
 				
 					# Make sure this command intersects the current
 					# rectangle.
 					dirtyIntersection = avo.Rectangle.intersection(
 						rectangle
-						command.relativeRectangle visibleRectangle
+						command.relativeRectangle @rectangle_
 					)
 					continue if avo.Rectangle.isNull dirtyIntersection
 					
 					# Make sure this command is actually visible.
 					intersection = avo.Rectangle.intersection(
 						dirtyIntersection
-						visibleRectangle
+						@rectangle_
 					)
 					continue if avo.Rectangle.isNull intersection
 					
@@ -100,7 +101,7 @@ class avo.DisplayList
 					position = avo.Rectangle.position intersection
 					position = avo.Vector.sub(
 						position
-						avo.Rectangle.position visibleRectangle
+						avo.Rectangle.position @rectangle_
 					)
 					
 					# The clipping rectangle for rendering this command.
@@ -108,8 +109,8 @@ class avo.DisplayList
 						avo.Vector.sub(
 							position
 							avo.Vector.sub(
-								avo.Rectangle.position command.relativeRectangle visibleRectangle
-								avo.Rectangle.position visibleRectangle
+								avo.Rectangle.position command.relativeRectangle @rectangle_
+								avo.Rectangle.position @rectangle_
 							)
 						)
 						avo.Rectangle.size intersection
@@ -122,17 +123,17 @@ class avo.DisplayList
 			# rectangles.
 			for dirtyCommand in @dirtyCommands_
 				
-				rectangle = dirtyCommand.lastRelativeRectangle visibleRectangle
+				rectangle = dirtyCommand.lastRelativeRectangle @rectangle_
 				
 				continue unless avo.Rectangle.intersects(
 					rectangle
-					visibleRectangle
+					@rectangle_
 				)
 			
 				renderCommands _.filter(
 					cleanCommands
-					(command) -> avo.Rectangle.intersects(
-						command.relativeRectangle visibleRectangle
+					(command) => avo.Rectangle.intersects(
+						command.relativeRectangle @rectangle_
 						rectangle
 					)
 				), rectangle
@@ -141,18 +142,18 @@ class avo.DisplayList
 			# rectangles.
 			for dirtyCommand in @dirtyCommands_
 			
-				rectangle = dirtyCommand.relativeRectangle visibleRectangle
+				rectangle = dirtyCommand.relativeRectangle @rectangle_
 				dirtyCommand.setLastRectangle dirtyCommand.rectangle()
 				
 				continue unless avo.Rectangle.intersects(
 					rectangle
-					visibleRectangle
+					@rectangle_
 				)
 			
 				renderCommands _.filter(
 					cleanCommands.concat @dirtyCommands_
-					(command) -> avo.Rectangle.intersects(
-						command.relativeRectangle visibleRectangle
+					(command) => avo.Rectangle.intersects(
+						command.relativeRectangle @rectangle_
 						rectangle
 					)
 				), rectangle

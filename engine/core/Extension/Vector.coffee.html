@@ -65,9 +65,13 @@ false
     <span class="p">[</span>
       <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span> <span class="nx">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
       <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span> <span class="nx">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="p">]</span>
+    <span class="p">]</span></pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>Mix the vector methods into a vector instance.</p>
 
-  <span class="nv">mixin: </span><span class="nf">(v) -&gt;</span>
+<pre><code>avocado&gt; v = avo.Vector.mixin [3, 4]
+avocado&gt; v.add [4, 5]
+[7, 9]
+</code></pre>
+</td><td class="code"><div class="highlight"><pre>  <span class="nv">mixin: </span><span class="nf">(v) -&gt;</span>
     
     <span class="k">for</span> <span class="nx">own</span> <span class="nx">method</span><span class="p">,</span> <span class="nx">f</span> <span class="k">of</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span>
       <span class="k">continue</span> <span class="k">if</span> <span class="nx">_</span><span class="p">.</span><span class="nx">contains</span> <span class="p">[</span><span class="s1">&#39;mixin&#39;</span><span class="p">],</span> <span class="nx">method</span>

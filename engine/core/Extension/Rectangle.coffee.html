@@ -131,8 +131,13 @@ true
       <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">floor</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">rectangle</span>
       <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">floor</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">size</span> <span class="nx">rectangle</span>
     <span class="p">)</span>
-    
-  <span class="nv">mixin: </span><span class="nf">(r) -&gt;</span>
+    </pre></div></td></tr><tr id="section-13"><td class="docs"><div class="pilwrap"><a href="#section-13" class="pilcrow">&#182;</a></div><p>Mix the rectangle methods into a rectangle instance.</p>
+
+<pre><code>avocado&gt; r = avo.Rectangle.mixin [3, 4, 5, 6]
+avocado&gt; r.size()
+[5, 6]
+</code></pre>
+</td><td class="code"><div class="highlight"><pre>  <span class="nv">mixin: </span><span class="nf">(r) -&gt;</span>
     
     <span class="k">for</span> <span class="nx">own</span> <span class="nx">method</span><span class="p">,</span> <span class="nx">f</span> <span class="k">of</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span>
       <span class="k">continue</span> <span class="k">if</span> <span class="nx">_</span><span class="p">.</span><span class="nx">contains</span> <span class="p">[</span><span class="s1">&#39;mixin&#39;</span><span class="p">,</span> <span class="s1">&#39;compose&#39;</span><span class="p">],</span> <span class="nx">method</span>

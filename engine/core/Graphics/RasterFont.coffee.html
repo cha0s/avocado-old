@@ -22,31 +22,59 @@
     <span class="nx">@textHeight</span> <span class="nx">text</span>
   <span class="p">]</span>
   
-  <span class="nv">render: </span><span class="nf">(location, destination, text, alpha = 255, effect = null) -&gt;</span>
-    
-    <span class="nv">location = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">copy</span> <span class="nx">location</span>
-    
-    <span class="nv">rect = </span><span class="p">(</span><span class="nx">character</span><span class="p">)</span> <span class="o">=&gt;</span>
-      </pre></div></td></tr><tr id="section-2"><td class="docs"><div class="pilwrap"><a href="#section-2" class="pilcrow">&#182;</a></div><p>Get the current area of the Image to render, based on the current
+  <span class="nv">render: </span><span class="nf">(</span>
+<span class="nf">    position</span>
+<span class="nf">    text</span>
+<span class="nf">    destination</span>
+<span class="nf">    clip = avo.Rectangle.compose [0, 0], @textSize text</span>
+<span class="nf">    alpha = 255</span>
+<span class="nf">    effect = null</span>
+<span class="nf">  ) -&gt;</span>
+    </pre></div></td></tr><tr id="section-2"><td class="docs"><div class="pilwrap"><a href="#section-2" class="pilcrow">&#182;</a></div><p>Get the current area of the Image to render, based on the current
 character, as well as the frame size.</p>
-</td><td class="code"><div class="highlight"><pre>      <span class="k">return</span> <span class="p">[</span>
-        <span class="nx">character</span> <span class="o">*</span> <span class="nx">@charSize_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span>
-        <span class="nx">@charSize_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">@charSize_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-      <span class="p">]</span>
-    </pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>Pre-calc the length. Iterate over the string's characters.</p>
-</td><td class="code"><div class="highlight"><pre>    <span class="nv">x = </span><span class="nx">location</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">for</span> <span class="nx">i</span> <span class="k">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">...</span><span class="nx">text</span><span class="p">.</span><span class="nx">length</span><span class="p">]</span>
+</td><td class="code"><div class="highlight"><pre>    <span class="nv">rect = </span><span class="p">(</span><span class="nx">character</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">[</span>
+      <span class="nx">character</span> <span class="o">*</span> <span class="nx">@charSize_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span>
+      <span class="nx">@charSize_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">@charSize_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="p">]</span>
     
-      <span class="nv">effectedLocation = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">copy</span> <span class="nx">location</span>
-      <span class="nv">effectedLocation = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">add</span> <span class="nx">effectedLocation</span><span class="p">,</span> <span class="nx">effect</span><span class="p">.</span><span class="nx">apply</span> <span class="nx">i</span> <span class="k">if</span> <span class="nx">effect</span><span class="o">?</span></pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Render the character.</p>
-</td><td class="code"><div class="highlight"><pre>      <span class="nx">@image_</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+    <span class="nv">position = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span> <span class="nx">position</span><span class="p">,</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">clip</span>
+    <span class="nv">clip = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">translated</span> <span class="nx">clip</span><span class="p">,</span> <span class="nx">position</span>
+    </pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>Pre-calc the length. Iterate over the string's characters.</p>
+</td><td class="code"><div class="highlight"><pre>    <span class="k">for</span> <span class="nx">i</span> <span class="k">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">...</span><span class="nx">text</span><span class="p">.</span><span class="nx">length</span><span class="p">]</span>
+    
+      <span class="nv">effectedLocation = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">copy</span> <span class="nx">position</span>
+      <span class="nv">effectedLocation = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span>
         <span class="nx">effectedLocation</span>
+        <span class="nx">effect</span><span class="p">.</span><span class="nx">apply</span> <span class="nx">i</span>
+      <span class="p">)</span> <span class="k">if</span> <span class="nx">effect</span><span class="o">?</span>
+      </pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Move right the width of the font.</p>
+</td><td class="code"><div class="highlight"><pre>      <span class="nx">position</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">@charSize_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      </pre></div></td></tr><tr id="section-5"><td class="docs"><div class="pilwrap"><a href="#section-5" class="pilcrow">&#182;</a></div><p>The bounding rect of the character to render.</p>
+</td><td class="code"><div class="highlight"><pre>      <span class="nv">charRect = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">compose</span> <span class="nx">effectedLocation</span><span class="p">,</span> <span class="nx">@charSize_</span>
+      </pre></div></td></tr><tr id="section-6"><td class="docs"><div class="pilwrap"><a href="#section-6" class="pilcrow">&#182;</a></div><p>Don't render the character if it isn't in the clipping area.</p>
+</td><td class="code"><div class="highlight"><pre>      <span class="nv">intersection = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersection</span> <span class="nx">charRect</span><span class="p">,</span> <span class="nx">clip</span>
+      <span class="k">continue</span> <span class="k">if</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">isNull</span> <span class="nx">intersection</span>
+      
+      <span class="nv">offset = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span>
+        <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">intersection</span>
+        <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">charRect</span>
+      <span class="p">)</span>
+      </pre></div></td></tr><tr id="section-7"><td class="docs"><div class="pilwrap"><a href="#section-7" class="pilcrow">&#182;</a></div><p>Render the character.</p>
+</td><td class="code"><div class="highlight"><pre>      <span class="nx">@image_</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+        <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">add</span> <span class="nx">effectedLocation</span><span class="p">,</span> <span class="nx">offset</span>
         <span class="nx">destination</span>
         <span class="nx">alpha</span>
         <span class="nx">avo</span><span class="p">.</span><span class="nx">Image</span><span class="p">.</span><span class="nx">DrawMode_Blend</span>
-        <span class="nx">rect</span><span class="p">(</span><span class="nx">text</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">i</span><span class="p">))</span>
-      <span class="p">)</span></pre></div></td></tr><tr id="section-5"><td class="docs"><div class="pilwrap"><a href="#section-5" class="pilcrow">&#182;</a></div><p>Move right the width of the font.</p>
-</td><td class="code"><div class="highlight"><pre>      <span class="nx">location</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">@charSize_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">compose</span><span class="p">(</span>
+          <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span>
+            <span class="nx">offset</span>
+            <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">rect</span> <span class="nx">text</span><span class="p">.</span><span class="nx">charCodeAt</span> <span class="nx">i</span>
+          <span class="p">)</span>
+          <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">size</span> <span class="nx">intersection</span>
+        <span class="p">)</span>
+      <span class="p">)</span>
+
+    <span class="kc">undefined</span>
 
 <span class="k">class</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">FontDisplayCommand</span> <span class="k">extends</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">DisplayCommand</span>
   
@@ -63,8 +91,6 @@ character, as well as the frame size.</p>
     
   <span class="nv">render: </span><span class="nf">(position, clip, destination) -&gt;</span>
     
-    <span class="nx">avo</span><span class="p">.</span><span class="nx">Logger</span><span class="p">.</span><span class="nx">info</span> <span class="p">[</span><span class="nx">position</span><span class="p">,</span> <span class="nx">clip</span><span class="p">]</span>
-    
-    <span class="nx">@font_</span><span class="p">.</span><span class="nx">render</span> <span class="nx">@position</span><span class="p">(),</span> <span class="nx">destination</span><span class="p">,</span> <span class="nx">@text_</span>
+    <span class="nx">@font_</span><span class="p">.</span><span class="nx">render</span> <span class="nx">position</span><span class="p">,</span> <span class="nx">@text_</span><span class="p">,</span> <span class="nx">destination</span><span class="p">,</span> <span class="nx">clip</span>
 
 </pre></div></td></tr></tbody></table><div id="projectname"><a href="../../../index.html">Avocado</a></div></div></body></html>

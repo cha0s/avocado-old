@@ -136,7 +136,7 @@ promise is State::initialize's promise.</p>
   
   <span class="nv">render: </span><span class="o">-&gt;</span>
     </pre></div></td></tr><tr id="section-29"><td class="docs"><div class="pilwrap"><a href="#section-29" class="pilcrow">&#182;</a></div><p>Notify any listeners if there's something to render.</p>
-</td><td class="code"><div class="highlight"><pre>    <span class="nv">rectangle = </span><span class="nx">@displayList</span><span class="p">.</span><span class="nx">render</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">],</span> <span class="nx">@backBuffer</span>
+</td><td class="code"><div class="highlight"><pre>    <span class="nv">rectangle = </span><span class="nx">@displayList</span><span class="p">.</span><span class="nx">render</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">],</span> <span class="nx">@backBuffer</span>
     <span class="nx">unless</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">isNull</span> <span class="nx">rectangle</span>
       
       <span class="nx">@emit</span> <span class="s1">&#39;render&#39;</span><span class="p">,</span> <span class="nx">@backBuffer</span><span class="p">,</span> <span class="nx">rectangle</span>

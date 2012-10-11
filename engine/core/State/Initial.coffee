@@ -5,7 +5,12 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 	# state needs here. This is the Initial state, so we can also set up
 	# things specific to our game.
 	initialize: ->
-	
+		
+		# Since we can't rely on graphics SPIIs letting us know when our
+		# graphics need to be rewritten, we'll force redrawing the entire
+		# screen 10 times a second.
+		setInterval (=> @main.displayList.setDirty()), 100
+		
 		# Add a display command to white out the background.
 		new avo.FillDisplayCommand(
 			@main.displayList
@@ -31,13 +36,13 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 				image
 				avo.Rectangle.compose [0, 0], image.size()
 			)
-		
+			
 		# Happy music!
 		musicPromise = avo.Music.load('/music/smile.ogg').then (@music) =>
 		
 			# Start it as soon as it loads.
 			@music.play()
-		
+			
 		# When the image and music are done loading, then we're done
 		# initializing. Remember - with CoffeeScript, the last statement in
 		# a function is the return value. And upon.all returns a promise, just

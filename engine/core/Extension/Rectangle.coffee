@@ -79,7 +79,7 @@ avo.Rectangle =
 	translated: (rectangle, vector) ->
 		
 		avo.Rectangle.compose(
-			avo.Vector.add avo.Rectangle.position, vector
+			avo.Vector.add vector, avo.Rectangle.position rectangle
 			avo.Rectangle.size rectangle
 		)
 		

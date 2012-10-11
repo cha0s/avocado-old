@@ -56,7 +56,7 @@ class avo.DisplayList
 		# All commands are dirty? Just render everything!
 		if cleanCommands.length is 0
 			
-			for command in _.sortBy @dirtyCommands_, 'commandId_'
+			for command in _.sortBy @commands_, 'commandId_'
 				
 				# Render this command.
 				command.render(
@@ -93,10 +93,6 @@ class avo.DisplayList
 					)
 					continue if avo.Rectangle.isNull intersection
 					
-					# Add this command's rectangle to the rendering
-					# rectangles list.
-					renderRectangles.push intersection
-					
 					# The actual position where rendering occurs.
 					position = avo.Rectangle.position intersection
 					position = avo.Vector.sub(
@@ -121,6 +117,7 @@ class avo.DisplayList
 			
 			# Render all clean commands that intersect all 'last' dirty
 			# rectangles.
+			lastDirtyRectangle = [0, 0, 0, 0]
 			for dirtyCommand in @dirtyCommands_
 				
 				rectangle = dirtyCommand.lastRelativeRectangle @rectangle_
@@ -129,17 +126,28 @@ class avo.DisplayList
 					rectangle
 					@rectangle_
 				)
+				
+				lastDirtyRectangle = avo.Rectangle.united(
+					lastDirtyRectangle
+					rectangle
+				)
 			
-				renderCommands _.filter(
-					cleanCommands
-					(command) => avo.Rectangle.intersects(
-						command.relativeRectangle @rectangle_
-						rectangle
-					)
-				), rectangle
+			renderCommands _.filter(
+				cleanCommands
+				(command) => avo.Rectangle.intersects(
+					command.relativeRectangle @rectangle_
+					lastDirtyRectangle
+				)
+			), lastDirtyRectangle
+			renderRectangles.push avo.Rectangle.intersection(
+				lastDirtyRectangle
+				@rectangle_
+			)
 				
 			# Render all clean and dirty commands that intersect all dirty
 			# rectangles.
+			currentDirtyRectangle = [0, 0, 0, 0]
+			dirtyCommands = []
 			for dirtyCommand in @dirtyCommands_
 			
 				rectangle = dirtyCommand.relativeRectangle @rectangle_
@@ -149,15 +157,26 @@ class avo.DisplayList
 					rectangle
 					@rectangle_
 				)
+				
+				dirtyCommands.push dirtyCommand
 			
-				renderCommands _.filter(
-					cleanCommands.concat @dirtyCommands_
-					(command) => avo.Rectangle.intersects(
-						command.relativeRectangle @rectangle_
-						rectangle
-					)
-				), rectangle
-		
+				currentDirtyRectangle = avo.Rectangle.united(
+					currentDirtyRectangle
+					rectangle
+				)
+
+			renderRectangles.push avo.Rectangle.intersection(
+				currentDirtyRectangle
+				@rectangle_
+			)
+			renderCommands _.filter(
+				cleanCommands.concat dirtyCommands
+				(command) => avo.Rectangle.intersects(
+					command.relativeRectangle @rectangle_
+					lastDirtyRectangle
+				)
+			), lastDirtyRectangle
+				
 		# Clean ALL the commands!
 		@dirtyCommands_ = []
 		

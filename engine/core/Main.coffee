@@ -24,9 +24,6 @@ class avo.Main
 		# Keep a back buffer to receive all rendering from the current State.
 		@backBuffer = new avo.Image [800, 600]
 		
-		# Keep a global display list to optimize rendering.
-		@displayList = new avo.DisplayList()
-		
 		# Holds the current State's name.
 		@stateName = ''
 		
@@ -162,8 +159,8 @@ class avo.Main
 	
 	render: ->
 		
-		# Notify any listeners if there's something to render.
-		rectangles = @displayList.render [0, 0, 800, 600], @backBuffer
+		# Let the State do rendering.
+		rectangles = @stateObject?.render @backBuffer
 		if rectangles.length > 0
 			
 			@emit 'render', @backBuffer, rectangles

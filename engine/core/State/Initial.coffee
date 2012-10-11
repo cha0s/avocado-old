@@ -6,14 +6,17 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 	# things specific to our game.
 	initialize: ->
 		
+		# Keep a display list to optimize rendering.
+		@displayList = new avo.DisplayList()
+		
 		# Since we can't rely on graphics SPIIs letting us know when our
 		# graphics need to be rewritten, we'll force redrawing the entire
 		# screen 10 times a second.
-		setInterval (=> @main.displayList.setDirty()), 100
+		setInterval (=> @displayList.setDirty()), 100
 		
 		# Add a display command to white out the background.
 		new avo.FillDisplayCommand(
-			@main.displayList
+			@displayList
 			255, 255, 255, 255
 			[0, 0, 800, 600]
 		)
@@ -32,7 +35,7 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 			
 			# Add a display command to show the yummy avocado.
 			@avocado = new avo.ImageDisplayCommand(
-				@main.displayList
+				@displayList
 				image
 				avo.Rectangle.compose [0, 0], image.size()
 			)
@@ -94,6 +97,12 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 			@avocado.position()
 			avo.Vector.scale movement, 250
 		)
+		
+	# Called repeatedly to allow the state to render graphics.
+	render: (buffer) ->
+		
+		# Notify any listeners if there's something to render.
+		@displayList.render [0, 0, 800, 600], buffer
 		
 	# Called when another state is loaded. This gives you a chance to clean
 	# up resources and event handlers.

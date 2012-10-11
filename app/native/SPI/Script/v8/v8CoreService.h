@@ -43,6 +43,11 @@ private:
 	static v8::Handle<v8::Value> ImplementSpi(const v8::Arguments &args);
 
 	/**
+	 * Read a file into a string.
+	 */
+	static v8::Handle<v8::Value> ReadResource(const v8::Arguments& args);
+
+	/**
 	 * Write JS values to stderr. Primitives get written verbatim, everything else
 	 * gets JSON.stringify'd and written.
 	 */

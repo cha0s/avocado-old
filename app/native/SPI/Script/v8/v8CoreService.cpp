@@ -32,6 +32,7 @@ void v8CoreService::initialize(Handle<ObjectTemplate> target) {
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "close", v8CoreService::Close);
 
 	V8_SET_METHOD(constructor_template, "implementSpi", v8CoreService::ImplementSpi);
+	V8_SET_METHOD(constructor_template, "%readResource", v8CoreService::ReadResource);
 	V8_SET_METHOD(constructor_template, "%writeStderr", v8CoreService::WriteStderr);
 
 	// Register.
@@ -75,6 +76,45 @@ v8::Handle<v8::Value> v8CoreService::ImplementSpi(const v8::Arguments &args) {
 	}
 
 	return Undefined();
+}
+
+v8::Handle<v8::Value> v8CoreService::ReadResource(const v8::Arguments& args) {
+	HandleScope scope;
+
+	Handle<Object> upon = Context::GetCurrent()->Global()->Get(
+		String::NewSymbol("upon")
+	).As<Object>();
+
+	Handle<Object> defer = upon->Get(
+		String::NewSymbol("defer")
+	).As<Function>()->Call(upon, 0, NULL).As<Object>();
+
+	try {
+
+		Handle<String> resource = String::New(
+			FS::readString(
+				FS::qualifyPath(
+					FS::resourceRoot(),
+					V8::stringToStdString(args[0].As<String>())
+				)
+			).c_str()
+		);
+
+		Handle<Value> resolveArgs[] = {
+			resource
+		};
+		defer->Get(
+			String::NewSymbol("resolve")
+		).As<Function>()->Call(defer, 1, resolveArgs);
+	}
+	catch (std::exception &e) {
+
+		return ThrowException(
+			v8::Exception::Error(String::New(e.what()))
+		);
+	}
+
+	return scope.Close(defer->Get(String::NewSymbol("promise")));
 }
 
 v8::Handle<v8::Value> v8CoreService::WriteStderr(const v8::Arguments& args) {

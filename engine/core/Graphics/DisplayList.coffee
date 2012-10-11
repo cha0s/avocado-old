@@ -165,17 +165,17 @@ class avo.DisplayList
 					rectangle
 				)
 
-			renderRectangles.push avo.Rectangle.intersection(
-				currentDirtyRectangle
-				@rectangle_
-			)
 			renderCommands _.filter(
 				cleanCommands.concat dirtyCommands
 				(command) => avo.Rectangle.intersects(
 					command.relativeRectangle @rectangle_
-					lastDirtyRectangle
+					currentDirtyRectangle
 				)
-			), lastDirtyRectangle
+			), currentDirtyRectangle
+			renderRectangles.push avo.Rectangle.intersection(
+				currentDirtyRectangle
+				@rectangle_
+			)
 				
 		# Clean ALL the commands!
 		@dirtyCommands_ = []

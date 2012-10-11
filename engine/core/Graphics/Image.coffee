@@ -139,6 +139,9 @@ class avo.FillDisplayCommand extends avo.DisplayCommand
 	render: (position, clip, destination) ->
 		
 		destination.drawFilledBox(
-			clip
+			avo.Rectangle.compose(
+				position
+				avo.Rectangle.size clip
+			)
 			@r_, @g_, @b_, @a_
 		)

@@ -19,13 +19,19 @@ is implemented as a 2-element array. Element 0 is <em>x</em> and element 1 is <e
 [4, 3]
 </code></pre>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">sub: </span><span class="nf">(l, r) -&gt;</span> <span class="p">[</span><span class="nx">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="nx">r</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="nx">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
-  </pre></div></td></tr><tr id="section-6"><td class="docs"><div class="pilwrap"><a href="#section-6" class="pilcrow">&#182;</a></div><p>Divide two vectors. </p>
+  </pre></div></td></tr><tr id="section-6"><td class="docs"><div class="pilwrap"><a href="#section-6" class="pilcrow">&#182;</a></div><p>Multiply two vectors. </p>
+
+<pre><code>avocado&gt; avo.Vector.mul [3, 5], [5, 5]
+[15, 25]
+</code></pre>
+</td><td class="code"><div class="highlight"><pre>  <span class="nv">mul: </span><span class="nf">(l, r) -&gt;</span> <span class="p">[</span><span class="nx">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nx">r</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nx">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+  </pre></div></td></tr><tr id="section-7"><td class="docs"><div class="pilwrap"><a href="#section-7" class="pilcrow">&#182;</a></div><p>Divide two vectors. </p>
 
 <pre><code>avocado&gt; avo.Vector.div [15, 5], [5, 5]
 [3, 1]
 </code></pre>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">div: </span><span class="nf">(l, r) -&gt;</span> <span class="p">[</span><span class="nx">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="nx">r</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="nx">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
-  </pre></div></td></tr><tr id="section-7"><td class="docs"><div class="pilwrap"><a href="#section-7" class="pilcrow">&#182;</a></div><p>Returns a deep copy of the vector.</p>
+  </pre></div></td></tr><tr id="section-8"><td class="docs"><div class="pilwrap"><a href="#section-8" class="pilcrow">&#182;</a></div><p>Returns a deep copy of the vector.</p>
 
 <pre><code>avocado&gt; vector = [0, 0]
 avocado&gt; otherVectory avo.Vector.copy vector
@@ -33,7 +39,7 @@ avocado&gt; vector is otherVector
 false
 </code></pre>
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">copy: </span><span class="nf">(vector) -&gt;</span> <span class="p">[</span><span class="nx">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
-  </pre></div></td></tr><tr id="section-8"><td class="docs"><div class="pilwrap"><a href="#section-8" class="pilcrow">&#182;</a></div><p>Checks whether a vector is [0, 0].</p>
+  </pre></div></td></tr><tr id="section-9"><td class="docs"><div class="pilwrap"><a href="#section-9" class="pilcrow">&#182;</a></div><p>Checks whether a vector is [0, 0].</p>
 
 <pre><code>avocado&gt; avo.Vector.zero [0, 0]
 true
@@ -44,7 +50,7 @@ false
 </td><td class="code"><div class="highlight"><pre>  <span class="nv">isZero: </span><span class="nf">(vector) -&gt;</span>
     
     <span class="nx">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">is</span> <span class="mi">0</span> <span class="o">and</span> <span class="nx">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">is</span> <span class="mi">0</span>
-  </pre></div></td></tr><tr id="section-9"><td class="docs"><div class="pilwrap"><a href="#section-9" class="pilcrow">&#182;</a></div><p>Round both axes of a vector.</p>
+  </pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>Round both axes of a vector.</p>
 
 <pre><code>avocado&gt; avo.Vector.round [3.14, 4.70]
 [3, 5]
@@ -55,25 +61,47 @@ false
       <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span> <span class="nx">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
       <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span> <span class="nx">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="p">]</span>
-  
-  <span class="nv">dotProduct: </span><span class="nf">(l, r) -&gt;</span> <span class="nx">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nx">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nx">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nx">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-  
-  <span class="nv">hypotenuse: </span><span class="nf">(l, r, relative = false) -&gt;</span>
+  </pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>Get the dot product of two vectors.</p>
+
+<pre><code>avocado&gt; avo.Vector.dot [2, 3], [4, 5]
+23
+</code></pre>
+</td><td class="code"><div class="highlight"><pre>  <span class="nv">dot: </span><span class="nf">(l, r) -&gt;</span> <span class="nx">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nx">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nx">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nx">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  </pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>Get a hypotenuse unit vector. If an origin vector is passed in, the
+hypotenuse is derived from the distance to the origin.</p>
+
+<pre><code>avocado&gt; avo.Vector.hypotenuse [5, 5], [6, 7]
+[0.4472135954999579, 0.8944271909999159]
+
+avocado&gt; avo.Vector.hypotenuse [.5, .7]
+[0.5812381937190965, 0.813733471206735]
+</code></pre>
+</td><td class="code"><div class="highlight"><pre>  <span class="nv">hypotenuse: </span><span class="nf">(unitOrDestination, origin = null) -&gt;</span>
     
-    <span class="nv">distance = </span><span class="nx">r</span>
-    <span class="nv">distance = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span> <span class="nx">distance</span><span class="p">,</span> <span class="nx">l</span> <span class="nx">unless</span> <span class="nx">relative</span>
+    <span class="nv">distanceOrUnit = </span><span class="nx">unitOrDestination</span>
+    <span class="nv">distanceOrUnit = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span> <span class="nx">distanceOrUnit</span><span class="p">,</span> <span class="nx">origin</span> <span class="k">if</span> <span class="nx">origin</span><span class="o">?</span>
     
-    <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="mi">0</span> <span class="o">is</span> <span class="nv">dp = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">dotProduct</span> <span class="nx">distance</span><span class="p">,</span> <span class="nx">distance</span>
+    <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="mi">0</span> <span class="o">is</span> <span class="nv">dp = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">dot</span> <span class="nx">distanceOrUnit</span><span class="p">,</span> <span class="nx">distanceOrUnit</span>
     <span class="nv">hypotenuse = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">scale</span><span class="p">(</span>
-      <span class="nx">distance</span>
+      <span class="nx">distanceOrUnit</span>
       <span class="mi">1</span> <span class="o">/</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">sqrt</span> <span class="nx">dp</span>
     <span class="p">)</span>
-    </pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>Don't let NaN poison our equations.</p>
-</td><td class="code"><div class="highlight"><pre>    <span class="nx">hypotenuse</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="kc">NaN</span> <span class="o">is</span> <span class="nx">hypotenuse</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="nx">hypotenuse</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="kc">NaN</span> <span class="o">is</span> <span class="nx">hypotenuse</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    </pre></div></td></tr><tr id="section-13"><td class="docs"><div class="pilwrap"><a href="#section-13" class="pilcrow">&#182;</a></div><p>Don't let NaN poison our equations.</p>
+</td><td class="code"><div class="highlight"><pre>    <span class="p">[</span>
+      <span class="k">if</span> <span class="kc">NaN</span> <span class="o">is</span> <span class="nx">hypotenuse</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">then</span> <span class="mi">0</span> <span class="k">else</span> <span class="nx">hypotenuse</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="k">if</span> <span class="kc">NaN</span> <span class="o">is</span> <span class="nx">hypotenuse</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">then</span> <span class="mi">0</span> <span class="k">else</span> <span class="nx">hypotenuse</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="p">]</span>
+  </pre></div></td></tr><tr id="section-14"><td class="docs"><div class="pilwrap"><a href="#section-14" class="pilcrow">&#182;</a></div><p>Get the absolute values of the axes of a vector.</p>
+
+<pre><code>avocado&gt; avo.Vector.abs [23, -5.20]
+[23, 5.20]
+</code></pre>
+</td><td class="code"><div class="highlight"><pre>  <span class="nv">abs: </span><span class="nf">(vector) -&gt;</span>
     
-    <span class="nx">hypotenuse</span>
-  </pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>Floor both axes of a vector.</p>
+    <span class="p">[</span>
+      <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span> <span class="nx">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span> <span class="nx">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="p">]</span></pre></div></td></tr><tr id="section-15"><td class="docs"><div class="pilwrap"><a href="#section-15" class="pilcrow">&#182;</a></div><p>Floor both axes of a vector.</p>
 
 <pre><code>avocado&gt; avo.Vector.floor [3.14, 4.70]
 [3, 4]
@@ -83,7 +111,7 @@ false
     <span class="p">[</span>
       <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span> <span class="nx">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
       <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span> <span class="nx">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="p">]</span></pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>Mix the vector methods into a vector instance.</p>
+    <span class="p">]</span></pre></div></td></tr><tr id="section-16"><td class="docs"><div class="pilwrap"><a href="#section-16" class="pilcrow">&#182;</a></div><p>Mix the vector methods into a vector instance.</p>
 
 <pre><code>avocado&gt; v = avo.Vector.mixin [3, 4]
 avocado&gt; v.add [4, 5]

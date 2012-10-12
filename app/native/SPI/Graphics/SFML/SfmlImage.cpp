@@ -19,7 +19,7 @@ SfmlImage::SfmlImage(int width, int height)
 	if (!renderTexture->create(width, height)) throw std::runtime_error(
 		"sf::RenderTexture::create(width, height) failed."
 	);
-	renderTexture->clear();
+	renderTexture->clear(sf::Color(0, 0, 0, 0));
 	renderTexture->display();
 }
 

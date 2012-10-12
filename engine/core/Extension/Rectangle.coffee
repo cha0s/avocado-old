@@ -91,9 +91,18 @@ avo.Rectangle =
 	#
 	#     avocado> avo.Rectangle.isNull [0, 0, 1, 0]
 	#     true
-	isNull: (rectangle) ->
+	isNull: (rectangle) -> avo.Vector.isNull avo.Rectangle.size rectangle
+	
+	# Check whether a rectangle equals another rectangle.
+	#
+	#     avocado> avo.Rectangle.equals [0, 0, 0, 0], [0, 0, 0, 1]
+	#     false
+	#
+	#     avocado> avo.Rectangle.equals [0, 0, 0, 0], [0, 0, 0, 0]
+	#     true
+	equals: (l, r) ->
 		
-		rectangle[2] is 0 or rectangle[3] is 0
+		l[0] is r[0] and l[1] is r[1] and l[2] is r[2] and l[3] is r[3]
 
 	# Returns a rectangle that is the united area of two rectangles.
 	#

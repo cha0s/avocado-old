@@ -34,6 +34,17 @@ avo.Vector =
 	#     [3, 1]
 	div: (l, r) -> [l[0] / r[0], l[1] / r[1]]
 	
+	# Clamp a vector's axes using a min vector and a max vector.
+	#
+	#     avocado> avo.Vector.clamp [-10, 10], [0, 0], [5, 5]
+	#     [0, 5]
+	clamp: (vector, min, max) ->
+		
+		[
+			Math.min max[0], Math.max min[0], vector[0]
+			Math.min max[1], Math.max min[1], vector[1]
+		]
+	
 	# Returns a deep copy of the vector.
 	#
 	#     avocado> vector = [0, 0]
@@ -41,6 +52,15 @@ avo.Vector =
 	#     avocado> vector is otherVector
 	#     false
 	copy: (vector) -> [vector[0], vector[1]]
+	
+	# Check whether a vector equals another vector.
+	#
+	#     avocado> avo.Vector.equals [4, 4], [5, 4]
+	#     false
+	#
+	#     avocado> avo.Vector.equals [4, 4], [4, 4]
+	#     true
+	equals: (l, r) -> l[0] is r[0] and l[1] is r[1]
 	
 	# Checks whether a vector is [0, 0].
 	#
@@ -117,6 +137,15 @@ avo.Vector =
 			Math.floor vector[1]
 		]
 
+	# Checks whether a vector is null. A vector is null if either axis is 0.
+	#
+	#     avocado> avo.Vector.isNull [1, 0]
+	#     true
+	#
+	#     avocado> avo.Vector.isNull [1, 1]
+	#     false
+	isNull: (vector) -> vector[0] is 0 or vector[1] is 0
+	
 	# Mix the vector methods into a vector instance.
 	#
 	#     avocado> v = avo.Vector.mixin [3, 4]
@@ -131,6 +160,7 @@ avo.Vector =
 		
 		v[method] = _.compose avo.Vector.mixin, v[method] for method in [
 			'scale', 'add', 'sub', 'div', 'copy', 'isZero', 'round', 'floor'
+			'isNull', 'mul', 'equals'
 		]
 			
 		v

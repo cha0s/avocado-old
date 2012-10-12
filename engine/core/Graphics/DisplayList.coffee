@@ -8,8 +8,23 @@ class avo.DisplayList
 	
 	constructor: (rectangle) ->
 		
-		@rectangle_ = rectangle
 		@clear()
+		@setRectangle rectangle
+		
+	setRectangle: (rectangle) ->
+		return if @rectangle_? and avo.Rectangle.equals @rectangle_, rectangle
+		
+		@rectangle_ = rectangle
+		@setDirty()
+		
+	rectangle: -> @rectangle_
+		
+	setPosition: (position) -> @setRectangle avo.Rectangle.compose(
+		position
+		avo.Rectangle.size @rectangle_
+	)
+		
+	position: -> avo.Rectangle.position @rectangle_
 	
 	addCommand: (command) ->
 		
@@ -53,19 +68,39 @@ class avo.DisplayList
 				@rectangle_
 			)
 			
+		renderCommand = (command, intersection) =>
+			
+			# The actual position where rendering occurs.
+			position = avo.Rectangle.position intersection
+			position = avo.Vector.sub(
+				position
+				avo.Rectangle.position @rectangle_
+			)
+			
+			# The clipping rectangle for rendering this command.
+			clip = avo.Rectangle.compose(
+				avo.Vector.sub(
+					position
+					avo.Vector.sub(
+						avo.Rectangle.position command.relativeRectangle @rectangle_
+						avo.Rectangle.position @rectangle_
+					)
+				)
+				avo.Rectangle.size intersection
+			)
+			
+			# Render this command.
+			command.render position, clip, destination
+
 		# All commands are dirty? Just render everything!
 		if cleanCommands.length is 0
 			
 			for command in _.sortBy @commands_, 'commandId_'
 				
 				# Render this command.
-				command.render(
-					avo.Vector.sub(
-						command.relativePosition @rectangle_
-						avo.Rectangle.position @rectangle_
-					)
-					avo.Rectangle.compose [0, 0], command.size()
-					destination
+				renderCommand command, avo.Rectangle.intersection(
+					@rectangle_
+					command.relativeRectangle @rectangle_
 				)
 				
 				command.setLastRectangle command.rectangle()
@@ -93,27 +128,7 @@ class avo.DisplayList
 					)
 					continue if avo.Rectangle.isNull intersection
 					
-					# The actual position where rendering occurs.
-					position = avo.Rectangle.position intersection
-					position = avo.Vector.sub(
-						position
-						avo.Rectangle.position @rectangle_
-					)
-					
-					# The clipping rectangle for rendering this command.
-					clip = avo.Rectangle.compose(
-						avo.Vector.sub(
-							position
-							avo.Vector.sub(
-								avo.Rectangle.position command.relativeRectangle @rectangle_
-								avo.Rectangle.position @rectangle_
-							)
-						)
-						avo.Rectangle.size intersection
-					)
-					
-					# Render this command.
-					command.render position, clip, destination
+					renderCommand command, intersection
 			
 			# Render all clean commands that intersect all 'last' dirty
 			# rectangles.

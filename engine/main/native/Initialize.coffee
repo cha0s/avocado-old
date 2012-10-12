@@ -16,7 +16,7 @@ avo.soundService = new avo.SoundService()
 
 # Shoot for 60 FPS input and render.
 avo.ticksPerSecondTarget = 120
-avo.rendersPerSecondTarget = 60
+avo.rendersPerSecondTarget = 80
 
 handles = {}
 handleIndex = 1

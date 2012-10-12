@@ -189,7 +189,16 @@ Window::Event SdlWindow::pollEvents() {
 }
 
 void SdlWindow::render(Image *working, int x, int y, int w, int h) {
-	working->render(x, y, image, 255, Image::DrawMode_PixelCopy, x, y, w, h);
+
+	SDL_Rect src = {x, y, w, h};
+	SDL_Rect dst = {x, y, w, h};
+
+	SDL_BlitSurface(
+		Image::superCast<SdlImage>(working)->surface,
+		&src,
+		Image::superCast<SdlImage>(image)->surface,
+		&dst
+	);
 	SDL_UpdateRect(image->surface, x, y, w, h);
 }
 

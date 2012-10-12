@@ -22,7 +22,7 @@ class avo.Main
 		avo.Mixin this, avo.EventEmitter
 		
 		# Keep a back buffer to receive all rendering from the current State.
-		@backBuffer = new avo.Image [800, 600]
+		@backBuffer = new avo.Image [1280, 720]
 		
 		# Holds the current State's name.
 		@stateName = ''
@@ -167,7 +167,7 @@ class avo.Main
 		
 		# Track the renders per second.
 		@rendersPerSecond.tick()
-
+		
 	quit: ->
 		
 		# GC our tick and render loop handles.

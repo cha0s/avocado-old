@@ -22,7 +22,7 @@ class avo.Cps
 	
 		if @ticker.ticks() > 0
 	
-			@fps = @c * (1000 / @ticker.frequency) 
+			@fps = @c * (1000 / @ticker.frequency)
 			@c = 0
 	
 		@c++

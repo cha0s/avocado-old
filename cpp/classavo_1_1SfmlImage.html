@@ -279,7 +279,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line">    <span class="keywordflow">if</span> (!renderTexture-&gt;create(<a class="code" href="classavo_1_1SfmlImage.html#af203ac1f0655dbd7828200c7ba18c760">width</a>, <a class="code" href="classavo_1_1SfmlImage.html#a5b3bfd976b3026aca151c105ab5e20bb">height</a>)) <span class="keywordflow">throw</span> std::runtime_error(</div>
 <div class="line">        <span class="stringliteral">&quot;sf::RenderTexture::create(width, height) failed.&quot;</span></div>
 <div class="line">    );</div>
-<div class="line">    renderTexture-&gt;clear();</div>
+<div class="line">    renderTexture-&gt;clear(sf::Color(0, 0, 0, 0));</div>
 <div class="line">    renderTexture-&gt;display();</div>
 <div class="line">}</div>
 </div><!-- fragment -->

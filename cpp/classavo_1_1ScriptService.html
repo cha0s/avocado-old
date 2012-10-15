@@ -219,6 +219,12 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Initialize service provider interfaces as well as compilers. </p>
 <div class="fragment"><div class="line">                               {</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// CoffeeScript. &lt;3</span></div>
+<div class="line">    Script *coffeeCompiler = <a class="code" href="classavo_1_1ScriptService.html#abc6846f81929f3ceb0cb5068d2d56d37">scriptFromFile</a>(</div>
+<div class="line">        <a class="code" href="namespaceavo_1_1FS.html#af3e23a86f585968d6f197ff401e9c09c">FS::engineRoot</a>() / <span class="stringliteral">&quot;compiler&quot;</span> / <span class="stringliteral">&quot;CoffeeScript.js&quot;</span></div>
+<div class="line">    );</div>
+<div class="line">    coffeeCompiler-&gt;execute();</div>
 <div class="line">}</div>
 </div><!-- fragment -->
 </div>

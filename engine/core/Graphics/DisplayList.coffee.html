@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><title>DisplayList.coffee</title><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><link rel="stylesheet" media="all" href="../../../docco.css"></head><body><div id="container"><div id="background"></div><div id="jump_to">Jump To &hellip;<div id="jump_wrapper"><div id="jump_page"><a href="../../../index.html" class="source"><span class="file_name">README</span></a><a href="../../../engine/core/CoreService.coffee.html" class="source "><span class="base_path">engine / core / </span><span class="file_name">CoreService.coffee</span></a><a href="../../../engine/core/Debug/Execution.coffee.html" class="source "><span class="base_path">engine / core / Debug / </span><span class="file_name">Execution.coffee</span></a><a href="../../../engine/core/Extension/Rectangle.coffee.html" class="source "><span class="base_path">engine / core / Extension / </span><span class="file_name">Rectangle.coffee</span></a><a href="../../../engine/core/Extension/String.coffee.html" class="source "><span class="base_path">engine / core / Extension / </span><span class="file_name">String.coffee</span></a><a href="../../../engine/core/Extension/Vector.coffee.html" class="source "><span class="base_path">engine / core / Extension / </span><span class="file_name">Vector.coffee</span></a><a href="../../../engine/core/Graphics/DisplayList.coffee.html" class="source selected"><span class="base_path">engine / core / Graphics / </span><span class="file_name">DisplayList.coffee</span></a><a href="../../../engine/core/Graphics/GraphicsService.coffee.html" class="source "><span class="base_path">engine / core / Graphics / </span><span class="file_name">GraphicsService.coffee</span></a><a href="../../../engine/core/Graphics/Image.coffee.html" class="source "><span class="base_path">engine / core / Graphics / </span><span class="file_name">Image.coffee</span></a><a href="../../../engine/core/Graphics/RasterFont.coffee.html" class="source "><span class="base_path">engine / core / Graphics / </span><span class="file_name">RasterFont.coffee</span></a><a href="../../../engine/core/Graphics/Window.coffee.html" class="source "><span class="base_path">engine / core / Graphics / </span><span class="file_name">Window.coffee</span></a><a href="../../../engine/core/Main.coffee.html" class="source "><span class="base_path">engine / core / </span><span class="file_name">Main.coffee</span></a><a href="../../../engine/core/Sound/Music.coffee.html" class="source "><span class="base_path">engine / core / Sound / </span><span class="file_name">Music.coffee</span></a><a href="../../../engine/core/Sound/Sample.coffee.html" class="source "><span class="base_path">engine / core / Sound / </span><span class="file_name">Sample.coffee</span></a><a href="../../../engine/core/State/AbstractState.coffee.html" class="source "><span class="base_path">engine / core / State / </span><span class="file_name">AbstractState.coffee</span></a><a href="../../../engine/core/State/Initial.coffee.html" class="source "><span class="base_path">engine / core / State / </span><span class="file_name">Initial.coffee</span></a><a href="../../../engine/core/Timing/Counter.coffee.html" class="source "><span class="base_path">engine / core / Timing / </span><span class="file_name">Counter.coffee</span></a><a href="../../../engine/core/Timing/Cps.coffee.html" class="source "><span class="base_path">engine / core / Timing / </span><span class="file_name">Cps.coffee</span></a><a href="../../../engine/core/Timing/Ticker.coffee.html" class="source "><span class="base_path">engine / core / Timing / </span><span class="file_name">Ticker.coffee</span></a><a href="../../../engine/core/Timing/TimingService.coffee.html" class="source "><span class="base_path">engine / core / Timing / </span><span class="file_name">TimingService.coffee</span></a><a href="../../../engine/core/Utility/EventEmitter.coffee.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">EventEmitter.coffee</span></a><a href="../../../engine/core/Utility/Logger.coffee.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">Logger.coffee</span></a><a href="../../../engine/core/Utility/Mixin.coffee.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">Mixin.coffee</span></a><a href="../../../engine/core/Utility/Transition.coffee.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">Transition.coffee</span></a><a href="../../../engine/core/Utility/underscore-min.js.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">underscore-min.js</span></a><a href="../../../engine/core/Utility/upon.js.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">upon.js</span></a><a href="../../../engine/main/native/Finish.coffee.html" class="source "><span class="base_path">engine / main / native / </span><span class="file_name">Finish.coffee</span></a><a href="../../../engine/main/native/Initialize.coffee.html" class="source "><span class="base_path">engine / main / native / </span><span class="file_name">Initialize.coffee</span></a><a href="../../../engine/main/native/Main.coffee.html" class="source "><span class="base_path">engine / main / native / </span><span class="file_name">Main.coffee</span></a></div></div></div><table cellpadding="0" cellspacing="0"><thead><tr><th class="docs"><h1>DisplayList.coffee</h1><div class="filepath">engine/core/Graphics/</div></th><th class="code"></th></tr></thead><tbody><tr id="section-1"><td class="docs"><div class="pilwrap"><a href="#section-1" class="pilcrow">&#182;</a></div><p>avo.<strong>DisplayList</strong> is a
+<!DOCTYPE html><html><head><title>DisplayList.coffee</title><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><link rel="stylesheet" media="all" href="../../../docco.css"></head><body><div id="container"><div id="background"></div><div id="jump_to">Jump To &hellip;<div id="jump_wrapper"><div id="jump_page"><a href="../../../index.html" class="source"><span class="file_name">README</span></a><a href="../../../engine/core/CoreService.coffee.html" class="source "><span class="base_path">engine / core / </span><span class="file_name">CoreService.coffee</span></a><a href="../../../engine/core/Debug/Execution.coffee.html" class="source "><span class="base_path">engine / core / Debug / </span><span class="file_name">Execution.coffee</span></a><a href="../../../engine/core/Entity/Entity.coffee.html" class="source "><span class="base_path">engine / core / Entity / </span><span class="file_name">Entity.coffee</span></a><a href="../../../engine/core/Entity/Traits/Existence.coffee.html" class="source "><span class="base_path">engine / core / Entity / Traits / </span><span class="file_name">Existence.coffee</span></a><a href="../../../engine/core/Entity/Traits/Mobility.coffee.html" class="source "><span class="base_path">engine / core / Entity / Traits / </span><span class="file_name">Mobility.coffee</span></a><a href="../../../engine/core/Entity/Traits/Trait.coffee.html" class="source "><span class="base_path">engine / core / Entity / Traits / </span><span class="file_name">Trait.coffee</span></a><a href="../../../engine/core/Entity/Traits/Visibility.coffee.html" class="source "><span class="base_path">engine / core / Entity / Traits / </span><span class="file_name">Visibility.coffee</span></a><a href="../../../engine/core/Environment/2D/Environment.coffee.html" class="source "><span class="base_path">engine / core / Environment / 2D / </span><span class="file_name">Environment.coffee</span></a><a href="../../../engine/core/Environment/2D/Room.coffee.html" class="source "><span class="base_path">engine / core / Environment / 2D / </span><span class="file_name">Room.coffee</span></a><a href="../../../engine/core/Environment/2D/TileLayer.coffee.html" class="source "><span class="base_path">engine / core / Environment / 2D / </span><span class="file_name">TileLayer.coffee</span></a><a href="../../../engine/core/Environment/2D/Tileset.coffee.html" class="source "><span class="base_path">engine / core / Environment / 2D / </span><span class="file_name">Tileset.coffee</span></a><a href="../../../engine/core/Extension/Rectangle.coffee.html" class="source "><span class="base_path">engine / core / Extension / </span><span class="file_name">Rectangle.coffee</span></a><a href="../../../engine/core/Extension/String.coffee.html" class="source "><span class="base_path">engine / core / Extension / </span><span class="file_name">String.coffee</span></a><a href="../../../engine/core/Extension/Vector.coffee.html" class="source "><span class="base_path">engine / core / Extension / </span><span class="file_name">Vector.coffee</span></a><a href="../../../engine/core/Graphics/Animation.coffee.html" class="source "><span class="base_path">engine / core / Graphics / </span><span class="file_name">Animation.coffee</span></a><a href="../../../engine/core/Graphics/DisplayList.coffee.html" class="source selected"><span class="base_path">engine / core / Graphics / </span><span class="file_name">DisplayList.coffee</span></a><a href="../../../engine/core/Graphics/GraphicsService.coffee.html" class="source "><span class="base_path">engine / core / Graphics / </span><span class="file_name">GraphicsService.coffee</span></a><a href="../../../engine/core/Graphics/Image.coffee.html" class="source "><span class="base_path">engine / core / Graphics / </span><span class="file_name">Image.coffee</span></a><a href="../../../engine/core/Graphics/RasterFont.coffee.html" class="source "><span class="base_path">engine / core / Graphics / </span><span class="file_name">RasterFont.coffee</span></a><a href="../../../engine/core/Graphics/Window.coffee.html" class="source "><span class="base_path">engine / core / Graphics / </span><span class="file_name">Window.coffee</span></a><a href="../../../engine/core/Main.coffee.html" class="source "><span class="base_path">engine / core / </span><span class="file_name">Main.coffee</span></a><a href="../../../engine/core/Sound/Music.coffee.html" class="source "><span class="base_path">engine / core / Sound / </span><span class="file_name">Music.coffee</span></a><a href="../../../engine/core/Sound/Sample.coffee.html" class="source "><span class="base_path">engine / core / Sound / </span><span class="file_name">Sample.coffee</span></a><a href="../../../engine/core/State/AbstractState.coffee.html" class="source "><span class="base_path">engine / core / State / </span><span class="file_name">AbstractState.coffee</span></a><a href="../../../engine/core/State/Environment.coffee.html" class="source "><span class="base_path">engine / core / State / </span><span class="file_name">Environment.coffee</span></a><a href="../../../engine/core/State/Initial.coffee.html" class="source "><span class="base_path">engine / core / State / </span><span class="file_name">Initial.coffee</span></a><a href="../../../engine/core/Timing/Counter.coffee.html" class="source "><span class="base_path">engine / core / Timing / </span><span class="file_name">Counter.coffee</span></a><a href="../../../engine/core/Timing/Cps.coffee.html" class="source "><span class="base_path">engine / core / Timing / </span><span class="file_name">Cps.coffee</span></a><a href="../../../engine/core/Timing/Ticker.coffee.html" class="source "><span class="base_path">engine / core / Timing / </span><span class="file_name">Ticker.coffee</span></a><a href="../../../engine/core/Timing/TimingService.coffee.html" class="source "><span class="base_path">engine / core / Timing / </span><span class="file_name">TimingService.coffee</span></a><a href="../../../engine/core/Utility/EventEmitter.coffee.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">EventEmitter.coffee</span></a><a href="../../../engine/core/Utility/Logger.coffee.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">Logger.coffee</span></a><a href="../../../engine/core/Utility/Mixin.coffee.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">Mixin.coffee</span></a><a href="../../../engine/core/Utility/Transition.coffee.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">Transition.coffee</span></a><a href="../../../engine/core/Utility/quadtree.js.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">quadtree.js</span></a><a href="../../../engine/core/Utility/underscore-min.js.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">underscore-min.js</span></a><a href="../../../engine/core/Utility/upon.js.html" class="source "><span class="base_path">engine / core / Utility / </span><span class="file_name">upon.js</span></a><a href="../../../engine/main/native/Finish.coffee.html" class="source "><span class="base_path">engine / main / native / </span><span class="file_name">Finish.coffee</span></a><a href="../../../engine/main/native/Initialize.coffee.html" class="source "><span class="base_path">engine / main / native / </span><span class="file_name">Initialize.coffee</span></a><a href="../../../engine/main/native/Main.coffee.html" class="source "><span class="base_path">engine / main / native / </span><span class="file_name">Main.coffee</span></a><a href="../../../engine/scratch.coffee.html" class="source "><span class="base_path">engine / </span><span class="file_name">scratch.coffee</span></a></div></div></div><table cellpadding="0" cellspacing="0"><thead><tr><th class="docs"><h1>DisplayList.coffee</h1><div class="filepath">engine/core/Graphics/</div></th><th class="code"></th></tr></thead><tbody><tr id="section-1"><td class="docs"><div class="pilwrap"><a href="#section-1" class="pilcrow">&#182;</a></div><p>avo.<strong>DisplayList</strong> is a
 <a href="http://en.wikipedia.org/wiki/Display_list">display list</a>. It is used for
 rendering graphics scene in an optimized way.</p>
 
@@ -6,191 +6,226 @@ rendering graphics scene in an optimized way.</p>
 only renders the changes.</p>
 </td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">DisplayList</span>
   
-  <span class="nv">constructor: </span><span class="nf">(rectangle) -&gt;</span>
+  <span class="nv">constructor: </span><span class="nf">(rectangle, worldRectangle) -&gt;</span>
+    
+    <span class="nv">args = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">toObject</span> <span class="nx">worldRectangle</span><span class="p">,</span> <span class="kc">true</span>
+    <span class="nv">args.maxChildren = </span><span class="mi">2</span>
+    <span class="nv">args.maxDepth = </span><span class="mi">4</span>
+    
+    <span class="vi">@quadTree = </span><span class="k">new</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">QuadTree</span> <span class="nx">args</span>
+    
+    <span class="vi">@lastDirtyRectangle_ = </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="vi">@dirtyCommands_ = </span><span class="p">{}</span>
+    
+    <span class="nx">@clear</span><span class="p">()</span>
+    <span class="nx">@setRectangle</span> <span class="nx">rectangle</span>
+    
+  <span class="nv">setRectangle: </span><span class="nf">(rectangle) -&gt;</span>
+    <span class="k">return</span> <span class="k">if</span> <span class="nx">@rectangle_</span><span class="o">?</span> <span class="o">and</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">equals</span> <span class="nx">@rectangle_</span><span class="p">,</span> <span class="nx">rectangle</span>
     
     <span class="vi">@rectangle_ = </span><span class="nx">rectangle</span>
-    <span class="nx">@clear</span><span class="p">()</span>
+    <span class="vi">@lastDirtyRectangle_ = </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="nx">@markCommandsAsDirty</span><span class="p">()</span>
+    
+  <span class="nv">rectangle: </span><span class="o">-&gt;</span> <span class="nx">@rectangle_</span>
   
+  <span class="nv">setPosition: </span><span class="nf">(position) -&gt;</span> <span class="nx">@setRectangle</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">compose</span><span class="p">(</span>
+    <span class="nx">position</span>
+    <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">size</span> <span class="nx">@rectangle_</span>
+  <span class="p">)</span>
+  
+  <span class="nv">position: </span><span class="o">-&gt;</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">@rectangle_</span>
+  
+  <span class="nv">addCommandToQuadTree: </span><span class="nf">(command) -&gt;</span>
+  
+    <span class="nv">O = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">toObject</span><span class="p">(</span>
+      <span class="nx">command</span><span class="p">.</span><span class="nx">relativeRectangle</span> <span class="nx">@rectangle_</span>
+      <span class="kc">true</span>
+    <span class="p">)</span>
+    <span class="nv">O.command = </span><span class="nx">command</span>
+    <span class="nv">command.O = </span><span class="nx">O</span>
+    <span class="nv">O.toJSON = </span><span class="o">-&gt;</span>
+      <span class="nv">x: </span><span class="nx">@x</span>
+      <span class="nv">y: </span><span class="nx">@y</span>
+      <span class="nv">w: </span><span class="nx">@w</span>
+      <span class="nv">h: </span><span class="nx">@h</span>
+    
+    <span class="nx">@quadTree</span><span class="p">.</span><span class="nx">insert</span> <span class="nx">O</span>
+    
   <span class="nv">addCommand: </span><span class="nf">(command) -&gt;</span>
-    </pre></div></td></tr><tr id="section-2"><td class="docs"><div class="pilwrap"><a href="#section-2" class="pilcrow">&#182;</a></div><p>Add the command as dirty.</p>
-</td><td class="code"><div class="highlight"><pre>    <span class="nv">command.commandId_ = </span><span class="nx">@commandId_</span><span class="o">++</span>
+    
+    <span class="nv">command.commandId_ = </span><span class="nx">@commandId_</span><span class="o">++</span>
     <span class="nx">@commands_</span><span class="p">.</span><span class="nx">push</span> <span class="nx">command</span>
-    <span class="nx">@setDirty</span> <span class="nx">command</span>
+    </pre></div></td></tr><tr id="section-2"><td class="docs"><div class="pilwrap"><a href="#section-2" class="pilcrow">&#182;</a></div><p>Add it to the QuadTree.</p>
+</td><td class="code"><div class="highlight"><pre>    <span class="nx">@addCommandToQuadTree</span> <span class="nx">command</span>
+    
+    <span class="nv">command.markAsDirty = </span><span class="p">(</span>
+      <span class="nv">rectangle = </span><span class="nx">command</span><span class="p">.</span><span class="nx">relativeRectangle</span> <span class="nx">@rectangle_</span>
+    <span class="p">)</span> <span class="o">=&gt;</span>
+      
+      <span class="nx">@dirtyCommands_</span><span class="p">[</span><span class="nx">command</span><span class="p">.</span><span class="nx">commandId_</span><span class="p">]</span> <span class="o">=</span> <span class="nx">command</span>
+      
+      <span class="vi">@lastDirtyRectangle_ = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">united</span><span class="p">(</span>
+        <span class="nx">@lastDirtyRectangle_</span>
+        <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersection</span><span class="p">(</span>
+          <span class="nx">command</span><span class="p">.</span><span class="nx">relativeRectangle</span> <span class="nx">@rectangle_</span>
+          <span class="nx">@rectangle_</span>
+        <span class="p">)</span>
+      <span class="p">)</span>
+      
+    <span class="nx">command</span><span class="p">.</span><span class="nx">markAsDirty</span><span class="p">()</span>
   
   <span class="nv">clear: </span><span class="o">-&gt;</span>
     
     <span class="vi">@commandId_ = </span><span class="mi">0</span>
     <span class="vi">@commands_ = </span><span class="p">[]</span>
-    <span class="vi">@dirtyCommands_ = </span><span class="p">[]</span>
+    <span class="vi">@dirtyCommands_ = </span><span class="p">{}</span>
+    <span class="nx">@quadTree</span><span class="p">.</span><span class="nx">clear</span><span class="p">()</span>
   
-  <span class="nv">setCommandDirty: </span><span class="nf">(command) -&gt;</span>
-    </pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>Add the command if it hasn't been yet.</p>
-</td><td class="code"><div class="highlight"><pre>    <span class="nx">unless</span> <span class="nx">_</span><span class="p">.</span><span class="nx">contains</span> <span class="nx">@dirtyCommands_</span><span class="p">,</span> <span class="nx">command</span>
-      <span class="nx">@dirtyCommands_</span><span class="p">.</span><span class="nx">push</span> <span class="nx">command</span>
+  <span class="nv">markCommandsAsDirty: </span><span class="nf">(commandsAreDirty) -&gt;</span>
     
-  <span class="nv">setDirty: </span><span class="o">-&gt;</span> <span class="nx">command</span><span class="p">.</span><span class="nx">setDirty</span><span class="p">()</span> <span class="k">for</span> <span class="nx">command</span> <span class="k">in</span> <span class="nx">@commands_</span>
+    <span class="nv">affectedCommands = </span><span class="nx">@quadTree</span><span class="p">.</span><span class="nx">retrieve</span><span class="p">(</span>
+      <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">toObject</span><span class="p">(</span>
+        <span class="nx">@rectangle_</span>
+        <span class="kc">true</span>
+      <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="nv">affectedCommands = </span><span class="nx">_</span><span class="p">.</span><span class="nx">map</span> <span class="nx">affectedCommands</span><span class="p">,</span> <span class="nf">(O) -&gt;</span> <span class="nx">O</span><span class="p">.</span><span class="nx">command</span>
+    
+    <span class="nx">command</span><span class="p">.</span><span class="nx">markAsDirty</span><span class="p">()</span> <span class="k">for</span> <span class="nx">command</span> <span class="k">in</span> <span class="nx">affectedCommands</span>
   
   <span class="nv">render: </span><span class="nf">(destination) -&gt;</span>
     <span class="nv">renderRectangles = </span><span class="p">[]</span>
-    </pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Nothing to render?</p>
-</td><td class="code"><div class="highlight"><pre>    <span class="k">return</span> <span class="nx">renderRectangles</span> <span class="nx">unless</span> <span class="nx">@dirtyCommands_</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
-    </pre></div></td></tr><tr id="section-5"><td class="docs"><div class="pilwrap"><a href="#section-5" class="pilcrow">&#182;</a></div><p>Keep track of the display offset so we can translate the resulting
+    
+    <span class="k">return</span> <span class="nx">renderRectangles</span> <span class="k">if</span> <span class="nx">_</span><span class="p">.</span><span class="nx">isEmpty</span> <span class="nx">@dirtyCommands_</span>
+    
+    <span class="nv">sortCommands = </span><span class="nf">(commands) -&gt;</span>
+      
+      <span class="nx">_</span><span class="p">.</span><span class="nx">sortBy</span> <span class="nx">commands</span><span class="p">,</span> <span class="s1">&#39;commandId_&#39;</span>
+    
+    <span class="nv">renderCommand = </span><span class="p">(</span><span class="nx">command</span><span class="p">,</span> <span class="nx">intersection</span><span class="p">)</span> <span class="o">=&gt;</span>
+      </pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>The actual position where rendering occurs.</p>
+</td><td class="code"><div class="highlight"><pre>      <span class="nv">position = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">intersection</span>
+      <span class="nv">position = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span>
+        <span class="nx">position</span>
+        <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">@rectangle_</span>
+      <span class="p">)</span>
+      </pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>The clipping rectangle for rendering this command.</p>
+</td><td class="code"><div class="highlight"><pre>      <span class="nv">clip = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">compose</span><span class="p">(</span>
+        <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span>
+          <span class="nx">position</span>
+          <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span>
+            <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">command</span><span class="p">.</span><span class="nx">relativeRectangle</span> <span class="nx">@rectangle_</span>
+            <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">@rectangle_</span>
+          <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">size</span> <span class="nx">intersection</span>
+      <span class="p">)</span>
+      </pre></div></td></tr><tr id="section-5"><td class="docs"><div class="pilwrap"><a href="#section-5" class="pilcrow">&#182;</a></div><p>Render this command.</p>
+</td><td class="code"><div class="highlight"><pre>      <span class="nx">command</span><span class="p">.</span><span class="nx">render</span> <span class="nx">position</span><span class="p">,</span> <span class="nx">clip</span><span class="p">,</span> <span class="nx">destination</span>
+      </pre></div></td></tr><tr id="section-6"><td class="docs"><div class="pilwrap"><a href="#section-6" class="pilcrow">&#182;</a></div><p>Keep track of the display offset so we can translate the resulting
 dirty rectangle back later.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="nv">offset = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">scale</span><span class="p">(</span>
       <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">@rectangle_</span>
       <span class="o">-</span><span class="mi">1</span>
     <span class="p">)</span>
-    </pre></div></td></tr><tr id="section-6"><td class="docs"><div class="pilwrap"><a href="#section-6" class="pilcrow">&#182;</a></div><p>Separate the visible clean commands so we have less to check.</p>
-</td><td class="code"><div class="highlight"><pre>    <span class="nv">cleanCommands = </span><span class="nx">_</span><span class="p">.</span><span class="nx">difference</span> <span class="nx">@commands_</span><span class="p">,</span> <span class="nx">@dirtyCommands_</span>
-    <span class="nv">cleanCommands = </span><span class="nx">_</span><span class="p">.</span><span class="nx">filter</span> <span class="nx">cleanCommands</span><span class="p">,</span> <span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="o">=&gt;</span>
-      <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersects</span><span class="p">(</span>
-        <span class="nx">command</span><span class="p">.</span><span class="nx">relativeRectangle</span> <span class="nx">@rectangle_</span>
-        <span class="nx">@rectangle_</span>
-      <span class="p">)</span>
-      </pre></div></td></tr><tr id="section-7"><td class="docs"><div class="pilwrap"><a href="#section-7" class="pilcrow">&#182;</a></div><p>All commands are dirty? Just render everything!</p>
-</td><td class="code"><div class="highlight"><pre>    <span class="k">if</span> <span class="nx">cleanCommands</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span>
-      
-      <span class="k">for</span> <span class="nx">command</span> <span class="k">in</span> <span class="nx">_</span><span class="p">.</span><span class="nx">sortBy</span> <span class="nx">@commands_</span><span class="p">,</span> <span class="s1">&#39;commandId_&#39;</span>
-        </pre></div></td></tr><tr id="section-8"><td class="docs"><div class="pilwrap"><a href="#section-8" class="pilcrow">&#182;</a></div><p>Render this command.</p>
-</td><td class="code"><div class="highlight"><pre>        <span class="nx">command</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
-          <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span>
-            <span class="nx">command</span><span class="p">.</span><span class="nx">relativePosition</span> <span class="nx">@rectangle_</span>
-            <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">@rectangle_</span>
-          <span class="p">)</span>
-          <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">compose</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="nx">command</span><span class="p">.</span><span class="nx">size</span><span class="p">()</span>
-          <span class="nx">destination</span>
-        <span class="p">)</span>
-        
-        <span class="nx">command</span><span class="p">.</span><span class="nx">setLastRectangle</span> <span class="nx">command</span><span class="p">.</span><span class="nx">rectangle</span><span class="p">()</span>
-        </pre></div></td></tr><tr id="section-9"><td class="docs"><div class="pilwrap"><a href="#section-9" class="pilcrow">&#182;</a></div><p>Refresh everything.</p>
-</td><td class="code"><div class="highlight"><pre>      <span class="nx">renderRectangles</span><span class="p">.</span><span class="nx">push</span> <span class="nx">@rectangle_</span>
-        
-    <span class="k">else</span>
     
-      <span class="nv">renderCommands = </span><span class="p">(</span><span class="nx">commands</span><span class="p">,</span> <span class="nx">rectangle</span><span class="p">)</span> <span class="o">=&gt;</span>
-        <span class="k">for</span> <span class="nx">command</span> <span class="k">in</span> <span class="nx">_</span><span class="p">.</span><span class="nx">sortBy</span> <span class="nx">commands</span><span class="p">,</span> <span class="s1">&#39;commandId_&#39;</span>
-        </pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>Make sure this command intersects the current
-rectangle.</p>
-</td><td class="code"><div class="highlight"><pre>          <span class="nv">dirtyIntersection = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersection</span><span class="p">(</span>
-            <span class="nx">rectangle</span>
-            <span class="nx">command</span><span class="p">.</span><span class="nx">relativeRectangle</span> <span class="nx">@rectangle_</span>
-          <span class="p">)</span>
-          <span class="k">continue</span> <span class="k">if</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">isNull</span> <span class="nx">dirtyIntersection</span>
-          </pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>Make sure this command is actually visible.</p>
-</td><td class="code"><div class="highlight"><pre>          <span class="nv">intersection = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersection</span><span class="p">(</span>
-            <span class="nx">dirtyIntersection</span>
-            <span class="nx">@rectangle_</span>
-          <span class="p">)</span>
-          <span class="k">continue</span> <span class="k">if</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">isNull</span> <span class="nx">intersection</span>
-          </pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>The actual position where rendering occurs.</p>
-</td><td class="code"><div class="highlight"><pre>          <span class="nv">position = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">intersection</span>
-          <span class="nv">position = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span>
-            <span class="nx">position</span>
-            <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">@rectangle_</span>
-          <span class="p">)</span>
-          </pre></div></td></tr><tr id="section-13"><td class="docs"><div class="pilwrap"><a href="#section-13" class="pilcrow">&#182;</a></div><p>The clipping rectangle for rendering this command.</p>
-</td><td class="code"><div class="highlight"><pre>          <span class="nv">clip = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">compose</span><span class="p">(</span>
-            <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span>
-              <span class="nx">position</span>
-              <span class="nx">avo</span><span class="p">.</span><span class="nx">Vector</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span>
-                <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">command</span><span class="p">.</span><span class="nx">relativeRectangle</span> <span class="nx">@rectangle_</span>
-                <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">@rectangle_</span>
-              <span class="p">)</span>
-            <span class="p">)</span>
-            <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">size</span> <span class="nx">intersection</span>
-          <span class="p">)</span>
-          </pre></div></td></tr><tr id="section-14"><td class="docs"><div class="pilwrap"><a href="#section-14" class="pilcrow">&#182;</a></div><p>Render this command.</p>
-</td><td class="code"><div class="highlight"><pre>          <span class="nx">command</span><span class="p">.</span><span class="nx">render</span> <span class="nx">position</span><span class="p">,</span> <span class="nx">clip</span><span class="p">,</span> <span class="nx">destination</span>
-      </pre></div></td></tr><tr id="section-15"><td class="docs"><div class="pilwrap"><a href="#section-15" class="pilcrow">&#182;</a></div><p>Render all clean commands that intersect all 'last' dirty
-rectangles.</p>
-</td><td class="code"><div class="highlight"><pre>      <span class="nv">lastDirtyRectangle = </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-      <span class="k">for</span> <span class="nx">dirtyCommand</span> <span class="k">in</span> <span class="nx">@dirtyCommands_</span>
-        
-        <span class="nv">rectangle = </span><span class="nx">dirtyCommand</span><span class="p">.</span><span class="nx">lastRelativeRectangle</span> <span class="nx">@rectangle_</span>
-        
-        <span class="k">continue</span> <span class="nx">unless</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersects</span><span class="p">(</span>
-          <span class="nx">rectangle</span>
-          <span class="nx">@rectangle_</span>
-        <span class="p">)</span>
-        
-        <span class="nv">lastDirtyRectangle = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">united</span><span class="p">(</span>
-          <span class="nx">lastDirtyRectangle</span>
-          <span class="nx">rectangle</span>
-        <span class="p">)</span>
+    <span class="nv">dirtyRectangle = </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="nv">dirtyCommands = </span><span class="p">[]</span>
+    
+    <span class="vi">@dirtyCommands_ = </span><span class="p">(</span><span class="nx">v</span> <span class="k">for</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span> <span class="k">of</span> <span class="nx">@dirtyCommands_</span><span class="p">)</span> 
+    <span class="k">for</span> <span class="nx">dirtyCommand</span> <span class="k">in</span> <span class="nx">sortCommands</span> <span class="nx">@dirtyCommands_</span>
       
-      <span class="nx">renderCommands</span> <span class="nx">_</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span>
-        <span class="nx">cleanCommands</span>
-        <span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersects</span><span class="p">(</span>
-          <span class="nx">command</span><span class="p">.</span><span class="nx">relativeRectangle</span> <span class="nx">@rectangle_</span>
-          <span class="nx">lastDirtyRectangle</span>
-        <span class="p">)</span>
-      <span class="p">),</span> <span class="nx">lastDirtyRectangle</span>
-      <span class="nx">renderRectangles</span><span class="p">.</span><span class="nx">push</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersection</span><span class="p">(</span>
-        <span class="nx">lastDirtyRectangle</span>
+      <span class="nv">intersection = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersection</span><span class="p">(</span>
+        <span class="nx">dirtyCommand</span><span class="p">.</span><span class="nx">relativeRectangle</span> <span class="nx">@rectangle_</span>
         <span class="nx">@rectangle_</span>
       <span class="p">)</span>
-        </pre></div></td></tr><tr id="section-16"><td class="docs"><div class="pilwrap"><a href="#section-16" class="pilcrow">&#182;</a></div><p>Render all clean and dirty commands that intersect all dirty
-rectangles.</p>
-</td><td class="code"><div class="highlight"><pre>      <span class="nv">currentDirtyRectangle = </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-      <span class="nv">dirtyCommands = </span><span class="p">[]</span>
-      <span class="k">for</span> <span class="nx">dirtyCommand</span> <span class="k">in</span> <span class="nx">@dirtyCommands_</span>
+      <span class="k">continue</span> <span class="k">if</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">isNull</span> <span class="nx">intersection</span>
       
-        <span class="nv">rectangle = </span><span class="nx">dirtyCommand</span><span class="p">.</span><span class="nx">relativeRectangle</span> <span class="nx">@rectangle_</span>
-        <span class="nx">dirtyCommand</span><span class="p">.</span><span class="nx">setLastRectangle</span> <span class="nx">dirtyCommand</span><span class="p">.</span><span class="nx">rectangle</span><span class="p">()</span>
-        
-        <span class="k">continue</span> <span class="nx">unless</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersects</span><span class="p">(</span>
-          <span class="nx">rectangle</span>
-          <span class="nx">@rectangle_</span>
-        <span class="p">)</span>
-        
-        <span class="nx">dirtyCommands</span><span class="p">.</span><span class="nx">push</span> <span class="nx">dirtyCommand</span>
+      <span class="nx">dirtyCommands</span><span class="p">.</span><span class="nx">push</span> <span class="nx">dirtyCommand</span>
       
-        <span class="nv">currentDirtyRectangle = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">united</span><span class="p">(</span>
-          <span class="nx">currentDirtyRectangle</span>
-          <span class="nx">rectangle</span>
+      <span class="nv">dirtyRectangle = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">united</span> <span class="nx">dirtyRectangle</span><span class="p">,</span> <span class="nx">intersection</span>
+    
+    <span class="nv">totalDirtyRectangle = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersection</span><span class="p">(</span>
+      <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">united</span> <span class="nx">@lastDirtyRectangle_</span><span class="p">,</span> <span class="nx">dirtyRectangle</span>
+      <span class="nx">@rectangle_</span>
+    <span class="p">)</span>
+    
+    <span class="nx">@quadTree</span><span class="p">.</span><span class="nx">clear</span><span class="p">()</span>
+    <span class="k">for</span> <span class="nx">command</span> <span class="k">in</span> <span class="nx">@commands_</span>
+      <span class="nx">@addCommandToQuadTree</span> <span class="nx">command</span>
+    
+    <span class="nv">affectedCommands = </span><span class="nx">@quadTree</span><span class="p">.</span><span class="nx">retrieve</span><span class="p">(</span>
+      <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">toObject</span><span class="p">(</span>
+        <span class="nx">totalDirtyRectangle</span>
+        <span class="kc">true</span>
+      <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="nv">affectedCommands = </span><span class="nx">_</span><span class="p">.</span><span class="nx">map</span> <span class="nx">affectedCommands</span><span class="p">,</span> <span class="nf">(O) -&gt;</span> <span class="nx">O</span><span class="p">.</span><span class="nx">command</span>
+    <span class="nv">affectedCommands = </span><span class="nx">sortCommands</span> <span class="nx">affectedCommands</span>
+    
+    <span class="nv">cleanCommands = </span><span class="nx">_</span><span class="p">.</span><span class="nx">difference</span> <span class="nx">affectedCommands</span><span class="p">,</span> <span class="nx">@dirtyCommands_</span>
+    
+    <span class="k">if</span> <span class="nx">cleanCommands</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
+      <span class="k">for</span> <span class="nx">command</span> <span class="k">in</span> <span class="nx">cleanCommands</span>
+        
+        <span class="nv">intersection = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersection</span><span class="p">(</span>
+          <span class="nx">command</span><span class="p">.</span><span class="nx">relativeRectangle</span> <span class="nx">@rectangle_</span>
+          <span class="nx">@lastDirtyRectangle_</span>
         <span class="p">)</span>
+        <span class="k">continue</span> <span class="k">if</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">isNull</span> <span class="nx">intersection</span>
+        
+        <span class="nx">renderCommand</span> <span class="nx">command</span><span class="p">,</span> <span class="nx">intersection</span>
+        
+      <span class="nv">dirtyCommands = </span><span class="nx">sortCommands</span> <span class="nx">dirtyCommands</span><span class="p">.</span><span class="nx">concat</span> <span class="nx">cleanCommands</span>
+      
+    <span class="k">for</span> <span class="nx">command</span> <span class="k">in</span> <span class="nx">dirtyCommands</span>
 
-      <span class="nx">renderCommands</span> <span class="nx">_</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span>
-        <span class="nx">cleanCommands</span><span class="p">.</span><span class="nx">concat</span> <span class="nx">dirtyCommands</span>
-        <span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersects</span><span class="p">(</span>
-          <span class="nx">command</span><span class="p">.</span><span class="nx">relativeRectangle</span> <span class="nx">@rectangle_</span>
-          <span class="nx">currentDirtyRectangle</span>
-        <span class="p">)</span>
-      <span class="p">),</span> <span class="nx">currentDirtyRectangle</span>
-      <span class="nx">renderRectangles</span><span class="p">.</span><span class="nx">push</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersection</span><span class="p">(</span>
-        <span class="nx">currentDirtyRectangle</span>
-        <span class="nx">@rectangle_</span>
+      <span class="nv">intersection = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">intersection</span><span class="p">(</span>
+        <span class="nx">command</span><span class="p">.</span><span class="nx">relativeRectangle</span> <span class="nx">@rectangle_</span>
+        <span class="nx">dirtyRectangle</span>
       <span class="p">)</span>
-        </pre></div></td></tr><tr id="section-17"><td class="docs"><div class="pilwrap"><a href="#section-17" class="pilcrow">&#182;</a></div><p>Clean ALL the commands!</p>
-</td><td class="code"><div class="highlight"><pre>    <span class="vi">@dirtyCommands_ = </span><span class="p">[]</span>
-    </pre></div></td></tr><tr id="section-18"><td class="docs"><div class="pilwrap"><a href="#section-18" class="pilcrow">&#182;</a></div><p>Let caller know which areas are actually dirty.</p>
+      <span class="k">continue</span> <span class="k">if</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">isNull</span> <span class="nx">intersection</span>
+      
+      <span class="nx">renderCommand</span> <span class="nx">command</span><span class="p">,</span> <span class="nx">intersection</span>
+      
+    <span class="vi">@lastDirtyRectangle_ = </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="vi">@dirtyCommands_ = </span><span class="p">{}</span>
+    
+    <span class="nx">renderRectangles</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span>
+      <span class="nx">totalDirtyRectangle</span>
+    <span class="p">)</span>
+    </pre></div></td></tr><tr id="section-7"><td class="docs"><div class="pilwrap"><a href="#section-7" class="pilcrow">&#182;</a></div><p>Let caller know which areas are actually dirty.</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="nx">_</span><span class="p">.</span><span class="nx">map</span> <span class="nx">renderRectangles</span><span class="p">,</span> <span class="nf">(renderRectangle) -&gt;</span>
       <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">translated</span> <span class="nx">renderRectangle</span><span class="p">,</span> <span class="nx">offset</span>
-    </pre></div></td></tr><tr id="section-19"><td class="docs"><div class="pilwrap"><a href="#section-19" class="pilcrow">&#182;</a></div><p>avo.<strong>DisplayCommand</strong> is an abstract base class to implement a display
+  </pre></div></td></tr><tr id="section-8"><td class="docs"><div class="pilwrap"><a href="#section-8" class="pilcrow">&#182;</a></div><p>avo.<strong>DisplayCommand</strong> is an abstract base class to implement a display
 command.</p>
 </td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">DisplayCommand</span>
 
-  <span class="nv">constructor: </span><span class="nf">(list, rectangle = [0, 0, 0, 0]) -&gt;</span>
+  <span class="nv">constructor: </span><span class="nf">(@list_, rectangle = [0, 0, 0, 0]) -&gt;</span>
     
-    <span class="vi">@list_ = </span><span class="nx">list</span>
-    <span class="nx">@list_</span><span class="p">.</span><span class="nx">addCommand</span> <span class="k">this</span>
+    <span class="nx">avo</span><span class="p">.</span><span class="nx">Mixin</span> <span class="k">this</span><span class="p">,</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">EventEmitter</span>
     
+    <span class="vi">@rectangle_ = </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
     <span class="nx">@setRectangle</span> <span class="nx">rectangle</span>
-    <span class="nx">@setLastRectangle</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-    
     <span class="nx">@setIsRelative</span> <span class="kc">true</span>
     
-  <span class="nv">setDirty: </span><span class="o">-&gt;</span>
-    
-    <span class="nx">@list_</span><span class="p">.</span><span class="nx">setCommandDirty</span> <span class="k">this</span>
+    <span class="nx">@list_</span><span class="p">.</span><span class="nx">addCommand</span> <span class="k">this</span>
+    <span class="nx">@markAsDirty</span> <span class="kc">true</span>
   
+  <span class="nv">list: </span><span class="o">-&gt;</span> <span class="nx">@list_</span>
+    
+  <span class="nv">markAsDirty: </span><span class="nf">(rectangle) -&gt;</span>
+    
   <span class="nv">setIsRelative: </span><span class="nf">(isRelative) -&gt;</span> <span class="vi">@isRelative_ = </span><span class="nx">isRelative</span>
   <span class="nv">isRelative: </span><span class="o">-&gt;</span> <span class="nx">@isRelative_</span>
-    
+  
   <span class="nv">setRectangle: </span><span class="nf">(rectangle) -&gt;</span>
     
+    <span class="k">return</span> <span class="k">if</span> <span class="nx">@rectangle_</span><span class="o">?</span> <span class="o">and</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">equals</span> <span class="nx">rectangle</span><span class="p">,</span> <span class="nx">@rectangle_</span>
+    
+    <span class="nx">@markAsDirty</span> <span class="nx">rectangle</span>
     <span class="vi">@rectangle_ = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">round</span> <span class="nx">rectangle</span>
-    <span class="nx">@setDirty</span><span class="p">()</span>
     
   <span class="nv">rectangle: </span><span class="o">-&gt;</span> <span class="nx">@rectangle_</span>
   
@@ -200,6 +235,7 @@ command.</p>
       <span class="nx">position</span>
       <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">size</span> <span class="nx">@rectangle_</span>
     <span class="p">)</span>
+    
   <span class="nv">position: </span><span class="o">-&gt;</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">@rectangle_</span>
   
   <span class="nv">setSize: </span><span class="nf">(size) -&gt;</span>
@@ -208,6 +244,7 @@ command.</p>
       <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">@rectangle_</span>
       <span class="nx">size</span>
     <span class="p">)</span>
+    
   <span class="nv">size: </span><span class="o">-&gt;</span> <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">size</span> <span class="nx">@rectangle_</span>
   
   <span class="nv">calculateRelative: </span><span class="nf">(rectangle, visible) -&gt;</span>
@@ -223,16 +260,13 @@ command.</p>
         <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">size</span> <span class="nx">rectangle</span>
       <span class="p">)</span>
       
-  <span class="nv">relativeRectangle: </span><span class="nf">(visible) -&gt;</span> <span class="nx">@calculateRelative</span> <span class="nx">@rectangle_</span><span class="p">,</span> <span class="nx">visible</span>
+  <span class="nv">relativeRectangle: </span><span class="nf">(visible) -&gt;</span>
+    
+    <span class="nx">@calculateRelative</span> <span class="nx">@rectangle_</span><span class="p">,</span> <span class="nx">visible</span>
     
   <span class="nv">relativePosition: </span><span class="nf">(visible) -&gt;</span>
     
     <span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">position</span> <span class="nx">@relativeRectangle</span> <span class="nx">visible</span>
-  
-  <span class="nv">setLastRectangle: </span><span class="nf">(lastRectangle) -&gt;</span> <span class="vi">@lastRectangle_ = </span><span class="nx">avo</span><span class="p">.</span><span class="nx">Rectangle</span><span class="p">.</span><span class="nx">round</span> <span class="nx">lastRectangle</span>
-  <span class="nv">lastRectangle: </span><span class="o">-&gt;</span> <span class="nx">@lastRectangle_</span>
-  
-  <span class="nv">lastRelativeRectangle: </span><span class="nf">(visible) -&gt;</span> <span class="nx">@calculateRelative</span> <span class="nx">@lastRectangle_</span><span class="p">,</span> <span class="nx">visible</span>
   
   <span class="nv">render: </span><span class="nf">(position, clip, destination) -&gt;</span>
 

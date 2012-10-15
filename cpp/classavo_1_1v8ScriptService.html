@@ -255,11 +255,9 @@ Additional Inherited Members</h2></td></tr>
 <div class="line">    <span class="comment">// Compile coffeescript to JS.</span></div>
 <div class="line">    <span class="keywordflow">if</span> (std::string::npos != filenameString.find(<span class="stringliteral">&quot;.coffee&quot;</span>)) {</div>
 <div class="line"></div>
-<div class="line">        <span class="comment">// CoffeeScript. &lt;3</span></div>
-<div class="line">        Script *coffeeCompiler = <a class="code" href="classavo_1_1ScriptService.html#abc6846f81929f3ceb0cb5068d2d56d37">scriptFromFile</a>(</div>
-<div class="line">            <a class="code" href="namespaceavo_1_1FS.html#af3e23a86f585968d6f197ff401e9c09c">FS::engineRoot</a>() / <span class="stringliteral">&quot;compiler&quot;</span> / <span class="stringliteral">&quot;CoffeeScript.js&quot;</span></div>
-<div class="line">        );</div>
-<div class="line">        coffeeCompiler-&gt;execute();</div>
+<div class="line">        std::cerr &lt;&lt; <span class="stringliteral">&quot;Precompiling &quot;</span> &lt;&lt; filenameString &lt;&lt; <span class="stringliteral">&quot;...&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"></div>
+<div class="line">        TryCatch exception;</div>
 <div class="line"></div>
 <div class="line">        Handle&lt;Object&gt; CoffeeScript = Context::GetCurrent()-&gt;Global()-&gt;Get(String::New(<span class="stringliteral">&quot;CoffeeScript&quot;</span>)).As&lt;Object&gt;();</div>
 <div class="line">        Handle&lt;Function&gt; compile = CoffeeScript-&gt;Get(String::New(<span class="stringliteral">&quot;compile&quot;</span>)).As&lt;Function&gt;();</div>
@@ -272,8 +270,6 @@ Additional Inherited Members</h2></td></tr>
 <div class="line">            String::New(code.c_str()),</div>
 <div class="line">            options</div>
 <div class="line">        };</div>
-<div class="line"></div>
-<div class="line">        TryCatch exception;</div>
 <div class="line"></div>
 <div class="line">        Handle&lt;Value&gt; result = compile-&gt;Call(compile, 2, args);</div>
 <div class="line"></div>
@@ -353,6 +349,8 @@ Additional Inherited Members</h2></td></tr>
 <div class="line">    <span class="keywordflow">if</span> (NULL == v8ScriptFactory) {</div>
 <div class="line">        <span class="keywordflow">throw</span> script_compilation_error(<span class="stringliteral">&quot;Concrete v8 factory mismatch!&quot;</span>);</div>
 <div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Compiling &quot;</span> &lt;&lt; filename.string() &lt;&lt; <span class="stringliteral">&quot;...&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Instantiate our script and return it.</span></div>
 <div class="line">    <span class="keywordflow">return</span> v8ScriptFactory-&gt;create(script);</div>

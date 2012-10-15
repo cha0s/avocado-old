@@ -31,6 +31,13 @@ avo.GraphicsService::playerTickMovement = (player) ->
 		avo.TimingService.tickElapsed()
 	)
 
+# Get a unit movement vector for a player.
+avo.GraphicsService::playerUnitMovement = (player) ->
+	
+	return [0, 0] unless movement[player]?
+	
+	movement[player].tickUnit
+
 # We'll store any movement that comes in, combining keyboard and
 # joystick movement, making sure that combined they never exceed 1.
 registerMovement = (player) ->

@@ -34,6 +34,17 @@ avo.Vector =
 	#     [3, 1]
 	div: (l, r) -> [l[0] / r[0], l[1] / r[1]]
 	
+	# Get the cartesian distance between two point vectors.
+	#
+	#     avocado> avo.Vector.div [0, 0], [1, 0]
+	#     1
+	cartesianDistance: (l, r) ->
+		
+		xd = l[0] - r[0]
+		yd = l[1] - r[1]
+
+		Math.sqrt xd * xd + yd * yd
+	
 	# Clamp a vector's axes using a min vector and a max vector.
 	#
 	#     avocado> avo.Vector.clamp [-10, 10], [0, 0], [5, 5]

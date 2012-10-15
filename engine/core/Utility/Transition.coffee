@@ -92,11 +92,11 @@ class avo.Transition
 				@defer.progress this
 				
 				# Stop if we're done.
-				@stop() if @elapsed is @duration
+				@stopTransition() if @elapsed is @duration
 
 			# Immediately stop the transition. This will leave the object in
 			# its current state; potentially partially transitioned.				
-			transition.stop = ->
+			transition.stopTransition = ->
 				
 				# Stop the tick loop and clear out the handle so additional
 				# transitions attached to this object won't wait.
@@ -108,7 +108,7 @@ class avo.Transition
 				
 			# Immediately finish the transition. This will leave the object
 			# in the fully transitioned state.
-			transition.skip = ->
+			transition.skipTransition = ->
 				
 				# Just trick it into thinking the time passed and do one last
 				# tick.

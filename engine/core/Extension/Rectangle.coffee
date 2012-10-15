@@ -28,6 +28,25 @@ avo.Rectangle =
 	compose: (l, r) ->
 		
 		l.concat r
+		
+	# Convert a rectangle to an object. If you *useShortKeys*, The width and
+	# height keys will be named w and h, respectively. 
+	#
+	#     avocado> avo.Rectangle.toObject [3, 4, 5, 6]
+	#     {x: 3, y: 4, width: 5, height: 6}
+	#
+	#     avocado> avo.Rectangle.toObject [3, 4, 5, 6], true
+	#     {x: 3, y: 4, w: 5, h: 6}
+	toObject: (rectangle, useShortKeys = false) ->
+		
+		whKeys = if useShortKeys then ['w', 'h'] else ['width', 'height']
+		
+		O = 
+			x: rectangle[0]
+			y: rectangle[1]
+		O[whKeys[0]] = rectangle[2]
+		O[whKeys[1]] = rectangle[3]
+		O
 
 	# Returns the position of a rectangle.
 	#
@@ -67,8 +86,8 @@ avo.Rectangle =
 		ly2 = l[1] + l[3]
 		ry2 = r[1] + r[3]
 		
-		w = if lx2 <= rx2 then lx2 - x else rx2 - x
-		h = if ly2 <= ry2 then ly2 - y else ry2 - y
+		w = (if lx2 <= rx2 then lx2 else rx2) - x
+		h = (if ly2 <= ry2 then ly2 else ry2) - y
 		
 		[x, y, w, h]
 

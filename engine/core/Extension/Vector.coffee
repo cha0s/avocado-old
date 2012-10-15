@@ -138,6 +138,8 @@ avo.Vector =
 		]
 
 	# Checks whether a vector is null. A vector is null if either axis is 0.
+	# The algorithm prefers horizontal directions to vertical; if you move
+	# up-right or down-right you'll face right.
 	#
 	#     avocado> avo.Vector.isNull [1, 0]
 	#     true
@@ -145,6 +147,92 @@ avo.Vector =
 	#     avocado> avo.Vector.isNull [1, 1]
 	#     false
 	isNull: (vector) -> vector[0] is 0 or vector[1] is 0
+	
+	# Convert a vector to a 4-direction. A 4-direction is:
+	# 
+	# * 0: Up
+	# * 1: Right
+	# * 2: Down
+	# * 3: Left
+	#
+	#     avocado> avo.Vector.toDirection4 [0, 1]
+	#     2
+	#
+	#     avocado> avo.Vector.toDirection4 [1, 0]
+	#     1
+	toDirection4: (vector) ->
+		
+		vector = avo.Vector.hypotenuse vector
+		
+		#  */
+
+		sqrt_2_2 = Math.sqrt(2) / 2
+
+		x = Math.abs(vector[0]) - sqrt_2_2
+		if x > 0 and x < sqrt_2_2
+			return if vector[0] > 0 then 1 else 3
+		
+		return if vector[1] > 0 then 2 else 0
+	
+	# Convert a vector to an 8-direction. An 8-direction is:
+	# 
+	# * 0: Up
+	# * 1: Right
+	# * 2: Down
+	# * 3: Left
+	# * 4: Up-Right
+	# * 5: Down-Right
+	# * 6: Down-Left
+	# * 7: Up-Left
+	#
+	#     avocado> avo.Vector.toDirection8 [1, 1]
+	#     5
+	#
+	#     avocado> avo.Vector.toDirection8 [1, 0]
+	#     1
+	toDirection8: (vector) ->
+		
+		vector = avo.Vector.hypotenuse vector
+
+		circumferenceRads = Math.PI * 2
+		
+		# Orient radians
+		rad = (circumferenceRads + Math.atan2(vector[1], vector[0])) % circumferenceRads
+		rad = (rad + (Math.PI * .5)) % circumferenceRads
+		
+		rad = Math.floor(rad * 100000) / 100000
+		
+		ds = [0, 4, 1, 5, 2, 6, 3, 7]
+		r = circumferenceRads - Math.PI * 0.125
+		for i in ds
+			
+			nr = (r + (Math.PI/4)) % circumferenceRads
+			nr = Math.floor(nr * 100000) / 100000
+			
+			return i if rad >= r && rad < nr
+			
+			r = nr
+		
+		return 0
+	
+	# Convert a vector to a *directionCount*-direction.
+	#
+	#     avocado> avo.Vector.toDirection [0, 1], 4
+	#     2
+	toDirection: (vector, directionCount) ->
+		
+		switch directionCount
+			
+			when 4 then avo.Vector.toDirection4 vector
+			when 8 then avo.Vector.toDirection8 vector
+			else
+				throw new Error "Unsupported conversion of vector to #{directionCount}-direction."
+	
+	# Convert a vector to an object.
+	#
+	#     avocado> avo.Vector.toObject [3, 4]
+	#     {x: 3, y: 4}
+	toObject: (vector) -> x: vector[0], y: vector[1]
 	
 	# Mix the vector methods into a vector instance.
 	#

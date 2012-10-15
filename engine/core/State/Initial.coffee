@@ -42,7 +42,11 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 	# update your world here. We'll move the avocado based on movement input.
 	tick: ->
 		
-		@main.changeState 'Environment', environmentUri: '/environment/wb-forest.environment.json'
+		@main.changeState(
+			'Environment'
+			environmentUri: '/environment/wb-forest.environment.json'
+			roomIndex: 0
+		)
 		
 	# Called repeatedly to allow the state to render graphics.
 	render: (buffer) ->

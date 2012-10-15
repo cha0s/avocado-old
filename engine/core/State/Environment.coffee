@@ -1,8 +1,15 @@
 # Avocado loads the 'Initial' state, and from there it's all up to you!
 class avo.Main.States['Environment'] extends avo.AbstractState
 	
+	initialize: ->
+		
+		@cameraPosition = [0, 0]
+		
+		super
+	
 	enter: ({
 		environmentUri
+		@roomIndex
 	}) ->
 		
 		# Load the environment, an entity to walk around in it, and a font to
@@ -23,12 +30,12 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 				
 				# Facing down.
 				@entity.setDirection 2
-			
+				
 			avo.RasterFont.load('/font/wb-text.png').then (@font) =>
 			
 		]).then =>
 			
-			currentRoom = @environment.room 0
+			currentRoom = @environment.room @roomIndex
 			
 			@roomRectangle = avo.Rectangle.compose(
 				[0, 0]
@@ -55,14 +62,14 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 			
 			new avo.TileLayerDisplayCommand(
 				@displayList
-				currentRoom.layer(0)
+				currentRoom.layer 0
 				@environment.tileset()
 				@roomRectangle
 			) 
 			
 			new avo.TileLayerDisplayCommand(
 				@displayList
-				currentRoom.layer(1)
+				currentRoom.layer 1
 				@environment.tileset()
 				@roomRectangle
 			) 
@@ -74,14 +81,14 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 			
 			new avo.TileLayerDisplayCommand(
 				@displayList
-				currentRoom.layer(2)
+				currentRoom.layer 2
 				@environment.tileset()
 				@roomRectangle
 			)
 			
 			new avo.TileLayerDisplayCommand(
 				@displayList
-				currentRoom.layer(3)
+				currentRoom.layer 3
 				@environment.tileset()
 				@roomRectangle
 			)
@@ -89,7 +96,7 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 			@tps = new avo.FontDisplayCommand(
 				@displayList
 				@font
-				""
+				"TPS: 0"
 				[16, 32]
 			)
 			@tps.setIsRelative false
@@ -97,7 +104,7 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 			@rps = new avo.FontDisplayCommand(
 				@displayList
 				@font
-				""
+				"RPS: 0"
 				[16, 48]
 			)
 			@rps.setIsRelative false
@@ -124,9 +131,9 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 				)
 				@mouseLocation = [x, y]
 		
-	setCameraFromEntity: (entity) ->
+	setCameraFromEntity: (entity, easing = 1) ->
 				
-		@displayList.setPosition avo.Vector.clamp(
+		newPosition = avo.Vector.clamp(
 			avo.Vector.sub(
 				avo.Vector.round entity.position()
 				avo.Vector.sub(
@@ -141,6 +148,28 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 			avo.Vector.sub(
 				avo.Rectangle.size @roomRectangle
 				avo.window.originalSize
+			)
+		)
+		
+		@displayList.setPosition newPosition if easing is 0
+		
+		distance = avo.Vector.cartesianDistance(
+			@displayList.position()
+			newPosition
+		)
+		return if distance is 0
+		
+		@displayList.setPosition avo.Vector.round @cameraPosition = avo.Vector.add(
+			@cameraPosition
+			avo.Vector.scale(
+				avo.Vector.hypotenuse(
+					newPosition
+					@cameraPosition
+				)
+				if distance is 0
+					0
+				else
+					(Math.min 10, distance / 16) / easing
 			)
 		)
 		

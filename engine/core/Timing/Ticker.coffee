@@ -23,8 +23,10 @@ class avo.Ticker
 	# tick.
 	reset: ->
 		
-		@last_ = avo.timeElapsed()
+		@last_ = avo.TimingService.elapsed()
 		@tickRemainder = 0
+	
+	setFrequency: (@frequency) ->
 	
 	# Count the number of ticks passed since the last invocation.
 	ticks: ->

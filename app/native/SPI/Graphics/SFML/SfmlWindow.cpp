@@ -178,6 +178,8 @@ Window::Event SfmlWindow::pollEvents() {
 			event.resize.width = sfmlEvent.size.width;
 			event.resize.height = sfmlEvent.size.height;
 
+			Window::setSize(sfmlEvent.size.width, sfmlEvent.size.height);
+
 			break;
 		}
 

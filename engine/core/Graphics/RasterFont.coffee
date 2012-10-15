@@ -91,8 +91,13 @@ class avo.FontDisplayCommand extends avo.DisplayCommand
 		
 	setText: (text) ->
 		
+		oldText = @text_
 		@text_ = text
-		@setSize @font_.textSize text
+		
+		if oldText isnt @text_
+			
+			@setSize @font_.textSize text
+			@markAsDirty()
 		
 	render: (position, clip, destination) ->
 		

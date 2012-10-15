@@ -64,11 +64,9 @@ std::string v8ScriptService::preCompileCode(const std::string &code, const boost
 	// Compile coffeescript to JS.
 	if (std::string::npos != filenameString.find(".coffee")) {
 
-		// CoffeeScript. <3
-		Script *coffeeCompiler = scriptFromFile(
-			FS::engineRoot() / "compiler" / "CoffeeScript.js"
-		);
-		coffeeCompiler->execute();
+		std::cerr << "Precompiling " << filenameString << "..." << std::endl;
+
+		TryCatch exception;
 
 		Handle<Object> CoffeeScript = Context::GetCurrent()->Global()->Get(String::New("CoffeeScript")).As<Object>();
 		Handle<Function> compile = CoffeeScript->Get(String::New("compile")).As<Function>();
@@ -81,8 +79,6 @@ std::string v8ScriptService::preCompileCode(const std::string &code, const boost
 			String::New(code.c_str()),
 			options
 		};
-
-		TryCatch exception;
 
 		Handle<Value> result = compile->Call(compile, 2, args);
 
@@ -126,6 +122,8 @@ Script *v8ScriptService::scriptFromCode(const std::string &code, const boost::fi
 	if (NULL == v8ScriptFactory) {
 		throw script_compilation_error("Concrete v8 factory mismatch!");
 	}
+
+	std::cerr << "Compiling " << filename.string() << "..." << std::endl;
 
 	// Instantiate our script and return it.
 	return v8ScriptFactory->create(script);

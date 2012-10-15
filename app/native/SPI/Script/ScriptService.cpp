@@ -79,6 +79,12 @@ ScriptService::~ScriptService() {
 }
 
 void ScriptService::initialize() {
+
+	// CoffeeScript. <3
+	Script *coffeeCompiler = scriptFromFile(
+		FS::engineRoot() / "compiler" / "CoffeeScript.js"
+	);
+	coffeeCompiler->execute();
 }
 
 std::vector<std::string> ScriptService::loadCore() {

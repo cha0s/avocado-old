@@ -295,6 +295,12 @@ v8::Handle<v8::Value> v8Window::Render(const v8::Arguments &args) {
 		)));
 	}
 
+	if (!args[1]->IsArray()) {
+		return ThrowException(v8::Exception::TypeError(String::NewSymbol(
+			"Window::render(): second argument not array."
+		)));
+	}
+
 	Handle<Array> rectangle = args[1].As<Array>();
 
 	windowWrapper->window->render(
@@ -320,7 +326,7 @@ v8::Handle<v8::Value> v8Window::SetFlags(const v8::Arguments &args) {
 	}
 
 	windowWrapper->window->setFlags(
-		static_cast<Window::WindowFlags>(args[1]->Int32Value())
+		static_cast<Window::WindowFlags>(args[0]->Int32Value())
 	);
 
 	return v8::Undefined();

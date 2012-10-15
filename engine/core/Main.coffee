@@ -161,7 +161,7 @@ class avo.Main
 		
 		# Let the State do rendering.
 		rectangles = @stateObject?.render @backBuffer
-		if rectangles.length > 0
+		if rectangles?.length > 0
 			
 			@emit 'render', @backBuffer, rectangles
 		

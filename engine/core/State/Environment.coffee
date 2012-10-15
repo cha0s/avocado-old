@@ -33,6 +33,10 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 				
 			avo.RasterFont.load('/font/wb-text.png').then (@font) =>
 			
+			avo.Font.load('/font/DroidSans.ttf').then (@ttfFont) =>
+				
+				@ttfFont.setSize 15
+			
 		]).then =>
 			
 			currentRoom = @environment.room @roomIndex
@@ -95,13 +99,13 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 			
 			@tps = new avo.FontDisplayCommand(
 				@displayList
-				@font
+				@ttfFont
 				"TPS: 0"
 				[16, 32]
 			)
 			@tps.setIsRelative false
 		
-			@rps = new avo.FontDisplayCommand(
+			@rps = new avo.RasterFontDisplayCommand(
 				@displayList
 				@font
 				"RPS: 0"

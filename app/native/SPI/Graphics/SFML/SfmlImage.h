@@ -25,6 +25,7 @@ class SfmlImage : public Image {
 
 public:
 
+	friend class SfmlFont;
 	friend class SfmlWindow;
 
 	/**

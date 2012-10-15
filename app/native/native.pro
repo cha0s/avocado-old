@@ -121,7 +121,7 @@ SOURCES += \
 	\
 	SPI/Script/Script.cpp SPI/Script/ScriptService.cpp \
 	SPI/Core/CoreService.cpp \
-	SPI/Graphics/GraphicsService.cpp SPI/Graphics/Image.cpp SPI/Graphics/Window.cpp \
+	SPI/Graphics/GraphicsService.cpp SPI/Graphics/Font.cpp SPI/Graphics/Image.cpp SPI/Graphics/Window.cpp \
 	SPI/Timing/TimingService.cpp SPI/Timing/Counter.cpp \
 	SPI/Sound/SoundService.cpp SPI/Sound/Sample.cpp SPI/Sound/Music.cpp
 
@@ -136,7 +136,7 @@ HEADERS += \
 	SPI/SpiiLoader.h \
 	SPI/Script/Script.h SPI/Script/ScriptService.h \
 	SPI/Core/CoreService.h \
-	SPI/Graphics/GraphicsService.h SPI/Graphics/Image.h SPI/Ui/Window.h \
+	SPI/Graphics/GraphicsService.h SPI/Graphics/Font.h SPI/Graphics/Image.h SPI/Ui/Window.h \
 	SPI/Timing/TimingService.h SPI/Timing/Counter.h \ 
 	SPI/Sound/SoundService.h SPI/Sound/Sample.h SPI/Sound/Music.h
 

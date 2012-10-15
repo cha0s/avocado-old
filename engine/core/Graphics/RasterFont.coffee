@@ -81,7 +81,7 @@ class avo.RasterFont
 
 		undefined
 
-class avo.FontDisplayCommand extends avo.DisplayCommand
+class avo.RasterFontDisplayCommand extends avo.DisplayCommand
 	
 	constructor: (list, font, text, rectangle = [0, 0, 0, 0]) ->
 		super list, rectangle

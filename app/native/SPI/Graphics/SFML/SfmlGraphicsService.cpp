@@ -2,6 +2,7 @@
 
 #include "SfmlGraphicsService.h"
 
+#include "SfmlFont.h"
 #include "SfmlImage.h"
 #include "SfmlWindow.h"
 
@@ -12,6 +13,7 @@ AbstractFactory<SfmlGraphicsService> *SfmlGraphicsService::factory = new Abstrac
 SfmlGraphicsService::SfmlGraphicsService() {
 
 	Image::factoryManager.setInstance(SfmlImage::factory);
+	Font::factoryManager.setInstance(SfmlFont::factory);
 	Window::factoryManager.setInstance(SfmlWindow::factory);
 }
 

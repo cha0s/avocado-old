@@ -4,4 +4,4 @@ HEADERS += \
 	\
 	../../../Factory.h ../../../FS.h ../../ResourceManager.h \
 	\
-	../GraphicsService.h ../Image.h ../Window.h
+	../GraphicsService.h ../Font.h ../Image.h ../Window.h

@@ -6,21 +6,6 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 	# things specific to our game.
 	initialize: ->
 		
-		# Keep a display list to optimize rendering.
-		@displayList = new avo.DisplayList [0, 0, 800, 600]
-		
-		# Since we can't rely on graphics SPIIs letting us know when our
-		# graphics need to be rewritten, we'll force redrawing the entire
-		# screen 10 times a second.
-		setInterval (=> @displayList.setDirty()), 100
-		
-		# Add a display command to white out the background.
-		new avo.FillDisplayCommand(
-			@displayList
-			255, 255, 255, 255
-			[0, 0, 800, 600]
-		)
-		
 		# Register a player 'Awesome player' to receive input using the
 		# keyboard arrow keys and joystick index 0.
 		avo.graphicsService.registerPlayerMovement 'Awesome player', [
@@ -30,83 +15,38 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 			avo.graphicsService.SpecialKeyCodes.LeftArrow
 		], 0
 		
-		# Yum, an avocado!
-		imagePromise = avo.Image.load('/image/avocado.png').then (image) =>
-			
-			# Add a display command to show the yummy avocado.
-			@avocado = new avo.ImageDisplayCommand(
-				@displayList
-				image
-				avo.Rectangle.compose [0, 0], image.size()
-			)
+		# Last, we'll open the window where we show all of the graphics
+		# stuff. We'll wait so that there isn't a black screen sitting
+		# there while everything loads.
+		# Instantiate a Window to receive render events.
+		avo.window = new avo.graphicsService.newWindow [720, 450]
+		avo.window.setWindowTitle 'Avocado - Fun Should Be Free'
+		avo.window.originalSize = [720, 450]
 		
-		# Happy music!
-		musicPromise = avo.Music.load('/music/smile.ogg').then (@music) =>
+		# @main lets us know when it has something to render, so we'll
+		# put it on our window.
+		@main.on 'render', (buffer, rectangle) =>
+			
+			# Render and display the changes to the window.
+			avo.window.render buffer, rectangle
+			avo.window.display()
+			
+		# Catch the quit event (window close event).
+		avo.window.on 'quit.InitialState', => @main.quit()
 		
-			# Start it as soon as it loads.
-			@music.play()
-			
-		# When the image and music are done loading, then we're done
-		# initializing. Remember - with CoffeeScript, the last statement in
-		# a function is the return value. And upon.all returns a promise, just
-		# as initialize requires. Elegant!
-		upon.all([
-			imagePromise
-			musicPromise
-		]).then =>
-			
-			# Last, we'll open the window where we show all of the graphics
-			# stuff. We'll wait so that there isn't a black screen sitting
-			# there while everything loads.
-			# Instantiate a Window to receive render events.
-			avo.window = new avo.graphicsService.newWindow [800, 600]
-			avo.window.setWindowTitle 'Avocado - Fun Should Be Free'
-			
-			# @main lets us know when it has something to render, so we'll
-			# put it on our window.
-			@main.on 'render', (buffer, rectangle) ->
-				
-				# Render and display the changes to the window.
-				avo.window.render buffer, rectangle
-				avo.window.display()
-				
-			# Catch the quit event (window close event).
-			avo.window.on 'quit.Engine', => @main.quit()
-			
-			# Allow dragging the avocado around with the left mouse button. Keep
-			# track of where the avocado was when we started dragging.
-			@dragStartAvocadoLocation = []
-			avo.window.on 'mouseButtonDown.InitialState', ({button}) =>
-				return unless button is avo.Window.LeftButton
-				@dragStartAvocadoLocation = @avocado.position()
-			avo.window.on 'mouseDrag.InitialState', ({position, button, relative}) =>
-				return unless button is avo.Window.LeftButton
-				@avocado.setPosition avo.Vector.add @dragStartAvocadoLocation, relative
+		defer = upon.defer()
+		defer.resolve()
+		defer.promise
 				
 	# Called repeatedly while this state is loaded. You can do things like
 	# update your world here. We'll move the avocado based on movement input.
 	tick: ->
 		
-		# Any movement input?
-		movement = avo.graphicsService.playerTickMovement('Awesome player')
-		return if avo.Vector.isZero movement
+		@main.changeState 'Environment', environmentUri: '/environment/wb-forest.environment.json'
 		
-		# Move the avocado 250px a second based on player 'Awesome player's
-		# movement.
-		@avocado.setPosition avo.Vector.add(
-			@avocado.position()
-			avo.Vector.scale movement, 250
-		)
-	
 	# Called repeatedly to allow the state to render graphics.
 	render: (buffer) ->
-		
-		# Render the anything dirty. This will also pass back the dirty areas.
-		@displayList.render buffer
 		
 	# Called when another state is loaded. This gives you a chance to clean
 	# up resources and event handlers.
 	leave: (nextStateName) ->
-		
-		# Remove our event handler(s).
-		avo.window.off '.InitialState'

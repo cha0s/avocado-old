@@ -115,7 +115,7 @@ PRECOMPILED_HEADER = avocado-global.h
 
 SOURCES += \
 	\
-	main.cpp \
+	main.cpp deploy.cpp \
 	\
 	FS.cpp \
 	\
@@ -127,7 +127,7 @@ SOURCES += \
 
 HEADERS += \
 	\
-	avocado-global.h \
+	avocado-global.h deploy.h \
 	\
 	Factory.h \
 	\
@@ -142,7 +142,7 @@ HEADERS += \
 
 INCLUDEPATH += deps
 
-LIBS += -lboost_filesystem -lboost_regex -lboost_system
+LIBS += -lboost_filesystem -lboost_regex -lboost_system -lboost_program_options
 
 unix:OUT_DIR = obj/unix
 

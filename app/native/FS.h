@@ -13,6 +13,11 @@ namespace avo {
 namespace FS {
 
 /**
+ * Copy a directory recursively.
+ */
+void copyDirectoryRecursively(const boost::filesystem::path &source, const boost::filesystem::path &destination);
+
+/**
  * Find a sorted list of filenames.
  */
 std::vector<boost::filesystem::path> findFilenames(const boost::filesystem::path &path, const boost::regex &regex = boost::regex(".*"));

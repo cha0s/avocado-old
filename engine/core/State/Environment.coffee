@@ -33,10 +33,6 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 				
 			avo.RasterFont.load('/font/wb-text.png').then (@font) =>
 			
-			avo.Font.load('/font/DroidSans.ttf').then (@ttfFont) =>
-				
-				@ttfFont.setSize 15
-			
 		]).then =>
 			
 			currentRoom = @environment.room @roomIndex
@@ -97,9 +93,9 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 				@roomRectangle
 			)
 			
-			@tps = new avo.FontDisplayCommand(
+			@tps = new avo.RasterFontDisplayCommand(
 				@displayList
-				@ttfFont
+				@font
 				"TPS: 0"
 				[16, 32]
 			)
@@ -115,7 +111,7 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 			
 			# Allow dragging the avocado around with the left mouse button. Keep
 			# track of where the avocado was when we started dragging.
-			@mouseLocation = [0, 0]
+			@mousePosition = [0, 0]
 			@clicking = false
 			avo.window.on 'mouseButtonDown.EnvironmentState', ({button, x, y}) =>
 				return unless button is avo.Window.LeftButton
@@ -124,7 +120,7 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 					[x, y]
 					avo.Vector.div avo.window.originalSize, avo.window.size()
 				)
-				@mouseLocation = [x, y]
+				@mousePosition = [x, y]
 			avo.window.on 'mouseButtonUp.EnvironmentState', ({button}) =>
 				return unless button is avo.Window.LeftButton
 				@clicking = false
@@ -133,7 +129,7 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 					[x, y]
 					avo.Vector.div avo.window.originalSize, avo.window.size()
 				)
-				@mouseLocation = [x, y]
+				@mousePosition = [x, y]
 		
 	setCameraFromEntity: (entity, easing = 1) ->
 				
@@ -183,19 +179,26 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 		@tps.setText "TPS: #{@main.ticksPerSecond.count()}"
 		@rps.setText "RPS: #{@main.rendersPerSecond.count()}"
 		
+		actuallyMoved = false
+		
 		# Any key/joystick movement input?
 		unless avo.Vector.isZero (
 			movement = avo.graphicsService.playerUnitMovement('Awesome player')
 		)
+			actuallyMoved = true
 			@entity.move movement, true   
 
 		# Mouse clicking?
-		if @clicking
-			@entity.move avo.Vector.add @mouseLocation, @displayList.position()
+		if @clicking and 2 < avo.Vector.cartesianDistance(
+			avo.Vector.add @mousePosition, @displayList.position()
+			@entity.position()
+		)
+			actuallyMoved = true
+			@entity.move avo.Vector.add @mousePosition, @displayList.position()
 		
 		# Let the entity know it isn't moving anymore, so it switches back
 		# to the idle animation.
-		unless @clicking or not avo.Vector.isZero movement
+		unless actuallyMoved
 			@entity.emit 'becameIdle'
 			
 		@setCameraFromEntity @entity

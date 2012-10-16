@@ -196,15 +196,6 @@ class avo.Entity
 			continue if trait.temporal
 			trait.toJSON()
 
-#### Implementing your own traits
-#
-# To implement your own trait, add an entry to the avo.**EntityTraits** object.
-# Entries must extend [Trait](Traits/Trait.html).
-#
-# ***TODO: This isn't actually enforced at the moment.***
-
-avo.EntityTraits ?= {}
-
 class avo.EntityDisplayCommand extends avo.DisplayCommand
 	
 	constructor: (
@@ -236,3 +227,11 @@ class avo.EntityDisplayCommand extends avo.DisplayCommand
 		for renderer in @entity_.renderers
 			
 			renderer.f.call @entity_, destination, position, clip
+
+#### Implementing your own traits
+#
+# To implement your own trait, add an entry to the avo.**EntityTraits** object.
+# Entries must extend [Trait](Traits/Trait.html).
+#
+# ***TODO: This isn't actually enforced at the moment.***
+avo.EntityTraits ?= {}

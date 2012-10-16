@@ -90,6 +90,12 @@ public:
 	std::vector<std::string> loadCore();
 
 	/**
+	 * Load the engine libraries. It's assumed these aren't under development
+	 * and are guaranteed to compile and execute.
+	 */
+	void loadLibraries();
+
+	/**
 	 * Precompile the passed in code, inferring any precompiler from the
 	 * extension of the filename passed in, if any.
 	 */

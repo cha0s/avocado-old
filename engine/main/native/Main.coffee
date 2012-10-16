@@ -10,7 +10,6 @@ avo.main = new class extends avo.Main
 		
 		# Keep track of ticks and renders so we can calculate when the next one
 		# will happen, and relieve the CPU between.
-		@timeCounter = new avo.Counter()
 		@lastTickTime = 0
 		@lastRenderTime = 0
 	

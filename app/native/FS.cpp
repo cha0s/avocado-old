@@ -12,11 +12,52 @@ namespace avo {
 
 namespace FS {
 
+namespace fs = boost::filesystem;
+
+void copyDirectoryRecursively(const boost::filesystem::path &source, const boost::filesystem::path &destination) {
+
+	// Check whether the function call is valid
+	if(!fs::exists(source) || !fs::is_directory(source)) {
+		throw fs::filesystem_error(
+			"Source directory " + source.string() + " does not exist or is not a directory.",
+			boost::system::error_code()
+		);
+	}
+
+	// Create the destination directory
+	if (!fs::exists(destination) && !fs::create_directories(destination)) {
+		throw fs::filesystem_error(
+			"Unable to create destination directory" + destination.string(),
+			boost::system::error_code()
+		);
+	}
+
+    // Iterate through the source directory
+    for (fs::directory_iterator file(source); file != fs::directory_iterator(); ++file) {
+		fs::path current(file->path());
+		if (fs::is_directory(current)) {
+			// Found directory: Recursion
+			copyDirectoryRecursively(
+				current,
+				destination / current.filename()
+			);
+		}
+		else {
+			// Found file: Copy
+			fs::copy_file(
+				current,
+				destination / current.filename(),
+				fs::copy_option::overwrite_if_exists
+			);
+		}
+    }
+}
+
 std::vector<boost::filesystem::path> findFilenames(const boost::filesystem::path &path, const boost::regex &regex) {
 
-	std::vector<boost::filesystem::path> matches;
+	std::vector<fs::path> matches;
 
-	for (boost::filesystem::recursive_directory_iterator it(path); it != boost::filesystem::recursive_directory_iterator(); ++it) {
+	for (fs::recursive_directory_iterator it(path); it != fs::recursive_directory_iterator(); ++it) {
 
 		if (boost::regex_search(it->path().string(), regex)) {
 			matches.push_back(it->path());
@@ -30,7 +71,7 @@ std::vector<boost::filesystem::path> findFilenames(const boost::filesystem::path
 
 std::string readString(const boost::filesystem::path &filename) {
 
-	boost::filesystem::ifstream ifs(filename);
+	fs::ifstream ifs(filename);
 
 	return std::string(
 		std::istreambuf_iterator<char>(ifs),
@@ -40,7 +81,7 @@ std::string readString(const boost::filesystem::path &filename) {
 
 void writeString(const boost::filesystem::path &filename, const std::string &string) {
 
-	boost::filesystem::ofstream file(filename);
+	fs::ofstream file(filename);
 	std::istringstream buffer(string);
 
 	if (file) {
@@ -53,7 +94,7 @@ void writeString(const boost::filesystem::path &filename, const std::string &str
 boost::filesystem::path qualifyPath(const boost::filesystem::path &base, const boost::filesystem::path &uri) {
 
 	std::string baseString = base.string();
-	std::string uriString = boost::filesystem::canonical(base / uri).string();
+	std::string uriString = fs::canonical(base / uri).string();
 
 	std::string::size_type  pos;
 	if (std::string::npos != (pos = uriString.find(baseString))) {
@@ -64,11 +105,10 @@ boost::filesystem::path qualifyPath(const boost::filesystem::path &base, const b
 	}
 }
 
-
 boost::filesystem::path unqualifyPath(const boost::filesystem::path &base, const boost::filesystem::path &uri) {
 
 	std::string baseString = base.string();
-	std::string uriString = boost::filesystem::canonical(uri).string();
+	std::string uriString = fs::canonical(uri).string();
 
 	std::string::size_type  pos;
 	if (std::string::npos != (pos = uriString.find(baseString))) {
@@ -86,7 +126,7 @@ boost::filesystem::path exePath() {
 }
 
 void setExePath(const boost::filesystem::path &path) {
-	m_exePath = boost::filesystem::canonical(path);
+	m_exePath = fs::canonical(path);
 }
 
 boost::filesystem::path m_engineRoot;
@@ -96,7 +136,7 @@ boost::filesystem::path engineRoot() {
 }
 
 void setEngineRoot(const boost::filesystem::path &engineRoot) {
-	m_engineRoot = boost::filesystem::canonical(engineRoot);
+	m_engineRoot = fs::canonical(engineRoot);
 }
 
 boost::filesystem::path m_resourceRoot;
@@ -106,7 +146,7 @@ boost::filesystem::path resourceRoot() {
 }
 
 void setResourceRoot(const boost::filesystem::path &resourceRoot) {
-	m_resourceRoot = boost::filesystem::canonical(resourceRoot);
+	m_resourceRoot = fs::canonical(resourceRoot);
 }
 
 bool ilexicographical_compare(const boost::filesystem::path& l, const boost::filesystem::path& r) {

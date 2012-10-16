@@ -129,6 +129,7 @@ std::vector<std::string> ScriptService::loadCore() {
 
 				// Try executing the script. If there isn't any error,
 				scripts[*i]->execute();
+				std::cerr << "Executing " << i->string() << "..." << std::endl;
 
 				// add it to the successfully run scripts list,
 				scriptsSuccessfullyRun.push_back(i->string());
@@ -177,6 +178,20 @@ std::vector<std::string> ScriptService::loadCore() {
 	}
 
 	return scriptsSuccessfullyRun;
+}
+
+void ScriptService::loadLibraries() {
+
+	// Gather up all the libraries.
+	vector<filesystem::path> filenames = FS::findFilenames(
+		FS::engineRoot() / "library",
+		regex("(.*\\.js|.*\\.coffee)")
+	);
+
+	// Compile and execute the libraries.
+	for (unsigned int i = 0; i < filenames.size(); i++) {
+		scriptFromFile(filenames[i])->execute();
+	}
 }
 
 Script *ScriptService::scriptFromFile(const boost::filesystem::path &filename) {

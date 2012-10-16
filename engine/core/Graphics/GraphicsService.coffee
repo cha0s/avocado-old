@@ -76,14 +76,14 @@ windows = []
 
 avo.GraphicsService::newWindow = (size, flags) ->
 	
-	window = new avo.Window()
-	windows.push window
+	window_ = new avo.Window()
+	windows.push window_
 	
-	window.setSize size if size?
-	window.setFlags flags if flags?
+	window_.setSize size if size?
+	window_.setFlags flags if flags?
 	
 	# Joystick movement.
-	window.on 'joyAxis.Avocado', ({stickIndex, axis, value}) ->
+	window_.on 'joyAxis.Avocado', ({stickIndex, axis, value}) ->
 		return if axis > 1
 		
 		return unless (player = stickIndexMap[stickIndex])?
@@ -102,7 +102,7 @@ avo.GraphicsService::newWindow = (size, flags) ->
 		registerMovement player
 		
 	# Keyboard movement started.
-	window.on 'keyDown.Avocado', ({code}) ->
+	window_.on 'keyDown.Avocado', ({code}) ->
 		
 		return unless (player = keyCodeMap[code])?
 		return unless m = movement[player]
@@ -112,7 +112,7 @@ avo.GraphicsService::newWindow = (size, flags) ->
 		registerMovement player
 		
 	# Keyboard movement stopped.
-	window.on 'keyUp.Avocado', ({code}) ->
+	window_.on 'keyUp.Avocado', ({code}) ->
 	
 		return unless (player = keyCodeMap[code])?
 		return unless m = movement[player]
@@ -128,21 +128,21 @@ avo.GraphicsService::newWindow = (size, flags) ->
 	mouseLocation = [0, 0]
 	
 	# Start dragging when a button is clicked.
-	window.on 'mouseButtonDown.Avocado', ({button}) ->
+	window_.on 'mouseButtonDown.Avocado', ({button}) ->
 		switch button
 			when avo.Window.LeftButton, avo.Window.MiddleButton, avo.Window.RightButton
 				dragStartLocation[button] = mouseLocation
 				buttons[button] = true
 				
 	# Stop dragging when a button is released.
-	window.on 'mouseButtonUp.Avocado', ({button}) ->
+	window_.on 'mouseButtonUp.Avocado', ({button}) ->
 		switch button
 			when avo.Window.LeftButton, avo.Window.MiddleButton, avo.Window.RightButton
 				delete buttons[button]
 				delete dragStartLocation[button]
 	
 	# When the mouse moves,
-	window.on 'mouseMove.Avocado', ({x, y}) ->
+	window_.on 'mouseMove.Avocado', ({x, y}) ->
 		mouseLocation = [x, y]
 		
 		# Check if any buttons are being held down
@@ -151,7 +151,7 @@ avo.GraphicsService::newWindow = (size, flags) ->
 			
 			# If so, send a mouseDrag event for each of them.
 			for key in keys
-				window.emit(
+				window_.emit(
 					'mouseDrag'
 						position: mouseLocation
 						button: parseInt key
@@ -161,6 +161,6 @@ avo.GraphicsService::newWindow = (size, flags) ->
 						)
 				)
 				
-	window
+	window_
 	
-avo.GraphicsService::pollEvents = -> window.pollEvents() for window in windows
+avo.GraphicsService::pollEvents = -> window_.pollEvents() for window_ in windows

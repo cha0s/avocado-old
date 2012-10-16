@@ -49,6 +49,8 @@ class avo.Main
 		@ticksPerSecond = new avo.Cps()
 		@rendersPerSecond = new avo.Cps()
 		
+		@timeCounter = new avo.Counter()
+		
 		# Keep count of tick and render frequencies in milliseconds.
 		@tickFrequency = 1000 / avo.ticksPerSecondTarget
 		@renderFrequency = 1000 / avo.rendersPerSecondTarget
@@ -68,7 +70,7 @@ class avo.Main
 		# Tick loop.
 		@tickInterval = setInterval(
 			=>
-				try 
+				try
 					@tick()
 				catch error
 					@emit 'error', error
@@ -124,6 +126,8 @@ class avo.Main
 		# When the State is finished initializing,
 		p = initializationPromise.then =>
 			
+			@emit 'stateInitialized', stateName
+			
 			# and finished being entered,
 			@states[stateName].enter(args, @stateName).then =>
 				
@@ -143,7 +147,7 @@ class avo.Main
 			delta -= @tickTargetSeconds
 			
 			avo.TimingService.setTickElapsed @tickTargetSeconds
-		
+			
 			# Let the State tick.
 			@stateObject?.tick()
 			

@@ -23,7 +23,6 @@ avo.TimingService::sleep = (ms) ->
 
 # Keep track of global time elapsing.
 elapsed = 0
-#lastElapsed = 0
 tickElapsed = 0
 
 # Total elapsed time.

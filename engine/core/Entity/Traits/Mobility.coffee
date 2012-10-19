@@ -26,7 +26,7 @@ class avo.EntityTraits['Mobility'] extends avo.Trait
 	signals:
 	
 		startedMoving: -> @isMoving = true
-		becameIdle: -> @isMoving = false
+		stoppedMoving: -> @isMoving = false
 		
 	actions:
 
@@ -84,14 +84,14 @@ class avo.EntityTraits['Mobility'] extends avo.Trait
 				newDirection = avo.Vector.toDirection hypotenuse, @entity.directionCount()
 				@entity.setDirection newDirection if direction isnt newDirection
 				
-				@entity.emit 'moving', hypotenuse, magnitude
-				
 				if @entity.hasTrait 'Physical'
 					
 					@entity.invoke 'moveRequest', hypotenuse, magnitude
 					
 				else
 					
+					@entity.emit 'moving', hypotenuse
+				
 					@entity.setPosition avo.Vector.add position, avo.Vector.scale hypotenuse, magnitude
 				
 				increment: 0
@@ -115,7 +115,7 @@ class avo.EntityTraits['Mobility'] extends avo.Trait
 					finishedMoving = avo.TimingService.elapsed() >= @movementExpectedTime unless finishedMoving
 					if finishedMoving
 					
-						@entity.emit 'becameIdle'
+						@entity.emit 'stoppedMoving'
 						
 						return {increment: 1}
 					

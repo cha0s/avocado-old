@@ -148,6 +148,9 @@ class avo.Main
 			
 			avo.TimingService.setTickElapsed @tickTargetSeconds
 			
+			if world = avo.world
+				world.Step 1 / avo.ticksPerSecondTarget, 8, 3
+			
 			# Let the State tick.
 			@stateObject?.tick()
 			

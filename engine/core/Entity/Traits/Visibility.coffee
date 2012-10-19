@@ -36,7 +36,7 @@ class avo.EntityTraits['Visibility'] extends avo.Trait
 		O.state = state unless _.isEmpty state
 		O
 	
-	reset: ->
+	resetTrait: ->
 		
 		@state.animationPlays = 0
 	
@@ -68,7 +68,7 @@ class avo.EntityTraits['Visibility'] extends avo.Trait
 			
 		upon.all(animationPromises).then =>
 			
-			@reset()
+			@resetTrait()
 			
 			defer.resolve()
 		
@@ -242,23 +242,30 @@ class avo.EntityTraits['Visibility'] extends avo.Trait
 			
 			@entity.currentAnimation().setCurrentFrameIndex frameIndex
 		
-		moving: (hypotenuse, magnitude) ->
+		moving: (hypotenuse) ->
+			
+			###
 			
 			scale = avo.Vector.div(
 				hypotenuse
 				avo.Vector.hypotenuse hypotenuse
 			)
+			scale = if scale[0] then scale[0] else scale[1]
 			
-			@entity.setCurrentAnimationIndex @entity.visibilityIndex(), false
 			@entity.currentAnimation().setFrameRateScaling(
-				if scale[0] then scale[0] else scale[1]
+				.25 + scale * .75
 			)
 			
-		becameIdle: ->
+			###
+			
+			@entity.setCurrentAnimationIndex @entity.visibilityIndex(), false
+			
+		stoppedMoving: ->
 			
 			@entity.setCurrentAnimationIndex 'initial', false
 		
 		directionChanged: (direction) ->
+			
 			for index, animation of @animationObjects
 				animation.setCurrentDirection direction
 

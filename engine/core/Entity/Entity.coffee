@@ -187,7 +187,7 @@ class avo.Entity
 
 	tick: (commandList) -> ticker.f() for ticker in @tickers
 			
-	reset: -> trait.reset() for type, trait of @traits
+	reset: -> trait.resetTrait() for type, trait of @traits
 	
 	toJSON: ->
 		

@@ -12,7 +12,7 @@ class avo.EntityTraits['Existence'] extends avo.Trait
 		
 		name: 'Abstract'
 	
-	reset: ->
+	resetTrait: ->
 		
 		# Set direction and force emit the event.
 		@entity.setDirection @state.direction

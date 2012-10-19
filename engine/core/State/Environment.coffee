@@ -12,6 +12,8 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 		@roomIndex
 	}) ->
 		
+		avo.world = new avo.b2World new avo.b2Vec2(0, 0), false
+		
 		# Load the environment, an entity to walk around in it, and a font to
 		# show the renders and ticks per second, for informational purposes.
 		upon.all([
@@ -30,6 +32,8 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 				
 				# Facing down.
 				@entity.setDirection 2
+				
+				@entity.reset()
 				
 			avo.RasterFont.load('/font/wb-text.png').then (@font) =>
 			
@@ -175,6 +179,8 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 		
 	tick: ->
 		
+		@entity.tick()
+		
 		# Update our counters.
 		@tps.setText "TPS: #{@main.ticksPerSecond.count()}"
 		@rps.setText "RPS: #{@main.rendersPerSecond.count()}"
@@ -196,10 +202,13 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 			actuallyMoved = true
 			@entity.move avo.Vector.add @mousePosition, @displayList.position()
 		
-		# Let the entity know it isn't moving anymore, so it switches back
-		# to the idle animation.
-		unless actuallyMoved
-			@entity.emit 'becameIdle'
+		if actuallyMoved
+			
+			@entity.emit 'startedMoving' unless @entity.isMoving()
+			
+		else
+		
+			@entity.emit 'stoppedMoving' if @entity.isMoving()
 			
 		@setCameraFromEntity @entity
 		

@@ -1,5 +1,7 @@
 class avo.Physics extends avo.Trait
 	
+	@PixelsPerMeter = 13
+	
 	defaults: ->
 		
 		bodyType: 'dynamic'
@@ -40,8 +42,7 @@ class avo.Physics extends avo.Trait
 		
 	resetTrait: ->
 		
-		world = avo.world
-		return unless world?
+		return unless avo.world?
 		
 		bodyDef = new avo.b2BodyDef()
 		bodyDef.type = translateBodyType @state.bodyType
@@ -49,11 +50,11 @@ class avo.Physics extends avo.Trait
 		
 		worldPosition = avo.Vector.scale(
 			[@entity.x(), -@entity.y()]
-			1/13
+			1 / avo.Physics.PixelsPerMeter
 		)
 		
 		bodyDef.position.Set.apply bodyDef.position, worldPosition 
-		@state.body = world.CreateBody bodyDef
+		@state.body = avo.world.CreateBody bodyDef
 		
 		circle = new avo.b2CircleShape()
 		circle.SetRadius @state.radius
@@ -70,10 +71,9 @@ class avo.Physics extends avo.Trait
 	
 	removeTrait: ->
 		
-		world = avo.world
-		return unless world?
+		return unless avo.world?
 		
-		world.DestroyBody @state.body
+		avo.world.DestroyBody @state.body
 	
 	actions:
 		

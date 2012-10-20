@@ -12,11 +12,10 @@ class avo.EntityTraits['2DTopdownPhysics'] extends avo.Physics
 		
 		moveRequest: (hypotenuse) ->
 		
-			world = avo.world
-			return unless world?
+			return unless avo.world?
 			
 			hypotenuse = avo.Vector.scale(
-				hypotenuse, @entity.movingSpeed() / 13
+				hypotenuse, @entity.movingSpeed() / avo.Physics.PixelsPerMeter
 			)
 			
 			@entity.emit 'moving', hypotenuse
@@ -57,9 +56,7 @@ class avo.EntityTraits['2DTopdownPhysics'] extends avo.Physics
 			weight: -100
 			f: ->
 				
-				world = avo.world
-				return unless world?
-				
+				return unless avo.world?
 				return unless @state.body?
 				
 				{x, y} = @state.body.GetLinearVelocity()
@@ -77,5 +74,5 @@ class avo.EntityTraits['2DTopdownPhysics'] extends avo.Physics
 				{x, y} = @state.body.GetPosition()
 				@entity.setPosition avo.Vector.scale(
 					[x, -y]
-					13
+					avo.Physics.PixelsPerMeter
 				)

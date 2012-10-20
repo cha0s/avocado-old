@@ -46,7 +46,7 @@ class avo.EventEmitter
 		@namespaces_[info.namespace][f] =
 			event: info.event
 			
-		return undefined
+		undefined
 		
 	# Remove listeners from an object.
 	# 
@@ -102,7 +102,7 @@ class avo.EventEmitter
 			delete @events_[@namespaces_[info.namespace][f].event][f]
 			delete @namespaces_[info.namespace][f]
 		
-		return
+		undefined
 		
 	# Notify ALL the listeners!
 	emit: (eventName, args...) ->
@@ -112,3 +112,5 @@ class avo.EventEmitter
 			f = @events_[eventName][callback].f
 			f.apply f, args
 
+		undefined
+		

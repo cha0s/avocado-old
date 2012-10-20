@@ -1,4 +1,4 @@
-class avo.EntityTraits['Physical'] extends avo.Trait
+class avo.EntityTraits['2DTopdownPhysics'] extends avo.Trait
 	
 	defaults: ->
 		

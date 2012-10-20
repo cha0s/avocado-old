@@ -84,12 +84,9 @@ class avo.EntityTraits['Mobility'] extends avo.Trait
 				newDirection = avo.Vector.toDirection hypotenuse, @entity.directionCount()
 				@entity.setDirection newDirection if direction isnt newDirection
 				
-				if @entity.hasTrait 'Physical'
-					
-					@entity.invoke 'moveRequest', hypotenuse
-					
-				else
-					
+				moveInvocations = @entity.invoke 'moveRequest', hypotenuse
+				if moveInvocations.length is 0
+				
 					@entity.emit 'moving', hypotenuse
 				
 					@entity.setPosition avo.Vector.add position, avo.Vector.scale hypotenuse, magnitude

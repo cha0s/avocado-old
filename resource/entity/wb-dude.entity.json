@@ -9,7 +9,7 @@
 			}
 		},
 		{
-			"type": "Physical"
+			"type": "2DTopdownPhysics"
 		},
 		{
 			"type": "Mobility",

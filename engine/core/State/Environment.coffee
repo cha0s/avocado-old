@@ -135,18 +135,12 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 				)
 				@mousePosition = [x, y]
 		
-	setCameraFromEntity: (entity, easing = 1) ->
+	setCamera: (position, easing = 1) ->
 				
 		newPosition = avo.Vector.clamp(
 			avo.Vector.sub(
-				avo.Vector.round entity.position()
-				avo.Vector.sub(
-					avo.Vector.scale avo.window.originalSize, .5
-					avo.Vector.scale(
-						avo.Rectangle.size entity.visibleRect()
-						.5
-					)
-				)
+				avo.Vector.round position
+				avo.Vector.scale avo.window.originalSize, .5
 			)
 			[0, 0]
 			avo.Vector.sub(
@@ -213,7 +207,7 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 		
 			@entity.emit 'stoppedMoving' if @entity.isMoving()
 			
-		@setCameraFromEntity @entity
+		@setCamera @entity.position()
 		
 	# Called repeatedly to allow the state to render graphics.
 	render: (buffer) ->

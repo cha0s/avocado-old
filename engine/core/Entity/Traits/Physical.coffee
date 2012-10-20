@@ -6,6 +6,7 @@ class avo.EntityTraits['Physical'] extends avo.Trait
 		solid: true
 		radius: 6
 		layer: 1
+		floorFriction: .1
 	
 	translateBodyType = (type) ->
 	
@@ -48,7 +49,12 @@ class avo.EntityTraits['Physical'] extends avo.Trait
 		bodyDef.type = translateBodyType @state.bodyType
 #		bodyDef.linearDamping = 0
 		
-		bodyDef.position.Set @entity.x(), -@entity.y()
+		worldPosition = avo.Vector.scale(
+			[@entity.x(), -@entity.y()]
+			1/13
+		)
+		
+		bodyDef.position.Set.apply bodyDef.position, worldPosition 
 		@state.body = world.CreateBody bodyDef
 		
 		circle = new avo.b2CircleShape()
@@ -61,10 +67,7 @@ class avo.EntityTraits['Physical'] extends avo.Trait
 		
 		@adjustFilterBits fixtureDef.filter
 		
-		avo.Logger.info @state.body.m_invMass
-			
 		@state.body.CreateFixture fixtureDef
-		avo.Logger.info @state.body.m_invMass
 		@state.body.SetUserData this
 	
 	removeTrait: ->
@@ -136,43 +139,45 @@ class avo.EntityTraits['Physical'] extends avo.Trait
 		
 		bodyType: -> @state.bodyType
 	
-	signals:
-		
-		startedMoving: ->
-			
-			@isMoving = true
-		
-		stoppedMoving: ->
-			
-			@isMoving = false
-		
 	hooks:
 		
-		moveRequest: (hypotenuse, magnitude) ->
+		moveRequest: (hypotenuse) ->
 		
 			world = avo.world
 			return unless world?
 			
-			mvec = 1000 / (avo.TimingService.tickElapsed() * 1000)
-			mvec *= (avo.ticksPerSecondTarget / mvec)
+			hypotenuse = avo.Vector.scale(
+				hypotenuse, @entity.movingSpeed() / 13
+			)
 			
-			desired = avo.Vector.mul(
-				[mvec, -mvec]
-				avo.Vector.scale hypotenuse, magnitude
+			@entity.emit 'moving', hypotenuse
+			
+			request = avo.Vector.scale(
+				hypotenuse
+				@state.floorFriction
 			)
 			
 			{x, y} = @state.body.GetLinearVelocity()
-			velocity = [x, y]
+			velocity = [x, -y]
 			
-			@entity.emit 'moving', avo.Vector.scale hypotenuse, magnitude
-			
-			change = avo.Vector.scale(
-				avo.Vector.sub desired, velocity
-				.01
-			)
-			
+			for i in [0..1]
+				
+				if request[i] > 0
+					if velocity[i] >= hypotenuse[i]
+						request[i] = 0
+					else
+						if (vr = velocity[i] + request[i]) > hypotenuse[i]
+							request[i] = hypotenuse[i] - vr
+					
+				else if request[i] < 0
+					if velocity[i] <= hypotenuse[i]
+						request[i] = 0
+					else
+						if (vr = velocity[i] + request[i]) < hypotenuse[i]
+							request[i] = hypotenuse[i] - vr
+					
 			@state.body.ApplyImpulse(
-				new avo.b2Vec2 change[0], change[1]
+				new avo.b2Vec2 request[0], -request[1]
 				@state.body.GetWorldCenter()
 			)
 			
@@ -189,20 +194,19 @@ class avo.EntityTraits['Physical'] extends avo.Trait
 				return unless @state.body?
 				
 				{x, y} = @state.body.GetLinearVelocity()
-				
-				return if x is 0 and y is 0
-				
-				unless @isMoving
+				unless x is 0 and y is 0
 					
 					velocity = avo.Vector.scale(
 						[-x, -y]
-						.01
+						@state.floorFriction
 					)
 					@state.body.ApplyImpulse(
 						new avo.b2Vec2 velocity[0], velocity[1]
 						@state.body.GetWorldCenter()
 					)
-				
+					
 				{x, y} = @state.body.GetPosition()
-				
-				@entity.setPosition avo.Vector.round [x, -y]
+				@entity.setPosition avo.Vector.scale(
+					[x, -y]
+					13
+				)

@@ -179,6 +179,9 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 		
 	tick: ->
 		
+		if world = avo.world
+			world.Step 1 / avo.ticksPerSecondTarget, 8, 3
+		
 		@entity.tick()
 		
 		# Update our counters.

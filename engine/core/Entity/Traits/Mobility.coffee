@@ -86,7 +86,7 @@ class avo.EntityTraits['Mobility'] extends avo.Trait
 				
 				if @entity.hasTrait 'Physical'
 					
-					@entity.invoke 'moveRequest', hypotenuse, magnitude
+					@entity.invoke 'moveRequest', hypotenuse
 					
 				else
 					

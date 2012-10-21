@@ -1,24 +1,16 @@
-# Avocado loads the 'Initial' state, and from there it's all up to you!
-class avo.Main.States['Environment'] extends avo.AbstractState
+class avo.Main.States['2DTopdownEnvironment'] extends avo.EnvironmentState
 	
-	initialize: ->
-		
-		@cameraPosition = [0, 0]
-		
-		super
-	
-	enter: ({
-		environmentUri
-		@roomIndex
-	}) ->
+	enter: (args) ->
 		
 		avo.world = new avo.b2World new avo.b2Vec2(0, 0), false
 		
-		# Load the environment, an entity to walk around in it, and a font to
-		# show the renders and ticks per second, for informational purposes.
+		avo.EntityTraits['Physics'] = avo.EntityTraits['2DTopdownPhysics']
+		
+		environmentPromise = super args
+		
 		upon.all([
 			
-			avo.Environment.load(environmentUri).then (@environment) =>
+			environmentPromise
 				
 			avo.Entity.load('/entity/wb-dude.entity.json').then (@entity) =>
 				
@@ -39,24 +31,6 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 			
 		]).then =>
 			
-			currentRoom = @environment.room @roomIndex
-			
-			@roomRectangle = avo.Rectangle.compose(
-				[0, 0]
-				avo.Vector.mul(
-					currentRoom.size()
-					@environment.tileset().tileSize()
-				)
-			)
-			
-			# Keep a display list to optimize rendering.
-			@displayList = new avo.DisplayList [0, 0, 720, 450], @roomRectangle
-			
-			# Since we can't rely on graphics SPIIs letting us know when our
-			# graphics need to be rewritten, we'll suggest redrawing the entire
-			# screen 10 times a second.
-			setInterval (=> @displayList.markCommandsAsDirty()), 100
-			
 			# Add a display command to white out the background.
 			new avo.FillDisplayCommand(
 				@displayList
@@ -66,14 +40,14 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 			
 			new avo.TileLayerDisplayCommand(
 				@displayList
-				currentRoom.layer 0
+				@currentRoom.layer 0
 				@environment.tileset()
 				@roomRectangle
 			) 
 			
 			new avo.TileLayerDisplayCommand(
 				@displayList
-				currentRoom.layer 1
+				@currentRoom.layer 1
 				@environment.tileset()
 				@roomRectangle
 			) 
@@ -85,14 +59,14 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 			
 			new avo.TileLayerDisplayCommand(
 				@displayList
-				currentRoom.layer 2
+				@currentRoom.layer 2
 				@environment.tileset()
 				@roomRectangle
 			)
 			
 			new avo.TileLayerDisplayCommand(
 				@displayList
-				currentRoom.layer 3
+				@currentRoom.layer 3
 				@environment.tileset()
 				@roomRectangle
 			)
@@ -117,7 +91,7 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 			# track of where the avocado was when we started dragging.
 			@mousePosition = [0, 0]
 			@clicking = false
-			avo.window.on 'mouseButtonDown.EnvironmentState', ({button, x, y}) =>
+			avo.window.on 'mouseButtonDown.2DTopdownEnvironmentState', ({button, x, y}) =>
 				return unless button is avo.Window.LeftButton
 				@clicking = true
 				[x, y] = avo.Vector.mul(
@@ -125,51 +99,15 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 					avo.Vector.div avo.window.originalSize, avo.window.size()
 				)
 				@mousePosition = [x, y]
-			avo.window.on 'mouseButtonUp.EnvironmentState', ({button}) =>
+			avo.window.on 'mouseButtonUp.2DTopdownEnvironmentState', ({button}) =>
 				return unless button is avo.Window.LeftButton
 				@clicking = false
-			avo.window.on 'mouseMove.EnvironmentState', ({x, y}) =>
+			avo.window.on 'mouseMove.2DTopdownEnvironmentState', ({x, y}) =>
 				[x, y] = avo.Vector.mul(
 					[x, y]
 					avo.Vector.div avo.window.originalSize, avo.window.size()
 				)
 				@mousePosition = [x, y]
-		
-	setCamera: (position, easing = 1) ->
-				
-		newPosition = avo.Vector.clamp(
-			avo.Vector.sub(
-				avo.Vector.round position
-				avo.Vector.scale avo.window.originalSize, .5
-			)
-			[0, 0]
-			avo.Vector.sub(
-				avo.Rectangle.size @roomRectangle
-				avo.window.originalSize
-			)
-		)
-		
-		@displayList.setPosition newPosition if easing is 0
-		
-		distance = avo.Vector.cartesianDistance(
-			@displayList.position()
-			newPosition
-		)
-		return if distance is 0
-		
-		@displayList.setPosition avo.Vector.round @cameraPosition = avo.Vector.add(
-			@cameraPosition
-			avo.Vector.scale(
-				avo.Vector.hypotenuse(
-					newPosition
-					@cameraPosition
-				)
-				if distance is 0
-					0
-				else
-					(Math.min 10, distance / 16) / easing
-			)
-		)
 		
 	tick: ->
 		
@@ -209,17 +147,12 @@ class avo.Main.States['Environment'] extends avo.AbstractState
 			
 		@setCamera @entity.position()
 		
-	# Called repeatedly to allow the state to render graphics.
-	render: (buffer) ->
-		
-		# Render the anything dirty. This will also pass back the dirty areas.
-		@displayList.render buffer
-		
 	# Called when another state is loaded. This gives you a chance to clean
 	# up resources and event handlers.
 	leave: (nextStateName) ->
 		
-		@displayList.clear()
+		super
 		
 		# Remove our event handler(s).
-		avo.window.off '.InitialState'
+		avo.window.off '.2DTopdownEnvironmentState'
+		

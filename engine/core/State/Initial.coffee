@@ -43,7 +43,7 @@ class avo.Main.States['Initial'] extends avo.AbstractState
 	tick: ->
 		
 		@main.changeState(
-			'Environment'
+			'2DTopdownEnvironment'
 			environmentUri: '/environment/wb-forest.environment.json'
 			roomIndex: 0
 		)

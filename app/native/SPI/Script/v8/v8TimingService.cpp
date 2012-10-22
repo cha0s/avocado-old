@@ -21,7 +21,7 @@ v8TimingService::~v8TimingService() {
 	delete timingService;
 }
 
-void v8TimingService::initialize(Handle<ObjectTemplate> target) {
+void v8TimingService::initialize(Handle<Object> target) {
 	HandleScope scope;
 
 	Handle<FunctionTemplate> constructor_template = FunctionTemplate::New(v8TimingService::New);
@@ -33,7 +33,7 @@ void v8TimingService::initialize(Handle<ObjectTemplate> target) {
 
 	V8_SET_METHOD(constructor_template, "implementSpi", v8TimingService::ImplementSpi);
 
-	target->Set(String::NewSymbol("TimingService"), constructor_template);
+	target->Set(String::NewSymbol("TimingService"), constructor_template->GetFunction());
 }
 
 v8::Handle<v8::Value> v8TimingService::New(const v8::Arguments &args) {

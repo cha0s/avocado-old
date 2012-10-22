@@ -35,7 +35,13 @@ v8ScriptService::v8ScriptService()
 
 	Handle<ObjectTemplate> global = ObjectTemplate::New();
 
-	Handle<ObjectTemplate> avo = ObjectTemplate::New();
+	global->Set(String::New("avo"), ObjectTemplate::New());
+
+	context = Context::New(NULL, global);
+
+	context->Enter();
+
+	Handle<Object> avo = context->Global()->Get(String::NewSymbol("avo")).As<Object>();
 
 	v8CoreService::initialize(avo);
 	v8GraphicsService::initialize(avo);
@@ -48,12 +54,6 @@ v8ScriptService::v8ScriptService()
 	v8Window::initialize(avo);
 	v8Music::initialize(avo);
 	v8Sample::initialize(avo);
-
-	global->Set(String::New("avo"), avo);
-
-	context = Context::New(NULL, global);
-
-	context->Enter();
 
 	ScriptService::initialize();
 }

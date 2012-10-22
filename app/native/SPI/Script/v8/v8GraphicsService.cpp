@@ -27,7 +27,7 @@ v8GraphicsService::~v8GraphicsService() {
 	delete graphicsService;
 }
 
-void v8GraphicsService::initialize(Handle<ObjectTemplate> target) {
+void v8GraphicsService::initialize(Handle<Object> target) {
 	HandleScope scope;
 
 	constructor_template = Persistent<FunctionTemplate>::New(
@@ -40,7 +40,7 @@ void v8GraphicsService::initialize(Handle<ObjectTemplate> target) {
 
 	V8_SET_METHOD(constructor_template, "implementSpi", v8GraphicsService::ImplementSpi);
 
-	target->Set(String::NewSymbol("GraphicsService"), constructor_template);
+	target->Set(String::NewSymbol("GraphicsService"), constructor_template->GetFunction());
 }
 
 v8::Handle<v8::Value> v8GraphicsService::New(const v8::Arguments &args) {

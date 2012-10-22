@@ -21,7 +21,7 @@ v8CoreService::~v8CoreService() {
 	delete coreService;
 }
 
-void v8CoreService::initialize(Handle<ObjectTemplate> target) {
+void v8CoreService::initialize(Handle<Object> target) {
 	HandleScope scope;
 
 	Handle<FunctionTemplate> constructor_template = FunctionTemplate::New(v8CoreService::New);
@@ -36,7 +36,7 @@ void v8CoreService::initialize(Handle<ObjectTemplate> target) {
 	V8_SET_METHOD(constructor_template, "%writeStderr", v8CoreService::WriteStderr);
 
 	// Register.
-	target->Set(String::NewSymbol("CoreService"), constructor_template);
+	target->Set(String::NewSymbol("CoreService"), constructor_template->GetFunction());
 }
 
 v8::Handle<v8::Value> v8CoreService::New(const v8::Arguments &args) {

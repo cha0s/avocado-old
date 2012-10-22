@@ -28,7 +28,7 @@ v8Image::~v8Image() {
 	releaseImage();
 }
 
-void v8Image::initialize(Handle<ObjectTemplate> target) {
+void v8Image::initialize(Handle<Object> target) {
 	HandleScope scope;
 
 	constructor_template = Persistent<FunctionTemplate>::New(
@@ -51,7 +51,7 @@ void v8Image::initialize(Handle<ObjectTemplate> target) {
 
 	V8_SET_METHOD(constructor_template, "%load", v8Image::Load);
 
-	target->Set(v8::String::NewSymbol("Image"), constructor_template);
+	target->Set(v8::String::NewSymbol("Image"), constructor_template->GetFunction());
 }
 
 Image *v8Image::wrappedImage() {

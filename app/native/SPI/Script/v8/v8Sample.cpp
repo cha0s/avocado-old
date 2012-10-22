@@ -51,7 +51,7 @@ void v8Sample::releaseSample() {
 	}
 }
 
-void v8Sample::initialize(Handle<ObjectTemplate> target) {
+void v8Sample::initialize(Handle<Object> target) {
 	HandleScope scope;
 
 	constructor_template = Persistent<FunctionTemplate>::New(
@@ -64,7 +64,7 @@ void v8Sample::initialize(Handle<ObjectTemplate> target) {
 
 	V8_SET_METHOD(constructor_template, "%load", v8Sample::Load);
 
-	target->Set(String::NewSymbol("Sample"), constructor_template);
+	target->Set(String::NewSymbol("Sample"), constructor_template->GetFunction());
 }
 
 v8::Handle<v8::Value> v8Sample::New(const v8::Arguments &args) {

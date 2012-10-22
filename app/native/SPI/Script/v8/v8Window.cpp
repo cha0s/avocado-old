@@ -19,7 +19,7 @@ v8Window::~v8Window() {
 	delete window;
 }
 
-void v8Window::initialize(Handle<ObjectTemplate> target) {
+void v8Window::initialize(Handle<Object> target) {
 	HandleScope scope;
 
 	Handle<FunctionTemplate> constructor_template = FunctionTemplate::New(v8Window::New);
@@ -35,7 +35,7 @@ void v8Window::initialize(Handle<ObjectTemplate> target) {
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%setWindowTitle", v8Window::SetWindowTitle);
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%size", v8Window::Size);
 
-	target->Set(String::NewSymbol("Window"), constructor_template);
+	target->Set(String::NewSymbol("Window"), constructor_template->GetFunction());
 }
 
 v8::Handle<v8::Value> v8Window::New(const v8::Arguments &args) {

@@ -27,7 +27,7 @@ public:
 
 	~v8Font();
 
-	static void initialize(v8::Handle<v8::ObjectTemplate> target);
+	static void initialize(v8::Handle<v8::Object> target);
 
 	static v8::Handle<v8::Object> New(Font *font);
 

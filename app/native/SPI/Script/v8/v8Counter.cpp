@@ -17,7 +17,7 @@ v8Counter::~v8Counter() {
 	delete counter;
 }
 
-void v8Counter::initialize(Handle<ObjectTemplate> target) {
+void v8Counter::initialize(Handle<Object> target) {
 	HandleScope scope;
 
 	Handle<FunctionTemplate> constructor_template = FunctionTemplate::New(v8Counter::New);
@@ -27,7 +27,7 @@ void v8Counter::initialize(Handle<ObjectTemplate> target) {
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%current", v8Counter::Current);
 	V8_SET_PROTOTYPE_METHOD(constructor_template, "%since", v8Counter::Since);
 
-	target->Set(String::NewSymbol("Counter"), constructor_template);
+	target->Set(String::NewSymbol("Counter"), constructor_template->GetFunction());
 }
 
 Counter *v8Counter::wrappedCounter() {

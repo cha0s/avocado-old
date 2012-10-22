@@ -29,7 +29,7 @@ v8Font::~v8Font() {
 	releaseFont();
 }
 
-void v8Font::initialize(Handle<ObjectTemplate> target) {
+void v8Font::initialize(Handle<Object> target) {
 	HandleScope scope;
 
 	constructor_template = Persistent<FunctionTemplate>::New(
@@ -46,7 +46,7 @@ void v8Font::initialize(Handle<ObjectTemplate> target) {
 
 	V8_SET_METHOD(constructor_template, "%load", v8Font::Load);
 
-	target->Set(v8::String::NewSymbol("Font"), constructor_template);
+	target->Set(v8::String::NewSymbol("Font"), constructor_template->GetFunction());
 }
 
 Font *v8Font::wrappedFont() {

@@ -21,7 +21,7 @@ v8SoundService::~v8SoundService() {
 	delete soundService;
 }
 
-void v8SoundService::initialize(Handle<ObjectTemplate> target) {
+void v8SoundService::initialize(Handle<Object> target) {
 	HandleScope scope;
 
 	Handle<FunctionTemplate> constructor_template = FunctionTemplate::New(v8SoundService::New);
@@ -32,7 +32,7 @@ void v8SoundService::initialize(Handle<ObjectTemplate> target) {
 
 	V8_SET_METHOD(constructor_template, "implementSpi", v8SoundService::ImplementSpi);
 
-	target->Set(String::NewSymbol("SoundService"), constructor_template);
+	target->Set(String::NewSymbol("SoundService"), constructor_template->GetFunction());
 }
 
 v8::Handle<v8::Value> v8SoundService::New(const v8::Arguments &args) {

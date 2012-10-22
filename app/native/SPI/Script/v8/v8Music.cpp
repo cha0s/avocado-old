@@ -51,7 +51,7 @@ void v8Music::releaseMusic() {
 	}
 }
 
-void v8Music::initialize(Handle<ObjectTemplate> target) {
+void v8Music::initialize(Handle<Object> target) {
 	HandleScope scope;
 
 	constructor_template = Persistent<FunctionTemplate>::New(
@@ -67,7 +67,7 @@ void v8Music::initialize(Handle<ObjectTemplate> target) {
 
 	V8_SET_METHOD(constructor_template, "%load", v8Music::Load);
 
-	target->Set(String::NewSymbol("Music"), constructor_template);
+	target->Set(String::NewSymbol("Music"), constructor_template->GetFunction());
 }
 
 v8::Handle<v8::Value> v8Music::New(const v8::Arguments &args) {

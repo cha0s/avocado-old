@@ -60,14 +60,15 @@ unsigned int SfmlImage::pixelAt(int x, int y) const {
 }
 
 void SfmlImage::drawCircle(int x, int y, int radius, int r, int g, int b, int a, DrawMode drawMode) {
-	AVOCADO_UNUSED(x);
-	AVOCADO_UNUSED(y);
-	AVOCADO_UNUSED(radius);
-	AVOCADO_UNUSED(r);
-	AVOCADO_UNUSED(g);
-	AVOCADO_UNUSED(b);
-	AVOCADO_UNUSED(a);
 	AVOCADO_UNUSED(drawMode);
+
+	sf::CircleShape circle;
+	circle.setRadius(radius);
+	circle.setOutlineColor(sf::Color(r, g, b, a));
+	circle.setOutlineThickness(1);
+	circle.setPosition(x - radius, y - radius);
+
+	renderTexture->draw(circle);
 }
 
 void SfmlImage::drawFilledBox(int x, int y, int w, int h, int r, int g, int b, int a, DrawMode drawMode) {

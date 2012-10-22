@@ -37,7 +37,6 @@ class avo.Main
 		#     }
 		#
 		# or if no state change is being requested, undefined.
-		@stateChange = name: 'Initial', args: {}
 		
 		# Hold the current State object.
 		@stateObject = null

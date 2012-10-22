@@ -12,6 +12,8 @@ avo.main = new class extends avo.Main
 		# will happen, and relieve the CPU between.
 		@lastTickTime = 0
 		@lastRenderTime = 0
+		
+		@stateChange = name: 'Initial', args: {}
 	
 	begin: ->
 		

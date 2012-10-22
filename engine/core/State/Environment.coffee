@@ -37,7 +37,7 @@ class avo.EnvironmentState extends avo.AbstractState
 			# screen 10 times a second.
 			setInterval (=> @displayList.markCommandsAsDirty()), 100
 			
-	setCamera: (position, easing = 1) ->
+	setCamera: (position, easing = .25) ->
 				
 		newPosition = avo.Vector.clamp(
 			avo.Vector.sub(

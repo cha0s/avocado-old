@@ -8,6 +8,8 @@ avo.main = new class extends avo.Main
 		avo.TimingService.setElapsed @timeCounter.current() / 1000
 		
 		super
+		
+		@stateChange = name: 'Initial', args: {}
 
 avo.main.on 'stateInitialized', (name) ->
 	

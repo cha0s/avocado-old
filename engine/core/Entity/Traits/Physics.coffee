@@ -6,7 +6,7 @@ class avo.Physics extends avo.Trait
 		
 		bodyType: 'dynamic'
 		solid: true
-		radius: 6
+		radius: 4
 		layer: 1
 		floorFriction: .1
 	
@@ -46,6 +46,7 @@ class avo.Physics extends avo.Trait
 		
 		bodyDef = new avo.b2BodyDef()
 		bodyDef.type = translateBodyType @state.bodyType
+		bodyDef.fixedRotation = true
 #		bodyDef.linearDamping = 0
 		
 		worldPosition = avo.Vector.scale(
@@ -56,13 +57,17 @@ class avo.Physics extends avo.Trait
 		bodyDef.position.Set.apply bodyDef.position, worldPosition 
 		@state.body = avo.world.CreateBody bodyDef
 		
+		box = new avo.b2PolygonShape()
+		box.SetAsBox @state.radius / avo.Physics.PixelsPerMeter, @state.radius / avo.Physics.PixelsPerMeter 
+		
 		circle = new avo.b2CircleShape()
-		circle.SetRadius @state.radius
+		circle.SetRadius @state.radius / avo.Physics.PixelsPerMeter
 		
 		fixtureDef = new avo.b2FixtureDef()
 		fixtureDef.shape = circle
+#		fixtureDef.shape = box
 		fixtureDef.density = 0
-#		fixtureDef.friction = .5
+		fixtureDef.friction = 0
 		
 		@adjustFilterBits fixtureDef.filter
 		

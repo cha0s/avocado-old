@@ -4,6 +4,10 @@
 
 #include "SPI/SpiiLoader.h"
 
+#ifdef AVOCADO_NODE
+#include <node.h>
+#endif
+
 using namespace v8;
 
 namespace avo {
@@ -37,6 +41,13 @@ void v8CoreService::initialize(Handle<Object> target) {
 
 	// Register.
 	target->Set(String::NewSymbol("CoreService"), constructor_template->GetFunction());
+
+#ifdef AVOCADO_NODE
+	dlopen(
+		"./node_modules/CoreService.node", RTLD_NOW | RTLD_GLOBAL
+	);
+#endif
+
 }
 
 v8::Handle<v8::Value> v8CoreService::New(const v8::Arguments &args) {
@@ -167,3 +178,6 @@ v8::Handle<v8::Value> v8CoreService::Close(const v8::Arguments &args) {
 
 }
 
+#ifdef AVOCADO_NODE
+NODE_MODULE(Core, avo::v8CoreService::initialize)
+#endif

@@ -4,6 +4,13 @@
 
 #include "SPI/SpiiLoader.h"
 
+#include "v8Music.h"
+#include "v8Sample.h"
+
+#ifdef AVOCADO_NODE
+#include <node.h>
+#endif
+
 using namespace v8;
 
 namespace avo {
@@ -33,6 +40,16 @@ void v8SoundService::initialize(Handle<Object> target) {
 	V8_SET_METHOD(constructor_template, "implementSpi", v8SoundService::ImplementSpi);
 
 	target->Set(String::NewSymbol("SoundService"), constructor_template->GetFunction());
+
+	v8Music::initialize(target);
+	v8Sample::initialize(target);
+
+#ifdef AVOCADO_NODE
+	dlopen(
+		"./node_modules/SoundService.node", RTLD_NOW | RTLD_GLOBAL
+	);
+#endif
+
 }
 
 v8::Handle<v8::Value> v8SoundService::New(const v8::Arguments &args) {
@@ -92,3 +109,7 @@ v8::Handle<v8::Value> v8SoundService::Close(const v8::Arguments &args) {
 
 }
 
+
+#ifdef AVOCADO_NODE
+NODE_MODULE(Sound, avo::v8SoundService::initialize)
+#endif

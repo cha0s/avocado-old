@@ -4,6 +4,12 @@
 
 #include "SPI/SpiiLoader.h"
 
+#include "v8Counter.h"
+
+#ifdef AVOCADO_NODE
+#include <node.h>
+#endif
+
 using namespace v8;
 
 namespace avo {
@@ -34,6 +40,15 @@ void v8TimingService::initialize(Handle<Object> target) {
 	V8_SET_METHOD(constructor_template, "implementSpi", v8TimingService::ImplementSpi);
 
 	target->Set(String::NewSymbol("TimingService"), constructor_template->GetFunction());
+
+	v8Counter::initialize(target);
+
+#ifdef AVOCADO_NODE
+	dlopen(
+		"./node_modules/TimingService.node", RTLD_NOW | RTLD_GLOBAL
+	);
+#endif
+
 }
 
 v8::Handle<v8::Value> v8TimingService::New(const v8::Arguments &args) {
@@ -105,3 +120,6 @@ v8::Handle<v8::Value> v8TimingService::Sleep(const v8::Arguments &args) {
 
 }
 
+#ifdef AVOCADO_NODE
+NODE_MODULE(Timing, avo::v8TimingService::initialize)
+#endif

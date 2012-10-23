@@ -4,6 +4,14 @@
 
 #include "SPI/SpiiLoader.h"
 
+#include "v8Font.h"
+#include "v8Image.h"
+#include "v8Window.h"
+
+#ifdef AVOCADO_NODE
+#include <node.h>
+#endif
+
 using namespace v8;
 
 namespace avo {
@@ -41,6 +49,17 @@ void v8GraphicsService::initialize(Handle<Object> target) {
 	V8_SET_METHOD(constructor_template, "implementSpi", v8GraphicsService::ImplementSpi);
 
 	target->Set(String::NewSymbol("GraphicsService"), constructor_template->GetFunction());
+
+	avo::v8Font::initialize(target);
+	avo::v8Image::initialize(target);
+	avo::v8Window::initialize(target);
+
+#ifdef AVOCADO_NODE
+	dlopen(
+		"./node_modules/GraphicsService.node", RTLD_NOW | RTLD_GLOBAL
+	);
+#endif
+
 }
 
 v8::Handle<v8::Value> v8GraphicsService::New(const v8::Arguments &args) {
@@ -113,3 +132,6 @@ Persistent<FunctionTemplate> v8GraphicsService::constructor_template;
 
 }
 
+#ifdef AVOCADO_NODE
+NODE_MODULE(Graphics, avo::v8GraphicsService::initialize)
+#endif

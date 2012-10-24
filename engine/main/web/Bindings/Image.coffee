@@ -1,5 +1,9 @@
+
+CoreService = require 'main/web/Bindings/CoreService'
+upon = require 'core/Utility/upon'
+
 Images = {}
-avo.Image = class
+module.exports = AvoImage = class
 	
 	constructor: (width, height) ->
 
@@ -14,11 +18,11 @@ avo.Image = class
 			@Canvas.width = width
 			@Canvas.height = height
 
-	@['%load'] = (uri) ->
+	@['%load'] = (uri, fn) ->
 		
 		defer = upon.defer()
 		
-		i = new avo.Image()
+		i = new AvoImage()
 		
 		resolve = ->
 			
@@ -33,6 +37,7 @@ avo.Image = class
 			context.drawImage i.BrowserImage, 0, 0
 			
 			defer.resolve i
+			fn i
 		
 		if Images[uri]?
 		
@@ -46,7 +51,7 @@ avo.Image = class
 			
 			defer.then -> Images[uri].defer.resolve()
 			
-			Images[uri].src = "#{avo.ResourcePath}#{uri}"
+			Images[uri].src = "#{CoreService.ResourcePath}#{uri}"
 		
 		defer.promise
 	

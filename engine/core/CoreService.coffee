@@ -10,7 +10,13 @@ Core.CoreService.writeStderr = Core.CoreService['%writeStderr']
 
 # Low-level API; reads a resource into a string. Returns a promise to be
 # resolved with the string containing the resource data. 
-Core.CoreService.readResource = Core.CoreService['%readResource']
+Core.CoreService.readResource = (uri) ->
+	
+	defer = upon.defer()
+	
+	Core.CoreService['%readResource'] uri, defer.resolve
+	
+	defer.promise
 
 # Low-level API; reads a JSON resource. Returns a promise to be resolved with
 # the parsed JSON object.

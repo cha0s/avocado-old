@@ -1,1 +1,1 @@
-class avo.SoundService
+module.exports = class

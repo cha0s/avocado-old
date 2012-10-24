@@ -4,6 +4,7 @@
 # fading, and more.
 
 Music = require('Sound').Music
+upon = require 'core/Utility/upon'
 
 # Music playing constants.
 # 
@@ -13,9 +14,17 @@ Music.LoopForever = -1
 
 # Load music at the specified URI.
 Music.load = (uri) ->
-	return unless uri?
+
+	defer = upon.defer()
 	
-	@['%load'] uri
+	unless uri?
+		
+		defer.resolve()
+		return defer.promise
+	
+	@['%load'] uri, defer.resolve
+	
+	defer.promise
 	
 # Fade in the music for the specified number of milliseconds, and loop for the
 # specified number of loops.

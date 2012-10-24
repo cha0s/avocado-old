@@ -4,7 +4,7 @@
 
 namespace avo {
 
-void deploy(char *exeName, const std::string &target, const std::vector<std::string> &successfullyLoadedFiles, ScriptService *scriptService) {
+void deploy(char *exeName, const std::string &target, const std::vector<boost::filesystem::path> &scripts, ScriptService *scriptService) {
 
 	boost::filesystem::path targetPath;
 	boost::filesystem::path targetEnginePath;
@@ -69,14 +69,18 @@ void deploy(char *exeName, const std::string &target, const std::vector<std::str
 		for (unsigned int i = 0; i < filenames.size(); ++i) {
 			boost::filesystem::path filename = filenames[i];
 
-			std::string code = scriptService->preCompileCode(
-				FS::readString(filename),
-				filename
-			);
+			std::string code;
 
 			boost::filesystem::path path = targetEnginePath / "main" / target;
 			if ("Bindings" == filename.parent_path().stem().string()) {
 				path /= "Bindings";
+				code = scriptService->wrapFile(filename);
+			}
+			else {
+				code = scriptService->preCompileCode(
+					FS::readString(filename),
+					filename
+				);
 			}
 
 			FS::writeString(
@@ -84,12 +88,6 @@ void deploy(char *exeName, const std::string &target, const std::vector<std::str
 				code
 			);
 		}
-
-//		// Copy main code.
-//		FS::copyDirectoryRecursively(
-//			FS::engineRoot() / "main" / target,
-//			targetEnginePath / "main" / target
-//		);
 	}
 
 	// Copy resources.
@@ -104,35 +102,30 @@ void deploy(char *exeName, const std::string &target, const std::vector<std::str
 		targetEnginePath / "compiler"
 	);
 
-	// Copy libraries.
-	FS::copyDirectoryRecursively(
+	// Aggregate libraries and core code.
+	std::string aggregate;
+
+	std::vector<boost::filesystem::path> filenames = FS::findFilenames(
 		FS::engineRoot() / "library",
-		targetEnginePath / "library"
+		boost::regex("(.*\\.js|.*\\.coffee)")
 	);
 
-	// Copy core engine code.
-	if (
-		!boost::filesystem::exists(targetEnginePath / "core")
-		&& !boost::filesystem::create_directories(targetEnginePath / "core")
-	) {
-		throw boost::filesystem::filesystem_error(
-			"Unable to create core engine directory.",
-			boost::system::error_code()
-		);
+	for (unsigned int i = 0; i < filenames.size(); ++i) {
+		boost::filesystem::path filename = filenames[i];
+		std::cerr << "Aggregating " << filename << "..." << std::endl;
+
+		aggregate += scriptService->wrapFile(filename);
 	}
 
-	std::string aggregate;
-	for (unsigned int i = 0; i < successfullyLoadedFiles.size(); ++i) {
-		std::string filename = successfullyLoadedFiles[i];
-		std::cerr << "Deploying " << filename << "..." << std::endl;
+	for (unsigned int i = 0; i < scripts.size(); ++i) {
+		boost::filesystem::path filename = scripts[i];
+		std::cerr << "Aggregating " << filename << "..." << std::endl;
 
-		std::string code = FS::readString(filename);
-
-		aggregate += scriptService->preCompileCode(code, filename);
+		aggregate += scriptService->wrapFile(filename);
 	}
 
 	FS::writeString(
-		targetEnginePath / "core" / "aggregate.js", aggregate
+		targetEnginePath / "aggregate.js", aggregate
 	);
 
 }

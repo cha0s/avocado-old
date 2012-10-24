@@ -5,7 +5,6 @@
 
 Core = require 'Core'
 Logger = require 'core/Utility/Logger'
-Main = require 'core/Main'
 Timing = require 'Timing'
 
 # SPI proxies.
@@ -22,6 +21,7 @@ require 'core/Sound/Sample'
 require 'core/Timing/TimingService'
 require 'core/Timing/Counter'
 
+Main = require 'core/Main'
 main = new class extends Main
 
 	constructor: ->
@@ -68,7 +68,7 @@ main = new class extends Main
 	render: (buffer) ->
 		
 		super buffer
-	
+		
 		# Keep track of render timings.
 		@lastRenderTime = @timeCounter.current()
 

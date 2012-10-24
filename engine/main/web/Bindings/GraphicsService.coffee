@@ -1,4 +1,4 @@
-class avo.GraphicsService
+module.exports = class
 
 	constructor: ->
 		

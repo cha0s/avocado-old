@@ -88,7 +88,7 @@ void ScriptService::initialize() {
 	coffeeCompiler->execute();
 }
 
-std::vector<std::string> ScriptService::loadCore() {
+std::vector<boost::filesystem::path> ScriptService::loadCore() {
 
 	// Gather up all the core files.
 	vector<filesystem::path> filenames = FS::findFilenames(
@@ -97,104 +97,30 @@ std::vector<std::string> ScriptService::loadCore() {
 	);
 
 	// Compile the core files.
-	map<filesystem::path, Script *> scripts;
+	vector<boost::filesystem::path> scripts;
 	for (unsigned int i = 0; i < filenames.size(); i++) {
-
-		Script *script;
 
 		try {
 
-			boost::filesystem::path path = FS::unqualifyPath(
-				FS::engineRoot(),
-				filenames[i]
-			);
-			path = path.remove_filename() / path.stem();
-
-			std::string moduleName = path.string().substr(1);
-
 			// Try compiling...
-			script = scriptFromCode(
-				"requires_['" + moduleName + "'] = function(module, exports) {\n"
-				+ preCompileCode(
-					avo::FS::readString(filenames[i]),
+			scriptFromCode(
+				wrapFile(filenames[i]),
+				FS::unqualifyPath(
+					FS::engineRoot(),
 					filenames[i]
 				)
-				+ "\n}",
-				moduleName
-			);
+			)->execute();
+
+			scripts.push_back(filenames[i]);
 		}
 		catch (std::exception &e) {
 
 			// If it fails, rethrow it as a core failure.
 			throw script_system_load_core_error(e.what());
 		}
-
-		scripts[filenames[i]] = script;
 	}
 
-	// Start running the core files. Keep track of the order which they were
-	// successfully run.
-	vector<string> scriptsSuccessfullyRun;
-	while (scripts.size() > 0) {
-
-		unsigned int size = scripts.size();
-
-		vector<filesystem::path>::iterator i = filenames.begin();
-		while (i != filenames.end()) {
-
-			try {
-
-				// Try executing the script. If there isn't any error,
-				scripts[*i]->execute();
-				std::cerr << "Executing " << i->string() << "..." << std::endl;
-
-				// add it to the successfully run scripts list,
-				scriptsSuccessfullyRun.push_back(i->string());
-
-				// deallocate and pull it out of the queue.
-				delete scripts[*i];
-				scripts.erase(*i);
-				i = filenames.erase(i);
-			}
-			catch (std::exception &e) {
-
-				// If it didn't run successfully, just keep on trying the next.
-				++i;
-			}
-		}
-
-		// If no more scripts were successfully run, then all attempts must
-		// have failed; we have to bail.
-		if (size == scripts.size()) {
-
-			// Build a message.
-			string message;
-			map<filesystem::path, Script *>::iterator i = scripts.begin();
-			while (i != scripts.end()) {
-
-				try {
-
-					// At this point, we know it's going to fail...
-					(i->second)->execute();
-				}
-				catch (std::exception &e) {
-
-					// So just add in whatever exception text came back into
-					// our report message.
-					message += e.what();
-				}
-
-				// Deallocate and pull it out of the queue.
-				delete i->second;
-				scripts.erase(i++);
-			}
-
-			// Throw a core exception.
-			throw script_system_load_core_error(message);
-		}
-	}
-
-	return scriptsSuccessfullyRun;
+	return scripts;
 }
 
 void ScriptService::loadLibraries() {
@@ -208,28 +134,41 @@ void ScriptService::loadLibraries() {
 	// Compile and execute the libraries.
 	for (unsigned int i = 0; i < filenames.size(); i++) {
 
-		boost::filesystem::path path = FS::unqualifyPath(
-			FS::engineRoot(),
-			filenames[i]
-		);
-		path = path.remove_filename() / path.stem();
-
-		std::string moduleName = path.string().substr(1);
-
 		scriptFromCode(
-			"requires_['" + moduleName + "'] = function(module, exports) {\n"
-			+ preCompileCode(
-				avo::FS::readString(filenames[i]),
+			wrapFile(filenames[i]),
+			FS::unqualifyPath(
+				FS::engineRoot(),
 				filenames[i]
 			)
-			+ "\n}",
-			moduleName
 		)->execute();
 	}
 }
 
 Script *ScriptService::scriptFromFile(const boost::filesystem::path &filename) {
-	return scriptFromCode(avo::FS::readString(filename), filename);
+
+	std::string code = avo::FS::readString(filename);
+
+	return scriptFromCode(preCompileCode(code, filename), filename);
+}
+
+std::string ScriptService::wrapFile(const boost::filesystem::path &filename) {
+
+	boost::filesystem::path path = FS::unqualifyPath(
+		FS::engineRoot(),
+		filename
+	);
+	path = path.remove_filename() / path.stem();
+
+	std::string moduleName = path.string().substr(1);
+
+	std::string wrapped = "requires_['" + moduleName + "'] = function(module, exports) {\n";
+	wrapped += preCompileCode(
+		avo::FS::readString(filename),
+		filename
+	);
+	wrapped += "}\n";
+
+	return wrapped;
 }
 
 }

@@ -1,8 +1,15 @@
-class avo.Window
+
+EventEmitter = require 'core/Utility/EventEmitter'
+Mixin = require 'core/Utility/Mixin'
+Rectangle = require 'core/Extension/Rectangle'
+
+module.exports = class
 	
 	constructor: ->
 		
-		avo.Mixin this, avo.EventEmitter
+		Window = require('Graphics').Window
+		
+		Mixin this, EventEmitter
 		
 		@Canvas = document.createElement 'canvas'
 		@Canvas.setAttribute 'tabIndex', 1
@@ -24,9 +31,9 @@ class avo.Window
 				y: mouseEvent.clientY - @offset_[1]
 		
 		browserMouseButtonMap =
-			0: avo.Window.LeftButton
-			1: avo.Window.MiddleButton
-			2: avo.Window.RightButton
+			0: Window.LeftButton
+			1: Window.MiddleButton
+			2: Window.RightButton
 		
 		@Canvas.onmousedown = (event) =>
 			
@@ -91,11 +98,13 @@ class avo.Window
 	
 	'%render': (image, rectangle) ->
 		
+		Image = require('Graphics').Image
+		
 		image.render(
-			avo.Rectangle.position rectangle
+			Rectangle.position rectangle
 			this
 			255
-			avo.Image.DrawMode_Blend
+			Image.DrawMode_Blend
 			rectangle
 		)
 		

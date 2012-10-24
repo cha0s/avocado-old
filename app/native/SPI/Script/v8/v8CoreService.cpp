@@ -92,18 +92,7 @@ v8::Handle<v8::Value> v8CoreService::ImplementSpi(const v8::Arguments &args) {
 v8::Handle<v8::Value> v8CoreService::ReadResource(const v8::Arguments& args) {
 	HandleScope scope;
 
-	Handle<Function> require = Context::GetCurrent()->Global()->Get(
-		String::New("require")
-	).As<Function>();
-
-	Handle<Value> argv[2];
-
-	argv[0] = String::NewSymbol("core/Utility/upon");
-	Handle<Object> upon = require->Call(require, 1, argv).As<Object>();
-
-	Handle<Object> defer = upon->Get(
-		String::NewSymbol("defer")
-	).As<Function>()->Call(upon, 0, NULL).As<Object>();
+	Handle<Function> fn = args[1].As<Function>();
 
 	try {
 
@@ -116,12 +105,10 @@ v8::Handle<v8::Value> v8CoreService::ReadResource(const v8::Arguments& args) {
 			).c_str()
 		);
 
-		Handle<Value> resolveArgs[] = {
+		Handle<Value> argv[] = {
 			resource
 		};
-		defer->Get(
-			String::NewSymbol("resolve")
-		).As<Function>()->Call(defer, 1, resolveArgs);
+		fn->Call(fn, 1, argv);
 	}
 	catch (std::exception &e) {
 
@@ -130,7 +117,7 @@ v8::Handle<v8::Value> v8CoreService::ReadResource(const v8::Arguments& args) {
 		);
 	}
 
-	return scope.Close(defer->Get(String::NewSymbol("promise")));
+	return Undefined();
 }
 
 v8::Handle<v8::Value> v8CoreService::WriteStderr(const v8::Arguments& args) {

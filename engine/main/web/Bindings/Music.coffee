@@ -1,11 +1,13 @@
-class avo.Music extends avo.Sound
 
-	@['%load'] = (uri) ->
+Sound = require 'main/web/Bindings/Sound'
+TimingService = require('Timing').TimingService
+upon = require 'core/Utility/upon'
+
+module.exports = class extends Sound
+
+	@['%load'] = (uri, fn) ->
 		
-		defer = upon.defer()
-		
-		soundPromise = avo.Sound.load uri
-		soundPromise.then (sound) ->
+		Sound.load(uri).then (sound) ->
 			
 			music = new Music()
 			
@@ -13,9 +15,7 @@ class avo.Music extends avo.Sound
 			music.Audio = sound.Audio
 			music.URI = sound.URI
 			
-			defer.resolve music
-		
-		defer.promise
+			fn music
 		
 	'%fadeIn': (@Loops, ms) ->
 		return unless @Media?
@@ -25,11 +25,11 @@ class avo.Music extends avo.Sound
 		@Media.volume = 0
 		@Media.play()
 		
-		elapsed = avo.TimingService.elapsed()
+		elapsed = TimingService.elapsed()
 		
 		fadeInterval = setInterval(
 			=>
-				volume = (avo.TimingService.elapsed() - elapsed) / (ms / 1000)
+				volume = (TimingService.elapsed() - elapsed) / (ms / 1000)
 				volume = 1 if volume > 1
 				
 				@Media.volume = volume
@@ -44,11 +44,11 @@ class avo.Music extends avo.Sound
 		return unless @Media?
 		
 		magnitude = @Media.volume
-		elapsed = avo.TimingService.elapsed()
+		elapsed = TimingService.elapsed()
 		
 		fadeInterval = setInterval(
 			=>
-				t = (avo.TimingService.elapsed() - elapsed) * 1000
+				t = (TimingService.elapsed() - elapsed) * 1000
 				volume = magnitude - magnitude * t / ms
 				volume = 0 if volume < 0
 				

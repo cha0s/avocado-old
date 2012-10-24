@@ -87,7 +87,7 @@ public:
 	 * @return
 	 *   A vector of strings; the filenames in order of loading.
 	 */
-	std::vector<std::string> loadCore();
+	std::vector<boost::filesystem::path> loadCore();
 
 	/**
 	 * Load the engine libraries. It's assumed these aren't under development
@@ -110,6 +110,11 @@ public:
 	 * Compile a file.
 	 */
 	Script *scriptFromFile(const boost::filesystem::path &filename);
+
+	/**
+	 * Wrap a script file to simulate a module.
+	 */
+	std::string wrapFile(const boost::filesystem::path &filename);
 
 	/**
 	 * Manages the concrete %ScriptService factory instance.

@@ -1,8 +1,9 @@
-avo.EnginePath = '/engine'
-avo.ResourcePath = '/resource'
+
+CoreService = require 'main/web/Bindings/CoreService'
+upon = require 'core/Utility/upon'
 
 Sounds = {}
-class avo.Sound
+module.exports = class
 
 	constructor: ->
 		
@@ -31,7 +32,7 @@ class avo.Sound
 		
 			audio = new Audio()
 			
-			audio.src = "#{avo.ResourcePath}#{uri}"
+			audio.src = "#{CoreService.ResourcePath}#{uri}"
 			
 			Sounds[uri] = {}
 			Sounds[uri].Audio = audio

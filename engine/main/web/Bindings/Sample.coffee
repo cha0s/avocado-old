@@ -1,11 +1,12 @@
-class avo.Sample extends avo.Sound
+
+Sound = require 'main/web/Bindings/Sound'
+upon = require 'core/Utility/upon'
+
+module.exports = class extends Sound
 	
-	@['%load'] = (uri) ->
+	@['%load'] = (uri, fn) ->
 		
-		defer = upon.defer()
-		
-		soundPromise = Sound.load uri
-		soundPromise.then (sound) ->
+		Sound.load(uri).then (sound) ->
 			
 			sample = new Sample()
 			
@@ -13,7 +14,5 @@ class avo.Sample extends avo.Sound
 			sample.Audio = sound.Audio
 			sample.URI = sound.URI
 			
-			defer.resolve sample
-		
-		defer.promise
+			fn sample
 	

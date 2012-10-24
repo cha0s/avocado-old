@@ -86,20 +86,6 @@ module.exports = class extends EnvironmentState
 		
 		environmentPromise = super args
 		
-		@currentRoom.collision ?= []
-		
-		@currentRoom.collision.push
-			
-			type: 'edges'
-			vertices: [
-				[48, 112]
-				[304, 112]
-				[304, 128]
-				[48, 128]
-			]
-		
-		@createRoomCollision()
-		
 		upon.all([
 			
 			environmentPromise
@@ -122,6 +108,20 @@ module.exports = class extends EnvironmentState
 			RasterFont.load('/font/wb-text.png').then (@font) =>
 			
 		]).then =>
+			
+			@currentRoom.collision ?= []
+			
+			@currentRoom.collision.push
+				
+				type: 'edges'
+				vertices: [
+					[48, 112]
+					[304, 112]
+					[304, 128]
+					[48, 128]
+				]
+			
+			@createRoomCollision()
 			
 			# Add a display command to white out the background.
 			new Image.FillDisplayCommand(

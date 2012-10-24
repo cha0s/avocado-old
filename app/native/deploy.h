@@ -5,7 +5,7 @@
 
 namespace avo {
 
-void deploy(char *exeName, const std::string &target, const std::vector<std::string> &successfullyLoadedFiles, ScriptService *scriptService);
+void deploy(char *exeName, const std::string &target, const std::vector<boost::filesystem::path> &scripts, ScriptService *scriptService);
 
 }
 

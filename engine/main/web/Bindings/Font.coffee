@@ -1,1 +1,4 @@
-class avo.Font
+
+upon = require 'core/Utility/upon'
+
+module.exports = class

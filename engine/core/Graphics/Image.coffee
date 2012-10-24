@@ -7,6 +7,7 @@
 DisplayCommand = require 'core/Graphics/DisplayCommand'
 Image = require('Graphics').Image
 Rectangle = require 'core/Extension/Rectangle'
+upon = require 'core/Utility/upon'
 
 # Draw mode constants.
 # 
@@ -40,9 +41,17 @@ Image.blendPixel = (src, dst, alpha = 255) ->
 
 # Load an image at the specified URI.
 Image.load = (uri) ->
-	return unless uri?
+
+	defer = upon.defer()
 	
-	Image['%load'] uri
+	unless uri?
+		
+		defer.resolve()
+		return defer.promise
+	
+	Image['%load'] uri, defer.resolve
+	
+	defer.promise
 
 # Show the image.
 Image::display = Image::['%display']

@@ -119,7 +119,7 @@ boost::filesystem::path unqualifyPath(const boost::filesystem::path &base, const
 	}
 }
 
-boost::filesystem::path m_exePath;
+boost::filesystem::path m_exePath = fs::canonical(".");
 
 boost::filesystem::path exePath() {
 	return m_exePath;
@@ -129,7 +129,7 @@ void setExePath(const boost::filesystem::path &path) {
 	m_exePath = fs::canonical(path);
 }
 
-boost::filesystem::path m_engineRoot;
+boost::filesystem::path m_engineRoot = fs::canonical(boost::filesystem::path(".") / "engine");
 
 boost::filesystem::path engineRoot() {
 	return m_engineRoot;
@@ -139,7 +139,7 @@ void setEngineRoot(const boost::filesystem::path &engineRoot) {
 	m_engineRoot = fs::canonical(engineRoot);
 }
 
-boost::filesystem::path m_resourceRoot;
+boost::filesystem::path m_resourceRoot = fs::canonical(boost::filesystem::path(".") / "resource");
 
 boost::filesystem::path resourceRoot() {
 	return m_resourceRoot;

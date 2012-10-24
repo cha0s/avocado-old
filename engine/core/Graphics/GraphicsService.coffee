@@ -82,6 +82,7 @@ windows = []
 Graphics.GraphicsService::newWindow = (size, flags) ->
 	
 	window_ = new Graphics.Window()
+	
 	windows.push window_
 	
 	window_.setSize size if size?
@@ -138,7 +139,7 @@ Graphics.GraphicsService::newWindow = (size, flags) ->
 			when Graphics.Window.LeftButton, Graphics.Window.MiddleButton, Graphics.Window.RightButton
 				dragStartLocation[button] = mouseLocation
 				buttons[button] = true
-				
+			
 	# Stop dragging when a button is released.
 	window_.on 'mouseButtonUp.Avocado', ({button}) ->
 		switch button

@@ -3,6 +3,7 @@
 # **Sample** is the representation for a sound effect.
 
 Sample = require('Sound').Sample
+upon = require 'core/Utility/upon'
 
 # Sample playing constants.
 # 
@@ -12,9 +13,17 @@ Sample.LoopForever = -1
 
 # Load a sample at the specified URI.
 Sample.load = (uri) ->
-	return unless uri?
+
+	defer = upon.defer()
 	
-	@['%load'] uri
+	unless uri?
+		
+		defer.resolve()
+		return defer.promise
+	
+	@['%load'] uri, defer.resolve
+	
+	defer.promise
 	
 # Play the sample for the specified number of loops.
 Sample::play = (loops = 0) ->

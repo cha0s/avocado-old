@@ -1,4 +1,4 @@
-class avo.Counter
+module.exports = class
 	
 	startMs = (new Date()).getTime()
 	

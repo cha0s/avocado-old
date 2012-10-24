@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
 		ScriptService->loadLibraries();
 
 		// Load core code.
-		std::vector<std::string> successfullyLoadedFiles = ScriptService->loadCore();
+		std::vector<boost::filesystem::path> scripts = ScriptService->loadCore();
 
 		avo::Script *main = ScriptService->scriptFromFile(
 			nativeMainPath / "Main.coffee"
@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
 			avo::deploy(
 				argv[0],
 				vm["deploy"].as<std::string>(),
-				successfullyLoadedFiles,
+				scripts,
 				ScriptService
 			);
 		}

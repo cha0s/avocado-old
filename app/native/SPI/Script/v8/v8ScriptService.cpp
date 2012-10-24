@@ -96,20 +96,17 @@ std::string v8ScriptService::preCompileCode(const std::string &code, const boost
 Script *v8ScriptService::scriptFromCode(const std::string &code, const boost::filesystem::path &filename) {
 	HandleScope scope;
 
-	// Precompile the code.
-	std::string precompiledCode = preCompileCode(code, filename);
-
 	// Instantiate the v8 script.
 	TryCatch exception;
 	Handle<v8::Script> script = v8::Script::New(
-		String::New(precompiledCode.c_str()),
+		String::New(code.c_str()),
 		String::New(filename.string().c_str())
 	);
 	if (exception.HasCaught()) {
 
 		throw script_compilation_error(
 			V8::stringifyException(exception),
-			precompiledCode
+			code
 		);
 	}
 

@@ -53,13 +53,6 @@ void v8GraphicsService::initialize(Handle<Object> target) {
 	avo::v8Font::initialize(target);
 	avo::v8Image::initialize(target);
 	avo::v8Window::initialize(target);
-
-#ifdef AVOCADO_NODE
-	dlopen(
-		"./node_modules/Graphics.node", RTLD_NOW | RTLD_GLOBAL
-	);
-#endif
-
 }
 
 v8::Handle<v8::Value> v8GraphicsService::New(const v8::Arguments &args) {
@@ -92,13 +85,24 @@ v8::Handle<v8::Value> v8GraphicsService::New(const v8::Arguments &args) {
 v8::Handle<v8::Value> v8GraphicsService::ImplementSpi(const v8::Arguments &args) {
 	HandleScope scope;
 
-	AVOCADO_UNUSED(args);
+	boost::filesystem::path spiiPath = args[1]->IsUndefined() ?
+		FS::exePath()
+	:
+		V8::stringToStdString(args[1]->ToString())
+	;
+
+#ifdef AVOCADO_NODE
+	dlopen(
+		(spiiPath.string() + "/node_modules/Graphics.node").c_str(), RTLD_NOW | RTLD_GLOBAL
+	);
+#endif
 
 	try {
 
 		// Attempt to load the SPII.
 		graphicsServiceSpiiLoader.implementSpi(
-			V8::stringToStdString(args[0]->ToString())
+			V8::stringToStdString(args[0]->ToString()),
+			spiiPath
 		);
 	}
 	catch (SpiiLoader<GraphicsService>::spi_implementation_error &e) {

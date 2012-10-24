@@ -48,6 +48,21 @@ private:
 	static v8::Handle<v8::Value> ReadResource(const v8::Arguments& args);
 
 	/**
+	 * Set the path of the executable.
+	 */
+	static v8::Handle<v8::Value> SetExePath(const v8::Arguments& args);
+
+	/**
+	 * Set the root path of engine code.
+	 */
+	static v8::Handle<v8::Value> SetEngineRoot(const v8::Arguments& args);
+
+	/**
+	 * Set the root path of resources.
+	 */
+	static v8::Handle<v8::Value> SetResourceRoot(const v8::Arguments& args);
+
+	/**
 	 * Write JS values to stderr. Primitives get written verbatim, everything else
 	 * gets JSON.stringify'd and written.
 	 */

@@ -43,13 +43,6 @@ void v8SoundService::initialize(Handle<Object> target) {
 
 	v8Music::initialize(target);
 	v8Sample::initialize(target);
-
-#ifdef AVOCADO_NODE
-	dlopen(
-		"./node_modules/Sound.node", RTLD_NOW | RTLD_GLOBAL
-	);
-#endif
-
 }
 
 v8::Handle<v8::Value> v8SoundService::New(const v8::Arguments &args) {
@@ -71,13 +64,24 @@ v8::Handle<v8::Value> v8SoundService::New(const v8::Arguments &args) {
 v8::Handle<v8::Value> v8SoundService::ImplementSpi(const v8::Arguments &args) {
 	HandleScope scope;
 
-	AVOCADO_UNUSED(args);
+	boost::filesystem::path spiiPath = args[1]->IsUndefined() ?
+		FS::exePath()
+	:
+		V8::stringToStdString(args[1]->ToString())
+	;
+
+#ifdef AVOCADO_NODE
+	dlopen(
+		(spiiPath.string() + "/node_modules/Sound.node").c_str(), RTLD_NOW | RTLD_GLOBAL
+	);
+#endif
 
 	try {
 
 		// Attempt to load the SPII.
 		soundServiceSpiiLoader.implementSpi(
-			V8::stringToStdString(args[0]->ToString())
+			V8::stringToStdString(args[0]->ToString()),
+			spiiPath
 		);
 	}
 	catch (SpiiLoader<SoundService>::spi_implementation_error &e) {

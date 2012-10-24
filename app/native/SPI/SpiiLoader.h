@@ -61,7 +61,7 @@ public:
 	 * previous SPII (if any), then it'll pass T's factory manager to the
 	 * %implementSpi() function located within the SPII.
 	 */
-	void implementSpi(const std::string &implementation) {
+	void implementSpi(const std::string &implementation, const boost::filesystem::path &path = "") {
 
 		// Only one implementation may be loaded at once. If any previous
 		// implementation exists, unload it.
@@ -69,7 +69,10 @@ public:
 
 		// By default, load SPIIs from
 		// <EXEPATH>/SPII/[SPI_NAME]-[SPI_IMPLEMENTATION].
-		boost::filesystem::path spiPath = avo::FS::exePath();
+		boost::filesystem::path spiPath = path;
+		if ("" == spiPath) {
+			spiPath = avo::FS::exePath();
+		}
 		spiPath /= "SPII";
 		spiPath /= T::name() + "-" + implementation + ".spii";
 

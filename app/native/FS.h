@@ -89,7 +89,7 @@ boost::filesystem::path resourceRoot();
 /**
  * Set the root path of resources.
  */
-void setResourceRoot(const boost::filesystem::path &resourceRoot);
+void setResourceRoot(const boost::filesystem::path &spiiPath);
 
 /**
  * Helper function to compare two paths case-insensitively.

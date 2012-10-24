@@ -42,13 +42,6 @@ void v8TimingService::initialize(Handle<Object> target) {
 	target->Set(String::NewSymbol("TimingService"), constructor_template->GetFunction());
 
 	v8Counter::initialize(target);
-
-#ifdef AVOCADO_NODE
-	dlopen(
-		"./node_modules/Timing.node", RTLD_NOW | RTLD_GLOBAL
-	);
-#endif
-
 }
 
 v8::Handle<v8::Value> v8TimingService::New(const v8::Arguments &args) {
@@ -70,13 +63,24 @@ v8::Handle<v8::Value> v8TimingService::New(const v8::Arguments &args) {
 v8::Handle<v8::Value> v8TimingService::ImplementSpi(const v8::Arguments &args) {
 	HandleScope scope;
 
-	AVOCADO_UNUSED(args);
+	boost::filesystem::path spiiPath = args[1]->IsUndefined() ?
+		FS::exePath()
+	:
+		V8::stringToStdString(args[1]->ToString())
+	;
+
+#ifdef AVOCADO_NODE
+	dlopen(
+		(spiiPath.string() + "/node_modules/Timing.node").c_str(), RTLD_NOW | RTLD_GLOBAL
+	);
+#endif
 
 	try {
 
 		// Attempt to load the SPII.
 		timingServiceSpiiLoader.implementSpi(
-			V8::stringToStdString(args[0]->ToString())
+			V8::stringToStdString(args[0]->ToString()),
+			spiiPath
 		);
 	}
 	catch (SpiiLoader<TimingService>::spi_implementation_error &e) {

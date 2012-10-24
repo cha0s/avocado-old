@@ -37,17 +37,13 @@ void v8CoreService::initialize(Handle<Object> target) {
 
 	V8_SET_METHOD(constructor_template, "implementSpi", v8CoreService::ImplementSpi);
 	V8_SET_METHOD(constructor_template, "%readResource", v8CoreService::ReadResource);
+	V8_SET_METHOD(constructor_template, "setExePath", v8CoreService::SetExePath);
+	V8_SET_METHOD(constructor_template, "setEngineRoot", v8CoreService::SetEngineRoot);
+	V8_SET_METHOD(constructor_template, "setResourceRoot", v8CoreService::SetResourceRoot);
 	V8_SET_METHOD(constructor_template, "%writeStderr", v8CoreService::WriteStderr);
 
 	// Register.
 	target->Set(String::NewSymbol("CoreService"), constructor_template->GetFunction());
-
-#ifdef AVOCADO_NODE
-	dlopen(
-		"./node_modules/Core.node", RTLD_NOW | RTLD_GLOBAL
-	);
-#endif
-
 }
 
 v8::Handle<v8::Value> v8CoreService::New(const v8::Arguments &args) {
@@ -69,13 +65,24 @@ v8::Handle<v8::Value> v8CoreService::New(const v8::Arguments &args) {
 v8::Handle<v8::Value> v8CoreService::ImplementSpi(const v8::Arguments &args) {
 	HandleScope scope;
 
-	AVOCADO_UNUSED(args);
+	boost::filesystem::path spiiPath = args[1]->IsUndefined() ?
+		FS::exePath()
+	:
+		V8::stringToStdString(args[1]->ToString())
+	;
+
+#ifdef AVOCADO_NODE
+	dlopen(
+		(spiiPath.string() + "/node_modules/Core.node").c_str(), RTLD_NOW | RTLD_GLOBAL
+	);
+#endif
 
 	try {
 
 		// Attempt to load the SPII.
 		coreServiceSpiiLoader.implementSpi(
-			V8::stringToStdString(args[0]->ToString())
+			V8::stringToStdString(args[0]->ToString()),
+			spiiPath
 		);
 	}
 	catch (SpiiLoader<CoreService>::spi_implementation_error &e) {
@@ -116,6 +123,30 @@ v8::Handle<v8::Value> v8CoreService::ReadResource(const v8::Arguments& args) {
 			v8::Exception::Error(String::New(e.what()))
 		);
 	}
+
+	return Undefined();
+}
+
+v8::Handle<v8::Value> v8CoreService::SetExePath(const v8::Arguments& args) {
+	HandleScope scope;
+
+	FS::setExePath(V8::stringToStdString(args[0].As<String>()));
+
+	return Undefined();
+}
+
+v8::Handle<v8::Value> v8CoreService::SetEngineRoot(const v8::Arguments& args) {
+	HandleScope scope;
+
+	FS::setEngineRoot(V8::stringToStdString(args[0].As<String>()));
+
+	return Undefined();
+}
+
+v8::Handle<v8::Value> v8CoreService::SetResourceRoot(const v8::Arguments& args) {
+	HandleScope scope;
+
+	FS::setResourceRoot(V8::stringToStdString(args[0].As<String>()));
 
 	return Undefined();
 }

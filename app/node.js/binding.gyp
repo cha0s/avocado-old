@@ -16,7 +16,6 @@
       '../native/deps',
     ],
     "sources": [
-      "../native/FS.cpp",
       "../native/SPI/Script/v8/avocado-v8.cpp",
       "../native/SPI/Script/v8/ObjectWrap.cpp"
     ]
@@ -25,6 +24,7 @@
     {
       "target_name": "Core",
       "sources": [
+        "../native/FS.cpp",
         "../native/SPI/Script/v8/v8CoreService.cpp",
         "../native/SPI/Core/CoreService.cpp",
       ]

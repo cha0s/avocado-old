@@ -101,7 +101,9 @@ boost::filesystem::path qualifyPath(const boost::filesystem::path &base, const b
 		return uriString;
 	}
 	else {
-		throw std::runtime_error("qualifyPath() detected a directory traversal exploit!");
+		std::string exceptionString = "qualifyPath() detected a directory traversal exploit!";
+		exceptionString += " (" + uriString + " out of " + baseString + ")";
+		throw std::runtime_error(exceptionString);
 	}
 }
 
@@ -115,11 +117,13 @@ boost::filesystem::path unqualifyPath(const boost::filesystem::path &base, const
 		return uriString.substr(baseString.size());
 	}
 	else {
-		throw std::runtime_error("unqualifyPath() detected a directory traversal exploit!");
+		std::string exceptionString = "unqualifyPath() detected a directory traversal exploit!";
+		exceptionString += " (" + uriString + " out of " + baseString + ")";
+		throw std::runtime_error(exceptionString);
 	}
 }
 
-boost::filesystem::path m_exePath = fs::canonical(".");
+boost::filesystem::path m_exePath = boost::filesystem::path(".");
 
 boost::filesystem::path exePath() {
 	return m_exePath;
@@ -129,7 +133,7 @@ void setExePath(const boost::filesystem::path &path) {
 	m_exePath = fs::canonical(path);
 }
 
-boost::filesystem::path m_engineRoot = fs::canonical(boost::filesystem::path(".") / "engine");
+boost::filesystem::path m_engineRoot = boost::filesystem::path(".") / "engine";
 
 boost::filesystem::path engineRoot() {
 	return m_engineRoot;
@@ -139,7 +143,7 @@ void setEngineRoot(const boost::filesystem::path &engineRoot) {
 	m_engineRoot = fs::canonical(engineRoot);
 }
 
-boost::filesystem::path m_resourceRoot = fs::canonical(boost::filesystem::path(".") / "resource");
+boost::filesystem::path m_resourceRoot = boost::filesystem::path(".") / "resource";
 
 boost::filesystem::path resourceRoot() {
 	return m_resourceRoot;

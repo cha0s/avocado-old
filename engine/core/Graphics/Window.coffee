@@ -6,7 +6,7 @@ EventEmitter = require 'core/Utility/EventEmitter'
 Mixin = require 'core/Utility/Mixin'
 
 NativeWindow = require('Graphics').Window
-Window = class extends NativeWindow
+Window = class
 	
 	# Window creation constants.
 	# 

@@ -2,8 +2,8 @@ require 'coffee-script'
 
 Core = require 'Core'
 Graphics = require 'Graphics'
-Timing = require 'Timing'
 Sound = require 'Sound'
+Timing = require 'Timing'
 
 # Use SFML CoreService for now.
 Core.CoreService.implementSpi 'sfml'
@@ -24,11 +24,6 @@ Sound.soundService = new Sound.SoundService()
 # Shoot for 60 FPS input and render.
 Timing.ticksPerSecondTarget = 120
 Timing.rendersPerSecondTarget = 80
-
-Timing['%setTimeout'] = setTimeout
-Timing['%setInterval'] = setInterval
-Timing['%clearTimeout'] = clearTimeout
-Timing['%clearInterval'] = clearInterval
 
 # SPI proxies.
 require 'core/CoreService'

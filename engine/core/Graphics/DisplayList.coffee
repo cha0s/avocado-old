@@ -5,7 +5,7 @@
 # The display list manages which parts of the scene have actually changed, and
 # only renders the changes.
 
-_ = require 'library/underscore'
+_ = require 'core/Utility/underscore'
 QuadTree = require 'core/Utility/QuadTree'
 Rectangle = require 'core/Extension/Rectangle'
 Vector = require 'core/Extension/Vector'

@@ -1,4 +1,4 @@
-_ = require 'library/underscore'
+_ = require 'core/Utility/underscore'
 upon = require 'core/Utility/upon'
 
 module.exports = class

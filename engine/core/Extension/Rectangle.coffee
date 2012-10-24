@@ -4,7 +4,7 @@
 # rectangle is implemented as a 4-element array. Element 0 is *x*, element
 # 1 is *y*, element 2 is *width* and element 3 is *height*.
 
-_ = require 'library/underscore'
+_ = require 'core/Utility/underscore'
 Vector = require 'core/Extension/Vector'
 
 module.exports = Rectangle = 

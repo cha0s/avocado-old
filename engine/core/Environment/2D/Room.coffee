@@ -1,5 +1,5 @@
 
-_ = require 'library/underscore'
+_ = require 'core/Utility/underscore'
 Entity = require 'core/Entity/Entity'
 TileLayer = require 'core/Environment/2D/TileLayer'
 upon = require 'core/Utility/upon'

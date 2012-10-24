@@ -63,9 +63,6 @@ int main(int argc, char **argv) {
 		);
 		initialize->execute();
 
-		// Load libraries.
-		ScriptService->loadLibraries();
-
 		// Load core code.
 		std::vector<boost::filesystem::path> scripts = ScriptService->loadCore();
 

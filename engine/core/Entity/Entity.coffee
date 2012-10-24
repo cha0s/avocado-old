@@ -1,7 +1,7 @@
 # The **Entity** class specifies objects in the game engine. Entities are
 # merely compositions of (subclassed) [Trait](Traits/Trait.html) objects.
 
-_ = require 'library/underscore'
+_ = require 'core/Utility/underscore'
 CoreService = require('Core').CoreService
 DisplayCommand = require 'core/Graphics/DisplayCommand'
 EventEmitter = require 'core/Utility/EventEmitter'

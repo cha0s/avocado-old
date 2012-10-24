@@ -105,18 +105,6 @@ void deploy(char *exeName, const std::string &target, const std::vector<boost::f
 	// Aggregate libraries and core code.
 	std::string aggregate;
 
-	std::vector<boost::filesystem::path> filenames = FS::findFilenames(
-		FS::engineRoot() / "library",
-		boost::regex("(.*\\.js|.*\\.coffee)")
-	);
-
-	for (unsigned int i = 0; i < filenames.size(); ++i) {
-		boost::filesystem::path filename = filenames[i];
-		std::cerr << "Aggregating " << filename << "..." << std::endl;
-
-		aggregate += scriptService->wrapFile(filename);
-	}
-
 	for (unsigned int i = 0; i < scripts.size(); ++i) {
 		boost::filesystem::path filename = scripts[i];
 		std::cerr << "Aggregating " << filename << "..." << std::endl;

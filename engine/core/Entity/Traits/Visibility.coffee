@@ -1,5 +1,5 @@
 
-_ = require 'library/underscore'
+_ = require 'core/Utility/underscore'
 Animation = require 'core/Graphics/Animation'
 Rectangle = require 'core/Extension/Rectangle'
 Trait = require 'core/Entity/Traits/Trait'

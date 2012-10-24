@@ -1,7 +1,7 @@
 # **TileLayer** represents a 2D tile matrix. It is a glorified array of
 # tile indices which index into a tileset.
 
-_ = require 'library/underscore'
+_ = require 'core/Utility/underscore'
 DisplayCommand = require 'core/Graphics/DisplayCommand'
 Graphics = require 'Graphics'
 Image = require('Graphics').Image

@@ -12,7 +12,7 @@ global = this
 		
 	requires_[name].object
 
-_ = require 'library/underscore'
+_ = require 'core/Utility/underscore'
 
 # Hack in the SPIIs.
 spiis = {}

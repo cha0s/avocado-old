@@ -123,27 +123,6 @@ std::vector<boost::filesystem::path> ScriptService::loadCore() {
 	return scripts;
 }
 
-void ScriptService::loadLibraries() {
-
-	// Gather up all the libraries.
-	vector<filesystem::path> filenames = FS::findFilenames(
-		FS::engineRoot() / "library",
-		regex("(.*\\.js|.*\\.coffee)")
-	);
-
-	// Compile and execute the libraries.
-	for (unsigned int i = 0; i < filenames.size(); i++) {
-
-		scriptFromCode(
-			wrapFile(filenames[i]),
-			FS::unqualifyPath(
-				FS::engineRoot(),
-				filenames[i]
-			)
-		)->execute();
-	}
-}
-
 Script *ScriptService::scriptFromFile(const boost::filesystem::path &filename) {
 
 	std::string code = avo::FS::readString(filename);

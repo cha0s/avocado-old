@@ -2,7 +2,7 @@
 # manage the registration of listeners who listen for the emission of the
 # events.
 
-_ = require 'library/underscore'
+_ = require 'core/Utility/underscore'
 
 module.exports = class
 

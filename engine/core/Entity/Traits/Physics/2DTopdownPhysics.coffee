@@ -14,7 +14,7 @@ module.exports = class extends Physics
 		
 		O
 		
-	hooks:
+	hooks: ->
 		
 		moveRequest: (hypotenuse) ->
 		
@@ -55,7 +55,7 @@ module.exports = class extends Physics
 				@state.body.GetWorldCenter()
 			)
 			
-	handler:
+	handler: ->
 		
 		ticker:
 			

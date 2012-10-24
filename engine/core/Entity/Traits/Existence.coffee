@@ -22,7 +22,7 @@ module.exports = class extends Trait
 		@entity.setDirection @state.direction
 		@entity.emit 'directionChanged', @state.direction
 		
-	values:
+	values: ->
 			
 		x: -> @state.x
 		
@@ -61,7 +61,7 @@ module.exports = class extends Trait
 			
 		name: -> @state.name
 		
-	actions:
+	actions: ->
 		
 		nop:
 			name: 'Do nothing'

@@ -18,7 +18,7 @@ module.exports = class extends Trait
 		@isMoving = false
 		@movementExpectedTime = 0
 
-	values:
+	values: ->
 
 		mobile: -> @state.mobile
 		
@@ -28,12 +28,12 @@ module.exports = class extends Trait
 		
 		visibilityIndex: -> @state.visibilityIndex
 	
-	signals:
+	signals: ->
 	
 		startedMoving: -> @isMoving = true
 		stoppedMoving: -> @isMoving = false
 		
-	actions:
+	actions: ->
 
 		move:
 			argTypes: ['Position', 'Boolean']

@@ -82,7 +82,7 @@ module.exports = Visibility = class extends Trait
 		
 		defer.promise
 		
-	values:
+	values: ->
 	
 		alpha: -> @state.alpha
 		
@@ -130,7 +130,7 @@ module.exports = Visibility = class extends Trait
 		
 		currentAnimationFrameSize: -> @entity.currentAnimation().frameSize()
 	
-	actions:
+	actions: ->
 		
 		setAlpha: (alpha) -> @state.alpha = alpha
 		
@@ -239,7 +239,7 @@ module.exports = Visibility = class extends Trait
 		
 		startCurrentAnimation: -> @entity.currentAnimation().start()
 		
-	signals:
+	signals: ->
 		
 		startedMoving: ->
 			
@@ -277,7 +277,7 @@ module.exports = Visibility = class extends Trait
 			for index, animation of @animationObjects
 				animation.setCurrentDirection direction
 
-	handler:
+	handler: ->
 		
 		renderer: (destination, position, clip) ->
 			return unless @state.visible

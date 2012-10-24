@@ -12,7 +12,8 @@
   "description": "Collaborative, libre, gratis game development",
   "private": true,
   "dependencies": {
-    "coffee-script": "1.4.0"
+    "coffee-script": "1.4.0",
+    "socket.io-client": "0.9.10"
   },
   "scripts": {
     "start": "NODE_PATH=engine node_modules/coffee-script/bin/coffee avocado.coffee"

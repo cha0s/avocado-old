@@ -96,17 +96,17 @@ module.exports = Entity = class
 			
 			# Bind the actions and values associated with this trait.
 			for type in ['actions', 'values']
-				for index, meta of trait[type]
+				for index, meta of trait[type]()
 					@[index] = _.bind meta.f ? meta, trait
 			
 			# Refresh the signals associated with this trait.
-			for index, signal of trait['signals']
+			for index, signal of trait['signals']()
 				name = "#{index}.#{trait.type}Trait"
 				@off name 
 				@on name, signal, trait
 			
 			# Refresh the handlers associated with this trait.
-			if handler = trait['handler']
+			if handler = trait['handler']?()
 				
 				for handlerType in ['ticker', 'renderer']
 					continue unless handler[handlerType]?
@@ -162,7 +162,7 @@ module.exports = Entity = class
 				_.extend @traits[type].state, state
 				
 				# and fire Trait::initializeTrait().
-				[@traits[type].initializeTrait()]
+				@traits[type].initializeTrait()
 			
 			# Otherwise, add the traits as new.
 			# TODO aggregate for efficiency.	
@@ -181,8 +181,8 @@ module.exports = Entity = class
 		trait.removeTrait this
 		
 		# Remove the actions and values.
-		delete @[index] for index of trait['actions']
-		delete @[index] for index of trait['values']
+		delete @[index] for index of trait['actions']()
+		delete @[index] for index of trait['values']()
 	
 		# Remove the handlers.
 		@tickers = _.filter @tickers, (e) -> e.trait.type isnt type
@@ -199,9 +199,9 @@ module.exports = Entity = class
 	invoke: (hook, args...) ->
 		
 		for type, trait of @traits
-			continue if not trait['hooks'][hook]?
+			continue if not trait['hooks']()[hook]?
 			
-			trait['hooks'][hook].apply trait, args
+			trait['hooks']()[hook].apply trait, args
 
 	tick: (commandList) -> ticker.f() for ticker in @tickers
 			

@@ -128,12 +128,16 @@ module.exports = Animation = class
 		}[direction] if @directionCount_ is 4 and direction > 3
 		
 		direction
+	
+	currentDirection: -> @currentDirection_
 		
 	setCurrentDirection: (direction) ->
 		
 		@currentDirection_ = @mapDirection direction
 		
 		@emit 'directionChanged'
+	
+	currentFrameIndex: -> @currentFrameIndex_
 	
 	setCurrentFrameIndex: (index) ->
 		

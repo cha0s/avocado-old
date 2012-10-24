@@ -12,6 +12,40 @@ Vector = require 'core/Extension/Vector'
 
 module.exports = class extends EnvironmentState
 	
+	initialize: ->
+		
+		@listDefer = upon.defer()
+		
+		@addedEntities_ = {}
+		
+		@main.on 'entityUpdated', ({id, position, direction, animationIndex, animationFrameIndex}) =>
+			
+			return unless @addedEntities_[id]
+			
+			@addedEntities_[id].setDirection direction
+			@addedEntities_[id].setPosition position
+			@addedEntities_[id].setCurrentAnimationIndex animationIndex
+			@addedEntities_[id].currentAnimation().setCurrentFrameIndex animationFrameIndex
+		
+		@main.on 'entityAdded', ({id, traits}) =>
+			
+			@listDefer.then =>
+				
+				Entity.load('/entity/wb-dude.entity.json').then (entity) =>
+					
+					@addedEntities_[id] = entity
+			
+					entity.extendTraits traits
+					
+					entity.reset()
+					
+					new Entity.DisplayCommand(
+						@displayList
+						entity
+					)
+				
+		super
+	
 	enter: (args) ->
 		
 		Box2D.world = new Box2D.b2World new Box2D.b2Vec2(0, 0), false
@@ -23,6 +57,8 @@ module.exports = class extends EnvironmentState
 			environmentPromise
 				
 			Entity.load('/entity/wb-dude.entity.json').then (@entity) =>
+				
+				@main.entity = @entity
 				
 				# Start the entity at 150, 150.
 				@entity.extendTraits [
@@ -40,6 +76,9 @@ module.exports = class extends EnvironmentState
 			RasterFont.load('/font/wb-text.png').then (@font) =>
 			
 		]).then =>
+			
+#			@entity.on 'positionChanged', => @main.emit 'entityUpdated'
+#			@entity.on 'directionChanged', => @main.emit 'entityUpdated'
 			
 			# Add a display command to white out the background.
 			new Image.FillDisplayCommand(
@@ -67,6 +106,10 @@ module.exports = class extends EnvironmentState
 				@entity
 			)
 			
+			@listDefer.resolve()
+			
+			###
+			
 			new TileLayer.DisplayCommand(
 				@displayList
 				@currentRoom.layer 2
@@ -80,6 +123,8 @@ module.exports = class extends EnvironmentState
 				@environment.tileset()
 				@roomRectangle
 			)
+			
+			###
 			
 			@tps = new RasterFont.DisplayCommand(
 				@displayList

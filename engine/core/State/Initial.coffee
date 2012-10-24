@@ -49,8 +49,8 @@ module.exports = class extends AbstractState
 	tick: ->
 		
 		@main.changeState(
-			'Environment/2DPlatformerEnvironment'
-			environmentUri: '/environment/platforms.environment.json'
+			'Environment/2DTopdownEnvironment'
+			environmentUri: '/environment/wb-forest.environment.json'
 			roomIndex: 0
 		)
 		

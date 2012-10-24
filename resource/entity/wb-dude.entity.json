@@ -9,12 +9,12 @@
 			}
 		},
 		{
-			"type": "Physics/2DPlatformerPhysics"
+			"type": "Physics/2DTopdownPhysics"
 		},
 		{
 			"type": "Mobility",
 			"state": {
-				"movingSpeed": 200
+				"movingSpeed": 100
 			}
 		},
 		{

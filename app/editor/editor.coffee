@@ -25,18 +25,7 @@ Timing.ticksPerSecondTarget = 120
 Timing.rendersPerSecondTarget = 80
 
 # SPI proxies.
-require 'core/CoreService'
-
-require 'core/Graphics/GraphicsService'
-require 'core/Graphics/Font'
-require 'core/Graphics/Image'
-require 'core/Graphics/Window'
-
-require 'core/Sound/Music'
-require 'core/Sound/Sample'
-
-require 'core/Timing/TimingService'
-require 'core/Timing/Counter'
+require 'core/proxySpiis'
 
 Logger = require 'core/Utility/Logger'
 
@@ -63,13 +52,25 @@ Logger.registerStrategy (message, type) ->
 	# message
 	Core.CoreService.writeStderr message
 
+consolidate = require 'consolidate'
 express = require 'express'
 http = require 'http'
 
 app = express()
 
+app.engine 'html', consolidate.mustache
+
+app.set 'view engine', 'html'
+
+app.use express.static '../..'
+
 app.get '/', (req, res) ->
-	res.send 'Hello!<script src="/socket.io/socket.io.js"></script>'
+	
+	res.render 'index', {}, (error, html) ->
+		
+		res.send html
+
+console.log 
   
 server = http.createServer app
 

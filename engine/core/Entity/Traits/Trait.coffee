@@ -28,15 +28,15 @@ module.exports = class
 		O.state = state unless _.isEmpty state
 		O
 	
-	handler: {}
+	hooks: -> {}
 	
-	hooks: {}
+	signals: -> {}
 	
-	methods: {}
+	actions: -> {}
 	
-	commands: {}
+	values: -> {}
 	
-	initializeTrait: (entity) ->
+	initializeTrait: ->
 		
 		@resetTrait()
 		
@@ -44,7 +44,7 @@ module.exports = class
 		defer.resolve()
 		defer.promise
 	
-	resetTrait: (entity) ->
+	resetTrait: ->
 	
 	removeTrait: ->
 	

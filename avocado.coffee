@@ -27,22 +27,11 @@ Timing.ticksPerSecondTarget = 120
 Timing.rendersPerSecondTarget = 80
 
 # SPI proxies.
-require 'core/CoreService'
-
-require 'core/Graphics/GraphicsService'
-require 'core/Graphics/Font'
-require 'core/Graphics/Image'
-require 'core/Graphics/Window'
-
-require 'core/Sound/Music'
-require 'core/Sound/Sample'
-
-require 'core/Timing/TimingService'
-require 'core/Timing/Counter'
+require 'core/proxySpiis'
 
 Logger = require 'core/Utility/Logger'
 Main = require 'core/Main'
-main = new class extends Main
+Main.main = main = new class extends Main
 
 	constructor: ->
 		
@@ -101,3 +90,6 @@ Logger.registerStrategy (message, type) ->
 
 # GO!	
 main.begin()
+
+require 'client-test/index.coffee'
+

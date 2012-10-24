@@ -1,6 +1,6 @@
 {
-  "name": "avocado-editor",
-  "description": "Edit avocado resources.",
+  "name": "avocado-server-test",
+  "description": "A test server.",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -11,6 +11,6 @@
     "mustache": "0.7.0"
   },
   "scripts": {
-    "start": "NODE_PATH=../../engine node_modules/coffee-script/bin/coffee editor.coffee"
+    "start": "NODE_PATH=../../engine node_modules/coffee-script/bin/coffee server.coffee"
   }
 }

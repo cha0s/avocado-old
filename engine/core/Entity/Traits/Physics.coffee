@@ -85,7 +85,7 @@ module.exports = Physics = class extends Trait
 		
 		Box2D.world.DestroyBody @state.body
 	
-	actions:
+	actions: ->
 		
 		setIsTouching: (entity) ->
 			
@@ -124,7 +124,7 @@ module.exports = Physics = class extends Trait
 			argTypes: ['Boolean']
 			argNames: ['Solidity']
 		
-	values:
+	values: ->
 		
 		isTouching:
 			

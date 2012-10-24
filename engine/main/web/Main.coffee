@@ -8,21 +8,10 @@ Logger = require 'core/Utility/Logger'
 Timing = require 'Timing'
 
 # SPI proxies.
-require 'core/CoreService'
-
-require 'core/Graphics/GraphicsService'
-require 'core/Graphics/Font'
-require 'core/Graphics/Image'
-require 'core/Graphics/Window'
-
-require 'core/Sound/Music'
-require 'core/Sound/Sample'
-
-require 'core/Timing/TimingService'
-require 'core/Timing/Counter'
+require 'core/proxySpiis'
 
 Main = require 'core/Main'
-main = new class extends Main
+Main.main = main = new class extends Main
 	
 	constructor: ->
 		

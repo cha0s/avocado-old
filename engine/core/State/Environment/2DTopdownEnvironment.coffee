@@ -1,10 +1,20 @@
-class avo.Main.States['2DTopdownEnvironment'] extends avo.EnvironmentState
+
+Box2D = require 'core/Physics/Box2D'
+Entity = require 'core/Entity/Entity'
+EnvironmentState = require 'core/State/Environment'
+Graphics = require 'Graphics'
+Image = Graphics.Image
+RasterFont = require 'core/Graphics/RasterFont'
+TileLayer = require 'core/Environment/2D/TileLayer'
+Timing = require 'Timing'
+upon = require 'core/Utility/upon'
+Vector = require 'core/Extension/Vector'
+
+module.exports = class extends EnvironmentState
 	
 	enter: (args) ->
 		
-		avo.world = new avo.b2World new avo.b2Vec2(0, 0), false
-		
-		avo.EntityTraits['Physics'] = avo.EntityTraits['2DTopdownPhysics']
+		Box2D.world = new Box2D.b2World new Box2D.b2Vec2(0, 0), false
 		
 		environmentPromise = super args
 		
@@ -12,7 +22,7 @@ class avo.Main.States['2DTopdownEnvironment'] extends avo.EnvironmentState
 			
 			environmentPromise
 				
-			avo.Entity.load('/entity/wb-dude.entity.json').then (@entity) =>
+			Entity.load('/entity/wb-dude.entity.json').then (@entity) =>
 				
 				# Start the entity at 150, 150.
 				@entity.extendTraits [
@@ -27,51 +37,51 @@ class avo.Main.States['2DTopdownEnvironment'] extends avo.EnvironmentState
 				
 				@entity.reset()
 				
-			avo.RasterFont.load('/font/wb-text.png').then (@font) =>
+			RasterFont.load('/font/wb-text.png').then (@font) =>
 			
 		]).then =>
 			
 			# Add a display command to white out the background.
-			new avo.FillDisplayCommand(
+			new Image.FillDisplayCommand(
 				@displayList
 				80, 80, 80, 255
 				@roomRectangle
 			)
 			
-			new avo.TileLayerDisplayCommand(
+			new TileLayer.DisplayCommand(
 				@displayList
 				@currentRoom.layer 0
 				@environment.tileset()
 				@roomRectangle
 			) 
 			
-			new avo.TileLayerDisplayCommand(
+			new TileLayer.DisplayCommand(
 				@displayList
 				@currentRoom.layer 1
 				@environment.tileset()
 				@roomRectangle
 			) 
 			
-			new avo.EntityDisplayCommand(
+			new Entity.DisplayCommand(
 				@displayList
 				@entity
 			)
 			
-			new avo.TileLayerDisplayCommand(
+			new TileLayer.DisplayCommand(
 				@displayList
 				@currentRoom.layer 2
 				@environment.tileset()
 				@roomRectangle
 			)
 			
-			new avo.TileLayerDisplayCommand(
+			new TileLayer.DisplayCommand(
 				@displayList
 				@currentRoom.layer 3
 				@environment.tileset()
 				@roomRectangle
 			)
 			
-			@tps = new avo.RasterFontDisplayCommand(
+			@tps = new RasterFont.DisplayCommand(
 				@displayList
 				@font
 				"TPS: 0"
@@ -79,7 +89,7 @@ class avo.Main.States['2DTopdownEnvironment'] extends avo.EnvironmentState
 			)
 			@tps.setIsRelative false
 		
-			@rps = new avo.RasterFontDisplayCommand(
+			@rps = new RasterFont.DisplayCommand(
 				@displayList
 				@font
 				"RPS: 0"
@@ -91,28 +101,28 @@ class avo.Main.States['2DTopdownEnvironment'] extends avo.EnvironmentState
 			# track of where the avocado was when we started dragging.
 			@mousePosition = [0, 0]
 			@clicking = false
-			avo.window.on 'mouseButtonDown.2DTopdownEnvironmentState', ({button, x, y}) =>
-				return unless button is avo.Window.LeftButton
+			Graphics.window.on 'mouseButtonDown.2DTopdownEnvironmentState', ({button, x, y}) =>
+				return unless button is Graphics.Window.LeftButton
 				@clicking = true
-				[x, y] = avo.Vector.mul(
+				[x, y] = Vector.mul(
 					[x, y]
-					avo.Vector.div avo.window.originalSize, avo.window.size()
+					Vector.div Graphics.window.originalSize, Graphics.window.size()
 				)
 				@mousePosition = [x, y]
-			avo.window.on 'mouseButtonUp.2DTopdownEnvironmentState', ({button}) =>
-				return unless button is avo.Window.LeftButton
+			Graphics.window.on 'mouseButtonUp.2DTopdownEnvironmentState', ({button}) =>
+				return unless button is Graphics.Window.LeftButton
 				@clicking = false
-			avo.window.on 'mouseMove.2DTopdownEnvironmentState', ({x, y}) =>
-				[x, y] = avo.Vector.mul(
+			Graphics.window.on 'mouseMove.2DTopdownEnvironmentState', ({x, y}) =>
+				[x, y] = Vector.mul(
 					[x, y]
-					avo.Vector.div avo.window.originalSize, avo.window.size()
+					Vector.div Graphics.window.originalSize, Graphics.window.size()
 				)
 				@mousePosition = [x, y]
 		
 	tick: ->
 		
-		if world = avo.world
-			world.Step 1 / avo.ticksPerSecondTarget, 8, 3
+		if world = Box2D.world
+			world.Step 1 / Timing.ticksPerSecondTarget, 8, 3
 		
 		@entity.tick()
 		
@@ -123,19 +133,19 @@ class avo.Main.States['2DTopdownEnvironment'] extends avo.EnvironmentState
 		actuallyMoved = false
 		
 		# Any key/joystick movement input?
-		unless avo.Vector.isZero (
-			movement = avo.graphicsService.playerUnitMovement('Awesome player')
+		unless Vector.isZero (
+			movement = Graphics.graphicsService.playerUnitMovement('Awesome player')
 		)
 			actuallyMoved = true
 			@entity.move movement, true   
 
 		# Mouse clicking?
-		if @clicking and 2 < avo.Vector.cartesianDistance(
-			avo.Vector.add @mousePosition, @displayList.position()
+		if @clicking and 2 < Vector.cartesianDistance(
+			Vector.add @mousePosition, @displayList.position()
 			@entity.position()
 		)
 			actuallyMoved = true
-			@entity.move avo.Vector.add @mousePosition, @displayList.position()
+			@entity.move Vector.add @mousePosition, @displayList.position()
 		
 		if actuallyMoved
 			
@@ -154,5 +164,5 @@ class avo.Main.States['2DTopdownEnvironment'] extends avo.EnvironmentState
 		super
 		
 		# Remove our event handler(s).
-		avo.window.off '.2DTopdownEnvironmentState'
+		Graphics.window.off '.2DTopdownEnvironmentState'
 		

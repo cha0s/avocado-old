@@ -1,34 +1,36 @@
 # SPI proxy and constant definitions.
 
-# avo.**TimingService** provides CPU sleep (if the platform supports it), and
+# **TimingService** provides CPU sleep (if the platform supports it), and
 # timeouts/intervals.
 
+Timing = require 'Timing'
+
 # Delay execution by a given number of milliseconds.
-avo.TimingService::sleep = (ms) ->
+Timing.TimingService::sleep = (ms) ->
 	return unless ms?
 	
 	@['%sleep'] ms
 
 # <https://developer.mozilla.org/en-US/docs/DOM/window.setTimeout>
-@setTimeout = avo['%setTimeout']
+@setTimeout = Timing['%setTimeout']
 
 # <https://developer.mozilla.org/en-US/docs/DOM/window.setInterval>
-@setInterval = avo['%setInterval']
+@setInterval = Timing['%setInterval']
 
 # <https://developer.mozilla.org/en-US/docs/DOM/window.clearTimeout>
-@clearTimeout = avo['%clearTimeout']
+@clearTimeout = Timing['%clearTimeout']
 
 # <https://developer.mozilla.org/en-US/docs/DOM/window.clearInterval>
-@clearInterval = avo['%clearInterval']
+@clearInterval = Timing['%clearInterval']
 
 # Keep track of global time elapsing.
 elapsed = 0
 tickElapsed = 0
 
 # Total elapsed time.
-avo.TimingService.elapsed = -> elapsed
-avo.TimingService.setElapsed = (e) -> elapsed = e
+Timing.TimingService.elapsed = -> elapsed
+Timing.TimingService.setElapsed = (e) -> elapsed = e
 
 # Time elapsed per engine tick.
-avo.TimingService.tickElapsed = -> tickElapsed
-avo.TimingService.setTickElapsed = (e) -> tickElapsed = e
+Timing.TimingService.tickElapsed = -> tickElapsed
+Timing.TimingService.setTickElapsed = (e) -> tickElapsed = e

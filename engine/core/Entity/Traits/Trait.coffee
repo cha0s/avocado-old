@@ -1,4 +1,7 @@
-class avo.Trait
+_ = require 'library/underscore'
+upon = require 'core/Utility/upon'
+
+module.exports = class
 
 	constructor: (@entity, state = {}) ->
 		

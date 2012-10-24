@@ -1,4 +1,11 @@
-class avo.Tileset
+
+CoreService = require('Core').CoreService
+Image = require('Graphics').Image
+Rectangle = require 'core/Extension/Rectangle'
+upon = require 'core/Utility/upon'
+Vector = require 'core/Extension/Vector'
+
+module.exports = Tileset = class
 
 	constructor: ->
 	
@@ -13,7 +20,7 @@ class avo.Tileset
 		@["#{i}_"] = O[i] for i of O
 	
 		uri = O.imageUri ? O.uri.replace '.tileset.json', '.png'
-		avo.Image.load(uri).then (@image_) =>
+		Image.load(uri).then (@image_) =>
 		
 			@setTileSize @tileSize_
 		
@@ -25,7 +32,7 @@ class avo.Tileset
 		
 		defer = upon.defer()
 		
-		avo.CoreService.readJsonResource(uri).then (O) =>
+		CoreService.readJsonResource(uri).then (O) =>
 			
 			tileset = new Tileset()
 			
@@ -40,8 +47,8 @@ class avo.Tileset
 		
 		tileset = new Tileset()
 		
-		tileset.tileSize_ = avo.Vector.copy @tileSize_
-		tileset.tiles_ = avo.Vector.copy @tiles_
+		tileset.tileSize_ = Vector.copy @tileSize_
+		tileset.tiles_ = Vector.copy @tiles_
 		
 		tileset.image_ = @image_
 		
@@ -54,26 +61,26 @@ class avo.Tileset
 		
 		return unless @image_?
 
-		@tiles_ = avo.Vector.div @image_.size(), @tileSize_
+		@tiles_ = Vector.div @image_.size(), @tileSize_
 	
 	render: (
 		location
 		destination
 		index
 		mode
-		tileClip = avo.Rectangle.compose [0, 0], @tileSize_
+		tileClip = Rectangle.compose [0, 0], @tileSize_
 	) ->
 		
 		return unless @image_?
 		
 		tileBox = @tileBox index
-		tileBox = avo.Rectangle.intersection(
+		tileBox = Rectangle.intersection(
 			tileBox
-			avo.Rectangle.translated tileClip, avo.Rectangle.position tileBox 
+			Rectangle.translated tileClip, Rectangle.position tileBox 
 		)
 		
 		@image_.render(
-			avo.Vector.add location, avo.Rectangle.position tileClip
+			Vector.add location, Rectangle.position tileClip
 			destination
 			255
 			mode
@@ -86,12 +93,12 @@ class avo.Tileset
 		
 		return false unless @image_?
 		
-		not avo.Vector.isNull @image_.size()
+		not Vector.isNull @image_.size()
 	
 	tileBox: (index) ->
 		
-		avo.Rectangle.compose(
-			avo.Vector.mul(
+		Rectangle.compose(
+			Vector.mul(
 				[index % @tiles_[0], Math.floor index / @tiles_[0]]
 				@tileSize_
 			)

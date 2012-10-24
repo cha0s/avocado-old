@@ -1,9 +1,9 @@
-# avo.**Transition** is a **Mixin** which lends the ability to handle timed
+# **Transition** is a **Mixin** which lends the ability to handle timed
 # transitions of arbitrary property methods residing on the mixed-in object.
 #
 # You can use this mixin like this:
 #
-#     avo.Mixin yourObject, avo.Transition
+#     Mixin yourObject, Transition
 #     
 #     yourObject.transition {x: 100}, 2000, 'easeOutQuad'
 #
@@ -14,7 +14,12 @@
 # This function was heavily inspired by the existence of
 # [jQuery.animate](http://api.jquery.com/animate/), though the API is ***NOT***
 # compatible.
-class avo.Transition
+
+Mixin = require 'core/Utility/Mixin'
+String = require 'core/Extension/String'
+TimingService = require('Timing').TimingService
+
+module.exports = Transition = class
 
 	# Registered easing functions. An easing function is a parametric equation
 	# that determines the value of a property over the time length of the
@@ -36,10 +41,10 @@ class avo.Transition
 			speed = if 'number' == typeof speed then speed else 100
 			
 			# If easing isn't passed in as a function, attempt to look it up
-			# as a string key into avo.Transition.easing. If that fails, then
+			# as a string key into Transition.easing. If that fails, then
 			# default to 'easeOutQuad'.
 			if 'function' isnt typeof easing
-				easing = easing && Transition.easing[easing] || avo.Transition.easing['easeOutQuad']
+				easing = easing && Transition.easing[easing] || Transition.easing['easeOutQuad']
 			
 			
 			# Store the original values of the properties and calculate the
@@ -51,7 +56,7 @@ class avo.Transition
 				value = this[i]()
 				original[i] = value
 				change[i] = prop - value
-				method[i] = avo.String.setterName i
+				method[i] = String.setterName i
 			
 			# Set up the transition object.
 			defer = upon.defer()
@@ -60,7 +65,7 @@ class avo.Transition
 				promise: defer.promise
 				then: defer.promise.then
 				duration: speed / 1000
-				start: avo.TimingService.elapsed()
+				start: TimingService.elapsed()
 				elapsed: 0
 				original: original
 				change: change
@@ -120,8 +125,8 @@ class avo.Transition
 				=>
 					
 					# Update the transition's elapsed time and tick.
-					transition.elapsed += avo.TimingService.elapsed() - transition.start
-					transition.start = avo.TimingService.elapsed()
+					transition.elapsed += TimingService.elapsed() - transition.start
+					transition.start = TimingService.elapsed()
 					transition.tick()
 				10
 			)
@@ -181,7 +186,7 @@ class avo.Transition
 ###
 # Not worth the trouble of translating.
 `
-avo.Transition.easing = {
+Transition.easing = {
 	linear: function (t, b, c, d) {
 		return b + c * t/d
 	},

@@ -2,7 +2,27 @@
 # and render timings to implement CPU relief by sleeping between, and a hard
 # loop where we manually update the time elapsed, since we need to invoke
 # intervals and timeouts out-of-band.
-avo.main = new class extends avo.Main
+
+Core = require 'Core'
+Logger = require 'core/Utility/Logger'
+Main = require 'core/Main'
+Timing = require 'Timing'
+
+# SPI proxies.
+require 'core/CoreService'
+
+require 'core/Graphics/GraphicsService'
+require 'core/Graphics/Font'
+require 'core/Graphics/Image'
+require 'core/Graphics/Window'
+
+require 'core/Sound/Music'
+require 'core/Sound/Sample'
+
+require 'core/Timing/TimingService'
+require 'core/Timing/Counter'
+
+main = new class extends Main
 
 	constructor: ->
 		
@@ -25,8 +45,8 @@ avo.main = new class extends avo.Main
 		while running
 			
 			# Update time and run intervals and timeouts.
-			avo.TimingService.setElapsed @timeCounter.current() / 1000
-			avo.tickTimeouts()
+			Timing.TimingService.setElapsed @timeCounter.current() / 1000
+			Timing.tickTimeouts()
 			
 			# Calculate the amount of time we can sleep and do so if we
 			# have enough time.
@@ -34,7 +54,7 @@ avo.main = new class extends avo.Main
 				@lastTickTime + @tickFrequency
 				@lastRenderTime + @renderFrequency
 			) - @timeCounter.current()
-			avo.timingService.sleep(
+			Timing.timingService.sleep(
 				nextWake * .8 if nextWake > 1
 			)
 	
@@ -53,18 +73,18 @@ avo.main = new class extends avo.Main
 		@lastRenderTime = @timeCounter.current()
 
 # Log and exit on error.
-avo.main.on 'error', (error) ->
+main.on 'error', (error) ->
 
 	message = if error.stack?
 		error.stack
 	else
 		error.toString()
-	avo.Logger.error message
+	Logger.error message
 	
-	avo.main.quit()
+	main.quit()
 
 # Register a stderr logging strategy.
-avo.Logger.registerStrategy (message, type) ->
+Logger.registerStrategy (message, type) ->
 	
 	# Colors for the console.
 	colors =
@@ -75,7 +95,7 @@ avo.Logger.registerStrategy (message, type) ->
 		reset : '\x1B[0m'
 		
 	# TYPE:
-	avo.CoreService.writeStderr "#{
+	Core.CoreService.writeStderr "#{
 		colors[type]
 	}#{
 		type.toUpperCase()
@@ -84,7 +104,7 @@ avo.Logger.registerStrategy (message, type) ->
 	}:"
 	
 	# message
-	avo.CoreService.writeStderr message
+	Core.CoreService.writeStderr message
 
 # GO!	
-avo.main.begin()
+main.begin()

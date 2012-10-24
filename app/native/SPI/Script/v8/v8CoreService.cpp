@@ -44,7 +44,7 @@ void v8CoreService::initialize(Handle<Object> target) {
 
 #ifdef AVOCADO_NODE
 	dlopen(
-		"./node_modules/CoreService.node", RTLD_NOW | RTLD_GLOBAL
+		"./node_modules/Core.node", RTLD_NOW | RTLD_GLOBAL
 	);
 #endif
 
@@ -92,9 +92,14 @@ v8::Handle<v8::Value> v8CoreService::ImplementSpi(const v8::Arguments &args) {
 v8::Handle<v8::Value> v8CoreService::ReadResource(const v8::Arguments& args) {
 	HandleScope scope;
 
-	Handle<Object> upon = Context::GetCurrent()->Global()->Get(
-		String::NewSymbol("upon")
-	).As<Object>();
+	Handle<Function> require = Context::GetCurrent()->Global()->Get(
+		String::New("require")
+	).As<Function>();
+
+	Handle<Value> argv[2];
+
+	argv[0] = String::NewSymbol("core/Utility/upon");
+	Handle<Object> upon = require->Call(require, 1, argv).As<Object>();
 
 	Handle<Object> defer = upon->Get(
 		String::NewSymbol("defer")

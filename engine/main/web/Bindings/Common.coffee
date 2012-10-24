@@ -1,3 +1,4 @@
+avo.EnginePath = '/engine'
 avo.ResourcePath = '/resource'
 
 Sounds = {}

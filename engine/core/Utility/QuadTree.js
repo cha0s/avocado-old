@@ -28,7 +28,7 @@
  * tree.clear() removes all items from the quadtree.
  */
 
-avo.QuadTree = function(args) {
+module.exports = function(args) {
 
     var node;
     var TOP_LEFT     = 0;

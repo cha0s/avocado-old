@@ -45,7 +45,7 @@ void v8TimingService::initialize(Handle<Object> target) {
 
 #ifdef AVOCADO_NODE
 	dlopen(
-		"./node_modules/TimingService.node", RTLD_NOW | RTLD_GLOBAL
+		"./node_modules/Timing.node", RTLD_NOW | RTLD_GLOBAL
 	);
 #endif
 

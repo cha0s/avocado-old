@@ -56,7 +56,7 @@ void v8GraphicsService::initialize(Handle<Object> target) {
 
 #ifdef AVOCADO_NODE
 	dlopen(
-		"./node_modules/GraphicsService.node", RTLD_NOW | RTLD_GLOBAL
+		"./node_modules/Graphics.node", RTLD_NOW | RTLD_GLOBAL
 	);
 #endif
 

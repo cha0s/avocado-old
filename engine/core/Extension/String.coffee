@@ -1,18 +1,18 @@
 # String operations.
 
-# avo.**String** is a utility class to help with string operations.
-avo.String = 
+# **String** is a utility class to help with string operations.
+module.exports = String = 
 	
 	# From a name, get a setter name. e.g.
 	# 
-	#     avocado> setterName 'width'
+	#     avocado> String.setterName 'width'
 	#     'setWidth'
-	setterName: (name) -> "set#{avo.String.capitalizeString name}"
+	setterName: (name) -> "set#{String.capitalizeString name}"
 	
 	# Capitalize the first character in the string. e.g.
 	# 
-	#     avocado> capitalizeString 'ruben'
+	#     avocado> String.capitalize 'ruben'
 	#     'Ruben'
-	capitalizeString: (string) ->
+	capitalize: (string) ->
 		
 		string.substr(0, 1).toUpperCase() + string.substr 1

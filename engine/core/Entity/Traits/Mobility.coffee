@@ -1,4 +1,9 @@
-class avo.EntityTraits['Mobility'] extends avo.Trait
+
+TimingService = require('Timing').TimingService
+Trait = require 'core/Entity/Traits/Trait'
+Vector = require 'core/Extension/Vector'
+
+module.exports = class extends Trait
 
 	defaults: ->
 		
@@ -50,12 +55,12 @@ class avo.EntityTraits['Mobility'] extends avo.Trait
 				if relative
 					hypotenuse = toPosition
 				else
-					hypotenuse = avo.Vector.hypotenuse(
+					hypotenuse = Vector.hypotenuse(
 						toPosition
 						position
 					)
 				
-				magnitude = avo.TimingService.tickElapsed() * @entity.movingSpeed()
+				magnitude = TimingService.tickElapsed() * @entity.movingSpeed()
 				
 				# Non-relative movement should check whether the movement has
 				# passed the destination. If so, the actual position is fixed up to
@@ -81,7 +86,7 @@ class avo.EntityTraits['Mobility'] extends avo.Trait
 						
 						return increment: 1
 						
-				newDirection = avo.Vector.toDirection hypotenuse, @entity.directionCount()
+				newDirection = Vector.toDirection hypotenuse, @entity.directionCount()
 				@entity.setDirection newDirection if direction isnt newDirection
 				
 				moveInvocations = @entity.invoke 'moveRequest', hypotenuse
@@ -89,7 +94,7 @@ class avo.EntityTraits['Mobility'] extends avo.Trait
 				
 					@entity.emit 'moving', hypotenuse
 				
-					@entity.setPosition avo.Vector.add position, avo.Vector.scale hypotenuse, magnitude
+					@entity.setPosition Vector.add position, Vector.scale hypotenuse, magnitude
 				
 				increment: 0
 
@@ -109,7 +114,7 @@ class avo.EntityTraits['Mobility'] extends avo.Trait
 				if @isMoving
 					
 					finishedMoving = @entity.move(@destination).increment > 0 
-					finishedMoving = avo.TimingService.elapsed() >= @movementExpectedTime unless finishedMoving
+					finishedMoving = TimingService.elapsed() >= @movementExpectedTime unless finishedMoving
 					if finishedMoving
 					
 						@entity.emit 'stoppedMoving'

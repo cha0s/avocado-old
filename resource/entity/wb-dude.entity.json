@@ -9,7 +9,7 @@
 			}
 		},
 		{
-			"type": "Physics"
+			"type": "Physics/2DPlatformerPhysics"
 		},
 		{
 			"type": "Mobility",

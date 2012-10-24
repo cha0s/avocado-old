@@ -1,16 +1,20 @@
 # SPI proxy and constant definitions.
 
 # Low-level API; writes a message to stderr (or equivalent, depending on
-# platform). 
-avo.CoreService.writeStderr = avo.CoreService['%writeStderr']
+# platform).
+
+Core = require 'Core'
+upon = require 'core/Utility/upon'
+ 
+Core.CoreService.writeStderr = Core.CoreService['%writeStderr']
 
 # Low-level API; reads a resource into a string. Returns a promise to be
 # resolved with the string containing the resource data. 
-avo.CoreService.readResource = avo.CoreService['%readResource']
+Core.CoreService.readResource = Core.CoreService['%readResource']
 
 # Low-level API; reads a JSON resource. Returns a promise to be resolved with
 # the parsed JSON object.
-avo.CoreService.readJsonResource = (uri) ->
+Core.CoreService.readJsonResource = (uri) ->
 	
 	defer = upon.defer()
 	

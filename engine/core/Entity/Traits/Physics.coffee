@@ -1,4 +1,9 @@
-class avo.Physics extends avo.Trait
+
+Box2D = require 'core/Physics/Box2D'
+Trait = require 'core/Entity/Traits/Trait'
+Vector = require 'core/Extension/Vector'
+
+module.exports = Physics = class extends Trait
 	
 	@PixelsPerMeter = 13
 	
@@ -13,8 +18,8 @@ class avo.Physics extends avo.Trait
 	translateBodyType = (type) ->
 	
 		switch type
-			when 'dynamic' then avo.b2Body.b2_dynamicBody
-			when 'static' then avo.b2Body.b2_staticBody
+			when 'dynamic' then Box2D.b2Body.b2_dynamicBody
+			when 'static' then Box2D.b2Body.b2_staticBody
 
 	adjustFilterBits: (filter) ->
 	
@@ -42,28 +47,28 @@ class avo.Physics extends avo.Trait
 		
 	resetTrait: ->
 		
-		return unless avo.world?
+		return unless Box2D.world?
 		
-		bodyDef = new avo.b2BodyDef()
+		bodyDef = new Box2D.b2BodyDef()
 		bodyDef.type = translateBodyType @state.bodyType
 		bodyDef.fixedRotation = true
 #		bodyDef.linearDamping = 0
 		
-		worldPosition = avo.Vector.scale(
+		worldPosition = Vector.scale(
 			[@entity.x(), -@entity.y()]
-			1 / avo.Physics.PixelsPerMeter
+			1 / Physics.PixelsPerMeter
 		)
 		
 		bodyDef.position.Set.apply bodyDef.position, worldPosition 
-		@state.body = avo.world.CreateBody bodyDef
+		@state.body = Box2D.world.CreateBody bodyDef
 		
-		box = new avo.b2PolygonShape()
-		box.SetAsBox @state.radius / avo.Physics.PixelsPerMeter, @state.radius / avo.Physics.PixelsPerMeter 
+		box = new Box2D.b2PolygonShape()
+		box.SetAsBox @state.radius / Physics.PixelsPerMeter, @state.radius / Physics.PixelsPerMeter 
 		
-		circle = new avo.b2CircleShape()
-		circle.SetRadius @state.radius / avo.Physics.PixelsPerMeter
+		circle = new Box2D.b2CircleShape()
+		circle.SetRadius @state.radius / Physics.PixelsPerMeter
 		
-		fixtureDef = new avo.b2FixtureDef()
+		fixtureDef = new Box2D.b2FixtureDef()
 		fixtureDef.shape = circle
 #		fixtureDef.shape = box
 		fixtureDef.density = 0
@@ -76,9 +81,9 @@ class avo.Physics extends avo.Trait
 	
 	removeTrait: ->
 		
-		return unless avo.world?
+		return unless Box2D.world?
 		
-		avo.world.DestroyBody @state.body
+		Box2D.world.DestroyBody @state.body
 	
 	actions:
 		

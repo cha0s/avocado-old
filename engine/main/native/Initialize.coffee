@@ -1,22 +1,41 @@
+global = this
+
+@require = (name) ->
+	
+	throw new Error "Module #{name} not found!" unless requires_[name]?
+	
+	unless requires_[name].object?
+		exports = {}
+		module = exports: exports
+		requires_[name].call global, module, exports
+		requires_[name] = object: module.exports
+		
+	requires_[name].object
+
+Core = require 'Core'
+Graphics = require 'Graphics'
+Timing = require 'Timing'
+Sound = require 'Sound'
+
 # Use SFML CoreService for now.
-avo.CoreService.implementSpi 'sfml'
-avo.coreService = new avo.CoreService()
+Core.CoreService.implementSpi 'sfml'
+Core.coreService = new Core.CoreService()
 
 # Use SFML GraphicsService for now.
-avo.GraphicsService.implementSpi 'sfml'
-avo.graphicsService = new avo.GraphicsService()
+Graphics.GraphicsService.implementSpi 'sfml'
+Graphics.graphicsService = new Graphics.GraphicsService()
 
 # Use SFML TimingService for now.
-avo.TimingService.implementSpi 'sfml'
-avo.timingService = new avo.TimingService()
+Timing.TimingService.implementSpi 'sfml'
+Timing.timingService = new Timing.TimingService()
 
 # Use SFML SoundService for now.
-avo.SoundService.implementSpi 'sfml'
-avo.soundService = new avo.SoundService()
+Sound.SoundService.implementSpi 'sfml'
+Sound.soundService = new Sound.SoundService()
 
 # Shoot for 60 FPS input and render.
-avo.ticksPerSecondTarget = 120
-avo.rendersPerSecondTarget = 80
+Timing.ticksPerSecondTarget = 120
+Timing.rendersPerSecondTarget = 80
 
 handles = {}
 handleIndex = 1
@@ -29,7 +48,7 @@ setCallback = (fn, duration, O, isInterval) ->
 	fn: fn
 	O: O ?= this
 	duration: duration / 1000
-	thisCall: avo.TimingService.elapsed()
+	thisCall: Timing.TimingService.elapsed()
 	isInterval: isInterval
 
 newHandle = (fn, duration, O, isInterval) ->
@@ -60,17 +79,17 @@ clearHandle = (handle) ->
 		handleFreeIds[id] = true
 		handleFreeList.push id
 
-avo['%setTimeout'] = (fn, duration, O) -> newHandle fn, duration, O, false
+Timing['%setTimeout'] = (fn, duration, O) -> newHandle fn, duration, O, false
 
-avo['%setInterval'] = (fn, duration, O) -> newHandle fn, duration, O, true
+Timing['%setInterval'] = (fn, duration, O) -> newHandle fn, duration, O, true
 
-avo['%clearTimeout'] = avo['%clearInterval'] = clearHandle
+Timing['%clearTimeout'] = Timing['%clearInterval'] = clearHandle
 
-avo.tickTimeouts = ->
+Timing.tickTimeouts = ->
 	
 	for id, handle of handles
 		
-		if avo.TimingService.elapsed() >= handle.thisCall + handle.duration
+		if Timing.TimingService.elapsed() >= handle.thisCall + handle.duration
 			
 			if not handle.isInterval
 			
@@ -78,7 +97,7 @@ avo.tickTimeouts = ->
 				
 			else
 			
-				handle.thisCall = avo.TimingService.elapsed()
+				handle.thisCall = Timing.TimingService.elapsed()
 
 			handle.fn.apply handle.O
 			

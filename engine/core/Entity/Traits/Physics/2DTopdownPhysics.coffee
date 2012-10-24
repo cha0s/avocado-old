@@ -1,4 +1,10 @@
-class avo.EntityTraits['2DTopdownPhysics'] extends avo.Physics
+
+Box2D = require 'core/Physics/Box2D'
+Physics = require 'core/Entity/Traits/Physics'
+Trait = require 'core/Entity/Traits/Trait'
+Vector = require 'core/Extension/Vector'
+
+module.exports = class extends Physics
 	
 	defaults: ->
 		
@@ -12,15 +18,15 @@ class avo.EntityTraits['2DTopdownPhysics'] extends avo.Physics
 		
 		moveRequest: (hypotenuse) ->
 		
-			return unless avo.world?
+			return unless Box2D.world?
 			
-			hypotenuse = avo.Vector.scale(
-				hypotenuse, @entity.movingSpeed() / avo.Physics.PixelsPerMeter
+			hypotenuse = Vector.scale(
+				hypotenuse, @entity.movingSpeed() / Physics.PixelsPerMeter
 			)
 			
 			@entity.emit 'moving', hypotenuse
 			
-			request = avo.Vector.scale(
+			request = Vector.scale(
 				hypotenuse
 				@state.floorFriction
 			)
@@ -45,7 +51,7 @@ class avo.EntityTraits['2DTopdownPhysics'] extends avo.Physics
 							request[i] = hypotenuse[i] - vr
 					
 			@state.body.ApplyImpulse(
-				new avo.b2Vec2 request[0], -request[1]
+				new Box2D.b2Vec2 request[0], -request[1]
 				@state.body.GetWorldCenter()
 			)
 			
@@ -56,23 +62,23 @@ class avo.EntityTraits['2DTopdownPhysics'] extends avo.Physics
 			weight: -100
 			f: ->
 				
-				return unless avo.world?
+				return unless Box2D.world?
 				return unless @state.body?
 				
 				{x, y} = @state.body.GetLinearVelocity()
 				unless x is 0 and y is 0
 					
-					velocity = avo.Vector.scale(
+					velocity = Vector.scale(
 						[-x, -y]
 						@state.floorFriction
 					)
 					@state.body.ApplyImpulse(
-						new avo.b2Vec2 velocity[0], velocity[1]
+						new Box2D.b2Vec2 velocity[0], velocity[1]
 						@state.body.GetWorldCenter()
 					)
 					
 				{x, y} = @state.body.GetPosition()
-				@entity.setPosition avo.Vector.scale(
+				@entity.setPosition Vector.scale(
 					[x, -y]
-					avo.Physics.PixelsPerMeter
+					Physics.PixelsPerMeter
 				)

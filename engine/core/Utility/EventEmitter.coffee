@@ -1,7 +1,10 @@
 # avo.**EventEmitter** is a mixin which lends the ability to emit events and
 # manage the registration of listeners who listen for the emission of the
 # events.
-class avo.EventEmitter
+
+_ = require 'library/underscore'
+
+module.exports = class
 
 	# Keeping track of events registered against this object.
 	@::events_ = {}
@@ -40,7 +43,7 @@ class avo.EventEmitter
 		@namespaces_[info.namespace] = {} if not @namespaces_[info.namespace]?
 		
 		@events_[info.event][f] =
-			f: f.bind that
+			f: _.bind f, that
 			namespace: info.namespace
 			
 		@namespaces_[info.namespace][f] =

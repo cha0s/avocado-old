@@ -1,4 +1,4 @@
-# avo.**AbstractState** is the abstract class which all states in the Avocado
+# **AbstractState** is the abstract class which all states in the Avocado
 # engine extend.
 #
 # Avocado is always in a State, except during the initialization phase, and
@@ -7,7 +7,10 @@
 # States will never be destroyed during the lifecycle of the engine. Remember
 # this, as it means that no child objects will be garbage collected unless
 # you delete them!
-class avo.AbstractState
+
+upon = require 'core/Utility/upon'
+
+module.exports = class
 	
 	# When the state is first loaded, initialize is called. This is used to
 	# initialize the State. You can load resources that are to remain as

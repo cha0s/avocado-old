@@ -1,4 +1,11 @@
-class avo.Room
+
+_ = require 'library/underscore'
+Entity = require 'core/Entity/Entity'
+TileLayer = require 'core/Environment/2D/TileLayer'
+upon = require 'core/Utility/upon'
+Vector = require 'core/Extension/Vector'
+
+module.exports = Room = class
 	
 	@layerCount: 5
 		
@@ -10,7 +17,7 @@ class avo.Room
 		@entities_ = []
 		@collision_ = []
 		
-		@layers_[i] = new avo.TileLayer() for i in [0...avo.Room.layerCount]
+		@layers_[i] = new TileLayer() for i in [0...Room.layerCount]
 
 	fromObject: (O) ->
 	
@@ -20,10 +27,10 @@ class avo.Room
 		
 		layerPromises = for layer, i in O.layers
 			
-			@layers_[i] = new avo.TileLayer()
+			@layers_[i] = new TileLayer()
 			@layers_[i].fromObject layer
 		
-		@resize avo.Vector.copy O.size
+		@resize Vector.copy O.size
 		
 		entityPromises = []
 		
@@ -35,7 +42,7 @@ class avo.Room
 				
 				entityDefer = upon.defer()
 				
-				avo.Entity.load(entityInfo.uri).then (entity) =>
+				Entity.load(entityInfo.uri).then (entity) =>
 				
 					extensionDefer = upon.defer()
 					
@@ -61,7 +68,7 @@ class avo.Room
 		
 	copy: ->
 		
-		room = new avo.Room()
+		room = new Room()
 		room.fromObject @toJSON()
 		
 		room
@@ -74,17 +81,17 @@ class avo.Room
 		
 	startParallax: ->
 		
-		@layers_[i].startParallax() for i in [0...avo.Room.layerCount]
+		@layers_[i].startParallax() for i in [0...Room.layerCount]
 		
 	stopParallax: ->
 		
-		@layers_[i].stopParallax() for i in [0...avo.Room.layerCount]
+		@layers_[i].stopParallax() for i in [0...Room.layerCount]
 	
 	resize: (w, h) ->
 		
 		@size_ = if w instanceof Array then w else [w, h]
 		
-		for i in [0...avo.Room.layerCount]
+		for i in [0...Room.layerCount]
 			
 			@layers_[i] = @layers_[i].copy()
 			@layers_[i].resize w, h
@@ -121,11 +128,13 @@ class avo.Room
 	
 	toJSON: ->
 		
+		entities = _.map @entities_, (entity) ->
+			
+			uri: entity.uri
+			traits: entity.traitExtensions()
+		
 		name: @name_
 		size: @size_
 		layers: @layers_
 		collision: @collision_
-		entities: @entities_.map (entity) ->
-			
-			uri: entity.uri
-			traits: entity.traitExtensions()
+		entities: entities

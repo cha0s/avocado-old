@@ -1,6 +1,6 @@
 # Dynamic object composition helper. Most often used in an object's constructor
 # function, however *instance* can be any object instance.
-avo.Mixin = (instance, Mixins...) ->
+module.exports = (instance, Mixins...) ->
 	
 	# Each one of the mixins gets instantiated,
 	for Mixin in Mixins

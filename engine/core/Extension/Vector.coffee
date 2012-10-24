@@ -1,42 +1,45 @@
 # Vector operations.
 
-# avo.**Vector** is a utility class to help with vector operations. A vector
+# **Vector** is a utility class to help with vector operations. A vector
 # is implemented as a 2-element array. Element 0 is *x* and element 1 is *y*.
-avo.Vector = 
+
+_ = require 'library/underscore'
+
+module.exports = Vector = 
 
 	# Scale a vector. This multiplies *x* and *y* by **k**.
 	#
-	#     avocado> avo.Vector.scale [.5, 1.5], 2
+	#     avocado> Vector.scale [.5, 1.5], 2
 	#     [1, 3]
 	scale: (vector, k) -> [vector[0] * k, vector[1] * k]
 	
 	# Add two vectors.
 	#
-	#     avocado> avo.Vector.add [1, 2], [1, 1]
+	#     avocado> Vector.add [1, 2], [1, 1]
 	#     [2, 3]
 	add: (l, r) -> [l[0] + r[0], l[1] + r[1]]
 	
 	# Subtract two vectors. 
 	#
-	#     avocado> avo.Vector.sub [9, 5], [5, 2]
+	#     avocado> Vector.sub [9, 5], [5, 2]
 	#     [4, 3]
 	sub: (l, r) -> [l[0] - r[0], l[1] - r[1]]
 	
 	# Multiply two vectors. 
 	#
-	#     avocado> avo.Vector.mul [3, 5], [5, 5]
+	#     avocado> Vector.mul [3, 5], [5, 5]
 	#     [15, 25]
 	mul: (l, r) -> [l[0] * r[0], l[1] * r[1]]
 	
 	# Divide two vectors. 
 	#
-	#     avocado> avo.Vector.div [15, 5], [5, 5]
+	#     avocado> Vector.div [15, 5], [5, 5]
 	#     [3, 1]
 	div: (l, r) -> [l[0] / r[0], l[1] / r[1]]
 	
 	# Get the cartesian distance between two point vectors.
 	#
-	#     avocado> avo.Vector.div [0, 0], [1, 0]
+	#     avocado> Vector.div [0, 0], [1, 0]
 	#     1
 	cartesianDistance: (l, r) ->
 		
@@ -47,7 +50,7 @@ avo.Vector =
 	
 	# Clamp a vector's axes using a min vector and a max vector.
 	#
-	#     avocado> avo.Vector.clamp [-10, 10], [0, 0], [5, 5]
+	#     avocado> Vector.clamp [-10, 10], [0, 0], [5, 5]
 	#     [0, 5]
 	clamp: (vector, min, max) ->
 		
@@ -59,26 +62,26 @@ avo.Vector =
 	# Returns a deep copy of the vector.
 	#
 	#     avocado> vector = [0, 0]
-	#     avocado> otherVectory avo.Vector.copy vector
+	#     avocado> otherVectory Vector.copy vector
 	#     avocado> vector is otherVector
 	#     false
 	copy: (vector) -> [vector[0], vector[1]]
 	
 	# Check whether a vector equals another vector.
 	#
-	#     avocado> avo.Vector.equals [4, 4], [5, 4]
+	#     avocado> Vector.equals [4, 4], [5, 4]
 	#     false
 	#
-	#     avocado> avo.Vector.equals [4, 4], [4, 4]
+	#     avocado> Vector.equals [4, 4], [4, 4]
 	#     true
 	equals: (l, r) -> l[0] is r[0] and l[1] is r[1]
 	
 	# Checks whether a vector is [0, 0].
 	#
-	#     avocado> avo.Vector.zero [0, 0]
+	#     avocado> Vector.zero [0, 0]
 	#     true
 	#
-	#     avocado> avo.Vector.zero [0, 1]
+	#     avocado> Vector.zero [0, 1]
 	#     false
 	isZero: (vector) ->
 		
@@ -86,7 +89,7 @@ avo.Vector =
 	
 	# Round both axes of a vector.
 	#
-	#     avocado> avo.Vector.round [3.14, 4.70]
+	#     avocado> Vector.round [3.14, 4.70]
 	#     [3, 5]
 	round: (vector) ->
 		
@@ -97,25 +100,25 @@ avo.Vector =
 	
 	# Get the dot product of two vectors.
 	#
-	#     avocado> avo.Vector.dot [2, 3], [4, 5]
+	#     avocado> Vector.dot [2, 3], [4, 5]
 	#     23
 	dot: (l, r) -> l[0] * r[0] + l[1] * r[1]
 	
 	# Get a hypotenuse unit vector. If an origin vector is passed in, the
 	# hypotenuse is derived from the distance to the origin.
 	#
-	#     avocado> avo.Vector.hypotenuse [5, 5], [6, 7]
+	#     avocado> Vector.hypotenuse [5, 5], [6, 7]
 	#     [0.4472135954999579, 0.8944271909999159]
 	#
-	#     avocado> avo.Vector.hypotenuse [.5, .7]
+	#     avocado> Vector.hypotenuse [.5, .7]
 	#     [0.5812381937190965, 0.813733471206735]
 	hypotenuse: (unitOrDestination, origin = null) ->
 		
 		distanceOrUnit = unitOrDestination
-		distanceOrUnit = avo.Vector.sub distanceOrUnit, origin if origin?
+		distanceOrUnit = Vector.sub distanceOrUnit, origin if origin?
 		
-		return [0, 0] if 0 is dp = avo.Vector.dot distanceOrUnit, distanceOrUnit
-		hypotenuse = avo.Vector.scale(
+		return [0, 0] if 0 is dp = Vector.dot distanceOrUnit, distanceOrUnit
+		hypotenuse = Vector.scale(
 			distanceOrUnit
 			1 / Math.sqrt dp
 		)
@@ -128,7 +131,7 @@ avo.Vector =
 	
 	# Get the absolute values of the axes of a vector.
 	#
-	#     avocado> avo.Vector.abs [23, -5.20]
+	#     avocado> Vector.abs [23, -5.20]
 	#     [23, 5.20]
 	abs: (vector) ->
 		
@@ -139,7 +142,7 @@ avo.Vector =
 
 	# Floor both axes of a vector.
 	#
-	#     avocado> avo.Vector.floor [3.14, 4.70]
+	#     avocado> Vector.floor [3.14, 4.70]
 	#     [3, 4]
 	floor: (vector) ->
 		
@@ -152,10 +155,10 @@ avo.Vector =
 	# The algorithm prefers horizontal directions to vertical; if you move
 	# up-right or down-right you'll face right.
 	#
-	#     avocado> avo.Vector.isNull [1, 0]
+	#     avocado> Vector.isNull [1, 0]
 	#     true
 	#
-	#     avocado> avo.Vector.isNull [1, 1]
+	#     avocado> Vector.isNull [1, 1]
 	#     false
 	isNull: (vector) -> vector[0] is 0 or vector[1] is 0
 	
@@ -166,14 +169,14 @@ avo.Vector =
 	# * 2: Down
 	# * 3: Left
 	#
-	#     avocado> avo.Vector.toDirection4 [0, 1]
+	#     avocado> Vector.toDirection4 [0, 1]
 	#     2
 	#
-	#     avocado> avo.Vector.toDirection4 [1, 0]
+	#     avocado> Vector.toDirection4 [1, 0]
 	#     1
 	toDirection4: (vector) ->
 		
-		vector = avo.Vector.hypotenuse vector
+		vector = Vector.hypotenuse vector
 		
 		#  */
 
@@ -196,14 +199,14 @@ avo.Vector =
 	# * 6: Down-Left
 	# * 7: Up-Left
 	#
-	#     avocado> avo.Vector.toDirection8 [1, 1]
+	#     avocado> Vector.toDirection8 [1, 1]
 	#     5
 	#
-	#     avocado> avo.Vector.toDirection8 [1, 0]
+	#     avocado> Vector.toDirection8 [1, 0]
 	#     1
 	toDirection8: (vector) ->
 		
-		vector = avo.Vector.hypotenuse vector
+		vector = Vector.hypotenuse vector
 
 		circumferenceRads = Math.PI * 2
 		
@@ -228,36 +231,36 @@ avo.Vector =
 	
 	# Convert a vector to a *directionCount*-direction.
 	#
-	#     avocado> avo.Vector.toDirection [0, 1], 4
+	#     avocado> Vector.toDirection [0, 1], 4
 	#     2
 	toDirection: (vector, directionCount) ->
 		
 		switch directionCount
 			
-			when 4 then avo.Vector.toDirection4 vector
-			when 8 then avo.Vector.toDirection8 vector
+			when 4 then Vector.toDirection4 vector
+			when 8 then Vector.toDirection8 vector
 			else
 				throw new Error "Unsupported conversion of vector to #{directionCount}-direction."
 	
 	# Convert a vector to an object.
 	#
-	#     avocado> avo.Vector.toObject [3, 4]
+	#     avocado> Vector.toObject [3, 4]
 	#     {x: 3, y: 4}
 	toObject: (vector) -> x: vector[0], y: vector[1]
 	
 	# Mix the vector methods into a vector instance.
 	#
-	#     avocado> v = avo.Vector.mixin [3, 4]
+	#     avocado> v = Vector.mixin [3, 4]
 	#     avocado> v.add [4, 5]
 	#     [7, 9]
 	mixin: (v) ->
 		
-		for own method, f of avo.Vector
+		for own method, f of Vector
 			continue if _.contains ['mixin'], method
 			
 			v[method] = _.bind f, v, v
 		
-		v[method] = _.compose avo.Vector.mixin, v[method] for method in [
+		v[method] = _.compose Vector.mixin, v[method] for method in [
 			'scale', 'add', 'sub', 'div', 'copy', 'isZero', 'round', 'floor'
 			'isNull', 'mul', 'equals'
 		]

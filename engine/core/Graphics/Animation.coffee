@@ -1,12 +1,23 @@
 # Animations control animating images.
-class avo.Animation
+
+CoreService = require('Core').CoreService
+DisplayCommand = require 'core/Graphics/DisplayCommand'
+EventEmitter = require 'core/Utility/EventEmitter'
+Image = require('Graphics').Image
+Mixin = require 'core/Utility/Mixin'
+Rectangle = require 'core/Extension/Rectangle'
+Ticker = require 'core/Timing/Ticker'
+upon = require 'core/Utility/upon'
+Vector = require 'core/Extension/Vector'
+
+module.exports = Animation = class
 	
 	constructor: ->
 	
-		avo.Mixin this, avo.EventEmitter
+		Mixin this, EventEmitter
 		
 		# The image to animate.
-		@image_ = new avo.Image()
+		@image_ = new Image()
 		
 		# The current frame index.
 		@currentFrameIndex_ = 0
@@ -19,7 +30,7 @@ class avo.Animation
 		
 		# The rate at which the frames increment. Default to 10 FPS.
 		@frameRate_ = 100
-		@frameTicker_ = new avo.Ticker @frameRate_
+		@frameTicker_ = new Ticker @frameRate_
 		
 		# Total number of frames in this animation.
 		@frameCount_ = 1
@@ -48,9 +59,9 @@ class avo.Animation
 		# if a URI wasn't given.
 		O.imageUri = O.uri.replace '.animation.json', '.png' if not O.imageUri?
 		
-		@frameTicker_ = new avo.Ticker @frameRate_
+		@frameTicker_ = new Ticker @frameRate_
 		
-		avo.Image.load(O.imageUri).then (image) =>
+		Image.load(O.imageUri).then (image) =>
 			
 			# Set and break up the image into frames.
 			@setImage image, O.frameSize
@@ -63,10 +74,10 @@ class avo.Animation
 		
 		defer = upon.defer()
 		
-		avo.CoreService.readJsonResource(uri).then (O) ->
+		CoreService.readJsonResource(uri).then (O) ->
 			O.uri = uri
 			
-			animation = new avo.Animation()
+			animation = new Animation()
 			animation.fromObject(O).then ->
 				
 				defer.resolve animation
@@ -94,7 +105,7 @@ class avo.Animation
 		# size. Width is calculated by dividing the total spritesheet width by
 		# the number of frames, and the height is the height of the spritesheet
 		# divided by the number of directions in the animation.
-		@frameSize_ = avo.Vector.div(
+		@frameSize_ = Vector.div(
 			@image_.size()
 			[@frameCount_, @directionCount_]
 		)
@@ -134,15 +145,15 @@ class avo.Animation
 	calculateFrameArea: ->
 		
 		# Make sure the matrix changed before trying to allocate a new one.
-		matrix = avo.Vector.div @image_.size(), @frameSize_
-		return if avo.Vector.equals matrix, @frameArea_
+		matrix = Vector.div @image_.size(), @frameSize_
+		return if Vector.equals matrix, @frameArea_
 
 		@frameArea_ = matrix
 	
 	# Get the position of one frame within the image.
 	framePosition: (index = @currentFrameIndex_) ->
 
-		avo.Vector.mul @frameSize_, [
+		Vector.mul @frameSize_, [
 			Math.floor index % @frameArea_[0]
 			@currentDirection_ + Math.floor(index / @frameArea_[0]) % @frameArea_[1]
 		]
@@ -201,16 +212,16 @@ class avo.Animation
 	) ->
 		return if @frameCount_ is 0
 		
-		if avo.Rectangle.isNull clip
+		if Rectangle.isNull clip
 			clip[2] = @frameSize_[0]
 			clip[3] = @frameSize_[1]
 		
-		rect = avo.Rectangle.compose(
-			avo.Vector.add(
+		rect = Rectangle.compose(
+			Vector.add(
 				@framePosition index
-				avo.Rectangle.position clip
+				Rectangle.position clip
 			)
-			avo.Rectangle.size clip
+			Rectangle.size clip
 		)
 		
 		@image_.render(
@@ -231,7 +242,7 @@ class avo.Animation
 		frameCount: @frameCount_
 		frameSize: @frameSize_
 
-class avo.AnimationDisplayCommand extends avo.DisplayCommand
+module.exports.DisplayCommand = class extends DisplayCommand
 	
 	constructor: (
 		list
@@ -239,8 +250,8 @@ class avo.AnimationDisplayCommand extends avo.DisplayCommand
 		rectangle = [0, 0, 0, 0]
 	) ->
 		
-		rectangle = avo.Rectangle.compose(
-			avo.Rectangle.position rectangle
+		rectangle = Rectangle.compose(
+			Rectangle.position rectangle
 			@animation_.frameSize()
 		) unless rectangle[2] and rectangle[3]
 		
@@ -254,7 +265,7 @@ class avo.AnimationDisplayCommand extends avo.DisplayCommand
 			position
 			destination
 			255
-			avo.Image.DrawMode_Blend
+			Image.DrawMode_Blend
 			clip
 		)
 

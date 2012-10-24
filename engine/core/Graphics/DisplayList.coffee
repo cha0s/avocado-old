@@ -1,18 +1,24 @@
-# avo.**DisplayList** is a
+# **DisplayList** is a
 # [display list](http://en.wikipedia.org/wiki/Display_list). It is used for
 # rendering graphics scene in an optimized way.
 #
 # The display list manages which parts of the scene have actually changed, and
 # only renders the changes.
-class avo.DisplayList
+
+_ = require 'library/underscore'
+QuadTree = require 'core/Utility/QuadTree'
+Rectangle = require 'core/Extension/Rectangle'
+Vector = require 'core/Extension/Vector'
+
+module.exports = class
 	
 	constructor: (rectangle, worldRectangle) ->
 		
-		args = avo.Rectangle.toObject worldRectangle, true
+		args = Rectangle.toObject worldRectangle, true
 		args.maxChildren = 2
 		args.maxDepth = 4
 		
-		@quadTree = new avo.QuadTree args
+		@quadTree = new QuadTree args
 		
 		@lastDirtyRectangle_ = [0, 0, 0, 0]
 		@dirtyCommands_ = {}
@@ -21,7 +27,7 @@ class avo.DisplayList
 		@setRectangle rectangle
 		
 	setRectangle: (rectangle) ->
-		return if @rectangle_? and avo.Rectangle.equals @rectangle_, rectangle
+		return if @rectangle_? and Rectangle.equals @rectangle_, rectangle
 		
 		@rectangle_ = rectangle
 		@lastDirtyRectangle_ = [0, 0, 0, 0]
@@ -29,16 +35,16 @@ class avo.DisplayList
 		
 	rectangle: -> @rectangle_
 	
-	setPosition: (position) -> @setRectangle avo.Rectangle.compose(
+	setPosition: (position) -> @setRectangle Rectangle.compose(
 		position
-		avo.Rectangle.size @rectangle_
+		Rectangle.size @rectangle_
 	)
 	
-	position: -> avo.Rectangle.position @rectangle_
+	position: -> Rectangle.position @rectangle_
 	
 	addCommandToQuadTree: (command) ->
 	
-		O = avo.Rectangle.toObject(
+		O = Rectangle.toObject(
 			command.relativeRectangle @rectangle_
 			true
 		)
@@ -66,9 +72,9 @@ class avo.DisplayList
 			
 			@dirtyCommands_[command.commandId_] = command
 			
-			@lastDirtyRectangle_ = avo.Rectangle.united(
+			@lastDirtyRectangle_ = Rectangle.united(
 				@lastDirtyRectangle_
-				avo.Rectangle.intersection(
+				Rectangle.intersection(
 					command.relativeRectangle @rectangle_
 					@rectangle_
 				)
@@ -86,7 +92,7 @@ class avo.DisplayList
 	markCommandsAsDirty: (commandsAreDirty) ->
 		
 		affectedCommands = @quadTree.retrieve(
-			avo.Rectangle.toObject(
+			Rectangle.toObject(
 				@rectangle_
 				true
 			)
@@ -107,22 +113,22 @@ class avo.DisplayList
 		renderCommand = (command, intersection) =>
 			
 			# The actual position where rendering occurs.
-			position = avo.Rectangle.position intersection
-			position = avo.Vector.sub(
+			position = Rectangle.position intersection
+			position = Vector.sub(
 				position
-				avo.Rectangle.position @rectangle_
+				Rectangle.position @rectangle_
 			)
 			
 			# The clipping rectangle for rendering this command.
-			clip = avo.Rectangle.compose(
-				avo.Vector.sub(
+			clip = Rectangle.compose(
+				Vector.sub(
 					position
-					avo.Vector.sub(
-						avo.Rectangle.position command.relativeRectangle @rectangle_
-						avo.Rectangle.position @rectangle_
+					Vector.sub(
+						Rectangle.position command.relativeRectangle @rectangle_
+						Rectangle.position @rectangle_
 					)
 				)
-				avo.Rectangle.size intersection
+				Rectangle.size intersection
 			)
 			
 			# Render this command.
@@ -130,8 +136,8 @@ class avo.DisplayList
 			
 		# Keep track of the display offset so we can translate the resulting
 		# dirty rectangle back later.
-		offset = avo.Vector.scale(
-			avo.Rectangle.position @rectangle_
+		offset = Vector.scale(
+			Rectangle.position @rectangle_
 			-1
 		)
 		
@@ -141,18 +147,18 @@ class avo.DisplayList
 		@dirtyCommands_ = (v for k, v of @dirtyCommands_) 
 		for dirtyCommand in sortCommands @dirtyCommands_
 			
-			intersection = avo.Rectangle.intersection(
+			intersection = Rectangle.intersection(
 				dirtyCommand.relativeRectangle @rectangle_
 				@rectangle_
 			)
-			continue if avo.Rectangle.isNull intersection
+			continue if Rectangle.isNull intersection
 			
 			dirtyCommands.push dirtyCommand
 			
-			dirtyRectangle = avo.Rectangle.united dirtyRectangle, intersection
+			dirtyRectangle = Rectangle.united dirtyRectangle, intersection
 		
-		totalDirtyRectangle = avo.Rectangle.intersection(
-			avo.Rectangle.united @lastDirtyRectangle_, dirtyRectangle
+		totalDirtyRectangle = Rectangle.intersection(
+			Rectangle.united @lastDirtyRectangle_, dirtyRectangle
 			@rectangle_
 		)
 		
@@ -161,7 +167,7 @@ class avo.DisplayList
 			@addCommandToQuadTree command
 		
 		affectedCommands = @quadTree.retrieve(
-			avo.Rectangle.toObject(
+			Rectangle.toObject(
 				totalDirtyRectangle
 				true
 			)
@@ -174,11 +180,11 @@ class avo.DisplayList
 		if cleanCommands.length > 0
 			for command in cleanCommands
 				
-				intersection = avo.Rectangle.intersection(
+				intersection = Rectangle.intersection(
 					command.relativeRectangle @rectangle_
 					@lastDirtyRectangle_
 				)
-				continue if avo.Rectangle.isNull intersection
+				continue if Rectangle.isNull intersection
 				
 				renderCommand command, intersection
 				
@@ -186,11 +192,11 @@ class avo.DisplayList
 			
 		for command in dirtyCommands
 
-			intersection = avo.Rectangle.intersection(
+			intersection = Rectangle.intersection(
 				command.relativeRectangle @rectangle_
 				dirtyRectangle
 			)
-			continue if avo.Rectangle.isNull intersection
+			continue if Rectangle.isNull intersection
 			
 			renderCommand command, intersection
 			
@@ -203,76 +209,4 @@ class avo.DisplayList
 		
 		# Let caller know which areas are actually dirty.
 		_.map renderRectangles, (renderRectangle) ->
-			avo.Rectangle.translated renderRectangle, offset
-	
-# avo.**DisplayCommand** is an abstract base class to implement a display
-# command.
-class avo.DisplayCommand
-
-	constructor: (@list_, rectangle = [0, 0, 0, 0]) ->
-		
-		avo.Mixin this, avo.EventEmitter
-		
-		@rectangle_ = [0, 0, 0, 0]
-		@setRectangle rectangle
-		@setIsRelative true
-		
-		@list_.addCommand this
-		@markAsDirty true
-	
-	list: -> @list_
-		
-	markAsDirty: (rectangle) ->
-		
-	setIsRelative: (isRelative) -> @isRelative_ = isRelative
-	isRelative: -> @isRelative_
-	
-	setRectangle: (rectangle) ->
-		
-		return if @rectangle_? and avo.Rectangle.equals rectangle, @rectangle_
-		
-		@markAsDirty rectangle
-		@rectangle_ = avo.Rectangle.round rectangle
-		
-	rectangle: -> @rectangle_
-	
-	setPosition: (position) ->
-		
-		@setRectangle avo.Rectangle.compose(
-			position
-			avo.Rectangle.size @rectangle_
-		)
-		
-	position: -> avo.Rectangle.position @rectangle_
-	
-	setSize: (size) ->
-		
-		@setRectangle avo.Rectangle.compose(
-			avo.Rectangle.position @rectangle_
-			size
-		)
-		
-	size: -> avo.Rectangle.size @rectangle_
-	
-	calculateRelative: (rectangle, visible) ->
-		
-		if @isRelative()
-			rectangle
-		else
-			avo.Rectangle.compose(
-				avo.Vector.add(
-					avo.Rectangle.position visible
-					avo.Rectangle.position rectangle
-				)
-				avo.Rectangle.size rectangle
-			)
-			
-	relativeRectangle: (visible) ->
-		
-		@calculateRelative @rectangle_, visible
-		
-	relativePosition: (visible) ->
-		
-		avo.Rectangle.position @relativeRectangle visible
-	
-	render: (position, clip, destination) ->
+			Rectangle.translated renderRectangle, offset

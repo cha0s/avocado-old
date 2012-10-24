@@ -1,6 +1,15 @@
-# avo.**TileLayer** represents a 2D tile matrix. It is a glorified array of
+# **TileLayer** represents a 2D tile matrix. It is a glorified array of
 # tile indices which index into a tileset.
-class avo.TileLayer
+
+_ = require 'library/underscore'
+DisplayCommand = require 'core/Graphics/DisplayCommand'
+Graphics = require 'Graphics'
+Image = require('Graphics').Image
+Rectangle = require 'core/Extension/Rectangle'
+upon = require 'core/Utility/upon'
+Vector = require 'core/Extension/Vector'
+
+module.exports = TileLayer = class
 	
 	constructor: ->
 	
@@ -16,7 +25,7 @@ class avo.TileLayer
 		
 		@["#{i}_"] = O[i] for i of O
 		
-		@size_ = avo.Vector.copy @size_
+		@size_ = Vector.copy @size_
 		
 		@tileIndices_ = @tileIndices_.slice 0 if @tileIndices_
 			
@@ -136,7 +145,7 @@ class avo.TileLayer
 		tileset
 		destination
 		clip = [0, 0, 0, 0]
-		mode = avo.Image.DrawMode_Blend
+		mode = Image.DrawMode_Blend
 	) ->
 		
 		return unless @tileIndices_?
@@ -147,8 +156,8 @@ class avo.TileLayer
 			
 			index = @tileIndex matrix.start
 			tileset.render(
-				avo.Vector.sub(
-					avo.Vector.mul matrix.start, tileSize
+				Vector.sub(
+					Vector.mul matrix.start, tileSize
 					position
 				)
 				destination
@@ -162,8 +171,8 @@ class avo.TileLayer
 # results.
 matrixBreaker = (clip, unit) ->
 
-	start = avo.Vector.floor avo.Vector.div(
-		avo.Rectangle.position clip
+	start = Vector.floor Vector.div(
+		Rectangle.position clip
 		unit
 	)
 	endOffset = [
@@ -172,16 +181,16 @@ matrixBreaker = (clip, unit) ->
 	]
 	start: start
 	endOffset: endOffset
-	area: avo.Vector.add(
+	area: Vector.add(
 		[
 			if endOffset[0] then 1 else 0
 			if endOffset[1] then 1 else 0
 		]
-		avo.Vector.sub(
-			avo.Vector.floor avo.Vector.div(
-				avo.Vector.add(
-					avo.Rectangle.position clip
-					avo.Rectangle.size clip
+		Vector.sub(
+			Vector.floor Vector.div(
+				Vector.add(
+					Rectangle.position clip
+					Rectangle.size clip
 				)
 				unit
 			)
@@ -192,7 +201,7 @@ matrixBreaker = (clip, unit) ->
 		clip[0] % unit[0]
 		clip[1] % unit[1]
 	]
-	clip: avo.Rectangle.compose [0, 0], unit
+	clip: Rectangle.compose [0, 0], unit
 	
 # Helper function - Eases rendering of clipped tile matrices.
 matrixRenderer = (clip, unit, f) ->
@@ -225,7 +234,7 @@ matrixRenderer = (clip, unit, f) ->
 		
 	undefined
 
-class avo.TileLayerDisplayCommand extends avo.DisplayCommand
+module.exports.DisplayCommand = class extends DisplayCommand
 	
 	constructor: (list, @layer_, @tileset_, rectangle = [0, 0, 0, 0]) ->
 		super list, rectangle
@@ -237,29 +246,29 @@ class avo.TileLayerDisplayCommand extends avo.DisplayCommand
 		# approach allocates 16 half-window-sized images which compose a 4x4
 		# grid. The visible portion is in the middle of this grid, and when
 		# the edge of the grid is approached, the next image is cached. 
-		@halfWindowSize_ = avo.Vector.scale avo.window.size(), .5
+		@halfWindowSize_ = Vector.scale Graphics.window.size(), .5
 		
 	render: (position, clip, destination) ->
 		
 		if _.isEmpty @cache_
 			for i in [0...16]
-				@cache_[i] = new avo.Image @halfWindowSize_
+				@cache_[i] = new Image @halfWindowSize_
 		
-		section = avo.Vector.mul(
-			avo.Vector.floor(
-				avo.Vector.div @list().position(), @halfWindowSize_
+		section = Vector.mul(
+			Vector.floor(
+				Vector.div @list().position(), @halfWindowSize_
 			)
 			@halfWindowSize_
 		)
 		
 		cache = {}
 		
-		offset = avo.Vector.scale @halfWindowSize_, -1
+		offset = Vector.scale @halfWindowSize_, -1
 		for y in [0...4]
 			for x in [0...4]
 				
-				rect = avo.Rectangle.compose(
-					avo.Vector.add offset, section
+				rect = Rectangle.compose(
+					Vector.add offset, section
 					@halfWindowSize_
 				)
 				
@@ -278,12 +287,12 @@ class avo.TileLayerDisplayCommand extends avo.DisplayCommand
 				
 		@cache_ = cache
 		
-		offset = avo.Vector.scale @halfWindowSize_, -1
+		offset = Vector.scale @halfWindowSize_, -1
 		for y in [0...4]
 			for x in [0...4]
 				
-				rect = avo.Rectangle.compose(
-					avo.Vector.add offset, section
+				rect = Rectangle.compose(
+					Vector.add offset, section
 					@halfWindowSize_
 				)
 				
@@ -297,12 +306,12 @@ class avo.TileLayerDisplayCommand extends avo.DisplayCommand
 				unless @cache_[rect]?
 
 					@layer_.render(
-						avo.Rectangle.position rect
+						Rectangle.position rect
 						@tileset_
 						@cache_[rect] = @freeQuads_.pop()
 						rect
 						255
-						avo.Image.DrawMode_Replace
+						Image.DrawMode_Replace
 					)
 					
 			offset[0] -= @halfWindowSize_[0] * 4
@@ -310,21 +319,21 @@ class avo.TileLayerDisplayCommand extends avo.DisplayCommand
 		
 		matrixRenderer clip, @halfWindowSize_, (matrix) =>
 			
-			rect = avo.Rectangle.compose(
-				avo.Vector.mul matrix.start, @halfWindowSize_
+			rect = Rectangle.compose(
+				Vector.mul matrix.start, @halfWindowSize_
 				@halfWindowSize_
 			)
 			
 			@cache_[rect].render(
-				avo.Vector.sub(
-					avo.Vector.add(
-						avo.Vector.mul matrix.start, @halfWindowSize_
+				Vector.sub(
+					Vector.add(
+						Vector.mul matrix.start, @halfWindowSize_
 						matrix.clip
 					)
 					@list().position()
 				)
 				destination
 				255
-				avo.Image.DrawMode_Blend
+				Image.DrawMode_Blend
 				matrix.clip
 			)

@@ -1,4 +1,12 @@
-class avo.EntityTraits['Visibility'] extends avo.Trait
+
+_ = require 'library/underscore'
+Animation = require 'core/Graphics/Animation'
+Rectangle = require 'core/Extension/Rectangle'
+Trait = require 'core/Entity/Traits/Trait'
+upon = require 'core/Utility/upon'
+Vector = require 'core/Extension/Vector'
+
+module.exports = Visibility = class extends Trait
 	
 	Visibility = this
 	Visibility.prefix = 'environment'
@@ -49,7 +57,7 @@ class avo.EntityTraits['Visibility'] extends avo.Trait
 		
 		promiseAnimation = (animation, index) =>
 			
-			avo.Animation.load(animation.animationUri).then (animationObject) =>
+			Animation.load(animation.animationUri).then (animationObject) =>
 			
 				animation.object = animationObject
 				
@@ -80,9 +88,9 @@ class avo.EntityTraits['Visibility'] extends avo.Trait
 		
 		visibleRect: ->
 			
-			avo.Rectangle.compose(
-				avo.Vector.scale avo.Vector.add(
-					avo.Vector.scale @entity.size(), .5
+			Rectangle.compose(
+				Vector.scale Vector.add(
+					Vector.scale @entity.size(), .5
 					@entity.currentAnimationMetadata().offset
 				), -1
 				@entity.currentAnimationFrameSize()
@@ -246,9 +254,9 @@ class avo.EntityTraits['Visibility'] extends avo.Trait
 			
 			###
 			
-			scale = avo.Vector.div(
+			scale = Vector.div(
 				hypotenuse
-				avo.Vector.hypotenuse hypotenuse
+				Vector.hypotenuse hypotenuse
 			)
 			scale = if scale[0] then scale[0] else scale[1]
 			

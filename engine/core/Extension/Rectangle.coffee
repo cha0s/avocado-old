@@ -1,16 +1,20 @@
 # Rectangle operations.
 
-# avo.**Rectangle** is a utility class to help with rectangle operations. A
+# **Rectangle** is a utility class to help with rectangle operations. A
 # rectangle is implemented as a 4-element array. Element 0 is *x*, element
 # 1 is *y*, element 2 is *width* and element 3 is *height*.
-avo.Rectangle = 
+
+_ = require 'library/underscore'
+Vector = require 'core/Extension/Vector'
+
+module.exports = Rectangle = 
 
 	# Check if a rectangle intersects with another rectangle.
 	#
-	#     avocado> avo.Rectangle.intersects [0, 0, 16, 16], [8, 8, 24, 24]
+	#     avocado> Rectangle.intersects [0, 0, 16, 16], [8, 8, 24, 24]
 	#     true
 	#
-	#     avocado> avo.Rectangle.intersects [0, 0, 16, 16], [16, 16, 32, 32]
+	#     avocado> Rectangle.intersects [0, 0, 16, 16], [16, 16, 32, 32]
 	#     false
 	intersects: (l, r) ->
 	
@@ -23,7 +27,7 @@ avo.Rectangle =
 
 	# Compose a rectangle from a position vector and a size vector.
 	#
-	#     avocado> avo.Rectangle.compose [0, 0], [16, 16]
+	#     avocado> Rectangle.compose [0, 0], [16, 16]
 	#     [0, 0, 16, 16]
 	compose: (l, r) ->
 		
@@ -32,10 +36,10 @@ avo.Rectangle =
 	# Convert a rectangle to an object. If you *useShortKeys*, The width and
 	# height keys will be named w and h, respectively. 
 	#
-	#     avocado> avo.Rectangle.toObject [3, 4, 5, 6]
+	#     avocado> Rectangle.toObject [3, 4, 5, 6]
 	#     {x: 3, y: 4, width: 5, height: 6}
 	#
-	#     avocado> avo.Rectangle.toObject [3, 4, 5, 6], true
+	#     avocado> Rectangle.toObject [3, 4, 5, 6], true
 	#     {x: 3, y: 4, w: 5, h: 6}
 	toObject: (rectangle, useShortKeys = false) ->
 		
@@ -50,7 +54,7 @@ avo.Rectangle =
 
 	# Returns the position of a rectangle.
 	#
-	#     avocado> avo.Rectangle.position [8, 8, 16, 16]
+	#     avocado> Rectangle.position [8, 8, 16, 16]
 	#     [8, 8]
 	position: (rectangle) ->
 		
@@ -61,7 +65,7 @@ avo.Rectangle =
 	
 	# Returns the size of a rectangle.
 	#
-	#     avocado> avo.Rectangle.position [8, 8, 16, 16]
+	#     avocado> Rectangle.position [8, 8, 16, 16]
 	#     [16, 16]
 	size: (rectangle) ->
 		
@@ -72,11 +76,11 @@ avo.Rectangle =
 	
 	# Compute the intersection rectangle of two rectangles.
 	#
-	#     avocado> avo.Rectangle.intersection [0, 0, 16, 16], [8, 8, 24, 24]
+	#     avocado> Rectangle.intersection [0, 0, 16, 16], [8, 8, 24, 24]
 	#     [8, 8, 8, 8]
 	intersection: (l,r) ->
 		
-		return [0, 0, 0, 0] unless avo.Rectangle.intersects l, r
+		return [0, 0, 0, 0] unless Rectangle.intersects l, r
 		
 		x = Math.max l[0], r[0]
 		y = Math.max l[1], r[1]
@@ -93,31 +97,31 @@ avo.Rectangle =
 
 	# Returns a rectangle translated along the [*x*, *y*] axis of a vector.
 	#
-	#     avocado> avo.Rectangle.translated [0, 0, 16, 16], [8, 8]
+	#     avocado> Rectangle.translated [0, 0, 16, 16], [8, 8]
 	#     [8, 8, 16, 16]
 	translated: (rectangle, vector) ->
 		
-		avo.Rectangle.compose(
-			avo.Vector.add vector, avo.Rectangle.position rectangle
-			avo.Rectangle.size rectangle
+		Rectangle.compose(
+			Vector.add vector, Rectangle.position rectangle
+			Rectangle.size rectangle
 		)
 		
 	# Checks if a rectangle is null. A null rectangle is defined by having any
 	# 0-length axis.
 	#
-	#     avocado> avo.Rectangle.isNull [0, 0, 1, 1]
+	#     avocado> Rectangle.isNull [0, 0, 1, 1]
 	#     false
 	#
-	#     avocado> avo.Rectangle.isNull [0, 0, 1, 0]
+	#     avocado> Rectangle.isNull [0, 0, 1, 0]
 	#     true
-	isNull: (rectangle) -> avo.Vector.isNull avo.Rectangle.size rectangle
+	isNull: (rectangle) -> Vector.isNull Rectangle.size rectangle
 	
 	# Check whether a rectangle equals another rectangle.
 	#
-	#     avocado> avo.Rectangle.equals [0, 0, 0, 0], [0, 0, 0, 1]
+	#     avocado> Rectangle.equals [0, 0, 0, 0], [0, 0, 0, 1]
 	#     false
 	#
-	#     avocado> avo.Rectangle.equals [0, 0, 0, 0], [0, 0, 0, 0]
+	#     avocado> Rectangle.equals [0, 0, 0, 0], [0, 0, 0, 0]
 	#     true
 	equals: (l, r) ->
 		
@@ -125,12 +129,12 @@ avo.Rectangle =
 
 	# Returns a rectangle that is the united area of two rectangles.
 	#
-	#     avocado> avo.Rectangle.united [0, 0, 4, 4], [4, 4, 8, 8]
+	#     avocado> Rectangle.united [0, 0, 4, 4], [4, 4, 8, 8]
 	#     [0, 0, 12, 12]
 	united: (l, r) ->
 		
-		return r if avo.Rectangle.isNull l
-		return l if avo.Rectangle.isNull r
+		return r if Rectangle.isNull l
+		return l if Rectangle.isNull r
 		
 		x = Math.min l[0], r[0]
 		y = Math.min l[1], r[1]
@@ -146,43 +150,43 @@ avo.Rectangle =
 		
 	# Round the position and size of a rectangle.
 	#
-	#     avocado> avo.Rectangle.round [3.14, 4.70, 5.32, 1.8]
+	#     avocado> Rectangle.round [3.14, 4.70, 5.32, 1.8]
 	#     [3, 5, 5, 2]
 	round: (rectangle) ->
 		
-		avo.Rectangle.compose(
-			avo.Vector.round avo.Rectangle.position rectangle
-			avo.Vector.round avo.Rectangle.size rectangle
+		Rectangle.compose(
+			Vector.round Rectangle.position rectangle
+			Vector.round Rectangle.size rectangle
 		)
 		
 	# Floor the position and size of a rectangle.
 	#
-	#     avocado> avo.Rectangle.floor [3.14, 4.70, 5.32, 1.8]
+	#     avocado> Rectangle.floor [3.14, 4.70, 5.32, 1.8]
 	#     [3, 4, 5, 1]
 	floor: (rectangle) ->
 		
-		avo.Rectangle.compose(
-			avo.Vector.floor avo.Rectangle.position rectangle
-			avo.Vector.floor avo.Rectangle.size rectangle
+		Rectangle.compose(
+			Vector.floor Rectangle.position rectangle
+			Vector.floor Rectangle.size rectangle
 		)
 		
 	# Mix the rectangle methods into a rectangle instance.
 	#
-	#     avocado> r = avo.Rectangle.mixin [3, 4, 5, 6]
+	#     avocado> r = Rectangle.mixin [3, 4, 5, 6]
 	#     avocado> r.size()
 	#     [5, 6]
 	mixin: (r) ->
 		
-		for own method, f of avo.Rectangle
+		for own method, f of Rectangle
 			continue if _.contains ['mixin', 'compose'], method
 			
 			r[method] = _.bind f, r, r
 		
-		r[method] = _.compose avo.Vector.mixin, r[method] for method in [
+		r[method] = _.compose Vector.mixin, r[method] for method in [
 			'position', 'size'
 		]
 			
-		r[method] = _.compose avo.Rectangle.mixin, r[method] for method in [
+		r[method] = _.compose Rectangle.mixin, r[method] for method in [
 			'intersection', 'translated', 'united', 'round', 'floor'
 		]
 			

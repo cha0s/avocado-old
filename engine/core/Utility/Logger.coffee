@@ -1,6 +1,6 @@
-# avo.Logger handles logging information. It can be customized to log through
+# Logger handles logging information. It can be customized to log through
 # logging strategies.
-class avo.Logger
+module.exports = class
 
 	# Logging strategies define how messages of different types are logged.
 	# A logging strategy is a function taking two arguments: message and type.

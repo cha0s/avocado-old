@@ -1,36 +1,40 @@
-avo.Font.FontStyle_Regular   = 0
-avo.Font.FontStyle_Bold      = 1
-avo.Font.FontStyle_Italic    = 2
-avo.Font.FontStyle_Underline = 4
+
+DisplayCommand = require 'core/Graphics/DisplayCommand'
+Font = require('Graphics').Font
+
+Font.FontStyle_Regular   = 0
+Font.FontStyle_Bold      = 1
+Font.FontStyle_Italic    = 2
+Font.FontStyle_Underline = 4
 
 # Load a font at the specified URI.
-avo.Font.load = (uri) ->
+Font.load = (uri) ->
 	return unless uri?
 	
-	avo.Font['%load'] uri
+	Font['%load'] uri
 
-avo.Font::render = (position, destination, text, clip = [0, 0, 0, 0]) ->
+Font::render = (position, destination, text, clip = [0, 0, 0, 0]) ->
 	return unless position? and destination? and text?
 	
 	@['%render'] position, destination, text, clip
 
-avo.Font::setSize = (size) ->
+Font::setSize = (size) ->
 	return unless size?
 	
 	@['%setSize'] size
 
-avo.Font::setStyle = (style) ->
+Font::setStyle = (style) ->
 	return unless style?
 	
 	@['%setStyle'] style
 
-avo.Font::textHeight = avo.Font::['%textHeight']
+Font::textHeight = Font::['%textHeight']
 
-avo.Font::textWidth = avo.Font::['%textWidth']
+Font::textWidth = Font::['%textWidth']
 
-avo.Font::textSize = (text) -> [@textWidth(), @textHeight()]
+Font::textSize = (text) -> [@textWidth(), @textHeight()]
 	
-class avo.FontDisplayCommand extends avo.DisplayCommand
+Font.DisplayCommand = class extends DisplayCommand
 	
 	constructor: (list, font, text, rectangle = [0, 0, 0, 0]) ->
 		super list, rectangle

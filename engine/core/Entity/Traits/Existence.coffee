@@ -1,4 +1,8 @@
-class avo.EntityTraits['Existence'] extends avo.Trait
+
+Trait = require 'core/Entity/Traits/Trait'
+Vector = require 'core/Extension/Vector'
+
+module.exports = class extends Trait
 
 	defaults: ->
 		x: -10000
@@ -41,8 +45,8 @@ class avo.EntityTraits['Existence'] extends avo.Trait
 			f: ->
 				
 				Array.composeRect(
-					avo.Vector.scale(
-						avo.Vector.sub @entity.position(), @size()
+					Vector.scale(
+						Vector.sub @entity.position(), @size()
 						.5
 					)
 					@size()

@@ -1,8 +1,13 @@
-class avo.Environment
+CoreService = require('Core').CoreService
+Room = require 'core/Environment/2D/Room'
+Tileset = require 'core/Environment/2D/Tileset'
+upon = require 'core/Utility/upon'
+
+module.exports = Environment = class
 	
 	constructor: ->
 		
-		@tileset_ = new avo.Tileset()
+		@tileset_ = new Tileset()
 		@rooms_ = []
 		@name_ = ''
 		
@@ -12,10 +17,10 @@ class avo.Environment
 	
 		@["#{i}_"] = O[i] for i of O
 		
-		tilesetPromise = avo.Tileset.load(O.tilesetUri).then (@tileset_) =>
+		tilesetPromise = Tileset.load(O.tilesetUri).then (@tileset_) =>
 			
 		promiseRoom = (O, i) =>
-			room = new avo.Room()
+			room = new Room()
 			room.fromObject(O).then (room) => @rooms_[i] = room
 		
 		roomPromises = for roomInfo, i in O.rooms
@@ -34,9 +39,9 @@ class avo.Environment
 	
 		defer = upon.defer()
 		
-		avo.CoreService.readJsonResource(uri).then (O) ->
+		CoreService.readJsonResource(uri).then (O) ->
 		
-			environment = new avo.Environment()
+			environment = new Environment()
 			
 			O.uri = uri
 			environment.fromObject(O).then ->
@@ -50,7 +55,7 @@ class avo.Environment
 	
 	copy: ->
 		
-		environment = new avo.Environment()
+		environment = new Environment()
 		environment.fromObject @toJSON()
 		
 		environment

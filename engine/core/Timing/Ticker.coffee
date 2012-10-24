@@ -1,6 +1,9 @@
-# avo.**Ticker** allows you to keep track of how many discrete ticks have
+# **Ticker** allows you to keep track of how many discrete ticks have
 # passed. Ticks are measured in milliseconds.
-class avo.Ticker
+
+TimingService = require('Timing').TimingService
+
+module.exports = Ticker = class
 
 	# Initialize a ticker to count a tick every *frequency* milliseconds.
 	constructor: (frequency) ->
@@ -8,12 +11,12 @@ class avo.Ticker
 		# Keep the remainder counted towards the next tick.
 		@tickRemainder = 0
 		@frequency = frequency
-		@last_ = avo.TimingService.elapsed()
+		@last_ = TimingService.elapsed()
 		
 	# Deep copy a ticker.
 	deepCopy: ->
 		
-		ticker = new avo.Ticker()
+		ticker = new Ticker()
 		
 		ticker.tickRemainder = @tickRemainder
 		ticker.frequency = @frequency
@@ -23,7 +26,7 @@ class avo.Ticker
 	# tick.
 	reset: ->
 		
-		@last_ = avo.TimingService.elapsed()
+		@last_ = TimingService.elapsed()
 		@tickRemainder = 0
 	
 	setFrequency: (@frequency) ->
@@ -32,8 +35,8 @@ class avo.Ticker
 	ticks: ->
 		
 		# Get current ticks.
-		now = (avo.TimingService.elapsed() - @last_) * 1000
-		@last_ = avo.TimingService.elapsed()
+		now = (TimingService.elapsed() - @last_) * 1000
+		@last_ = TimingService.elapsed()
 
 		# The number of milliseconds since last invocation.
 		since = 0

@@ -1,4 +1,13 @@
-class avo.EnvironmentState extends avo.AbstractState
+
+AbstractState = require 'core/State/AbstractState'
+DisplayList = require 'core/Graphics/DisplayList'
+Environment = require 'core/Environment/2D/Environment'
+Graphics = require 'Graphics'
+Rectangle = require 'core/Extension/Rectangle'
+upon = require 'core/Utility/upon'
+Vector = require 'core/Extension/Vector'
+
+module.exports = class extends AbstractState
 	
 	initialize: ->
 		
@@ -15,22 +24,22 @@ class avo.EnvironmentState extends avo.AbstractState
 		# show the renders and ticks per second, for informational purposes.
 		upon.all([
 			
-			avo.Environment.load(environmentUri).then (@environment) =>
+			Environment.load(environmentUri).then (@environment) =>
 				
 		]).then =>
 			
 			@currentRoom = @environment.room @roomIndex
 			
-			@roomRectangle = avo.Rectangle.compose(
+			@roomRectangle = Rectangle.compose(
 				[0, 0]
-				avo.Vector.mul(
+				Vector.mul(
 					@currentRoom.size()
 					@environment.tileset().tileSize()
 				)
 			)
 			
 			# Keep a display list to optimize rendering.
-			@displayList = new avo.DisplayList [0, 0, 720, 450], @roomRectangle
+			@displayList = new DisplayList [0, 0, 720, 450], @roomRectangle
 			
 			# Since we can't rely on graphics SPIIs letting us know when our
 			# graphics need to be rewritten, we'll suggest redrawing the entire
@@ -39,30 +48,30 @@ class avo.EnvironmentState extends avo.AbstractState
 			
 	setCamera: (position, easing = .25) ->
 				
-		newPosition = avo.Vector.clamp(
-			avo.Vector.sub(
-				avo.Vector.round position
-				avo.Vector.scale avo.window.originalSize, .5
+		newPosition = Vector.clamp(
+			Vector.sub(
+				Vector.round position
+				Vector.scale Graphics.window.originalSize, .5
 			)
 			[0, 0]
-			avo.Vector.sub(
-				avo.Rectangle.size @roomRectangle
-				avo.window.originalSize
+			Vector.sub(
+				Rectangle.size @roomRectangle
+				Graphics.window.originalSize
 			)
 		)
 		
 		@displayList.setPosition newPosition if easing is 0
 		
-		distance = avo.Vector.cartesianDistance(
+		distance = Vector.cartesianDistance(
 			@displayList.position()
 			newPosition
 		)
 		return if distance is 0
 		
-		@displayList.setPosition avo.Vector.round @cameraPosition = avo.Vector.add(
+		@displayList.setPosition Vector.round @cameraPosition = Vector.add(
 			@cameraPosition
-			avo.Vector.scale(
-				avo.Vector.hypotenuse(
+			Vector.scale(
+				Vector.hypotenuse(
 					newPosition
 					@cameraPosition
 				)

@@ -1,4 +1,4 @@
-# avo.**Main** implements the main engine loop. This class does everything
+# **Main** implements the main engine loop. This class does everything
 # you'd expect in a game loop: user input polling, timing, updating the game
 # state (called *tick*ing) and rendering the game state.
 #
@@ -11,18 +11,25 @@
 # 
 # * <pre>error: When an error was encountered.</pre>
 # * <pre>quit:  When the engine is shutting down.</pre>
-# 
-class avo.Main
+#
+
+Cps = require 'core/Timing/Cps' 
+EventEmitter = require 'core/Utility/EventEmitter'
+Graphics = require 'Graphics'
+Mixin = require 'core/Utility/Mixin'
+Timing = require 'Timing'
+
+module.exports = Main = class
 	
 	# State implementations should add their class to this map.
 	@States = {}
 
 	constructor: ->
 		
-		avo.Mixin this, avo.EventEmitter
+		Mixin this, EventEmitter
 		
 		# Keep a back buffer to receive all rendering from the current State.
-		@backBuffer = new avo.Image [1280, 720]
+		@backBuffer = new Graphics.Image [1280, 720]
 		
 		# Holds the current State's name.
 		@stateName = ''
@@ -45,14 +52,14 @@ class avo.Main
 		@states = {}
 		
 		# Keep a count of the tick and render operations performed per second.
-		@ticksPerSecond = new avo.Cps()
-		@rendersPerSecond = new avo.Cps()
+		@ticksPerSecond = new Cps()
+		@rendersPerSecond = new Cps()
 		
-		@timeCounter = new avo.Counter()
+		@timeCounter = new Timing.Counter()
 		
 		# Keep count of tick and render frequencies in milliseconds.
-		@tickFrequency = 1000 / avo.ticksPerSecondTarget
-		@renderFrequency = 1000 / avo.rendersPerSecondTarget
+		@tickFrequency = 1000 / Timing.ticksPerSecondTarget
+		@renderFrequency = 1000 / Timing.rendersPerSecondTarget
 		
 		# Keep handles for out tick and render loops, so we can GC them on
 		# quit.
@@ -60,7 +67,7 @@ class avo.Main
 		@renderInterval = null
 		
 		# [Fix your timestep!](http://gafferongames.com/game-physics/fix-your-timestep/)
-		@tickTargetSeconds = 1 / avo.ticksPerSecondTarget
+		@tickTargetSeconds = 1 / Timing.ticksPerSecondTarget
 		@lastElapsed = 0
 		@elapsedRemainder = 0
 	
@@ -118,7 +125,8 @@ class avo.Main
 		# Otherwise, instantiate and cache the State, and the initialization
 		# promise is State::initialize's promise.
 		else
-			@states[stateName] = new avo.Main.States[stateName]
+			
+			@states[stateName] = new (require "core/State/#{stateName}")
 			@states[stateName].main = this
 			initializationPromise = @states[stateName].initialize()
 			
@@ -136,16 +144,16 @@ class avo.Main
 		
 	tick: ->
 		
-		delta = avo.TimingService.elapsed() - @lastElapsed
+		delta = Timing.TimingService.elapsed() - @lastElapsed
 		delta += @elapsedRemainder
 		
 		# Poll events.
-		avo.graphicsService.pollEvents()
+		Graphics.graphicsService.pollEvents()
 		
 		while delta > @tickTargetSeconds
 			delta -= @tickTargetSeconds
 			
-			avo.TimingService.setTickElapsed @tickTargetSeconds
+			Timing.TimingService.setTickElapsed @tickTargetSeconds
 			
 			# Let the State tick.
 			@stateObject?.tick()
@@ -158,7 +166,7 @@ class avo.Main
 			
 		@elapsedRemainder = delta
 		
-		@lastElapsed = avo.TimingService.elapsed()
+		@lastElapsed = Timing.TimingService.elapsed()
 	
 	render: ->
 		

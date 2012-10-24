@@ -18,6 +18,15 @@ namespace avo {
 
 AbstractFactory<v8ScriptService> *v8ScriptService::factory = new AbstractFactory<v8ScriptService>;
 
+#define INITIALIZE_SPI(name) { \
+    Handle<Object> name = Object::New(); \
+    Handle<Object> name ## Object = Object::New(); \
+    name->Set(String::NewSymbol("object"), name ## Object); \
+    v8 ## name ## Service::initialize(name ## Object); \
+    requires_->Set(String::NewSymbol(#name), name); }
+
+
+
 v8ScriptService::v8ScriptService()
 	: ScriptService()
 {
@@ -28,18 +37,20 @@ v8ScriptService::v8ScriptService()
 
 	Handle<ObjectTemplate> global = ObjectTemplate::New();
 
-	global->Set(String::New("avo"), ObjectTemplate::New());
+	global->Set(String::New("requires_"), ObjectTemplate::New());
 
 	context = Context::New(NULL, global);
 
 	context->Enter();
 
-	Handle<Object> avo = context->Global()->Get(String::NewSymbol("avo")).As<Object>();
+	Handle<Object> requires_ = context->Global()->Get(
+		String::NewSymbol("requires_")
+	).As<Object>();
 
-	v8CoreService::initialize(avo);
-	v8GraphicsService::initialize(avo);
-	v8SoundService::initialize(avo);
-	v8TimingService::initialize(avo);
+	INITIALIZE_SPI(Core);
+	INITIALIZE_SPI(Graphics);
+	INITIALIZE_SPI(Sound);
+	INITIALIZE_SPI(Timing);
 
 	ScriptService::initialize();
 }
@@ -47,7 +58,7 @@ v8ScriptService::v8ScriptService()
 std::string v8ScriptService::preCompileCode(const std::string &code, const boost::filesystem::path &filename) {
 	HandleScope scope;
 
-	std::string filenameString = FS::unqualifyPath(FS::engineRoot(), filename).string();
+	std::string filenameString = filename.string();
 
 	// Compile coffeescript to JS.
 	if (std::string::npos != filenameString.find(".coffee")) {
@@ -61,7 +72,7 @@ std::string v8ScriptService::preCompileCode(const std::string &code, const boost
 
 		Handle<Object> options = Object::New();
 		options->Set(String::New("filename"), String::New(
-			filename.c_str()
+			filenameString.c_str()
 		));
 		Handle<Value> args[] = {
 			String::New(code.c_str()),
@@ -92,7 +103,7 @@ Script *v8ScriptService::scriptFromCode(const std::string &code, const boost::fi
 	TryCatch exception;
 	Handle<v8::Script> script = v8::Script::New(
 		String::New(precompiledCode.c_str()),
-		String::New(FS::unqualifyPath(FS::engineRoot(), filename).string().c_str())
+		String::New(filename.string().c_str())
 	);
 	if (exception.HasCaught()) {
 

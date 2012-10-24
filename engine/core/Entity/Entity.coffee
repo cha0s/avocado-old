@@ -1,6 +1,17 @@
 # The **Entity** class specifies objects in the game engine. Entities are
 # merely compositions of (subclassed) [Trait](Traits/Trait.html) objects.
-class avo.Entity
+
+_ = require 'library/underscore'
+CoreService = require('Core').CoreService
+DisplayCommand = require 'core/Graphics/DisplayCommand'
+EventEmitter = require 'core/Utility/EventEmitter'
+Logger = require 'core/Utility/Logger'
+Mixin = require 'core/Utility/Mixin'
+Rectangle = require 'core/Extension/Rectangle'
+Transition = require 'core/Utility/Transition'
+upon = require 'core/Utility/upon'
+
+module.exports = Entity = class
 	
 	#### Instantiation
 	constructor: ->
@@ -9,7 +20,7 @@ class avo.Entity
 		# 
 		# * **[EventEmitter](../Utility/EventEmitter.html)** for Existence::emit()
 		# * **[Transition](../Utility/Transition.html)** for transitioning any property.
-		avo.Mixin this, avo.EventEmitter, avo.Transition
+		Mixin this, EventEmitter, Transition
 		
 		# Initialize members.
 		@traits = {}
@@ -43,10 +54,10 @@ class avo.Entity
 		
 		defer = upon.defer()
 		
-		avo.CoreService.readJsonResource(uri).then (O) ->
+		CoreService.readJsonResource(uri).then (O) ->
 			O.uri = uri
 			
-			entity = new avo.Entity()
+			entity = new Entity()
 			entity.fromObject(O).then ->
 				
 				defer.resolve entity
@@ -56,7 +67,7 @@ class avo.Entity
 	# Deep copy.
 	copy: ->
 		
-		entity = new avo.Entity()
+		entity = new Entity()
 		entity.fromObject @toJSON()
 		
 		entity
@@ -78,7 +89,8 @@ class avo.Entity
 		for traitInfo in traits
 			
 			# Instantiate and insert the Trait.
-			trait = new avo.EntityTraits[traitInfo.type] this, traitInfo.state
+			Trait = require "core/Entity/Traits/#{traitInfo.type}"
+			trait = new Trait this, traitInfo.state
 			trait.type = traitInfo.type
 			@traits[trait.type] = trait
 			
@@ -126,11 +138,17 @@ class avo.Entity
 		
 		traits = _.filter traits, (trait) ->
 			
-			return true if avo.EntityTraits[trait.type]?
-			
-			avo.Logger.warn "Ignoring unknown entity trait: #{trait.type}"
-			delete traits[trait.type]
-			false
+			try
+				
+				require "core/Entity/Traits/#{trait.type}"
+				return true
+				
+			catch e
+				
+				Logger.warn e.stack
+				Logger.warn "Ignoring unknown entity trait: #{trait.type}"
+				delete traits[trait.type]
+				false
 			
 		# Wrap all the trait promises in a promise and return it.	
 		traitsPromise = for trait in traits
@@ -196,7 +214,7 @@ class avo.Entity
 			continue if trait.temporal
 			trait.toJSON()
 
-class avo.EntityDisplayCommand extends avo.DisplayCommand
+module.exports.DisplayCommand = class extends DisplayCommand
 	
 	constructor: (
 		list
@@ -204,7 +222,7 @@ class avo.EntityDisplayCommand extends avo.DisplayCommand
 		rectangle = [0, 0, 0, 0]
 	) ->
 		
-		rectangle = avo.Rectangle.translated(
+		rectangle = Rectangle.translated(
 			entity.visibleRect()
 			entity.position()
 		) if entity.hasTrait 'Visibility'
@@ -213,7 +231,7 @@ class avo.EntityDisplayCommand extends avo.DisplayCommand
 		
 		entity.on 'positionChanged.EntityDisplayCommand', =>
 			
-			@setPosition avo.Rectangle.position avo.Rectangle.translated(
+			@setPosition Rectangle.position Rectangle.translated(
 				entity.visibleRect()
 				entity.position()
 			) if entity.hasTrait 'Visibility'			
@@ -227,11 +245,3 @@ class avo.EntityDisplayCommand extends avo.DisplayCommand
 		for renderer in @entity_.renderers
 			
 			renderer.f.call @entity_, destination, position, clip
-
-#### Implementing your own traits
-#
-# To implement your own trait, add an entry to the avo.**EntityTraits** object.
-# Entries must extend [Trait](Traits/Trait.html).
-#
-# ***TODO: This isn't actually enforced at the moment.***
-avo.EntityTraits ?= {}

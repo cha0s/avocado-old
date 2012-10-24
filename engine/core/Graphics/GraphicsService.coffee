@@ -1,3 +1,8 @@
+
+Graphics = require 'Graphics'
+Timing = require 'Timing'
+Vector = require 'core/Extension/Vector'
+
 # We want to store how much a player is moving either with the
 # arrow keys or the joystick/gamepad.
 movement = {}
@@ -8,7 +13,7 @@ stickIndexMap = {}
 # associate this movement, as well as a 4-element array of key codes to use
 # for the movement. The key codes represent up, right, down, left
 # respectively. Also, specify a joystick index to assign to this player.
-avo.GraphicsService::registerPlayerMovement = (player, keyCodes, stickIndex) ->
+Graphics.GraphicsService::registerPlayerMovement = (player, keyCodes, stickIndex) ->
 	
 	# Map the key code and joystick index to the player so we can look 'em up
 	# quick when a key code or joystick movement comes in.
@@ -22,17 +27,17 @@ avo.GraphicsService::registerPlayerMovement = (player, keyCodes, stickIndex) ->
 		joyState: [0, 0, 0, 0]
 
 # Get a unit movement vector for a player scaled by the time passed this tick.
-avo.GraphicsService::playerTickMovement = (player) ->
+Graphics.GraphicsService::playerTickMovement = (player) ->
 	
 	return [0, 0] unless movement[player]?
 	
-	avo.Vector.scale(
+	Vector.scale(
 		movement[player].tickUnit
-		avo.TimingService.tickElapsed()
+		Timing.TimingService.tickElapsed()
 	)
 
 # Get a unit movement vector for a player.
-avo.GraphicsService::playerUnitMovement = (player) ->
+Graphics.GraphicsService::playerUnitMovement = (player) ->
 	
 	return [0, 0] unless movement[player]?
 	
@@ -67,16 +72,16 @@ registerMovement = (player) ->
 			-1
 		)
 	]
-	m.tickUnit = avo.Vector.mul(
+	m.tickUnit = Vector.mul(
 		m.tickUnit
-		avo.Vector.hypotenuse avo.Vector.abs m.tickUnit
+		Vector.hypotenuse Vector.abs m.tickUnit
 	)
 
 windows = []
 
-avo.GraphicsService::newWindow = (size, flags) ->
+Graphics.GraphicsService::newWindow = (size, flags) ->
 	
-	window_ = new avo.Window()
+	window_ = new Graphics.Window()
 	windows.push window_
 	
 	window_.setSize size if size?
@@ -130,14 +135,14 @@ avo.GraphicsService::newWindow = (size, flags) ->
 	# Start dragging when a button is clicked.
 	window_.on 'mouseButtonDown.Avocado', ({button}) ->
 		switch button
-			when avo.Window.LeftButton, avo.Window.MiddleButton, avo.Window.RightButton
+			when Graphics.Window.LeftButton, Graphics.Window.MiddleButton, Graphics.Window.RightButton
 				dragStartLocation[button] = mouseLocation
 				buttons[button] = true
 				
 	# Stop dragging when a button is released.
 	window_.on 'mouseButtonUp.Avocado', ({button}) ->
 		switch button
-			when avo.Window.LeftButton, avo.Window.MiddleButton, avo.Window.RightButton
+			when Graphics.Window.LeftButton, Graphics.Window.MiddleButton, Graphics.Window.RightButton
 				delete buttons[button]
 				delete dragStartLocation[button]
 	
@@ -155,7 +160,7 @@ avo.GraphicsService::newWindow = (size, flags) ->
 					'mouseDrag'
 						position: mouseLocation
 						button: parseInt key
-						relative: avo.Vector.sub(
+						relative: Vector.sub(
 							mouseLocation
 							dragStartLocation[key]
 						)
@@ -163,4 +168,4 @@ avo.GraphicsService::newWindow = (size, flags) ->
 				
 	window_
 	
-avo.GraphicsService::pollEvents = -> window_.pollEvents() for window_ in windows
+Graphics.GraphicsService::pollEvents = -> window_.pollEvents() for window_ in windows

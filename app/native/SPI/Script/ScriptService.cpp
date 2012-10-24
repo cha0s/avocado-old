@@ -6,9 +6,10 @@
 #include <sstream>
 #include <vector>
 
-#include "boost/format.hpp"
-#include <boost/tokenizer.hpp>
+#include <boost/algorithm/string/replace.hpp>
+#include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/tokenizer.hpp>
 
 #include "FS.h"
 #include "Script.h"
@@ -103,8 +104,24 @@ std::vector<std::string> ScriptService::loadCore() {
 
 		try {
 
+			boost::filesystem::path path = FS::unqualifyPath(
+				FS::engineRoot(),
+				filenames[i]
+			);
+			path = path.remove_filename() / path.stem();
+
+			std::string moduleName = path.string().substr(1);
+
 			// Try compiling...
-			script = scriptFromFile(filenames[i]);
+			script = scriptFromCode(
+				"requires_['" + moduleName + "'] = function(module, exports) {\n"
+				+ preCompileCode(
+					avo::FS::readString(filenames[i]),
+					filenames[i]
+				)
+				+ "\n}",
+				moduleName
+			);
 		}
 		catch (std::exception &e) {
 
@@ -190,7 +207,24 @@ void ScriptService::loadLibraries() {
 
 	// Compile and execute the libraries.
 	for (unsigned int i = 0; i < filenames.size(); i++) {
-		scriptFromFile(filenames[i])->execute();
+
+		boost::filesystem::path path = FS::unqualifyPath(
+			FS::engineRoot(),
+			filenames[i]
+		);
+		path = path.remove_filename() / path.stem();
+
+		std::string moduleName = path.string().substr(1);
+
+		scriptFromCode(
+			"requires_['" + moduleName + "'] = function(module, exports) {\n"
+			+ preCompileCode(
+				avo::FS::readString(filenames[i]),
+				filenames[i]
+			)
+			+ "\n}",
+			moduleName
+		)->execute();
 	}
 }
 

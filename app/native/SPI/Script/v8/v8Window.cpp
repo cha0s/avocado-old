@@ -44,19 +44,20 @@ v8::Handle<v8::Value> v8Window::New(const v8::Arguments &args) {
 	try {
 		new v8Window(args.Holder());
 
-		Handle<Object> avo = Context::GetCurrent()->Global()->Get(
-			String::New("avo")
-		).As<Object>();
-
-		Handle<Function> Mixin = avo->Get(
-			String::New("Mixin")
+		Handle<Function> require = Context::GetCurrent()->Global()->Get(
+			String::New("require")
 		).As<Function>();
 
-		Handle<Function> EventEmitter = avo->Get(
-			String::New("EventEmitter")
-		).As<Function>();
+		Handle<Value> argv[2];
 
-		Handle<Value> argv[] = {args.Holder(), EventEmitter};
+		argv[0] = String::NewSymbol("core/Utility/Mixin");
+		Handle<Function> Mixin = require->Call(require, 1, argv).As<Function>();
+
+		argv[0] = String::NewSymbol("core/Utility/EventEmitter");
+		Handle<Function> EventEmitter = require->Call(require, 1, argv).As<Function>();
+
+		argv[0] = args.Holder();
+		argv[1] = EventEmitter;
 		Mixin->Call(Context::GetCurrent()->Global(), 2, argv);
 	}
 	catch (std::exception &e) {

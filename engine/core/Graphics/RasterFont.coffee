@@ -1,13 +1,20 @@
-class avo.RasterFont
+
+DisplayCommand = require 'core/Graphics/DisplayCommand'
+Image = require('Graphics').Image
+Rectangle = require 'core/Extension/Rectangle'
+upon = require 'core/Utility/upon'
+Vector = require 'core/Extension/Vector'
+
+module.exports = RasterFont = class
 	
 	@load = (uri) ->
 		
 		defer = upon.defer()
 		
-		avo.Image.load(uri).then (image) ->
+		Image.load(uri).then (image) ->
 			font = new RasterFont()
 			font.image_ = image
-			font.charSize_ = avo.Vector.div font.image_.size(), [256, 1]
+			font.charSize_ = Vector.div font.image_.size(), [256, 1]
 			defer.resolve font
 			
 		defer.promise
@@ -25,7 +32,7 @@ class avo.RasterFont
 		position
 		text
 		destination
-		clip = avo.Rectangle.compose [0, 0], @textSize text
+		clip = Rectangle.compose [0, 0], @textSize text
 		alpha = 255
 		effect = null
 	) ->
@@ -37,14 +44,14 @@ class avo.RasterFont
 			@charSize_[0], @charSize_[1]
 		]
 		
-		position = avo.Vector.sub position, avo.Rectangle.position clip
-		clip = avo.Rectangle.translated clip, position
+		position = Vector.sub position, Rectangle.position clip
+		clip = Rectangle.translated clip, position
 		
 		# Pre-calc the length. Iterate over the string's characters.
 		for i in [0...text.length]
 		
-			effectedLocation = avo.Vector.copy position
-			effectedLocation = avo.Vector.add(
+			effectedLocation = Vector.copy position
+			effectedLocation = Vector.add(
 				effectedLocation
 				effect.apply i
 			) if effect?
@@ -53,35 +60,35 @@ class avo.RasterFont
 			position[0] += @charSize_[0]
 			
 			# The bounding rect of the character to render.
-			charRect = avo.Rectangle.compose effectedLocation, @charSize_
+			charRect = Rectangle.compose effectedLocation, @charSize_
 			
 			# Don't render the character if it isn't in the clipping area.
-			intersection = avo.Rectangle.intersection charRect, clip
-			continue if avo.Rectangle.isNull intersection
+			intersection = Rectangle.intersection charRect, clip
+			continue if Rectangle.isNull intersection
 			
-			offset = avo.Vector.sub(
-				avo.Rectangle.position intersection
-				avo.Rectangle.position charRect
+			offset = Vector.sub(
+				Rectangle.position intersection
+				Rectangle.position charRect
 			)
 			
 			# Render the character.
 			@image_.render(
-				avo.Vector.add effectedLocation, offset
+				Vector.add effectedLocation, offset
 				destination
 				alpha
-				avo.Image.DrawMode_Blend
-				avo.Rectangle.compose(
-					avo.Vector.add(
+				Image.DrawMode_Blend
+				Rectangle.compose(
+					Vector.add(
 						offset
-						avo.Rectangle.position rect text.charCodeAt i
+						Rectangle.position rect text.charCodeAt i
 					)
-					avo.Rectangle.size intersection
+					Rectangle.size intersection
 				)
 			)
 
 		undefined
 
-class avo.RasterFontDisplayCommand extends avo.DisplayCommand
+module.exports.DisplayCommand = class extends DisplayCommand
 	
 	constructor: (list, font, text, rectangle = [0, 0, 0, 0]) ->
 		super list, rectangle

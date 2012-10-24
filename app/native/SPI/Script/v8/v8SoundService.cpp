@@ -46,7 +46,7 @@ void v8SoundService::initialize(Handle<Object> target) {
 
 #ifdef AVOCADO_NODE
 	dlopen(
-		"./node_modules/SoundService.node", RTLD_NOW | RTLD_GLOBAL
+		"./node_modules/Sound.node", RTLD_NOW | RTLD_GLOBAL
 	);
 #endif
 

@@ -4,6 +4,8 @@ AbstractState = require 'core/State/AbstractState'
 Graphics = require 'Graphics'
 upon = require 'core/Utility/upon'
 
+PACKET_INTERVAL = 30
+
 module.exports = class extends AbstractState
 	
 	# Called the first time this state is loaded. You can set up any stuff your
@@ -41,8 +43,22 @@ module.exports = class extends AbstractState
 		# Catch the quit event (window close event).
 		Graphics.window.on 'quit.InitialState', => @main.quit()
 		
-		defer.resolve()
-		defer.promise
+		socketPromise = require('core/Network/ClientSocket').then (socket) =>
+			
+			@main.socket = socket
+			
+			setInterval(
+				=>
+					
+					@main.socket.emit 'clientInput',
+						unitMovement: Graphics.graphicsService.playerUnitMovement('Awesome player')
+					
+				1000 / PACKET_INTERVAL
+			)
+			
+		upon.all([
+			socketPromise
+		])
 				
 	# Called repeatedly while this state is loaded. You can do things like
 	# update your world here. We'll move the avocado based on movement input.

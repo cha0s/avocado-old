@@ -10,40 +10,14 @@ Timing = require 'Timing'
 upon = require 'core/Utility/upon'
 Vector = require 'core/Extension/Vector'
 
+PACKET_INTERVAL = 30
+
 module.exports = class extends EnvironmentState
 	
 	initialize: ->
 		
-		@listDefer = upon.defer()
+		@entityPosition = [150, 150]
 		
-		@addedEntities_ = {}
-		
-		@main.on 'entityUpdated', ({id, position, direction, animationIndex, animationFrameIndex}) =>
-			
-			return unless @addedEntities_[id]
-			
-			@addedEntities_[id].setDirection direction
-			@addedEntities_[id].setPosition position
-			@addedEntities_[id].setCurrentAnimationIndex animationIndex
-			@addedEntities_[id].currentAnimation().setCurrentFrameIndex animationFrameIndex
-		
-		@main.on 'entityAdded', ({id, traits}) =>
-			
-			@listDefer.then =>
-				
-				Entity.load('/entity/wb-dude.entity.json').then (entity) =>
-					
-					@addedEntities_[id] = entity
-			
-					entity.extendTraits traits
-					
-					entity.reset()
-					
-					new Entity.DisplayCommand(
-						@displayList
-						entity
-					)
-				
 		super
 	
 	enter: (args) ->
@@ -52,34 +26,10 @@ module.exports = class extends EnvironmentState
 		
 		environmentPromise = super args
 		
-		upon.all([
-			
-			environmentPromise
-				
-			Entity.load('/entity/wb-dude.entity.json').then (@entity) =>
-				
-				@main.entity = @entity
-				
-				# Start the entity at 150, 150.
-				@entity.extendTraits [
-					type: 'Existence'
-					state:
-						x: 150
-						y: 150
-				]
-				
-				# Facing down.
-				@entity.setDirection 2
-				
-				@entity.reset()
-				
-			RasterFont.load('/font/wb-text.png').then (@font) =>
-			
-		]).then =>
-			
-#			@entity.on 'positionChanged', => @main.emit 'entityUpdated'
-#			@entity.on 'directionChanged', => @main.emit 'entityUpdated'
-			
+		entityDefer = upon.defer()
+		
+		environmentPromise.then =>
+		
 			# Add a display command to white out the background.
 			new Image.FillDisplayCommand(
 				@displayList
@@ -101,30 +51,31 @@ module.exports = class extends EnvironmentState
 				@roomRectangle
 			) 
 			
-			new Entity.DisplayCommand(
-				@displayList
-				@entity
-			)
+			Entity.load('/entity/wb-dude.entity.json').then (@entity) =>
+					
+				@main.socket.on 'worldUpdate', (entity) =>
+					@entityPosition = entity.position
+					
+				@entity.setPosition [150, 150]
+				
+				new Entity.DisplayCommand(
+					@displayList
+					@entity
+				)
+				
+				@entity.reset()
+				
+				entityDefer.resolve()
+		
+		upon.all([
 			
-			@listDefer.resolve()
+			environmentPromise
 			
-			###
+			entityDefer.promise
 			
-			new TileLayer.DisplayCommand(
-				@displayList
-				@currentRoom.layer 2
-				@environment.tileset()
-				@roomRectangle
-			)
+			RasterFont.load('/font/wb-text.png').then (@font) =>
 			
-			new TileLayer.DisplayCommand(
-				@displayList
-				@currentRoom.layer 3
-				@environment.tileset()
-				@roomRectangle
-			)
-			
-			###
+		]).then =>
 			
 			@tps = new RasterFont.DisplayCommand(
 				@displayList
@@ -142,64 +93,34 @@ module.exports = class extends EnvironmentState
 			)
 			@rps.setIsRelative false
 			
-			# Allow dragging the avocado around with the left mouse button. Keep
-			# track of where the avocado was when we started dragging.
-			@mousePosition = [0, 0]
-			@clicking = false
-			Graphics.window.on 'mouseButtonDown.2DTopdownEnvironmentState', ({button, x, y}) =>
-				return unless button is Graphics.Window.LeftButton
-				@clicking = true
-				[x, y] = Vector.mul(
-					[x, y]
-					Vector.div Graphics.window.originalSize, Graphics.window.size()
-				)
-				@mousePosition = [x, y]
-			Graphics.window.on 'mouseButtonUp.2DTopdownEnvironmentState', ({button}) =>
-				return unless button is Graphics.Window.LeftButton
-				@clicking = false
-			Graphics.window.on 'mouseMove.2DTopdownEnvironmentState', ({x, y}) =>
-				[x, y] = Vector.mul(
-					[x, y]
-					Vector.div Graphics.window.originalSize, Graphics.window.size()
-				)
-				@mousePosition = [x, y]
-		
 	tick: ->
+		
+		return unless @entity?
 		
 		if world = Box2D.world
 			world.Step 1 / Timing.ticksPerSecondTarget, 8, 3
 		
 		@entity.tick()
 		
-		# Update our counters.
-		@tps.setText "TPS: #{@main.ticksPerSecond.count()}"
-		@rps.setText "RPS: #{@main.rendersPerSecond.count()}"
-		
-		actuallyMoved = false
+		unitMovement = Graphics.graphicsService.playerUnitMovement('Awesome player')
 		
 		# Any key/joystick movement input?
 		unless Vector.isZero (
-			movement = Graphics.graphicsService.playerUnitMovement('Awesome player')
+			unitMovement
 		)
-			actuallyMoved = true
-			@entity.move movement, true   
-
-		# Mouse clicking?
-		if @clicking and 2 < Vector.cartesianDistance(
-			Vector.add @mousePosition, @displayList.position()
-			@entity.position()
-		)
-			actuallyMoved = true
-			@entity.move Vector.add @mousePosition, @displayList.position()
-		
-		if actuallyMoved
-			
+			@entity.move unitMovement, null, true   
 			@entity.emit 'startedMoving' unless @entity.isMoving()
 			
 		else
 		
 			@entity.emit 'stoppedMoving' if @entity.isMoving()
-			
+		
+		@entity.setPosition @lerp @entityPosition, @entity.position()
+		
+		# Update our counters.
+		@tps.setText "TPS: #{@main.ticksPerSecond.count()}"
+		@rps.setText "RPS: #{@main.rendersPerSecond.count()}"
+		
 		@setCamera @entity.position()
 		
 	# Called when another state is loaded. This gives you a chance to clean

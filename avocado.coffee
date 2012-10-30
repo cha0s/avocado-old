@@ -90,6 +90,3 @@ Logger.registerStrategy (message, type) ->
 
 # GO!	
 main.begin()
-
-require 'client-test/index.coffee'
-

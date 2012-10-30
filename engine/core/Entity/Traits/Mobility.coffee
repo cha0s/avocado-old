@@ -46,7 +46,11 @@ module.exports = class extends Trait
 				output += "#{Rule.Render args[1]}"
 				
 			name: 'Move towards'
-			f: (toPosition, relative = false) ->
+			f: (
+				toPosition
+				elapsed = TimingService.tickElapsed()
+				relative = false
+			) ->
 				return increment: 1 if not @entity.mobile()
 				
 				direction = @entity.direction()
@@ -60,7 +64,7 @@ module.exports = class extends Trait
 						position
 					)
 				
-				magnitude = TimingService.tickElapsed() * @entity.movingSpeed()
+				magnitude = elapsed * @entity.movingSpeed()
 				
 				# Non-relative movement should check whether the movement has
 				# passed the destination. If so, the actual position is fixed up to

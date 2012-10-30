@@ -45,6 +45,31 @@ module.exports = class extends AbstractState
 			# graphics need to be rewritten, we'll suggest redrawing the entire
 			# screen 10 times a second.
 			setInterval (=> @displayList.markCommandsAsDirty()), 100
+		
+	lerp: (actual, lerping, easing = .25) ->
+		
+		return actual if easing is 0
+		
+		distance = Vector.cartesianDistance(
+			actual
+			lerping
+		)
+		return actual if distance is 0
+		
+		Vector.add(
+			lerping
+			Vector.scale(
+				Vector.hypotenuse(
+					actual
+					lerping
+				)
+				if distance is 0
+					0
+				else
+					(Math.min 10, distance / 16) / easing
+			)
+		)
+	
 			
 	setCamera: (position, easing = .25) ->
 				
@@ -60,26 +85,8 @@ module.exports = class extends AbstractState
 			)
 		)
 		
-		@displayList.setPosition newPosition if easing is 0
-		
-		distance = Vector.cartesianDistance(
-			@displayList.position()
-			newPosition
-		)
-		return if distance is 0
-		
-		@displayList.setPosition Vector.round @cameraPosition = Vector.add(
-			@cameraPosition
-			Vector.scale(
-				Vector.hypotenuse(
-					newPosition
-					@cameraPosition
-				)
-				if distance is 0
-					0
-				else
-					(Math.min 10, distance / 16) / easing
-			)
+		@displayList.setPosition(
+			Vector.round @cameraPosition = @lerp newPosition, @cameraPosition, easing
 		)
 		
 	# Called repeatedly to allow the state to render graphics.

@@ -70,7 +70,7 @@ module.exports = Main = class
 		@tickTargetSeconds = 1 / Timing.ticksPerSecondTarget
 		@lastElapsed = 0
 		@elapsedRemainder = 0
-	
+		
 	begin: ->
 		
 		# Tick loop.

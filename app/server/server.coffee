@@ -54,13 +54,9 @@ Logger.registerStrategy (message, type) ->
 	# message
 	Core.CoreService.writeStderr message
 
-_ = require 'core/Utility/underscore'
 consolidate = require 'consolidate'
 express = require 'express'
-fs = require 'fs'
 http = require 'http'
-path = require 'path'
-upon = require 'core/Utility/upon'
 
 app = express()
 
@@ -68,74 +64,14 @@ app.engine 'html', consolidate.mustache
 
 app.set 'view engine', 'html'
 
-gatherFilesRecursive = (abs, rel) ->
-	
-	coreFiles = []
-	
-	for candidate in fs.readdirSync abs
-		
-		absPath = "#{abs}/#{candidate}"
-		relPath = "#{rel}/#{candidate}"
-		
-		stats = fs.statSync absPath
-		
-		if stats.isDirectory()
-			
-			coreFiles = coreFiles.concat gatherFilesRecursive(
-				absPath
-				relPath
-			)
-			
-		else
-			
-			extension = path.extname absPath
-			if _.contains ['.js', '.coffee'], extension
-				
-				coreFiles.push
-					
-					type: switch extension
-						when '.coffee' then 'coffeescript'
-						when '.js' then 'javascript'
-					src: relPath
-	
-	coreFiles
-
-app.locals.coreFiles = gatherFilesRecursive "../../engine/core", "/engine/core"
+require('./lib/avocadoModules') app
 
 app.get '/', (req, res) ->
 	
 	res.render 'index', {}, (error, html) ->
 		
-		res.send html
+		res.end html
 
-# Wrap core JS.
-app.get /(^\/engine\/core\/.*|^\/engine\/main\/web\/Bindings\/.*)/, (req, res) ->
-	
-	fs.readFile "../..#{req.url}", 'UTF-8', (error, code) ->
-		
-		throw error if error
-		
-		key = req.url.substr 8
-		
-		if '.coffee' is path.extname req.url
-			code = coffee.compile code
-			module = path.basename key, '.coffee'
-		else
-			module = path.basename key, '.js'
-			
-		key = "#{path.dirname key}/#{module}"
-		
-		res.end "requires_['#{key}'] = function(module, exports) {\n#{code}\n}\n"
-
-# Translate .coffee to .js
-app.get /.*\.coffee/, (req, res) ->
-	
-	fs.readFile "../..#{req.url}", 'UTF-8', (error, code) ->
-		
-		throw error if error
-		
-		res.end coffee.compile code
-		
 app.use express.static '../..'
 
 server = http.createServer app
@@ -172,18 +108,6 @@ io.sockets.on 'connection', (socket) ->
 				y: 150
 		]
 	
-#	setTimeout(
-#		->
-#			socket.emit 'entityAdded', traits: [
-#				type: 'Existence'
-#				state:
-#					x: 150
-#					y: 150
-#			]
-#			
-#		5000
-#	)
-
 	socket.on 'entityUpdated', (entity) ->
 		
 		socket.set 'position', entity.position, ->

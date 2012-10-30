@@ -13,7 +13,7 @@ module.exports = Physics = class extends Trait
 		solid: true
 		radius: 4
 		layer: 1
-		floorFriction: .1
+		floorFriction: .3
 	
 	translateBodyType = (type) ->
 	

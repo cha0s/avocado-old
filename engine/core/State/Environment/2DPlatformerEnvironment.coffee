@@ -225,7 +225,7 @@ module.exports = class extends EnvironmentState
 		
 		# Any key/joystick movement input?
 		unless Vector.isZero (
-			movement = Graphics.graphicsService.playerUnitMovement('Awesome player')
+			movement = Graphics.playerUnitMovement('Awesome player')
 		)
 			actuallyMoved = true
 			

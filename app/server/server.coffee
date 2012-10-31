@@ -74,43 +74,27 @@ app.get '/', (req, res) ->
 
 app.use express.static '../..'
 
-server = http.createServer app
+httpServer = http.createServer app
 
-server.listen 13337
+httpServer.listen 13337
 
-io = require('socket.io').listen server
+Server = class extends (require 'core/Network/Server')
 
-io.sockets.on 'connection', (socket) ->
-	
-	console.log socket.id
-	
-	for client in io.sockets.clients()
-		continue if client is socket
+	constructor: ->
 		
-		client.get 'position', (err, position) ->
-			
-			position ?= [150, 150]
-			socket.emit 'entityAdded',
-				id: client.id
-				traits: [
-					type: 'Existence'
-					state:
-						x: position[0]
-						y: position[1]
-				]
-	
-	socket.broadcast.emit 'entityAdded',
-		id: socket.id
-		traits: [
-			type: 'Existence'
-			state:
-				x: 150
-				y: 150
-		]
-	
-	socket.on 'entityUpdated', (entity) ->
+		super
 		
-		socket.set 'position', entity.position, ->
-			
-			entity.id = socket.id
-			socket.broadcast.emit 'entityUpdated', entity
+		@timeCounter = new Timing.Counter()
+		
+	tick: ->
+		
+		Timing.TimingService.setElapsed @timeCounter.current() / 1000
+		
+		super
+		
+server = new Server
+	
+	type: 'socketIo'
+	server: httpServer
+
+server.begin()

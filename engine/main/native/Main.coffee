@@ -4,73 +4,11 @@
 # intervals and timeouts out-of-band.
 
 Core = require 'Core'
-Logger = require 'core/Utility/Logger'
+Graphics = require 'Graphics'
 Timing = require 'Timing'
+Sound = require 'Sound'
 
-# SPI proxies.
-require 'core/proxySpiis'
-
-Main = require 'core/Main'
-main = new class extends Main
-
-	constructor: ->
-		
-		super
-		
-		# Keep track of ticks and renders so we can calculate when the next one
-		# will happen, and relieve the CPU between.
-		@lastTickTime = 0
-		@lastRenderTime = 0
-		
-		@stateChange = name: 'Initial', args: {}
-	
-	begin: ->
-		
-		super
-		
-		# Run the hard loop until we receive the quit event.
-		running = true
-		@on 'quit', -> running = false
-		while running
-			
-			# Update time and run intervals and timeouts.
-			Timing.TimingService.setElapsed @timeCounter.current() / 1000
-			Timing.tickTimeouts()
-			
-			# Calculate the amount of time we can sleep and do so if we
-			# have enough time.
-			nextWake = Math.min(
-				@lastTickTime + @tickFrequency
-				@lastRenderTime + @renderFrequency
-			) - @timeCounter.current()
-			Timing.timingService.sleep(
-				nextWake * .8 if nextWake > 1
-			)
-	
-	tick: ->
-		
-		super
-		
-		# Keep track of tick timings.
-		@lastTickTime = @timeCounter.current()
-	
-	render: (buffer) ->
-		
-		super buffer
-		
-		# Keep track of render timings.
-		@lastRenderTime = @timeCounter.current()
-
-# Log and exit on error.
-main.on 'error', (error) ->
-
-	message = if error.stack?
-		error.stack
-	else
-		error.toString()
-	Logger.error message
-	
-	main.quit()
+Logger = require 'core/Utility/Logger'
 
 # Register a stderr logging strategy.
 Logger.registerStrategy (message, type) ->
@@ -95,5 +33,85 @@ Logger.registerStrategy (message, type) ->
 	# message
 	Core.CoreService.writeStderr message
 
+@console = log: Logger.info
+
+Timing = require 'Timing'
+
+# SPI proxies.
+require 'core/proxySpiis'
+
+Server = class extends (require 'core/Network/Server')
+server = new Server
+	
+	type: 'ipc'
+
+server.begin()
+
+timeCounter = new Timing.Counter()
+		
+Client = class extends (require 'core/Network/Client')
+
+	constructor: ->
+		
+		super
+		
+		# Keep track of ticks and renders so we can calculate when the next one
+		# will happen, and relieve the CPU between.
+		@lastTickTime = 0
+		@lastRenderTime = 0
+	
+	tick: ->
+		
+		super
+		
+		# Keep track of tick timings.
+		@lastTickTime = timeCounter.current()
+	
+	render: (buffer) ->
+		
+		super buffer
+		
+		# Keep track of render timings.
+		@lastRenderTime = timeCounter.current()
+
+client = new Client 'ipc://'
+
+# Log and exit on error.
+client.on 'error', (error) ->
+
+	message = if error.stack?
+		error.stack
+	else
+		error.toString()
+	Logger.error message
+	
+	client.quit()
+
+client.on 'quit', ->
+
+	Sound.soundService.close()
+	Timing.timingService.close()
+	Graphics.graphicsService.close()
+	Core.coreService.close()
+
 # GO!	
-main.begin()
+client.begin()
+
+# Run the hard loop until we receive the quit event.
+running = true
+client.on 'quit', -> running = false
+while running
+	
+	# Update time and run intervals and timeouts.
+	Timing.TimingService.setElapsed timeCounter.current() / 1000
+	Timing.tickTimeouts()
+	
+	# Calculate the amount of time we can sleep and do so if we
+	# have enough time.
+	nextWake = Math.min(
+		client.lastTickTime + client.tickFrequency
+		client.lastRenderTime + client.renderFrequency
+	) - timeCounter.current()
+	Timing.timingService.sleep(
+		nextWake * .8 if nextWake > 1
+	)

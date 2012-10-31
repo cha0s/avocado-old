@@ -13,7 +13,7 @@ stickIndexMap = {}
 # associate this movement, as well as a 4-element array of key codes to use
 # for the movement. The key codes represent up, right, down, left
 # respectively. Also, specify a joystick index to assign to this player.
-Graphics.GraphicsService::registerPlayerMovement = (player, keyCodes, stickIndex) ->
+Graphics.registerPlayerMovement = (player, keyCodes, stickIndex) ->
 	
 	# Map the key code and joystick index to the player so we can look 'em up
 	# quick when a key code or joystick movement comes in.
@@ -26,18 +26,8 @@ Graphics.GraphicsService::registerPlayerMovement = (player, keyCodes, stickIndex
 		stickIndex: stickIndex
 		joyState: [0, 0, 0, 0]
 
-# Get a unit movement vector for a player scaled by the time passed this tick.
-Graphics.GraphicsService::playerTickMovement = (player) ->
-	
-	return [0, 0] unless movement[player]?
-	
-	Vector.scale(
-		movement[player].tickUnit
-		Timing.TimingService.tickElapsed()
-	)
-
 # Get a unit movement vector for a player.
-Graphics.GraphicsService::playerUnitMovement = (player) ->
+Graphics.playerUnitMovement = (player) ->
 	
 	return [0, 0] unless movement[player]?
 	

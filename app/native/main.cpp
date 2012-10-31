@@ -86,13 +86,6 @@ int main(int argc, char **argv) {
 			main->execute();
 		}
 
-		// Finish and clean up.
-		avo::Script *finish = ScriptService->scriptFromFile(
-			nativeMainPath / "Finish.coffee"
-		);
-		finish->execute();
-
-		delete finish;
 		delete main;
 		delete initialize;
 

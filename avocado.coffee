@@ -30,23 +30,25 @@ Timing.rendersPerSecondTarget = 80
 require 'core/proxySpiis'
 
 Logger = require 'core/Utility/Logger'
-Main = require 'core/Main'
-Main.main = main = new class extends Main
+
+Client = class extends (require 'core/Network/Client')
 
 	constructor: ->
 		
 		super
 		
-		@stateChange = name: 'Initial', args: {}
-	
+		@timeCounter = new Timing.Counter()
+		
 	tick: ->
 		
 		Timing.TimingService.setElapsed @timeCounter.current() / 1000
 		
 		super
 		
+client = new Client 'http://avocado.cha0sb0x.ath.cx'
+
 # Log and exit on error.
-main.on 'error', (error) ->
+client.on 'error', (error) ->
 
 	message = if error.stack?
 		error.stack
@@ -54,9 +56,9 @@ main.on 'error', (error) ->
 		error.toString()
 	Logger.error message
 	
-	main.quit 1
+	client.quit 1
 
-main.on 'quit', (code = 0) ->
+client.on 'quit', (code = 0) ->
 	
 	Sound.soundService.close()
 	Timing.timingService.close()
@@ -89,4 +91,4 @@ Logger.registerStrategy (message, type) ->
 	Core.CoreService.writeStderr message
 
 # GO!	
-main.begin()
+client.begin()

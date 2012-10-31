@@ -21,15 +21,9 @@ Timing = require 'Timing'
 
 module.exports = Main = class
 	
-	# State implementations should add their class to this map.
-	@States = {}
-
 	constructor: ->
 		
 		Mixin this, EventEmitter
-		
-		# Keep a back buffer to receive all rendering from the current State.
-		@backBuffer = new Graphics.Image [1280, 720]
 		
 		# Holds the current State's name.
 		@stateName = ''
@@ -51,20 +45,12 @@ module.exports = Main = class
 		# A cache of all instantiated State objects.
 		@states = {}
 		
-		# Keep a count of the tick and render operations performed per second.
-		@ticksPerSecond = new Cps()
-		@rendersPerSecond = new Cps()
-		
-		@timeCounter = new Timing.Counter()
-		
 		# Keep count of tick and render frequencies in milliseconds.
 		@tickFrequency = 1000 / Timing.ticksPerSecondTarget
-		@renderFrequency = 1000 / Timing.rendersPerSecondTarget
 		
 		# Keep handles for out tick and render loops, so we can GC them on
 		# quit.
 		@tickInterval = null
-		@renderInterval = null
 		
 		# [Fix your timestep!](http://gafferongames.com/game-physics/fix-your-timestep/)
 		@tickTargetSeconds = 1 / Timing.ticksPerSecondTarget
@@ -83,16 +69,6 @@ module.exports = Main = class
 			@tickFrequency
 		)
 		
-		# Render loop.
-		@renderInterval = setInterval(
-			=>
-				try
-					@render()
-				catch error
-					@emit 'error', error
-			@renderFrequency
-		)
-	
 	# Change the State. This isn't immediate, but will be dispatched on the
 	# next tick.
 	changeState: (name, args = {}) -> @stateChange = name: name, args: args
@@ -160,30 +136,15 @@ module.exports = Main = class
 			
 			# Handle any State change.
 			@handleStateChange()
-			
-			# Track the ticks per second.
-			@ticksPerSecond.tick()
-			
+		
 		@elapsedRemainder = delta
 		
 		@lastElapsed = Timing.TimingService.elapsed()
 	
-	render: ->
-		
-		# Let the State do rendering.
-		rectangles = @stateObject?.render @backBuffer
-		if rectangles?.length > 0
-			
-			@emit 'render', @backBuffer, rectangles
-		
-		# Track the renders per second.
-		@rendersPerSecond.tick()
-		
 	quit: ->
 		
 		# GC our tick and render loop handles.
 		clearInterval @tickInterval
-		clearInterval @renderInterval
 		
 		# Notify any listeners that it's time to quit.
 		@emit 'quit'

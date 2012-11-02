@@ -76,7 +76,7 @@ module.exports = Main = class
 	# Leave any State we're currently in and NULL the object so
 	# State::tick and State::render don't run until the next State is
 	# loaded.
-	leaveState: ->
+	leaveState: (stateName) ->
 	
 		@stateObject?.leave stateName
 		@stateObject = null
@@ -86,14 +86,14 @@ module.exports = Main = class
 		return unless @stateChange?
 		
 		# Hold handles to some children in @stateChange since we're going to
-		# delete it to say we've handled the state change request.
+		# delete it to signal that we've handled the state change request.
 		args = @stateChange.args
 		stateName = @stateChange.name
 
 		# We're handling the state change.
 		delete @stateChange
 		
-		@leaveState()
+		@leaveState stateName
 		
 		# If the State is already loaded and cached, resolve the
 		# initialization promise immediately.
@@ -147,7 +147,7 @@ module.exports = Main = class
 	
 	quit: ->
 		
-		@leaveState()
+		@leaveState 'quit'
 		
 		# GC our tick and render loop handles.
 		clearInterval @tickInterval

@@ -14,7 +14,7 @@
 		{
 			"type": "Mobility",
 			"state": {
-				"movingSpeed": 200
+				"movingSpeed": 120
 			}
 		},
 		{

@@ -53,25 +53,23 @@ module.exports = class
 		
 	size: -> Rectangle.size @rectangle_
 	
-	calculateRelative: (rectangle, visible) ->
+	calculateRelativePosition: (position, offset) ->
 		
 		if @isRelative()
-			rectangle
+			position
 		else
-			Rectangle.compose(
-				Vector.add(
-					Rectangle.position visible
-					Rectangle.position rectangle
-				)
-				Rectangle.size rectangle
+			Vector.add(
+				offset
+				position
 			)
 			
-	relativeRectangle: (visible) ->
+	relativeRectangle: ->
 		
-		@calculateRelative @rectangle_, visible
+		position = @calculateRelativePosition @position(), @list_.position()
 		
-	relativePosition: (visible) ->
+		Rectangle.compose(
+			position
+			@size()
+		)
 		
-		Rectangle.position @relativeRectangle visible
-	
 	render: (position, clip, destination) ->

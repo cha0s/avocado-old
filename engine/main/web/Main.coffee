@@ -10,14 +10,13 @@ Timing = require 'Timing'
 # SPI proxies.
 require 'core/proxySpiis'
 
-Main = require 'core/Main'
-Main.main = main = new class extends Main
-	
+Client = class extends (require 'core/Network/Client')
+
 	constructor: ->
 		
 		super
 		
-		@stateChange = name: 'Initial', args: {}
+		@timeCounter = new Timing.Counter()
 	
 	tick: ->
 		
@@ -25,19 +24,24 @@ Main.main = main = new class extends Main
 		
 		super
 		
-main.on 'stateInitialized', (name) ->
+client = new Client
 	
-	if name is 'Initial'
+#	url: 'http://avocado.cha0sb0x.ath.cx'
+	url: 'http://engine.bridgeunitorzo.com'
+
+client.on 'stateInitialized', (name) ->
+	
+	if name is 'Client/Initial'
 		
 		document.body.appendChild Graphics.window.window_.Canvas
 		Graphics.window.window_.calculateOffset()
 
 # Log and exit on error.
-main.on 'error', (error) ->
+client.on 'error', (error) ->
 	
 	Logger.error error
 	
-	main.quit()
+	client.quit()
 
 # Register a stderr logging strategy.
 Logger.registerStrategy (message, type) ->
@@ -49,4 +53,4 @@ Logger.registerStrategy (message, type) ->
 	Core.CoreService.writeStderr message
 
 # GO!	
-main.begin()
+client.begin()

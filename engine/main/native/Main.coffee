@@ -35,10 +35,12 @@ Logger.registerStrategy (message, type) ->
 
 @console = log: Logger.info
 
-Timing = require 'Timing'
-
 # SPI proxies.
 require 'core/proxySpiis'
+
+GlobalConfig = require 'core/GlobalConfig'
+GlobalConfig.CLIENT_PACKET_INTERVAL = 80
+GlobalConfig.SERVER_PACKET_INTERVAL = 80
 
 Server = class extends (require 'core/Network/Server')
 server = new Server
@@ -74,7 +76,7 @@ Client = class extends (require 'core/Network/Client')
 		# Keep track of render timings.
 		@lastRenderTime = timeCounter.current()
 
-client = new Client 'ipc://'
+client = new Client url: 'ipc://'
 
 # Log and exit on error.
 client.on 'error', (error) ->
@@ -112,6 +114,6 @@ while running
 		client.lastTickTime + client.tickFrequency
 		client.lastRenderTime + client.renderFrequency
 	) - timeCounter.current()
-	Timing.timingService.sleep(
-		nextWake * .8 if nextWake > 1
-	)
+#	Timing.timingService.sleep(
+#		nextWake * .8 if nextWake > 1
+#	)

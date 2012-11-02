@@ -73,6 +73,14 @@ module.exports = Main = class
 	# next tick.
 	changeState: (name, args = {}) -> @stateChange = name: name, args: args
 	
+	# Leave any State we're currently in and NULL the object so
+	# State::tick and State::render don't run until the next State is
+	# loaded.
+	leaveState: ->
+	
+		@stateObject?.leave stateName
+		@stateObject = null
+		
 	# Handle the last State change request.
 	handleStateChange: ->
 		return unless @stateChange?
@@ -85,11 +93,7 @@ module.exports = Main = class
 		# We're handling the state change.
 		delete @stateChange
 		
-		# Leave any State we're currently in and NULL the object so
-		# State::tick and State::render don't run until the next State is
-		# loaded.
-		@stateObject?.leave stateName
-		@stateObject = null
+		@leaveState()
 		
 		# If the State is already loaded and cached, resolve the
 		# initialization promise immediately.
@@ -142,6 +146,8 @@ module.exports = Main = class
 		@lastElapsed = Timing.TimingService.elapsed()
 	
 	quit: ->
+		
+		@leaveState()
 		
 		# GC our tick and render loop handles.
 		clearInterval @tickInterval

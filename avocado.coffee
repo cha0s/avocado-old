@@ -45,7 +45,12 @@ Client = class extends (require 'core/Network/Client')
 		
 		super
 		
-client = new Client 'http://avocado.cha0sb0x.ath.cx'
+client = new Client
+	
+#	url: 'http://engine.bridgeunitorzo.com'
+	url: 'http://avocado.cha0sb0x.ath.cx'
+#	url: 'unix:///tmp/foobar.sock'
+#	url: 'tcp://localhost:13337'
 
 # Log and exit on error.
 client.on 'error', (error) ->
@@ -59,6 +64,8 @@ client.on 'error', (error) ->
 	client.quit 1
 
 client.on 'quit', (code = 0) ->
+	
+	client.disconnect()
 	
 	Sound.soundService.close()
 	Timing.timingService.close()
@@ -92,3 +99,7 @@ Logger.registerStrategy (message, type) ->
 
 # GO!	
 client.begin()
+
+process.on 'SIGINT', ->
+	
+	client.quit()

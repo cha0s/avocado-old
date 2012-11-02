@@ -248,6 +248,7 @@ module.exports = Visibility = class extends Trait
 			else
 				0
 			
+			@entity.setCurrentAnimationIndex @entity.visibilityIndex(), false
 			@entity.currentAnimation().setCurrentFrameIndex frameIndex
 		
 		moving: (hypotenuse) ->

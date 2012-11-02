@@ -45,7 +45,7 @@ module.exports = class
 	addCommandToQuadTree: (command) ->
 	
 		O = Rectangle.toObject(
-			command.relativeRectangle @rectangle_
+			command.relativeRectangle()
 			true
 		)
 		O.command = command
@@ -67,7 +67,7 @@ module.exports = class
 		@addCommandToQuadTree command
 		
 		command.markAsDirty = (
-			rectangle = command.relativeRectangle @rectangle_
+			rectangle = command.relativeRectangle()
 		) =>
 			
 			@dirtyCommands_[command.commandId_] = command
@@ -75,7 +75,7 @@ module.exports = class
 			@lastDirtyRectangle_ = Rectangle.united(
 				@lastDirtyRectangle_
 				Rectangle.intersection(
-					command.relativeRectangle @rectangle_
+					command.relativeRectangle()
 					@rectangle_
 				)
 			)
@@ -124,7 +124,7 @@ module.exports = class
 				Vector.sub(
 					position
 					Vector.sub(
-						Rectangle.position command.relativeRectangle @rectangle_
+						Rectangle.position command.relativeRectangle()
 						Rectangle.position @rectangle_
 					)
 				)
@@ -148,7 +148,7 @@ module.exports = class
 		for dirtyCommand in sortCommands @dirtyCommands_
 			
 			intersection = Rectangle.intersection(
-				dirtyCommand.relativeRectangle @rectangle_
+				dirtyCommand.relativeRectangle()
 				@rectangle_
 			)
 			continue if Rectangle.isNull intersection
@@ -181,7 +181,7 @@ module.exports = class
 			for command in cleanCommands
 				
 				intersection = Rectangle.intersection(
-					command.relativeRectangle @rectangle_
+					command.relativeRectangle()
 					@lastDirtyRectangle_
 				)
 				continue if Rectangle.isNull intersection
@@ -193,7 +193,7 @@ module.exports = class
 		for command in dirtyCommands
 
 			intersection = Rectangle.intersection(
-				command.relativeRectangle @rectangle_
+				command.relativeRectangle()
 				dirtyRectangle
 			)
 			continue if Rectangle.isNull intersection

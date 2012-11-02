@@ -22,8 +22,10 @@ Sound = require 'Sound'
 Sound.SoundService.implementSpi 'sfml', '../..'
 Sound.soundService = new Sound.SoundService()
 
+GlobalConfig = require 'core/GlobalConfig'
+
 # Shoot for 60 FPS input and render.
-Timing.ticksPerSecondTarget = 120
+Timing.ticksPerSecondTarget = GlobalConfig.SERVER_PACKET_INTERVAL
 Timing.rendersPerSecondTarget = 80
 
 # SPI proxies.
@@ -75,7 +77,6 @@ app.get '/', (req, res) ->
 app.use express.static '../..'
 
 httpServer = http.createServer app
-
 httpServer.listen 13337
 
 Server = class extends (require 'core/Network/Server')
@@ -96,5 +97,22 @@ server = new Server
 	
 	type: 'socketIo'
 	server: httpServer
+	settings:
+		'log level': 1
+		'transports': [
+			'websocket'
+			'flashsocket'
+			'htmlfile'
+			'xhr-polling'
+			'jsonp-polling'
+		]
+
+#	type: 'netSocket'
+#	listenSpec: '/tmp/avocado.sock'
+#	listenSpec: 13337
 
 server.begin()
+
+process.on 'SIGINT', ->
+	
+	server.quit()

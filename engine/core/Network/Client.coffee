@@ -25,7 +25,7 @@ module.exports = Client = class extends Main
 	# State implementations should add their class to this map.
 	@States = {}
 
-	constructor: (@url) ->
+	constructor: (@connection) ->
 		
 		super
 		
@@ -42,15 +42,19 @@ module.exports = Client = class extends Main
 		# quit.
 		@renderInterval = null
 		
+		# Record of connected clients, including this client. Keyed by
+		# connection ID.
+		@clients = {}
+		
 		@stateChange = name: 'Client/Initial', args: {}
 		
 	connect: ->
 		
 		defer = upon.defer()
 		
-		uri = jsuri.Uri @url
+		uri = jsuri.Uri @connection.url
 		
-		socketIo = (url) ->
+		socketIo = (url) =>
 			
 			socket = if io?
 				io.connect url
@@ -60,28 +64,53 @@ module.exports = Client = class extends Main
 			socket.on 'connect', ->
 				
 				defer.resolve socket
+				
+			@disconnect = -> socket.disconnect()
 		
 		switch uri.protocol()
 			
+			# 'http://example.com'
+			# 'ws://example.com'
 			when 'http', 'ws'
 				
 				uri.protocol 'http'
 				socketIo uri.toString()
 				
+			# 'https://example.com'
+			# 'wss://example.com'
 			when 'https', 'wss'
 				
 				uri.protocol 'https'
 				socketIo uri.toString()
 				
+			# 'tcp://example.com:13337'
 			when 'tcp'
 				
-				foo = 'bar'
+				client = require('net').connect
+					host: uri.host()
+					port: uri.port()
 				
+				require('core/Network/NodeSocketAugmentation') client
+				
+				defer.resolve client
+				
+			# 'unix:///tmp/avocado.sock'
+			when 'unix'
+				
+				client = require('net').connect uri.path()
+				
+				require('core/Network/NodeSocketAugmentation') client
+				
+				defer.resolve client
+				
+			# 'ipc://'
 			when 'ipc'
 				
 				defer.resolve require 'core/Network/Ipc'
 		
 		defer.promise
+	
+	disconnect: ->
 		
 	begin: ->
 		

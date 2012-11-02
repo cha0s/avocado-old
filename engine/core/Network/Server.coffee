@@ -25,7 +25,11 @@ module.exports = Server = class extends Main
 		
 		super
 		
-		@stateChange = name: 'Server/Accept', args: {}		
+		@stateChange = name: 'Server/Accept', args: {}
+		
+		@on 'quit', =>
+			
+			@connection.server.close() if @connection.server?
 
 	listen: (fn) ->
 		
@@ -33,54 +37,33 @@ module.exports = Server = class extends Main
 			
 			when 'socketIo'
 
-				# Hardcoded path.				
-				io = require('../../../app/server/node_modules/socket.io').listen @connection.server
+				io = require('socket.io').listen @connection.server
+				
+				@connection.io = io
+				
+				for key, value of @connection.settings
+				
+					io.set key, value
 				
 				io.sockets.on 'connection', (socket) ->
 					
 					fn socket
-			
-			when 'tcp'
+					
+			when 'netSocket'
 				
 				# This is node-specific for the time being.
-				require('net').createServer (client) ->
+				server = require('net').createServer (client) ->
 					
-					emit = client.emit
-					client.emit = (event, args...) ->
-						
-						return emit.apply(
-							client
-							[event].concat args
-						) if _.contains [
-							'listening', 'connection', 'close', 'error'
-							'connect', 'data', 'end', 'timeout', 'drain', 'error'
-							'close'
-						], event
-						
-						packet =
-							type: event
-							data: args[0]
-						
-						client.write JSON.stringify packet
-						client.write '\n'
+					require('core/Network/NodeSocketAugmentation') client
 					
-					packetData = ''
-					client.on 'data', (data) ->
-					
-						packetData += data
-						
-						packets = packetData.split '\n'
-						
-						return if packets.length is 0
-						
-						packetData = packets.splice -1, 1
-						
-						for {type, data} in (_.map packets, (packet) -> JSON.parse packet)
-							
-							client.emit type, data
-							
 					fn client
-			
+					
+				server.listen @connection.listenSpec
+				
+				@connection.server = server
+				
 			when 'ipc'
-			
-				fn require 'core/Network/Ipc'
+				
+				fn @connection.socket = require 'core/Network/Ipc'
+				
+		undefined 

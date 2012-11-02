@@ -6,15 +6,21 @@ Entity = require 'core/Entity/Entity'
 Graphics = require 'Graphics'
 upon = require 'core/Utility/upon'
 
+changeState = null
+
 module.exports = class extends AbstractState
 	
 	enter: ->
 		
-		userLoadedDefer = upon.defer()
+		@main.clients = {}
 		
 		@main.connect().then (connection) =>
 			
-			connection.on 'userLoaded', ({uri, traits}) =>
+			connection.on 'userLoaded', ({
+				id
+				uri
+				traits
+			}) =>
 				
 				Entity.load(uri).then (entity) =>
 					
@@ -24,10 +30,18 @@ module.exports = class extends AbstractState
 					entity.reset()
 					
 					@main.user = entity
+					@main.clients[id] =
+						
+						entity: entity
+						serverPosition: entity.position()
 					
 					connection.on 'worldUpdate', ({clients}) =>
-					
-						entity.serverPosition = clients[0].position
+						
+						@main.emit 'worldUpdate', clients
+						
+					connection.on 'removeConnection', ({id}) =>
+						
+						@main.emit 'removeConnection', id
 						
 					setInterval(
 						=>
@@ -40,16 +54,28 @@ module.exports = class extends AbstractState
 						1000 / GlobalConfig.CLIENT_PACKET_INTERVAL
 					)
 					
-					userLoadedDefer.resolve()
-					
+			connection.on 'changeState', ({
+				name
+				args
+			}) ->
+				
+				changeState =
+					name: name
+					args: args
+				
 			connection.emit 'userConnect', {}
 			
-		userLoadedDefer.promise
-	
+		upon.all([
+		])
+
 	tick: ->
 		
-		@main.changeState(
-			'Environment/2DTopdownEnvironment'
-			environmentUri: '/environment/wb-forest.environment.json'
-			roomIndex: 0
-		)
+		if changeState?
+			
+			@main.changeState(
+				changeState.name
+				changeState.args
+			)
+			
+			changeState = null
+			

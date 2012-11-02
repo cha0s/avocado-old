@@ -10,6 +10,7 @@ Mixin = require 'core/Utility/Mixin'
 Rectangle = require 'core/Extension/Rectangle'
 Transition = require 'core/Utility/Transition'
 upon = require 'core/Utility/upon'
+Vector = require 'core/Extension/Vector'
 
 module.exports = Entity = class
 	
@@ -141,13 +142,11 @@ module.exports = Entity = class
 			try
 				
 				require "core/Entity/Traits/#{trait.type}"
-				return true
+				true
 				
 			catch e
 				
-				Logger.warn e.stack
 				Logger.warn "Ignoring unknown entity trait: #{trait.type}"
-				delete traits[trait.type]
 				false
 			
 		# Wrap all the trait promises in a promise and return it.	
@@ -245,3 +244,108 @@ module.exports.DisplayCommand = class extends DisplayCommand
 		for renderer in @entity_.renderers
 			
 			renderer.f.call @entity_, destination, position, clip
+			
+		undefined
+
+module.exports.DisplayCommandList = class extends DisplayCommand
+	
+	constructor: (
+		list
+		rectangle = [0, 0, 0, 0]
+	) ->
+		
+		@entities = []
+		
+		super list, rectangle
+		
+	rectangleFromEntity: (entity) ->
+		
+		Rectangle.translated(
+			entity.visibleRect()
+			entity.position()
+		)
+		
+	rectangleFromEntities: ->
+		
+		rectangle = [0, 0, 0, 0]
+		
+		for entity in @entities
+			
+			continue unless entity.hasTrait 'Visibility'
+			
+			rectangle = Rectangle.united(
+				rectangle
+				@rectangleFromEntity entity
+			)
+		
+		rectangle
+		
+	addEntity: (entity) ->
+		
+		return if _.contains @entities, entity
+		
+		entity.on 'positionChanged.EntityDisplayCommand', =>
+			
+			@setRectangle @rectangleFromEntities()
+			
+		entity.on 'renderUpdate.EntityDisplayCommand', =>
+			
+			@markAsDirty()
+			
+		@entities.push entity
+		
+		@setRectangle @rectangleFromEntities()
+		
+	removeEntity: (entity) ->
+		
+		index = @entities.indexOf entity
+		
+		return if index is -1
+		
+		@entities.splice index, 1
+		
+		@setRectangle @rectangleFromEntities()
+		
+	render: (position, clip, destination) ->
+		
+		for entity in (
+			
+			(_.filter @entities, (entity) ->
+				entity.hasTrait 'Visibility'
+			).sort (l, r) =>
+				
+				l.y() - r.y()
+		)
+			
+			rectangle = @rectangleFromEntity entity
+			
+			entityClip = Rectangle.intersection(
+				rectangle
+				Rectangle.translated clip, @position()
+			)
+			
+			continue if Rectangle.isNull entityClip
+			
+			entityPosition = Vector.round Vector.sub(
+				Rectangle.position entityClip
+				Rectangle.position @list_.position()
+			)
+			
+			entityClipPosition = Vector.sub(
+				Rectangle.position entityClip
+				Rectangle.position rectangle
+			)
+			
+			entityClip = Rectangle.round Rectangle.compose(
+				entityClipPosition
+				Vector.sub(
+					Rectangle.size rectangle
+					entityClipPosition
+				)
+			) 
+			
+			for renderer in entity.renderers
+				
+				renderer.f.call entity, destination, entityPosition, entityClip
+			
+		undefined

@@ -64,6 +64,6 @@ module.exports = Server = class extends Main
 				
 			when 'ipc'
 				
-				fn @connection.socket = require 'core/Network/Ipc'
+				fn @connection.socket = @connection.ipcSocket
 				
 		undefined 

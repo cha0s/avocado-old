@@ -106,7 +106,7 @@ module.exports = Client = class extends Main
 			# 'ipc://'
 			when 'ipc'
 				
-				defer.resolve require 'core/Network/Ipc'
+				defer.resolve @connection.ipcSocket
 		
 		defer.promise
 	

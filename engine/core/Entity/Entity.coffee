@@ -37,21 +37,21 @@ module.exports = Entity = class
 		]
 		
 	# Initialize an Entity from a POD object.
-	fromObject: (O) ->
+	fromObject: (O, variables) ->
 		
 		defer = upon.defer()
 		
 		{@uri, traits} = O
 
 		# Add traits asynchronously.
-		@extendTraits(traits).then ->
+		@extendTraits(traits, variables).then ->
 			
 			defer.resolve()
 			
 		defer.promise
 			
 	# Load an entity by URI.
-	@load: (uri) ->
+	@load: (uri, variables = {}) ->
 		
 		defer = upon.defer()
 		
@@ -59,22 +59,22 @@ module.exports = Entity = class
 			O.uri = uri
 			
 			entity = new Entity()
-			entity.fromObject(O).then ->
+			entity.fromObject(O, variables).then ->
 				
 				defer.resolve entity
 		
 		defer.promise
 	
 	# Deep copy.
-	copy: ->
+	copy: (variables = {}) ->
 		
 		entity = new Entity()
-		entity.fromObject @toJSON()
+		entity.fromObject @toJSON(), variables
 		
 		entity
 	
 	# ***Internal:*** Add an array of [Trait](Traits/Trait.html) PODs to this entity.
-	addTraits = (traits) ->
+	addTraits = (traits, variables) ->
 		
 		# nop.
 		if not traits?
@@ -132,10 +132,10 @@ module.exports = Entity = class
 					# Add the handler.
 					@["#{handlerType}s"].push handler[handlerType]
 			
-			trait.initializeTrait()
+			trait.initializeTrait variables
 		
 	# Extend this Entity's traits.
-	extendTraits: (traits) ->
+	extendTraits: (traits, variables = {}) ->
 		
 		traits = _.filter traits, (trait) ->
 			
@@ -161,13 +161,13 @@ module.exports = Entity = class
 				_.extend @traits[type].state, state
 				
 				# and fire Trait::initializeTrait().
-				@traits[type].initializeTrait()
+				@traits[type].initializeTrait variables
 			
 			# Otherwise, add the traits as new.
 			# TODO aggregate for efficiency.	
 			else
 				
-				addTraits.call this, [trait]
+				addTraits.call this, [trait], variables
 				
 		upon.all _.flatten traitsPromise, true
 			
@@ -177,7 +177,7 @@ module.exports = Entity = class
 		trait = @traits[type]
 		
 		# Fire Trait::removeTrait().
-		trait.removeTrait this
+		trait.removeTrait()
 		
 		# Remove the actions and values.
 		delete @[index] for index of trait['actions']()
@@ -297,6 +297,8 @@ module.exports.DisplayCommandList = class extends DisplayCommand
 		@setRectangle @rectangleFromEntities()
 		
 	removeEntity: (entity) ->
+		
+		entity.off '.EntityDisplayCommand'
 		
 		index = @entities.indexOf entity
 		

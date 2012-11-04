@@ -22,38 +22,27 @@ module.exports = class extends AbstractState
 				traits
 			}) =>
 				
-				Entity.load(uri).then (entity) =>
+				@main.id = id
+				
+				connection.on 'worldUpdate', ({clients}) =>
 					
-					entity.extendTraits(traits).then =>
+					@main.emit 'worldUpdate', clients
 					
-					# Why?
-					entity.reset()
+				connection.on 'removeConnection', ({id}) =>
 					
-					@main.user = entity
-					@main.clients[id] =
-						
-						entity: entity
-						serverPosition: entity.position()
+					@main.emit 'removeConnection', id
 					
-					connection.on 'worldUpdate', ({clients}) =>
+				setInterval(
+					=>
 						
-						@main.emit 'worldUpdate', clients
+						connection.emit 'clientInput',
+							unitMovement: Graphics.playerUnitMovement(
+								'Awesome player'
+							)
 						
-					connection.on 'removeConnection', ({id}) =>
-						
-						@main.emit 'removeConnection', id
-						
-					setInterval(
-						=>
-							
-							connection.emit 'userInput',
-								unitMovement: Graphics.playerUnitMovement(
-									'Awesome player'
-								)
-							
-						1000 / GlobalConfig.CLIENT_PACKET_INTERVAL
-					)
-					
+					1000 / GlobalConfig.CLIENT_PACKET_INTERVAL
+				)
+				
 			connection.on 'changeState', ({
 				name
 				args

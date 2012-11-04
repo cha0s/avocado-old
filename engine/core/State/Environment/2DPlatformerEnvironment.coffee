@@ -54,7 +54,7 @@ module.exports = class extends EnvironmentState
 				)
 			)
 			
-			Box2D.world.GetGroundBody().CreateFixture fixtureDef
+			@world.GetGroundBody().CreateFixture fixtureDef
 		
 	createRoomCollision: ->
 		
@@ -82,7 +82,7 @@ module.exports = class extends EnvironmentState
 	
 	enter: (args) ->
 		
-		Box2D.world = new Box2D.b2World new Box2D.b2Vec2(0, -98), false
+		@world = new Box2D.b2World new Box2D.b2Vec2(0, -98), false
 		
 		environmentPromise = super args
 		
@@ -212,7 +212,7 @@ module.exports = class extends EnvironmentState
 		
 	tick: ->
 		
-		if world = Box2D.world
+		if world = @world
 			world.Step 1 / Timing.ticksPerSecondTarget, 8, 3
 		
 		@entity.tick()

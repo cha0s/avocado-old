@@ -45,22 +45,18 @@ module.exports = Physics = class extends Trait
 		
 		@isTouching = []
 		
-	resetTrait: ->
+	initializeTrait: (variables) ->
 		
-		return unless Box2D.world?
+		return unless variables.world?
+		
+		@world = variables.world
 		
 		bodyDef = new Box2D.b2BodyDef()
 		bodyDef.type = translateBodyType @state.bodyType
 		bodyDef.fixedRotation = true
 #		bodyDef.linearDamping = 0
 		
-		worldPosition = Vector.scale(
-			[@entity.x(), -@entity.y()]
-			1 / Physics.PixelsPerMeter
-		)
-		
-		bodyDef.position.Set.apply bodyDef.position, worldPosition 
-		@state.body = Box2D.world.CreateBody bodyDef
+		@state.body = @world.CreateBody bodyDef
 		
 		box = new Box2D.b2PolygonShape()
 		box.SetAsBox @state.radius / Physics.PixelsPerMeter, @state.radius / Physics.PixelsPerMeter 
@@ -78,13 +74,34 @@ module.exports = Physics = class extends Trait
 		
 		@state.body.CreateFixture fixtureDef
 		@state.body.SetUserData this
-	
+		
+		@resetTrait()
+		
+	updatePhysicsPosition: ->
+		
+		worldPosition = Vector.scale(
+			[@entity.x(), -@entity.y()]
+			1 / Physics.PixelsPerMeter
+		)
+		
+		@state.body.SetPosition Vector.toObject worldPosition
+		
+	resetTrait: ->
+		
+		@updatePhysicsPosition()
+		
 	removeTrait: ->
 		
-		return unless Box2D.world?
+		return unless @world?
 		
-		Box2D.world.DestroyBody @state.body
+		@world.DestroyBody @state.body
 	
+	signals: ->
+		
+		positionChanged: ->
+		
+			@updatePhysicsPosition()
+		
 	actions: ->
 		
 		setIsTouching: (entity) ->

@@ -15,23 +15,63 @@ updateTicker = new Ticker 1000 / GlobalConfig.SERVER_PACKET_INTERVAL
 
 module.exports = class extends AbstractState
 	
+	initialize: ->
+		
+		@environmentClients = {}
+		
+		super
+	
 	broadcast: (name, data) ->
 		
 		client.connection.emit name, data for id, client of clients
+		
+		undefined
 	
-	worldUpdateForClient: (clientToUpdate) ->
-	
-		clientToUpdate.connection.emit 'worldUpdate'
+	environmentClient: (uri) ->
+		
+		clientDefer = upon.defer()
+		
+		if @environmentClients[uri]?
+		
+			clientDefer.resolve @environmentClients[uri].client
 			
-			clients: for id, client of clients
+		else
+		
+			connection = switch GlobalConfig.ENVIRONMENT_SERVER_STRATEGY
+			
+				when 'ipc'
 				
-				direction: client.entity.direction()
-				position: client.entity.position()
-				moving: not Vector.isZero client.userInput.unitMovement
-				id: id
+					ipcSocket = require('core/Network/Ipc')()
+					
+					# Create a new server to execute the environment.
+					Server = class extends (require 'core/Network/Server')
+					server = new Server
+						type: 'ipc'
+						ipcSocket: ipcSocket
+					server.changeState(
+						'Server/2DTopdownEnvironment'
+						environmentUri: '/environment/wb-forest.environment.json'
+						roomIndex: 0
+					)
+					server.on 'error', (error) -> throw error
+					server.begin()
+					
+					@main.on 'quit', -> server.quit()
+					
+					url: 'ipc://'
+					ipcSocket: ipcSocket
+					
+					@environmentClients[uri] =
+						client: ipcSocket
+						
+					server.on 'stateEntered', (stateName) =>
+						if stateName is 'Server/2DTopdownEnvironment'
+							clientDefer.resolve @environmentClients[uri].client
+		
+		clientDefer.promise
 	
 	connectionId = 1
-	newConnectionId: -> connectionId++
+	newConnectionId: -> '' + connectionId++
 	
 	enter: ->
 		
@@ -39,69 +79,64 @@ module.exports = class extends AbstractState
 			
 			connection.on 'userConnect', (data) =>
 				
-				uri = data.uri ? '/entity/wb-dude.entity.json'
-				traits = [
-					type: 'Existence'
-					state:
-						x: 150
-						y: 150
-						direction: 2
-				]
 				id = @newConnectionId()
 				
-				connection.on 'disconnect', =>
-					return unless clients[id]?
-					
-					@broadcast 'removeConnection', id: id
-					
-					delete clients[id]
-					
-				Entity.load(uri).then (entity) =>
-					
-					entity.extendTraits(traits).then =>
-					
-					# Why?
-					entity.reset()
+				@environmentClient(
+					'/environment/wb-forest.environment.json'
+				).then (environmentClient) =>
 					
 					client = clients[id] =
-						
+						environmentClient: environmentClient
 						connection: connection
-						entity: entity
 					
-					connection.on 'userInput', (userInput) ->
+					connection.on 'disconnect', =>
+						return unless clients[id]?
 						
-						client.userInput = userInput
+						@broadcast 'removeConnection', id: id
+						client.environmentClient.emit 'removeConnection', id: id
 						
-					connection.emit 'userLoaded',
+						delete clients[id]
+					
+					connection.on 'clientInput', (input) ->
 						
-						uri: uri
-						traits: traits
+						client.environmentClient.emit 'clientInput',
+							id: id
+							input: input
+					
+					client.environmentClient.on "worldUpdate-#{id}", (worldUpdate) ->
+						
+						connection.emit 'worldUpdate', worldUpdate
+						
+					client.environmentClient.on 'environmentUserLoaded', ({
+						id
+						uri
+						traits
+					}) ->
+						
+						connection.emit 'userLoaded',
+							
+							uri: uri
+							traits: traits
+							id: id
+							
+						connection.emit 'changeState',
+							
+							name: 'Client/2DTopdownEnvironment'
+							args:
+								environmentUri: '/environment/wb-forest.environment.json'
+								roomIndex: 0
+								
+					client.environmentClient.emit 'clientEntered',
+						
 						id: id
-		
-					connection.emit 'changeState',
-						
-						name: 'Client/2DTopdownEnvironment'
-						args:
-							environmentUri: '/environment/wb-forest.environment.json'
-							roomIndex: 0
-		
+				
 		upon.all([
 		])
 		
 	tick: ->
 		
-		for id, client of clients
-		
-			continue if Vector.isZero client.userInput.unitMovement
-			
-			client.entity.move(
-				client.userInput.unitMovement
-				1 / Timing.ticksPerSecondTarget
-				true
-			)
-		
 		if updateTicker.ticks() > 0
-			
 			for id, client of clients
+				client.environmentClient.emit 'environmentWorldUpdate', id: id
 				
-				@worldUpdateForClient client
+		undefined

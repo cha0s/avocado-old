@@ -42,7 +42,7 @@ GlobalConfig = require 'core/GlobalConfig'
 GlobalConfig.CLIENT_PACKET_INTERVAL = 80
 GlobalConfig.SERVER_PACKET_INTERVAL = 80
 
-ipcSocket = require 'core/Network/Ipc'
+ipcSocket = require('core/Network/Ipc')()
 
 Server = class extends (require 'core/Network/Server')
 server = new Server
@@ -51,6 +51,17 @@ server = new Server
 	ipcSocket: ipcSocket
 
 server.begin()
+
+# Log and exit on error.
+server.on 'error', (error) ->
+
+	message = if error.stack?
+		error.stack
+	else
+		error.toString()
+	Logger.error message
+	
+	server.quit()
 
 timeCounter = new Timing.Counter()
 		

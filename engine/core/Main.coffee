@@ -118,6 +118,8 @@ module.exports = Main = class
 			# and finished being entered,
 			@states[stateName].enter(args, @stateName).then =>
 				
+				@emit 'stateEntered', stateName
+				
 				# set the new State name, and the object for ticking/rendering.
 				@stateObject = @states[stateName]
 				@stateName = stateName

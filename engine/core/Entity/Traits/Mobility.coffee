@@ -95,11 +95,11 @@ module.exports = class extends Trait
 				
 				moveInvocations = @entity.invoke 'moveRequest', hypotenuse
 				if moveInvocations.length is 0
-				
+					
 					@entity.emit 'moving', hypotenuse
 				
 					@entity.setPosition Vector.add position, Vector.scale hypotenuse, magnitude
-				
+					
 				increment: 0
 
 		moveForward:

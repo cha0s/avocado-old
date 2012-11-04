@@ -18,7 +18,7 @@ module.exports = class extends Physics
 		
 		moveRequest: (hypotenuse) ->
 		
-			return unless Box2D.world?
+			return unless @world?
 			
 			hypotenuse = Vector.scale(
 				hypotenuse, @entity.movingSpeed() / Physics.PixelsPerMeter
@@ -62,10 +62,11 @@ module.exports = class extends Physics
 			weight: -100
 			f: ->
 				
-				return unless Box2D.world?
+				return unless @world?
 				return unless @state.body?
 				
 				{x, y} = @state.body.GetLinearVelocity()
+				
 				unless x is 0 and y is 0
 					
 					velocity = Vector.scale(
@@ -78,6 +79,7 @@ module.exports = class extends Physics
 					)
 					
 				{x, y} = @state.body.GetPosition()
+				
 				@entity.setPosition Vector.scale(
 					[x, -y]
 					Physics.PixelsPerMeter

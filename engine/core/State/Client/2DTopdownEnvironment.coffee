@@ -13,6 +13,8 @@ Vector = require 'core/Extension/Vector'
 module.exports = class extends EnvironmentState
 	
 	initialize: ->
+		
+		@lastMovement = 0
 
 		@main.on 'removeConnection', (id) =>
 			return unless @main.clients[id]?
@@ -20,9 +22,11 @@ module.exports = class extends EnvironmentState
 			@entityCommandList.removeEntity @main.clients[id].entity
 			delete @main.clients[id]
 		
+		@environmentLoaded = false 
+		
 		@main.on 'worldUpdate', (clients) =>
 			
-			@updateWorld clients
+			@updateWorld clients if @environmentLoaded
 			
 		super
 		
@@ -39,11 +43,16 @@ module.exports = class extends EnvironmentState
 			
 			if (client = @main.clients[id])?
 				
+				# The authoritative position of this client.
+				client.serverPosition = position
+				
 				entity = client.entity
+				
+				continue unless entity?
 				
 				# Handle animating the movement of other clients. Main entity
 				# movement animation is handled locally.
-				unless @main.user is entity
+				unless @main.id is id
 					if moving
 						entity.emit 'startedMoving' unless entity.isMoving()
 					else
@@ -51,11 +60,9 @@ module.exports = class extends EnvironmentState
 				
 				entity.setDirection direction
 				
-				# The authoritative position of this client.
-				client.serverPosition = position
-				
 			# If we don't have this client yet, create a new record for it.
 			else
+				
 				@main.clients[id] = {}
 				
 				traits = [
@@ -66,21 +73,33 @@ module.exports = class extends EnvironmentState
 						direction: direction
 				]
 				
-				Entity.load('/entity/wb-dude.entity.json').then (e) =>
-					
-					e.extendTraits(traits).then =>
-					
-						# Why?
-						e.reset()
+				loadEntity = (id) =>
+				
+					Entity.load(
+						'/entity/wb-dude.entity.json'
+						world: @world
+					).then (e) =>
 						
-						@main.clients[id] =
+						e.extendTraits(
+							traits
+							world: @world
+						).then =>
 							
-							entity: e
-							serverPosition: position
-						
-						@entityCommandList.addEntity e
+							# Why?
+							e.reset()
+							
+							@main.clients[id] =
+								
+								entity: e
+								serverPosition: position
+							
+							@entityCommandList.addEntity e
+							
+				loadEntity id
 		
 	enter: (args) ->
+		
+		@environmentLoaded = false
 		
 		upon.all([
 			
@@ -123,9 +142,9 @@ module.exports = class extends EnvironmentState
 					@currentRoom.layer 3
 					@environment.tileset()
 					@roomRectangle
-				) 
+				)
 				
-				@entityCommandList.addEntity @main.user
+				@environmentLoaded = true 
 				
 			RasterFont.load('/font/wb-text.png').then (@font) =>
 			
@@ -135,34 +154,53 @@ module.exports = class extends EnvironmentState
 		
 		super
 		
-		unitMovement = Graphics.playerUnitMovement('Awesome player')
-		
-		# Any key/joystick movement input?
-		unless Vector.isZero (
-			unitMovement
-		)
-#			@main.user.move unitMovement, null, true   
-			@main.user.emit 'startedMoving' unless @main.user.isMoving()
-			
-			mainEasing = 0
-			
-		else
-		
-			@main.user.emit 'stoppedMoving' if @main.user.isMoving()
-			
-			mainEasing = 0
-			
 		for id, client of @main.clients
 			
-			oldPosition = Vector.round client.entity.position()
+			continue unless client.entity?
 			
+			client.entity.tick()
+				
+			if @main.id is id
+				
+				unitMovement = Graphics.playerUnitMovement('Awesome player')
+				
+				# Any key/joystick movement input?
+				unless Vector.isZero (
+					unitMovement
+				)
+#					client.entity.move unitMovement, null, true   
+					client.entity.emit 'startedMoving' unless client.entity.isMoving()
+					
+#					mainEasing = 15
+					mainEasing = .25
+					
+					@lastMovement = Timing.TimingService.elapsed()
+					
+				else
+				
+					client.entity.emit 'stoppedMoving' if client.entity.isMoving()
+					
+					if Timing.TimingService.elapsed() - @lastMovement > .5
+					
+#						mainEasing = 1
+						mainEasing = .25
+						
+					else
+						
+#						mainEasing = 4
+						mainEasing = .25
+						
 			client.entity.setPosition @lerp(
 				client.serverPosition
 				client.entity.position()
-				if @main.user is client.entity
+				if @main.id is id
 					mainEasing
 				else
 					.25
 			)
 			
-		@setCamera @main.user.position()
+			if @main.id is id
+				
+				@setCamera client.entity.position()
+
+			

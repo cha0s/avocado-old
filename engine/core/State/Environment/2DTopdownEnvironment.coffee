@@ -7,12 +7,12 @@ module.exports = class extends EnvironmentState
 	
 	enter: (args) ->
 		
-		Box2D.world = new Box2D.b2World new Box2D.b2Vec2(0, 0), false
+		@world = new Box2D.b2World new Box2D.b2Vec2(0, 0), false
 		
 		super args
 			
 	tick: ->
 		
-		if world = Box2D.world
+		if world = @world
 			
 			world.Step 1 / Timing.ticksPerSecondTarget, 8, 3

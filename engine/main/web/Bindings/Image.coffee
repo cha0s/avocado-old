@@ -86,7 +86,8 @@ module.exports = AvoImage = class
 		
 		context.lineCap = 'butt';
 		context.fillStyle = context.strokeStyle = rgbToHex r, g, b, a
-		context.strokeRect box[0], box[1], box[2], box[3]
+		
+		context.strokeRect box[0] + .5, box[1] + .5, box[2], box[3]
 	
 	'%fill': (r, g, b, a) ->
 		

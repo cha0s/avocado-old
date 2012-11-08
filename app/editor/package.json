@@ -1,6 +1,6 @@
 {
   "name": "avocado-editor",
-  "description": "Edit avocado resources.",
+  "description": "Resourceeditor for avocado.",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -8,9 +8,10 @@
     "socket.io": "0.9.10",
     "coffee-script": "1.4.0",
     "consolidate": "0.4.0",
-    "mustache": "0.7.0"
+    "mustache": "0.7.0",
+    "session.socket.io": "0.1.1"
   },
   "scripts": {
-    "start": "NODE_PATH=../../engine node_modules/coffee-script/bin/coffee editor.coffee"
+    "start": "NODE_PATH=../../engine:./node_modules node_modules/coffee-script/bin/coffee editor.coffee"
   }
 }

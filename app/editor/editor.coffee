@@ -1,3 +1,5 @@
+coffee = require 'coffee-script'
+
 # Use SFML CoreService for now.
 Core = require 'Core'
 Core.CoreService.implementSpi 'sfml', '../..'
@@ -20,8 +22,10 @@ Sound = require 'Sound'
 Sound.SoundService.implementSpi 'sfml', '../..'
 Sound.soundService = new Sound.SoundService()
 
+GlobalConfig = require 'core/GlobalConfig'
+
 # Shoot for 60 FPS input and render.
-Timing.ticksPerSecondTarget = 120
+Timing.ticksPerSecondTarget = GlobalConfig.SERVER_PACKET_INTERVAL
 Timing.rendersPerSecondTarget = 80
 
 # SPI proxies.
@@ -62,25 +66,32 @@ app.engine 'html', consolidate.mustache
 
 app.set 'view engine', 'html'
 
-app.use express.static '../..'
+require('./lib/avocadoModules') app
 
 app.get '/', (req, res) ->
 	
 	res.render 'index', {}, (error, html) ->
 		
-		res.send html
+		res.end html
 
-console.log 
-  
-server = http.createServer app
+app.use express.static '../..'
 
-server.listen 1337
+httpServer = http.createServer app
+httpServer.listen 13338
 
-io = require('socket.io').listen server
+io = require('socket.io').listen httpServer
+
+ioSettings =
+	'log level': 1
+	'transports': [
+		'websocket'
+		'flashsocket'
+		'htmlfile'
+		'xhr-polling'
+		'jsonp-polling'
+	]
+
+
+io.set key, value for key, value of ioSettings
 
 io.sockets.on 'connection', (socket) ->
-
-	socket.emit 'greeting', hello: 'world'
-	
-	socket.on 'load environment', ({uri}) ->
-		console.log uri

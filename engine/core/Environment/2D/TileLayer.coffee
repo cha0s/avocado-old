@@ -152,6 +152,11 @@ module.exports = TileLayer = class
 		
 		tileSize = tileset.tileSize()
 		
+		if Vector.isZero Rectangle.size clip
+			
+			clip[2] = destination.width()
+			clip[3] = destination.height()
+		
 		matrixRenderer clip, tileSize, (matrix) =>
 			
 			index = @tileIndex matrix.start

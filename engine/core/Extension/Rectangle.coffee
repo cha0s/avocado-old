@@ -24,6 +24,13 @@ module.exports = Rectangle =
 		return false if r[1] >= l[1] + l[3]
 		
 		true
+		
+	isTouching: (rectangle, vector) ->
+		
+		Rectangle.intersects(
+			rectangle
+			Rectangle.compose vector, [1, 1]
+		)
 
 	# Compose a rectangle from a position vector and a size vector.
 	#

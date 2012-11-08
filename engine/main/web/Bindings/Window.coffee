@@ -1,4 +1,5 @@
 
+Dom = require 'core/Utility/Dom'
 EventEmitter = require 'core/Utility/EventEmitter'
 Mixin = require 'core/Utility/Mixin'
 Rectangle = require 'core/Extension/Rectangle'
@@ -66,14 +67,8 @@ module.exports = class
 			@keyUps_.push code: keyEvent.keyCode
 	
 	calculateOffset: -> 
-	
-		obj = @Canvas
 		
-		@offset_[0] = obj.offsetLeft
-		@offset_[1] = obj.offsetTop
-		while obj = obj.offsetParent
-			@offset_[0] += obj.offsetLeft
-			@offset_[1] += obj.offsetTop
+		@offset_ = Dom.calculateOffset @Canvas 
 	
 	'%display': ->
 	

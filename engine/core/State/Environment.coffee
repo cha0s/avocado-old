@@ -44,7 +44,7 @@ module.exports = class extends AbstractState
 			# Since we can't rely on graphics SPIIs letting us know when our
 			# graphics need to be rewritten, we'll suggest redrawing the entire
 			# screen 10 times a second.
-			setInterval (=> @displayList.markCommandsAsDirty()), 100
+			setInterval (=> @displayList.markAllCommandsAsDirty()), 100
 		
 	lerp: (actual, lerping, easing = .25) ->
 		

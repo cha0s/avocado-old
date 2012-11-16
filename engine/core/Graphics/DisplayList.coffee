@@ -31,7 +31,7 @@ module.exports = class
 		
 		@rectangle_ = rectangle
 		@lastDirtyRectangle_ = [0, 0, 0, 0]
-		@markCommandsAsDirty()
+		@markAllCommandsAsDirty()
 		
 	rectangle: -> @rectangle_
 	
@@ -89,17 +89,21 @@ module.exports = class
 		@dirtyCommands_ = {}
 		@quadTree.clear()
 	
-	markCommandsAsDirty: (commandsAreDirty) ->
-		
+	markRectangleAsDirty: (rectangle) ->
+	
 		affectedCommands = @quadTree.retrieve(
 			Rectangle.toObject(
-				@rectangle_
+				rectangle
 				true
 			)
 		)
 		affectedCommands = _.map affectedCommands, (O) -> O.command
 		
 		command.markAsDirty() for command in affectedCommands
+		
+	markAllCommandsAsDirty: ->
+	
+		@markRectangleAsDirty @rectangle_
 	
 	render: (destination) ->
 		renderRectangles = []

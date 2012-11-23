@@ -1,4 +1,4 @@
-TARGET = ../../avocado
+TARGET = avocado
 TEMPLATE = app
 
 CONFIG -= qt

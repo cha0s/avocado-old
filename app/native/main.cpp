@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
 
 		// Set <EXEPATH>.
 		avo::FS::setExePath(boost::filesystem::canonical(boost::filesystem::absolute(
-			boost::filesystem::path(argv[0]).parent_path(),
+			boost::filesystem::path(argv[0]).parent_path() / ".." / "..",
 			boost::filesystem::current_path()
 		)));
 

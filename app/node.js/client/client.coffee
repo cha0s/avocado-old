@@ -4,8 +4,10 @@ require 'coffee-script'
 Core = require 'Core'
 Core.CoreService.implementSpi 'sfml'
 Core.coreService = new Core.CoreService()
-Core.CoreService.setEngineRoot './engine'
-Core.CoreService.setResourceRoot './resource'
+
+#Core.CoreService.setExePath '../../..'
+Core.CoreService.setEngineRoot '../../../engine'
+Core.CoreService.setResourceRoot '../../../resource'
 
 # Use SFML GraphicsService for now.
 Graphics = require 'Graphics'

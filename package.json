@@ -10,12 +10,5 @@
   "version": "1.0.0",
   "author": "cha0s <cha0s@therealcha0s.net>",
   "description": "Collaborative, libre, gratis game development",
-  "private": true,
-  "dependencies": {
-    "coffee-script": "1.4.0",
-    "socket.io-client": "0.9.10"
-  },
-  "scripts": {
-    "start": "NODE_PATH=engine node_modules/coffee-script/bin/coffee avocado.coffee"
-  }
+  "private": true
 }

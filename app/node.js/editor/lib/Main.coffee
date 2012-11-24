@@ -25,7 +25,10 @@ Rectangle = require 'core/Extension/Rectangle'
 upon = require 'core/Utility/upon'
 Vector = require 'core/Extension/Vector'
 
-socket = io.connect 'http://editor.avocado.cha0sb0x.ath.cx'
+socket = io.connect(
+	'http://localhost:13338'
+#	'http://editor.avocado.cha0sb0x.ath.cx'
+)
 
 class Editor
 	

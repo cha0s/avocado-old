@@ -1,5 +1,3 @@
-require 'coffee-script'
-
 # Use SFML CoreService for now.
 Core = require 'Core'
 Core.CoreService.implementSpi 'sfml', '../../..'

@@ -72,7 +72,7 @@ v8::Handle<v8::Value> v8SoundService::ImplementSpi(const v8::Arguments &args) {
 
 #ifdef AVOCADO_NODE
 	dlopen(
-		(spiiPath.string() + "/node_modules/Sound.node").c_str(), RTLD_NOW | RTLD_GLOBAL
+		(spiiPath.string() + "/SPII/Sound.node").c_str(), RTLD_NOW | RTLD_GLOBAL
 	);
 #endif
 

@@ -9,6 +9,6 @@
     "socket.io-client": "0.9.10"
   },
   "scripts": {
-    "start": "NODE_PATH=../../../engine:./node_modules node_modules/coffee-script/bin/coffee client.coffee"
+    "start": "NODE_PATH=../../../SPII:../../../engine:./node_modules node_modules/coffee-script/bin/coffee client.coffee"
   }
 }

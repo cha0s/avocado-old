@@ -1,6 +1,6 @@
 {
-  "name": "avocado-editor",
-  "description": "Resourceeditor for avocado.",
+  "name": "avocado-server-test",
+  "description": "A test server.",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -12,6 +12,6 @@
     "session.socket.io": "0.1.1"
   },
   "scripts": {
-    "start": "NODE_PATH=../../engine:./node_modules node_modules/coffee-script/bin/coffee editor.coffee"
+    "start": "NODE_PATH=../../../SPII:../../../engine:./node_modules node_modules/coffee-script/bin/coffee server.coffee"
   }
 }

@@ -71,7 +71,7 @@ v8::Handle<v8::Value> v8TimingService::ImplementSpi(const v8::Arguments &args) {
 
 #ifdef AVOCADO_NODE
 	dlopen(
-		(spiiPath.string() + "/node_modules/Timing.node").c_str(), RTLD_NOW | RTLD_GLOBAL
+		(spiiPath.string() + "/SPII/Timing.node").c_str(), RTLD_NOW | RTLD_GLOBAL
 	);
 #endif
 

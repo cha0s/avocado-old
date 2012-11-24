@@ -2,26 +2,25 @@ require 'coffee-script'
 
 # Use SFML CoreService for now.
 Core = require 'Core'
-Core.CoreService.implementSpi 'sfml'
+Core.CoreService.implementSpi 'sfml', '../../..'
 Core.coreService = new Core.CoreService()
 
-#Core.CoreService.setExePath '../../..'
 Core.CoreService.setEngineRoot '../../../engine'
 Core.CoreService.setResourceRoot '../../../resource'
 
 # Use SFML GraphicsService for now.
 Graphics = require 'Graphics'
-Graphics.GraphicsService.implementSpi 'sfml'
+Graphics.GraphicsService.implementSpi 'sfml', '../../..'
 Graphics.graphicsService = new Graphics.GraphicsService()
 
 # Use SFML TimingService for now.
 Timing = require 'Timing'
-Timing.TimingService.implementSpi 'sfml'
+Timing.TimingService.implementSpi 'sfml', '../../..'
 Timing.timingService = new Timing.TimingService()
 
 # Use SFML SoundService for now.
 Sound = require 'Sound'
-Sound.SoundService.implementSpi 'sfml'
+Sound.SoundService.implementSpi 'sfml', '../../..'
 Sound.soundService = new Sound.SoundService()
 
 # Shoot for 60 FPS input and render.
@@ -50,9 +49,9 @@ Client = class extends (require 'core/Network/Client')
 client = new Client
 	
 #	url: 'http://engine.bridgeunitorzo.com'
-	url: 'http://avocado.cha0sb0x.ath.cx'
+#	url: 'http://avocado.cha0sb0x.ath.cx'
 #	url: 'unix:///tmp/foobar.sock'
-#	url: 'tcp://localhost:13337'
+	url: 'http://localhost:13337'
 
 # Log and exit on error.
 client.on 'error', (error) ->

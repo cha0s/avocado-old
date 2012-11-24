@@ -1,2 +1,2 @@
 node-gyp configure build
-find -maxdepth 3 -name '*.node' -exec cp {} ../../node_modules/ \;
+find -maxdepth 3 -name '*.node' -exec cp {} ../../SPII \;

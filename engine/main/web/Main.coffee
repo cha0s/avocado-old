@@ -43,7 +43,7 @@ client.on 'error', (error) ->
 	
 	client.quit()
 
-# Register a stderr logging strategy.
+# Register a console logging strategy.
 Logger.registerStrategy (message, type) ->
 	
 	# TYPE:

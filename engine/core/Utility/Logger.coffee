@@ -1,6 +1,31 @@
+Core = require 'Core'
+
 # Logger handles logging information. It can be customized to log through
 # logging strategies.
 module.exports = class
+
+	# A stderr logging strategy.
+	@stderrStrategy: (message, type) ->
+		
+		# Colors for the console.
+		colors =
+		
+			error : '\x1B[1;31m'
+			warn  : '\x1B[1;33m'
+			info  : '\x1B[1;32m'
+			reset : '\x1B[0m'
+			
+		# TYPE:
+		Core.CoreService.writeStderr "#{
+			colors[type]
+		}#{
+			type.toUpperCase()
+		}#{
+			colors.reset
+		}:"
+		
+		# message
+		Core.CoreService.writeStderr message
 
 	# Logging strategies define how messages of different types are logged.
 	# A logging strategy is a function taking two arguments: message and type.

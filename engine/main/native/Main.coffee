@@ -11,27 +11,7 @@ Sound = require 'Sound'
 Logger = require 'core/Utility/Logger'
 
 # Register a stderr logging strategy.
-Logger.registerStrategy (message, type) ->
-	
-	# Colors for the console.
-	colors =
-	
-		error : '\x1B[1;31m'
-		warn  : '\x1B[1;33m'
-		info  : '\x1B[1;32m'
-		reset : '\x1B[0m'
-		
-	# TYPE:
-	Core.CoreService.writeStderr "#{
-		colors[type]
-	}#{
-		type.toUpperCase()
-	}#{
-		colors.reset
-	}:"
-	
-	# message
-	Core.CoreService.writeStderr message
+Logger.registerStrategy Logger.stderrStrategy
 
 @console = log: Logger.info
 

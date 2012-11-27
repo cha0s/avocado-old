@@ -1,0 +1,42 @@
+# Subclass Main. We update the elapsed time manually, since we don't get
+# a tight loop like on native platforms; everything is interval-based in a
+# browser.
+
+Core = require 'Core'
+Logger = require 'core/Utility/Logger'
+
+# Register a console logging strategy.
+Logger.registerStrategy (message, type) ->
+	
+	# TYPE:
+	Core.CoreService.writeStderr type.toUpperCase()
+	
+	# message
+	Core.CoreService.writeStderr message
+
+# SPI proxies.
+require 'core/proxySpiis'
+
+socket = io.connect(
+	'http://192.168.1.2:13338'
+#	'http://editor.avocado.cha0sb0x.ath.cx'
+)
+
+$(document).ready ->
+	
+socket.on 'connect', ->
+
+	Persea = require 'Persea'
+	
+	persea = new Persea.View el: $ '#persea'
+	
+	persea.render()
+	
+	persea.loadSubject '/environment/wb-forest.environment.json'
+	
+	setTimeout(
+		-> persea.loadSubject '/environment/platforms.environment.json'
+		2000
+	)
+	
+	document.title = 'Persea'

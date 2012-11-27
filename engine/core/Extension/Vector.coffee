@@ -37,6 +37,12 @@ module.exports = Vector =
 	#     [3, 1]
 	div: (l, r) -> [l[0] / r[0], l[1] / r[1]]
 	
+	# Modulo divide two vectors. 
+	#
+	#     avocado> Vector.mod [13, 6], [5, 5]
+	#     [3, 1]
+	mod: (l, r) -> [l[0] % r[0], l[1] % r[1]]
+	
 	# Get the cartesian distance between two point vectors.
 	#
 	#     avocado> Vector.div [0, 0], [1, 0]
@@ -48,16 +54,33 @@ module.exports = Vector =
 
 		Math.sqrt xd * xd + yd * yd
 	
+	# Get the minimum values from two vectors.
+	#
+	#     avocado> Vector.min [-10, 10], [0, 0]
+	#     [-10, 0]
+	min: (l, r) ->
+		
+		[
+			Math.min l[0], r[0]
+			Math.min l[1], r[1]
+		]
+	
+	# Get the maximum values from two vectors.
+	#
+	#     avocado> Vector.max [-10, 10], [0, 0]
+	#     [0, 10]
+	max: (l, r) ->
+		
+		[
+			Math.max l[0], r[0]
+			Math.max l[1], r[1]
+		]
+	
 	# Clamp a vector's axes using a min vector and a max vector.
 	#
 	#     avocado> Vector.clamp [-10, 10], [0, 0], [5, 5]
 	#     [0, 5]
-	clamp: (vector, min, max) ->
-		
-		[
-			Math.min max[0], Math.max min[0], vector[0]
-			Math.min max[1], Math.max min[1], vector[1]
-		]
+	clamp: (vector, min, max) -> Vector.min max, Vector.max min, vector
 	
 	# Returns a deep copy of the vector.
 	#

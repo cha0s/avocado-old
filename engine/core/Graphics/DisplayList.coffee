@@ -35,6 +35,13 @@ module.exports = class
 		
 	rectangle: -> @rectangle_
 	
+	setSize: (size) -> @setRectangle Rectangle.compose(
+		Rectangle.position @rectangle_
+		size
+	)
+	
+	size: -> Rectangle.size @rectangle_
+	
 	setPosition: (position) -> @setRectangle Rectangle.compose(
 		position
 		Rectangle.size @rectangle_
@@ -75,7 +82,7 @@ module.exports = class
 			@lastDirtyRectangle_ = Rectangle.united(
 				@lastDirtyRectangle_
 				Rectangle.intersection(
-					command.relativeRectangle()
+					rectangle
 					@rectangle_
 				)
 			)
@@ -90,7 +97,7 @@ module.exports = class
 		@quadTree.clear()
 	
 	markRectangleAsDirty: (rectangle) ->
-	
+		
 		affectedCommands = @quadTree.retrieve(
 			Rectangle.toObject(
 				rectangle
@@ -99,7 +106,7 @@ module.exports = class
 		)
 		affectedCommands = _.map affectedCommands, (O) -> O.command
 		
-		command.markAsDirty() for command in affectedCommands
+		command.markAsDirty rectangle for command in affectedCommands
 		
 	markAllCommandsAsDirty: ->
 	
@@ -160,7 +167,7 @@ module.exports = class
 			dirtyCommands.push dirtyCommand
 			
 			dirtyRectangle = Rectangle.united dirtyRectangle, intersection
-		
+			
 		totalDirtyRectangle = Rectangle.intersection(
 			Rectangle.united @lastDirtyRectangle_, dirtyRectangle
 			@rectangle_
@@ -180,7 +187,6 @@ module.exports = class
 		affectedCommands = sortCommands affectedCommands
 		
 		cleanCommands = _.difference affectedCommands, @dirtyCommands_
-		
 		if cleanCommands.length > 0
 			for command in cleanCommands
 				

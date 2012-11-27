@@ -17,6 +17,13 @@ module.exports = (app) ->
 		(filename) -> src: filename.replace '../../..', ''
 	)
 	
+	# Build the list of bindings. We'll generate script tags for each to
+	# send to the client.
+	app.locals.bindingFiles = _.map(
+		helpers.gatherFilesRecursiveSync "#{rootPath}/engine/main/web/Bindings", "/engine/main/web/Bindings"
+		(filename) -> src: filename.replace '../../..', ''
+	)
+	
 	# Automatically stream any coffeescript files requested as JS.
 	app.get /\/[^/]*\.coffee$/, (req, res, next) ->
 		
@@ -32,14 +39,19 @@ module.exports = (app) ->
 				# If the original coffeescript was requested, end the request
 				# with its return.
 				if req.query.original?
-					res.type 'text/coffeescript'
+					res.type 'application/coffeescript'
 					res.end code
 					
 				# Otherwise, process the coffeescript and continue the request.
 				else
 					
-					res.type 'text/javascript'
-					req.processedCode = coffee.compile code
+					res.type 'application/javascript'
+					
+					try
+						req.processedCode = coffee.compile code
+					catch e
+						throw new Error "Failed compiling #{filename}: #{e.stack}"
+					
 					next()
 	
 	# Derive the module name from the filename. e.g.:

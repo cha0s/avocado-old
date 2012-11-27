@@ -66,8 +66,14 @@ module.exports = AvoImage = class
 		
 		context = @Canvas.getContext '2d'
 		
+		oldAlpha = context.globalAlpha
+		
+		context.globalAlpha = a / 255
+		
 		context.fillStyle = rgbToHex r, g, b, a
 		context.fillRect box[0], box[1], box[2], box[3]
+		
+		context.globalAlpha = oldAlpha
 	
 	'%drawLine': (line, r, g, b, a, mode) ->
 		

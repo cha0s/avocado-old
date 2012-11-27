@@ -96,6 +96,9 @@ module.exports = Room = class
 			@layers_[i] = @layers_[i].copy()
 			@layers_[i].resize w, h
 	
+	height: -> @size_[1]
+	width: -> @size_[0]
+	
 	size: -> @size_
 	
 	layer: (index) -> @layers_[index]

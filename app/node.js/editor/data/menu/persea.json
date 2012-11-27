@@ -1,0 +1,49 @@
+[
+	{
+		"label": "File",
+		"children": [
+			{
+				"label": "New",
+				"children": [
+					{
+						"label": "Environment"
+					},
+					{
+						"label": "Entity"
+					},
+					{
+						"label": "Animation"
+					}
+				]
+			},
+			{
+				"label": "Open"
+			},
+			{
+				"label": "Save"
+			},
+			{
+				"label": "Save As..."
+			}
+		]
+	},
+	{
+		"label": "Edit",
+		"children": [
+			{
+				"label": "Undo"
+			},
+			{
+				"label": "Redo"
+			}
+		]
+	},
+	{
+		"label": "View",
+		"children": [
+			{
+				"label": "Toolbars"
+			}
+		]
+	}
+]

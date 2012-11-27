@@ -1,5 +1,5 @@
 docco-husky `find engine -name '*.coffee' -o -name '*.js' \
 	-a ! -wholename '*/compiler/*' \
-	-a ! -name 'Box2D.min.js' \
-	-a ! -name 'underscore.min.js' \
+	-a ! -name 'Box2D*.js' \
+	-a ! -name 'underscore*.js' \
 `

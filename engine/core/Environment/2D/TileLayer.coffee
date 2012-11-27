@@ -241,50 +241,85 @@ matrixRenderer = (clip, unit, f) ->
 
 module.exports.DisplayCommand = class extends DisplayCommand
 	
-	constructor: (list, @layer_, @tileset_, rectangle = [0, 0, 0, 0]) ->
-		super list, rectangle
-		
-		@cache_ = {}
-		@freeQuads_ = []
+	constructor: (
+		list
+		@layer_
+		@tileset_
+		rectangle
 		
 		# We take an approach here as tradeoff between space and time. This
 		# approach allocates 16 half-window-sized images which compose a 4x4
 		# grid. The visible portion is in the middle of this grid, and when
-		# the edge of the grid is approached, the next image is cached. 
-		@halfWindowSize_ = Vector.scale Graphics.window.size(), .5
+		# the edge of the grid is approached, the next image is cached.
+		@canvasSize_ = Graphics.window.size()
+		@cacheChunkScale_ = .5
+	) ->
+		super list, rectangle
+		
+		@setCacheChunkSize()
+		
+	setCacheChunkSize: ->
+		
+		@cacheChunkSize_ = Vector.round(
+			Vector.scale @canvasSize_, @cacheChunkScale_
+		)
+		
+		@cache_ = {}
+		@freeQuads_ = []
+		
+	invalidateCache: (rect) ->
+		
+		topLeft = Vector.mul(
+			Vector.floor Vector.div(
+				Rectangle.position rect
+				@cacheChunkSize_
+			)
+			@cacheChunkSize_
+		)
+		
+		topLeftKey = Rectangle.compose(
+			topLeft
+			@cacheChunkSize_
+		).toString()
+		
+		@cache_[topLeftKey].fill 0, 0, 0, 0
+		@freeQuads_.push @cache_[topLeftKey]
+		delete @cache_[topLeftKey]
 		
 	render: (position, clip, destination) ->
 		
+		chunkSide = 2 + 1 / @cacheChunkScale_
+		
 		if _.isEmpty @cache_
-			for i in [0...16]
-				@cache_[i] = new Image @halfWindowSize_
+			for i in [0...chunkSide * chunkSide]
+				@cache_[i] = new Image @cacheChunkSize_
 		
 		section = Vector.mul(
 			Vector.floor(
-				Vector.div @list().position(), @halfWindowSize_
+				Vector.div @list().position(), @cacheChunkSize_
 			)
-			@halfWindowSize_
+			@cacheChunkSize_
 		)
 		
 		cache = {}
 		
-		offset = Vector.scale @halfWindowSize_, -1
-		for y in [0...4]
-			for x in [0...4]
+		offset = Vector.scale @cacheChunkSize_, -1
+		for y in [0...chunkSide]
+			for x in [0...chunkSide]
 				
 				rect = Rectangle.compose(
 					Vector.add offset, section
-					@halfWindowSize_
+					@cacheChunkSize_
 				)
 				
-				offset[0] += @halfWindowSize_[0]
+				offset[0] += @cacheChunkSize_[0]
 				
 				if @cache_[rect]?
 					cache[rect] = @cache_[rect]
 		
-			offset[0] -= @halfWindowSize_[0] * 4
-			offset[1] += @halfWindowSize_[1]
-			 
+			offset[0] -= @cacheChunkSize_[0] * chunkSide
+			offset[1] += @cacheChunkSize_[1]
+			
 		for rect, image of @cache_
 			unless cache[rect]?
 				image.fill 0, 0, 0, 0
@@ -292,16 +327,16 @@ module.exports.DisplayCommand = class extends DisplayCommand
 				
 		@cache_ = cache
 		
-		offset = Vector.scale @halfWindowSize_, -1
-		for y in [0...4]
-			for x in [0...4]
+		offset = Vector.scale @cacheChunkSize_, -1
+		for y in [0...chunkSide]
+			for x in [0...chunkSide]
 				
 				rect = Rectangle.compose(
 					Vector.add offset, section
-					@halfWindowSize_
+					@cacheChunkSize_
 				)
 				
-				offset[0] += @halfWindowSize_[0]
+				offset[0] += @cacheChunkSize_[0]
 				
 				continue if rect[0] < 0
 				continue if rect[1] < 0
@@ -309,7 +344,7 @@ module.exports.DisplayCommand = class extends DisplayCommand
 				continue if rect[1] >= @size()[1]
 				
 				unless @cache_[rect]?
-
+					
 					@layer_.render(
 						Rectangle.position rect
 						@tileset_
@@ -319,20 +354,20 @@ module.exports.DisplayCommand = class extends DisplayCommand
 						Image.DrawMode_Replace
 					)
 					
-			offset[0] -= @halfWindowSize_[0] * 4
-			offset[1] += @halfWindowSize_[1] 
+			offset[0] -= @cacheChunkSize_[0] * chunkSide
+			offset[1] += @cacheChunkSize_[1] 
 		
-		matrixRenderer clip, @halfWindowSize_, (matrix) =>
+		matrixRenderer clip, @cacheChunkSize_, (matrix) =>
 			
 			rect = Rectangle.compose(
-				Vector.mul matrix.start, @halfWindowSize_
-				@halfWindowSize_
+				Vector.mul matrix.start, @cacheChunkSize_
+				@cacheChunkSize_
 			)
 			
 			@cache_[rect].render(
 				Vector.sub(
 					Vector.add(
-						Vector.mul matrix.start, @halfWindowSize_
+						Vector.mul matrix.start, @cacheChunkSize_
 						matrix.clip
 					)
 					@list().position()

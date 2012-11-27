@@ -52,7 +52,7 @@ app.get '/', (req, res) ->
 		
 		res.end html
 
-app.use express.static '../../..'
+app.use express.static __dirname + '/../../..'
 
 httpServer = http.createServer app
 httpServer.listen 13338

@@ -2,19 +2,19 @@ requires_['Persea/Editor/Environment/Model'] = (module, exports) ->
 
 	module.exports = Model = Backbone.Model.extend
 		
-		initialize: ->
+		initialize: ({
+			@subject
+		})->
+			
+			# Keep URI in sync with Model.id
+			@on 'change:id', => @subject.setUri @get 'id'
+			@id = @subject.uri()
 			
 			# Metadata for editing.
 			@offset = [0, 0]
 			@currentRoomIndex = 0
 			
-		setSubject: (@environment) ->
-			
-			# Keep URI in sync with Model.id
-			@on 'change:id', => @environment.setUri @get 'id'
-			@id = @environment.uri()
-			
-		currentRoom: -> @environment.room @currentRoomIndex
+		currentRoom: -> @subject.room @currentRoomIndex
 			
 	Model.loadSubject = (uri) -> require(
 		'core/Environment/2D/Environment'

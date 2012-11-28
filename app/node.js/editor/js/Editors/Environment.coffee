@@ -15,8 +15,9 @@ requires_['Persea/Editor/Environment'] = (module, exports) ->
 	Subject = new SubjectView
 		id: 'environment-subject'
 	
-	Thumbs.on 'showSubject', (model) ->
-		Subject.showSubject model
+	Thumbs.on 'subjectChanged', (model) ->
+		Subject.changeSubject model
+		Subjects.trigger 'windowTitleChanged', model.id
 
 	Subject.on 'canvasSizeRecalculated', (calculatedCanvasSize) ->
 		Thumbs.setCanvasWidth calculatedCanvasSize[0]
@@ -26,10 +27,10 @@ requires_['Persea/Editor/Environment'] = (module, exports) ->
 		Model.loadSubject(
 			uri
 		).then (subject) =>
-			model = new Model
-			model.setSubject subject
+			model = new Model subject: subject
 			Subjects.add model
-			Subject.showSubject model
+			
+			Thumbs.trigger 'subjectChanged', model
 	
 	exports.Subjects = Subjects
 	

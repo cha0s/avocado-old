@@ -34,9 +34,4 @@ socket.on 'connect', ->
 	
 	persea.loadSubject '/environment/wb-forest.environment.json'
 	
-	setTimeout(
-		-> persea.loadSubject '/environment/platforms.environment.json'
-		2000
-	)
-	
 	document.title = 'Persea'

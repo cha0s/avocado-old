@@ -30,6 +30,7 @@ requires_['Persea'] = (module, exports) ->
 				href: O.href
 				title: O.title
 			).text O.label
+			$item.attr 'id', O.id if O.id?
 			
 			# Recursively add all the children.
 			if O.children?.length > 0
@@ -60,12 +61,33 @@ requires_['Persea'] = (module, exports) ->
 			# Set the first editor to environments.
 			@setCurrentEditorIndex 'Environment'
 		
+		events:
+			
+			'click #menu-open': 'openSubject' 
+		
 		# Manage the current editor.
 		currentEditorIndex: -> @currentEditorIndex_
 		setCurrentEditorIndex: (currentEditorIndex) ->
 			editors[@currentEditorIndex_]?.Subjects.off 'all', @render, this
 			@currentEditorIndex_ = currentEditorIndex
-			editors[@currentEditorIndex_].Subjects.on 'all', @render, this
+			editors[@currentEditorIndex_].Subjects.on(
+				'all'
+				(name, title) ->
+					
+					switch name
+						
+						when 'windowTitleChanged'
+							
+							titleParts = ['Persea']
+							titleParts.push title if title?
+							
+							document.title = titleParts.join ' - '
+							
+						else
+							
+							@render()
+				this
+			)
 			
 		# Turn off text selection by default to make things look nicer. We'll
 		# individually turn any element unselectability off on a case-by-case
@@ -78,3 +100,9 @@ requires_['Persea'] = (module, exports) ->
 		# Load a subject from a URI.
 		loadSubject: (uri) ->
 			editors[@currentEditorIndex_].loadSubject uri
+			
+		# Open a subject using a dialog.
+		openSubject: ->
+			return if '' is uri = prompt 'URI?'
+			
+			@loadSubject uri

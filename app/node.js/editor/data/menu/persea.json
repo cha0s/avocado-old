@@ -17,7 +17,8 @@
 				]
 			},
 			{
-				"label": "Open"
+				"label": "Open",
+				"id": "menu-open"
 			},
 			{
 				"label": "Save"

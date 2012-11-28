@@ -68,7 +68,7 @@ requires_['Persea/Editor/Environment/ThumbsView'] = (module, exports) ->
 			@subjects.each (subject) =>
 				
 				view = new ThumbView model: subject
-				view.on 'showSubject', (model) => @trigger 'showSubject', model
+				view.on 'subjectChanged', (model) => @trigger 'subjectChanged', model
 				@$el.append view.render().el
 	
 			# Calculate width of all elements, stop animating, and reset

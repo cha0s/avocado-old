@@ -9,9 +9,11 @@ requires_['Persea/Editor/Environment/ThumbView'] = (module, exports) ->
 		
 			@model.bind 'change', @render, this
 			
-		events: click: 'showSubject'
+		events:
 			
-		showSubject: -> @trigger 'showSubject', @model
+			click: 'changeSubject'
+			
+		changeSubject: -> @trigger 'subjectChanged', @model
 			
 		render: ->
 			

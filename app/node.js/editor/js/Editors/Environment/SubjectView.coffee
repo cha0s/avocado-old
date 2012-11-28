@@ -14,10 +14,10 @@ requires_['Persea/Editor/Environment/SubjectView'] = (module, exports) ->
 			
 			@calculatedCanvasSize = [0, 0]
 			@canvas = new Graphics.Image [1, 1]
-			@showSubject null
+			@changeSubject null
 			
 			$(window).resize _.throttle(
-				=> @showSubject @model
+				=> @changeSubject @model
 				1000
 			)
 			
@@ -54,13 +54,13 @@ requires_['Persea/Editor/Environment/SubjectView'] = (module, exports) ->
 				[96, 96]
 			)
 			
-		showSubject: (@model, render = true) ->
+		changeSubject: (@model, render = true) ->
 			
 			# Don't show anything for a null model.
 			@$el.hide()
 			return unless @model?
 			
-			@environment = @model.environment
+			@environment = @model.subject
 			currentRoom = @model.currentRoom()
 			
 			roomRectangle = Rectangle.compose(

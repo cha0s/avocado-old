@@ -1,5 +1,5 @@
 {
-	"name": "",
+	"name": "LEPS forest (WB)",
 	"prefix": "environment",
 	"tilesetUri": "/tileset/wb-forest.tileset.json",
 	"rooms": [

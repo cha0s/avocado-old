@@ -24,9 +24,7 @@ requires_['Persea/Editor/Environment'] = (module, exports) ->
 	
 	exports.loadSubject = (uri) ->
 		
-		Model.loadSubject(
-			uri
-		).then (subject) =>
+		Model.loadSubject(uri).then (subject) =>
 			model = new Model subject: subject
 			Subjects.add model
 			

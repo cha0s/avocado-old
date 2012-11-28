@@ -53,6 +53,9 @@ module.exports = Environment = class
 	
 	tileset: -> @tileset_
 	
+	name: -> @name_
+	setName: (@name_) ->
+	
 	uri: -> @uri_
 	setUri: (@uri_) ->
 	

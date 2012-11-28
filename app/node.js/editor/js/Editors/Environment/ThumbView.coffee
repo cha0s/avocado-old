@@ -21,8 +21,11 @@ requires_['Persea/Editor/Environment/ThumbView'] = (module, exports) ->
 			# TODO: use environment.name() and fallback on basename.
 			@$el.attr 'title', @model.id
 			
-			basename = @model.id.match /.*\/([^.]+)\.environment\.json/
-			@$el.html $('<h1>').text(basename[1])
+			title = @model.subject.name()
+			if '' is title 
+				basename = @model.id.match /.*\/([^.]+)\.environment\.json/
+				title = basename[1]
+			@$el.html $('<h1>').text title
 			
 			this
 	

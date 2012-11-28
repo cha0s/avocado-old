@@ -70,6 +70,8 @@ requires_['Persea'] = (module, exports) ->
 		setCurrentEditorIndex: (currentEditorIndex) ->
 			editors[@currentEditorIndex_]?.Subjects.off 'all', @render, this
 			@currentEditorIndex_ = currentEditorIndex
+			
+			# TODO I feel like we need better event delegation.
 			editors[@currentEditorIndex_].Subjects.on(
 				'all'
 				(name, title) ->

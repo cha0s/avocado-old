@@ -1,14 +1,6 @@
 requires_['Persea'] = (module, exports) ->
 	
 	Core = require 'Core'
-	Graphics = require 'Graphics'
-	
-	_ = require 'core/Utility/underscore'
-	DisplayList = require 'core/Graphics/DisplayList'
-	Editor = require 'Persea/Editor'
-	Rectangle = require 'core/Extension/Rectangle'
-	upon = require 'core/Utility/upon'
-	Vector = require 'core/Extension/Vector'
 	
 	# Load up editors.
 	# TODO Should be dynamic?
@@ -85,10 +77,4 @@ requires_['Persea'] = (module, exports) ->
 		
 		# Load a subject from a URI.
 		loadSubject: (uri) ->
-			editors[@currentEditorIndex_].Model.loadSubject(
-				uri
-			).then (subject) =>
-				model = new editors[@currentEditorIndex_].Model
-				model.setSubject subject
-				editors[@currentEditorIndex_].Subjects.add model
-				editors[@currentEditorIndex_].Subject.showSubject model
+			editors[@currentEditorIndex_].loadSubject uri

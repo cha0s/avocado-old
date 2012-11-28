@@ -15,9 +15,9 @@ requires_['Persea/Editor/Environment'] = (module, exports) ->
 	Subject = new SubjectView
 		id: 'environment-subject'
 	
-	$(Subject.canvas.Canvas).on
-		
-		click: -> alert 'hey'
+#	$(Subject.canvas.Canvas).on
+#		
+#		click: -> alert 'hey'
 	
 	Subjects.on 'subjectChanged', (model) ->
 		Subject.changeSubject model

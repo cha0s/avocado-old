@@ -95,6 +95,8 @@ requires_['Persea/Editor/Environment/SubjectView'] = (module, exports) ->
 				roomRectangle
 			)
 			
+			# ###
+			
 			# and 4 layers
 			# TODO dynamic layer count.
 			@tileLayerCommands = []
@@ -106,6 +108,8 @@ requires_['Persea/Editor/Environment/SubjectView'] = (module, exports) ->
 					roomRectangle
 					@calculatedCanvasSize
 				) 
+			
+			# ###
 			
 			@recalculateSliders()
 			

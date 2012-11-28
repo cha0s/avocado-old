@@ -12,6 +12,22 @@ requires_['Persea/Editor/Environment/EditorView'] = (module, exports) ->
 		
 		initialize: ->
 			
+			@$el.append $('<h2>').text 'Draw'
+			
+			@$el.append $('<label>').addClass('draw-label').text 'with:'
+			@$el.append $drawSelect = $ '<select>'
+			$drawSelect.append $('<option>').text 'Paintbrush'
+			$drawSelect.append $('<option>').text 'Flood'
+			$drawSelect.append $('<option>').text 'Randomized flood'
+			
+			@$el.append $('<label>').addClass('draw-label').text 'on layer:'
+			@$el.append $drawSelect = $ '<select>'
+			$drawSelect.append $('<option>').text '0'
+			$drawSelect.append $('<option>').text '1'
+			$drawSelect.append $('<option>').text '2'
+			$drawSelect.append $('<option>').text '3'
+			
+			
 			$tilesetContainer = $ '<div class="tileset-container">'
 			
 			$tilesetContainer.append @$tileset = $ '<div class="tileset">'

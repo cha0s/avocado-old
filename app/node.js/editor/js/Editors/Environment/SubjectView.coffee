@@ -122,37 +122,39 @@ requires_['Persea/Editor/Environment/SubjectView'] = (module, exports) ->
 		recalculateSliders: ->
 			
 			canvasSize = @calculatedCanvasSize
-			currentRoom = @model.currentRoom()
+			totalSize = @model.currentRoom().size()
 			tileSize = @environment.tileset().tileSize()
 			
 			# Some magic to DRY up both axes. The max - ... stuff is due to
 			# jQuery UI making 0 the bottom of vertical sliders.
-			css = ['width', 'height']
 			$sliders = [@$xSlider, @$ySlider]
-			max = (i) -> currentRoom.width() - canvasSize[i] / tileSize[i]
+			max = (i) -> totalSize[i] - canvasSize[i] / tileSize[i]
 			offset = (i, ui) ->
 				[
 					ui.value
 					max(1) - ui.value
 				][i]
-			position = (i) =>
+			setPosition = (i) =>
 				[
-					[
+					=> @displayList.setPosition [
 						@model.offset[0] * tileSize[0]
 						@displayList.position()[1]
 					]
-					[
+					=> @displayList.setPosition [
 						@displayList.position()[0]
 						@model.offset[1] * tileSize[1]
 					]
-				][i]
+				][i]()
 			value = (i) =>
 				[
 					@model.offset[i]
 					max(1) - @model.offset[i]
 				][i]
-			@displayList.setPosition Vector.mul @model.offset, tileSize
 			
+			setPosition 0
+			setPosition 1
+			
+			css = ['width', 'height']
 			for i in [0...2]
 				
 				# Don't show unusable sliders.
@@ -172,7 +174,7 @@ requires_['Persea/Editor/Environment/SubjectView'] = (module, exports) ->
 							value: value i
 							slide: (event, ui) =>
 								@model.offset[i] = offset i, ui
-								@displayList.setPosition position i
+								setPosition i
 								@render()
 					)
 				) i

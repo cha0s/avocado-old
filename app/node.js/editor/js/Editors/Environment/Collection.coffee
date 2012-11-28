@@ -5,6 +5,10 @@ requires_['Persea/Editor/Environment/Collection'] = (module, exports) ->
 		initialize: (models, {
 			@localStorage
 		}) ->
+			
+			@on 'subjectChanged', @changeSubject, this
+		
+		changeSubject: (@currentSubject) ->
 		
 		model: require 'Persea/Editor/Environment/Model'
 		

@@ -78,6 +78,23 @@ requires_['Persea'] = (module, exports) ->
 			# Set the first editor to environments.
 			@setCurrentEditorIndex 'Environment'
 		
+		events:
+			
+			'click #editor .toggle': 'toggleEditorControls'
+		
+		toggleEditorControls: ->
+			
+			return if $('#editor .controls').is ':animated'
+			
+			$p = $ '#editor .toggle p'
+			
+			$p.text if $('#editor .controls').is ':visible' then '←' else '→'
+			
+			$('#editor .controls').toggle()
+			
+			Subjects = editors[@currentEditorIndex_].Subjects
+			Subjects.trigger 'subjectChanged', Subjects.currentSubject
+		
 		# Manage the current editor.
 		currentEditorIndex: -> @currentEditorIndex_
 		setCurrentEditorIndex: (currentEditorIndex) ->

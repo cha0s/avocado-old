@@ -56,6 +56,8 @@ requires_['Persea/Editor/Environment/SubjectView'] = (module, exports) ->
 			
 		changeSubject: (@model, render = true) ->
 			
+			@trigger 'windowTitleChanged'
+		
 			# Don't show anything for a null model.
 			@$el.hide()
 			return unless @model?
@@ -110,7 +112,13 @@ requires_['Persea/Editor/Environment/SubjectView'] = (module, exports) ->
 			@render() if render
 			
 			@$el.show()
-		
+			
+			if '' is title = @model.name()
+				title = @model.id
+			else
+				title += " (#{@model.id})"
+			@model.trigger 'windowTitleChanged', title
+			
 		recalculateSliders: ->
 			
 			canvasSize = @calculatedCanvasSize

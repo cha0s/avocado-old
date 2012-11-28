@@ -69,7 +69,6 @@ ioSettings =
 		'jsonp-polling'
 	]
 
-
 io.set key, value for key, value of ioSettings
 
 io.sockets.on 'connection', (socket) ->

@@ -12,7 +12,6 @@ requires_['Persea/Editor/Environment/ThumbsView'] = (module, exports) ->
 			@subjects
 		}) ->
 			
-			@subjects ?= new Backbone.Collection
 			@canvasWidth = 'auto'
 		
 			# Allow swiping through thumbnails when they can't all fit.
@@ -68,7 +67,7 @@ requires_['Persea/Editor/Environment/ThumbsView'] = (module, exports) ->
 			@subjects.each (subject) =>
 				
 				view = new ThumbView model: subject
-				view.on 'subjectChanged', (model) => @trigger 'subjectChanged', model
+				view.on 'subjectChanged', (model) => @subjects.trigger 'subjectChanged', model
 				@$el.append view.render().el
 	
 			# Calculate width of all elements, stop animating, and reset

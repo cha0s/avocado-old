@@ -51,6 +51,16 @@ requires_['Persea'] = (module, exports) ->
 			
 			this
 		
+	Routes = Backbone.Router.extend
+		
+		initialize: ({
+			@persea
+		}) ->
+	
+		routes:
+			
+			'open': 'openSubject'
+			
 	exports.View = Backbone.View.extend
 	
 		initialize: ->
@@ -58,12 +68,15 @@ requires_['Persea'] = (module, exports) ->
 			# Load the menu.
 			@menu = new Menu el: $ '#menu'
 			
+			@routes = new Routes persea: this
+			
+			@routes.on 'all', (name) =>
+				[base, route] = name.split ':'
+				
+				@[route]() if @[route]
+			
 			# Set the first editor to environments.
 			@setCurrentEditorIndex 'Environment'
-		
-		events:
-			
-			'click #menu-open': 'openSubject' 
 		
 		# Manage the current editor.
 		currentEditorIndex: -> @currentEditorIndex_
@@ -81,7 +94,7 @@ requires_['Persea'] = (module, exports) ->
 						when 'windowTitleChanged'
 							
 							titleParts = ['Persea']
-							titleParts.push title if title?
+							titleParts.unshift title if title?
 							
 							document.title = titleParts.join ' - '
 							
@@ -105,6 +118,10 @@ requires_['Persea'] = (module, exports) ->
 			
 		# Open a subject using a dialog.
 		openSubject: ->
-			return if '' is uri = prompt 'URI?'
+			uri = prompt 'URI?'
+			
+			@routes.navigate '/'
+			
+			return if '' is uri or not uri?
 			
 			@loadSubject uri

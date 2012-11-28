@@ -18,8 +18,7 @@
 			},
 			{
 				"label": "Open",
-				"href": "/open",
-				"id": "menu-open"
+				"href": "/#/open"
 			},
 			{
 				"label": "Save"

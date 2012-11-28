@@ -15,7 +15,13 @@ requires_['Persea/Editor/Environment/Model'] = (module, exports) ->
 			@currentRoomIndex = 0
 			
 		currentRoom: -> @subject.room @currentRoomIndex
-			
+		
+		basename: ->
+			basename = @id.match /.*\/([^.]+)\.environment\.json/
+			basename[1]
+		
+		name: -> @subject.name()
+	
 	Model.loadSubject = (uri) -> require(
 		'core/Environment/2D/Environment'
 	).load uri

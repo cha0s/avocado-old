@@ -17,7 +17,13 @@ requires_['Persea/Editor/Environment'] = (module, exports) ->
 	
 	Thumbs.on 'subjectChanged', (model) ->
 		Subject.changeSubject model
-		Subjects.trigger 'windowTitleChanged', model.id
+		
+		if '' is title = model.name()
+			title = model.id
+		else
+			title += " (#{model.id})"
+		
+		Subjects.trigger 'windowTitleChanged', title
 
 	Subject.on 'canvasSizeRecalculated', (calculatedCanvasSize) ->
 		Thumbs.setCanvasWidth calculatedCanvasSize[0]

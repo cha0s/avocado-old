@@ -24,14 +24,18 @@ socket = io.connect(
 
 $(document).ready ->
 	
+	document.title = 'Persea'
+	
 socket.on 'connect', ->
 
 	Persea = require 'Persea'
 	
 	persea = new Persea.View el: $ '#persea'
 	
+	Backbone.history.start
+#		pushState: true
+		silent: true
+	
 	persea.render()
 	
 	persea.loadSubject '/environment/wb-forest.environment.json'
-	
-	document.title = 'Persea'

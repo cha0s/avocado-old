@@ -7,7 +7,7 @@ module.exports = String =
 	# 
 	#     avocado> String.setterName 'width'
 	#     'setWidth'
-	setterName: (name) -> "set#{String.capitalizeString name}"
+	setterName: (name) -> "set#{String.capitalize name}"
 	
 	# Capitalize the first character in the string. e.g.
 	# 

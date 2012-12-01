@@ -1,15 +1,15 @@
+
+module.exports = Backbone.Collection.extend
 	
-	module.exports = Backbone.Collection.extend
+	initialize: (models, {
+		@localStorage
+	}) ->
 		
-		initialize: (models, {
-			@localStorage
-		}) ->
-			
-			@on 'subjectChanged', @changeSubject, this
-		
-		changeSubject: (@currentSubject) ->
-		
-		model: require 'Persea/Editors/Environment/Model'
-		
-		# Sort by id.
-		comparator: (model) -> model.id
+		@on 'subjectChanged', @changeSubject, this
+	
+	changeSubject: (@currentSubject) ->
+	
+	model: require 'Persea/Editors/Environment/Model'
+	
+	# Sort by id.
+	comparator: (model) -> model.id

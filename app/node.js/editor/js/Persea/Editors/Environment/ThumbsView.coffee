@@ -1,8 +1,7 @@
-requires_['Persea/Editor/Environment/ThumbsView'] = (module, exports) ->
 	
 	Dom = require 'core/Utility/Dom'
 	
-	ThumbView = require 'Persea/Editor/Environment/ThumbView'
+	ThumbView = require 'Persea/Editors/Environment/ThumbView'
 	
 	module.exports = Backbone.View.extend
 		

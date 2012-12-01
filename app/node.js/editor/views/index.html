@@ -29,15 +29,9 @@
 		<script src="/app/node.js/editor/js/vendor/backbone.js"></script>
 		<script src="/app/node.js/editor/js/vendor/backbone-localstorage.js"></script>
 		
-		<script type="text/javascript" src="/app/node.js/editor/js/Editors/Environment.coffee"></script>
-		<script type="text/javascript" src="/app/node.js/editor/js/Editors/Environment/Collection.coffee"></script>
-		<script type="text/javascript" src="/app/node.js/editor/js/Editors/Environment/EditorView.coffee"></script>
-		<script type="text/javascript" src="/app/node.js/editor/js/Editors/Environment/Model.coffee"></script>
-		<script type="text/javascript" src="/app/node.js/editor/js/Editors/Environment/SubjectView.coffee"></script>
-		<script type="text/javascript" src="/app/node.js/editor/js/Editors/Environment/ThumbView.coffee"></script>
-		<script type="text/javascript" src="/app/node.js/editor/js/Editors/Environment/ThumbsView.coffee"></script>
-		
-		<script type="text/javascript" src="/app/node.js/editor/js/Persea.coffee"></script>
+		{{#editorFiles}}
+		<script type="text/javascript" src="{{{src}}}"></script>
+		{{/editorFiles}}
 		
 		<script type="text/javascript" src="/app/node.js/editor/js/index.coffee"></script>
 		

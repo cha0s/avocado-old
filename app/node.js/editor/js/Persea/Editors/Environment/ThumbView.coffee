@@ -1,4 +1,3 @@
-requires_['Persea/Editor/Environment/ThumbView'] = (module, exports) ->
 
 	module.exports = Backbone.View.extend
 		

@@ -1,4 +1,3 @@
-requires_['Persea/Editor/Environment/Collection'] = (module, exports) ->
 	
 	module.exports = Backbone.Collection.extend
 		
@@ -10,7 +9,7 @@ requires_['Persea/Editor/Environment/Collection'] = (module, exports) ->
 		
 		changeSubject: (@currentSubject) ->
 		
-		model: require 'Persea/Editor/Environment/Model'
+		model: require 'Persea/Editors/Environment/Model'
 		
 		# Sort by id.
 		comparator: (model) -> model.id

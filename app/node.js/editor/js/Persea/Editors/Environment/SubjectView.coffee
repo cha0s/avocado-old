@@ -1,4 +1,3 @@
-requires_['Persea/Editor/Environment/SubjectView'] = (module, exports) ->
 
 	Graphics = require 'Graphics'
 	Image = Graphics.Image

@@ -34,8 +34,10 @@ Logger = require 'core/Utility/Logger'
 # Register a stderr logging strategy.
 Logger.registerStrategy Logger.stderrStrategy
 
+_ = require 'core/Utility/underscore'
 consolidate = require 'consolidate'
 express = require 'express'
+helpers = require '../common/helpers'
 http = require 'http'
 
 app = express()
@@ -46,12 +48,46 @@ app.set 'view engine', 'html'
 
 require('../common/avocadoModules') app
 
+rootPath = '../../..'
+
+editorFiles = helpers.gatherFilesRecursiveSync "#{rootPath}/app/node.js/editor/js", "/app/node.js/editor/js"
+editorFiles = editorFiles.filter (e) ->
+	
+	return false if e.match('../../../app/node.js/editor/js/vendor')?
+	return false if e is '../../../app/node.js/editor/js/index.coffee'
+	
+	not e.match('../../../app/node.js/editor/js/vendor')?
+	
+editorFiles = editorFiles.map (filename) ->
+	
+	src: filename.replace '../../../app/node.js/editor/js/', '/app/node.js/editor/js/'
+
+app.locals.editorFiles = editorFiles
+
+helpers.serveModuleFiles(
+	app
+	resourcePath
+	rootPath
+	'/app/node.js/editor/js/'
+) for resourcePath in [
+	/^\/app\/node.js\/editor\/js\/Persea.*/
+]
+
+# Catch-all. Actually send any processed code we've handled.
+app.get /.*/, (req, res, next) ->
+	
+	if req.processedCode
+		res.end req.processedCode
+		
+	else
+		next()
+	
 app.get '/', (req, res) ->
 	
 	res.render 'index', {}, (error, html) ->
 		
 		res.end html
-
+		
 app.use express.static __dirname + '/../../..'
 
 httpServer = http.createServer app

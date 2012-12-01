@@ -1,10 +1,9 @@
-requires_['Persea/Editor/Environment'] = (module, exports) ->
 	
-	Collection = require 'Persea/Editor/Environment/Collection'
-	EditorView = require 'Persea/Editor/Environment/EditorView'
-	Model = require 'Persea/Editor/Environment/Model'
-	SubjectView = require 'Persea/Editor/Environment/SubjectView'
-	ThumbsView = require 'Persea/Editor/Environment/ThumbsView'
+	Collection = require 'Persea/Editors/Environment/Collection'
+	EditorView = require 'Persea/Editors/Environment/EditorView'
+	Model = require 'Persea/Editors/Environment/Model'
+	SubjectView = require 'Persea/Editors/Environment/SubjectView'
+	ThumbsView = require 'Persea/Editors/Environment/ThumbsView'
 	
 	Subjects = new Collection [],
 		localStorage: new Store 'avocado-persea-environment'

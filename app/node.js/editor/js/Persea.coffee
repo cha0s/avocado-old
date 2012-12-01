@@ -1,5 +1,3 @@
-requires_['Persea'] = (module, exports) ->
-	
 	Core = require 'Core'
 	
 	# Load up editors.
@@ -8,7 +6,7 @@ requires_['Persea'] = (module, exports) ->
 	for editor in [
 		'Environment'
 	]
-		editors[editor] = require "Persea/Editor/#{editor}"
+		editors[editor] = require "Persea/Editors/#{editor}"
 		
 	Menu = Backbone.View.extend
 		

@@ -1,4 +1,3 @@
-requires_['Persea/Editor/Environment/Model'] = (module, exports) ->
 
 	module.exports = Model = Backbone.Model.extend
 		

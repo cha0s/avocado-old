@@ -67,7 +67,6 @@ module.exports = AvoImage = class
 		context = @Canvas.getContext '2d'
 		
 		oldAlpha = context.globalAlpha
-		
 		context.globalAlpha = a / 255
 		
 		context.fillStyle = rgbToHex r, g, b, a
@@ -90,20 +89,32 @@ module.exports = AvoImage = class
 		
 		context = @Canvas.getContext '2d'
 		
+		oldAlpha = context.globalAlpha
+		context.globalAlpha = a / 255
+		
 		context.lineCap = 'butt';
 		context.fillStyle = context.strokeStyle = rgbToHex r, g, b, a
 		
 		context.strokeRect box[0] + .5, box[1] + .5, box[2], box[3]
 	
+		context.globalAlpha = oldAlpha
+		
 	'%fill': (r, g, b, a) ->
 		
 		context = @Canvas.getContext '2d'
 		
 		# HACK!
 		if a > 0
+		
+			oldAlpha = context.globalAlpha
+			context.globalAlpha = a / 255
+			
 			context.rect 0, 0, @width(), @height()
 			context.fillStyle = rgbToHex r, g, b, a
-			context.fill() 
+			context.fill()
+			
+			context.globalAlpha = oldAlpha
+		
 		else
 			context.clearRect(0, 0, @width(), @height())
 	

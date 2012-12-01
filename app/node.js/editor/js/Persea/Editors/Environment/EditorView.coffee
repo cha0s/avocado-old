@@ -4,40 +4,127 @@
 	
 	DisplayList = require 'core/Graphics/DisplayList'
 	Rectangle = require 'core/Extension/Rectangle'
+	Swipey = require 'Swipey'
 	TileLayer = require 'core/Environment/2D/TileLayer'
 	Vector = require 'core/Extension/Vector'
 	
 	module.exports = Backbone.View.extend
 		
-		initialize: ->
+		initialize: ({
+			@$canvas
+		}) ->
+			
+			@gridOverlay = new Graphics.Image [1, 1]
+			@$canvas.append @gridOverlay.Canvas
 			
 			@$el.append $('<h2>').text 'Draw'
 			
-			@$el.append $('<label>').addClass('draw-label').text 'with:'
-			@$el.append $drawSelect = $ '<select>'
+			@$el.append $drawWithContainer = $ '<div class="draw-with">'
+			$drawWithContainer.append $('<label>').addClass('draw-label').text 'with:'
+			$drawWithContainer.append $drawSelect = $ '<select>'
 			$drawSelect.append $('<option>').text 'Paintbrush'
 			$drawSelect.append $('<option>').text 'Flood'
 			$drawSelect.append $('<option>').text 'Randomized flood'
 			
-			@$el.append $('<label>').addClass('draw-label').text 'on layer:'
-			@$el.append $drawSelect = $ '<select>'
-			$drawSelect.append $('<option>').text '0'
-			$drawSelect.append $('<option>').text '1'
-			$drawSelect.append $('<option>').text '2'
-			$drawSelect.append $('<option>').text '3'
+			@$el.append $drawOnContainer = $ '<div class="draw-on">'
+			$drawOnContainer.append $('<label>').addClass('draw-label').text 'on layer:'
+			$drawOnContainer.append $drawSelect = $ '<select>'
 			
+			for index in [0...4]
+				$drawSelect.append $('<option>').html "#{index}&nbsp;"
 			
 			$tilesetContainer = $ '<div class="tileset-container">'
 			
 			$tilesetContainer.append @$tileset = $ '<div class="tileset">'
 			
-			$tilesetContainer.append @$ySlider = $('<div class="y-slider">').slider
-				orientation: 'vertical'
-			$tilesetContainer.append @$xSlider = $('<div class="x-slider">').slider()
+			@swipey = new Swipey @$tileset
+			@swipey.on 'update', (offset) =>
+				
+				offset = Vector.floor offset
+				tileSize = @tileset.tileSize()
+				
+				$(@tileset.image().Canvas).css 'left', offset[0] * -tileSize[0]
+				$(@tileset.image().Canvas).css 'top', offset[1] * -tileSize[1]
+			
+			taps = 0
+			compoundTapEvent = _.debounce(
+				=>
+					switch taps
+						when 2
+							@$tileset.trigger 'doubletap'
+						when 3
+							@$tileset.trigger 'tripletap'
+						
+					taps = 0
+				300
+			)
+			
+			mode = 0
+			
+			@$tileset.on
+				
+				mousedown: (event) =>
+					
+					taps += 1
+					compoundTapEvent()
+					
+					true
+					
+				doubletap: =>
+					
+					switch mode
+						
+						when 0
+							
+							@$tileset.css cursor: 'default'
+							@swipey.active = false
+							
+						when 1
+					
+							@$tileset.css cursor: 'move'
+							@swipey.active = true
+							
+					mode = if mode is 0 then 1 else 0
+					
+			@$tileset.css
+				cursor: 'move'
 			
 			@$el.append $tilesetContainer
 			
 			$('#editor .controls').append @$el
+		
+		attachCanvas: (@$canvas) ->
+		
+			@$canvas.on
+			
+				doubletap: ->
+					
+					alert 'Double tap!'
+			
+				tripletap: ->
+					
+					alert 'Triple tap!'
+		
+		setCanvasSize: (canvasSize) ->
+			
+			@gridOverlay.Canvas.width = canvasSize[0]
+			@gridOverlay.Canvas.height = canvasSize[1]
+			
+			tileSize = @tileset.tileSize()
+			
+			sizeInTiles = Vector.div canvasSize, tileSize
+			
+			for y in [0...sizeInTiles[1]]
+				for x in [0...sizeInTiles[0]]
+					@gridOverlay.drawLineBox(
+						Rectangle.compose(
+							Vector.mul tileSize, [x, y]
+							tileSize
+						)
+						255, 255, 255, 32
+					)
+					
+			undefined
 		
 		setModel: (@model) ->
 			return unless @model?
@@ -48,57 +135,15 @@
 			
 			@$tileset.html @tileset.image().Canvas
 			
-			canvasSize = [256, 256]
-			totalSize = Vector.div @tileset.image().size(), @tileset.tileSize()
-			tileSize = @tileset.tileSize()
-			
-			# Some magic to DRY up both axes. The max - ... stuff is due to
-			# jQuery UI making 0 the bottom of vertical sliders.
-			$sliders = [@$xSlider, @$ySlider]
-			max = (i) -> totalSize[i] - canvasSize[i] / tileSize[i]
-			offset = (i, ui) ->
-				[
-					ui.value
-					max(1) - ui.value
-				][i]
-			setPosition = (i) =>
-				[
-					=> $(@tileset.image().Canvas).css 'left', @model.tilesetOffset[0] * -tileSize[0]
-					=> $(@tileset.image().Canvas).css 'top', @model.tilesetOffset[1] * -tileSize[1]
-				][i]()
-			value = (i) =>
-				[
-					@model.tilesetOffset[i]
-					max(1) - @model.tilesetOffset[i]
-				][i]
-				
-			setPosition 0
-			setPosition 1
-			
-			css = ['width', 'height']
-			for i in [0...2]
-				
-				# Don't show unusable sliders.
-				if 0 is max i
-					$sliders[i].hide()
-					continue
-				else
-					$sliders[i].show()
-				
-				((i) =>
-					
-					$sliders[i].css css[i], canvasSize[i] - 24
-					$sliders[i].slider(
-						'option'
-							min: 0
-							max: max i
-							value: value i
-							slide: (event, ui) =>
-								@model.tilesetOffset[i] = offset i, ui
-								setPosition i
-								@render()
+			@swipey.setMinMax(
+				[0, 0]
+				Vector.sub(
+					Vector.div @tileset.image().size(), @tileset.tileSize()
+					Vector.div(
+						[256, 256]
+						@tileset.tileSize()
 					)
-				) i
-				
-			undefined
+				)
+			)
 			
+			undefined

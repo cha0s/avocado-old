@@ -59,10 +59,13 @@ editorFiles = editorFiles.filter (e) ->
 	not e.match('../../../app/node.js/editor/js/vendor')?
 	
 editorFiles = editorFiles.map (filename) ->
-	
 	src: filename.replace '../../../app/node.js/editor/js/', '/app/node.js/editor/js/'
 
-app.locals.editorFiles = editorFiles
+commonFiles = helpers.gatherFilesRecursiveSync "#{rootPath}/app/node.js/common", "/app/node.js/common"
+commonFiles = commonFiles.map (filename) ->
+	src: filename.replace '../../../app/node.js/common/', '/app/node.js/common/'
+
+app.locals.editorFiles = commonFiles.concat editorFiles
 
 helpers.serveModuleFiles(
 	app
@@ -71,6 +74,15 @@ helpers.serveModuleFiles(
 	'/app/node.js/editor/js/'
 ) for resourcePath in [
 	/^\/app\/node.js\/editor\/js\/Persea.*/
+]
+
+helpers.serveModuleFiles(
+	app
+	resourcePath
+	rootPath
+	'/app/node.js/common/'
+) for resourcePath in [
+	/^\/app\/node.js\/common\/.*/
 ]
 
 # Catch-all. Actually send any processed code we've handled.

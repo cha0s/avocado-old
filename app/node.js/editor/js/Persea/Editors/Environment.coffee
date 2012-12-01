@@ -5,41 +5,40 @@
 	SubjectView = require 'Persea/Editors/Environment/SubjectView'
 	ThumbsView = require 'Persea/Editors/Environment/ThumbsView'
 	
-	Subjects = new Collection [],
+	subjects = new Collection [],
 		localStorage: new Store 'avocado-persea-environment'
 	
-	Editor = new EditorView
-		id: 'environment-editor'
-	
-	Subject = new SubjectView
+	subject = new SubjectView
 		id: 'environment-subject'
 	
-#	$(Subject.canvas.Canvas).on
-#		
-#		click: -> alert 'hey'
+	editor = new EditorView
+		id: 'environment-editor'
+		$canvas: subject.$canvas
 	
-	Subjects.on 'subjectChanged', (model) ->
-		Subject.changeSubject model
+	subjects.on 'subjectChanged', (model) ->
 		
 		if model?
-			Editor.setModel model
+			editor.setModel model
 			$('#editor').show()
 		else
 			$('#editor').hide()
 
+		subject.changeSubject model
+		
 	Thumbs = new ThumbsView
 		id: 'environment-thumbs'
-		subjects: Subjects
+		subjects: subjects
 	
-	Subject.on 'canvasSizeRecalculated', (calculatedCanvasSize) ->
-		Thumbs.setCanvasWidth calculatedCanvasSize[0]
+	subject.on 'canvasSizeRecalculated', (canvasSize) ->
+		
+		editor.setCanvasSize canvasSize
+		Thumbs.setCanvasWidth canvasSize[0]
 	
 	exports.loadSubject = (uri) ->
 		
 		Model.loadSubject(uri).then (subject) =>
 			model = new Model subject: subject
-			Subjects.add model
-			Subjects.trigger 'subjectChanged', model
+			subjects.add model
+			subjects.trigger 'subjectChanged', model
 	
-	exports.Subjects = Subjects
-	
+	exports.subjects = subjects

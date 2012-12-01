@@ -90,17 +90,17 @@
 			
 			$('#editor .controls').toggle()
 			
-			Subjects = editors[@currentEditorIndex_].Subjects
-			Subjects.trigger 'subjectChanged', Subjects.currentSubject
+			subjects = editors[@currentEditorIndex_].subjects
+			subjects.trigger 'subjectChanged', subjects.currentSubject
 		
 		# Manage the current editor.
 		currentEditorIndex: -> @currentEditorIndex_
 		setCurrentEditorIndex: (currentEditorIndex) ->
-			editors[@currentEditorIndex_]?.Subjects.off 'all', @render, this
+			editors[@currentEditorIndex_]?.subjects.off 'all', @render, this
 			@currentEditorIndex_ = currentEditorIndex
 			
 			# TODO I feel like we need better event delegation.
-			editors[@currentEditorIndex_].Subjects.on(
+			editors[@currentEditorIndex_].subjects.on(
 				'all'
 				(name, title) ->
 					

@@ -4,6 +4,7 @@
 
 Core = require 'Core'
 Logger = require 'core/Utility/Logger'
+Timing = require 'Timing'
 
 # Register a console logging strategy.
 Logger.registerStrategy (message, type) ->
@@ -20,6 +21,12 @@ require 'core/proxySpiis'
 socket = io.connect(
 	'http://192.168.1.2:13338'
 #	'http://editor.avocado.cha0sb0x.ath.cx'
+)
+
+timeCounter = new Timing.Counter()
+setInterval(
+	-> Timing.TimingService.setElapsed timeCounter.current() / 1000
+	10
 )
 
 $(document).ready ->

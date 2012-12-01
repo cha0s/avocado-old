@@ -4,6 +4,7 @@
 	
 	DisplayList = require 'core/Graphics/DisplayList'
 	Rectangle = require 'core/Extension/Rectangle'
+	Swipey = require 'Swipey'
 	TileLayer = require 'core/Environment/2D/TileLayer'
 	Vector = require 'core/Extension/Vector'
 	
@@ -11,19 +12,59 @@
 		
 		initialize: ->
 			
-			@calculatedCanvasSize = [0, 0]
-			@canvas = new Graphics.Image [1, 1]
 			@changeSubject null
+		
+			###
+			
+			taps = 0
+			compoundTapEvent = _.debounce(
+				=>
+					switch taps
+						when 2
+							$(@subjectCanvas.Canvas).trigger 'doubletap'
+						when 3
+							$(@subjectCanvas.Canvas).trigger 'tripletap'
+						
+					taps = 0
+				300
+			)
+			
+			$(@subjectCanvas.Canvas).on
+				
+				mousedown: (event) =>
+					
+					taps += 1
+					compoundTapEvent()
+					
+					true
+					
+			$(@subjectCanvas.Canvas).css
+				cursor: 'move'
+			
+			###
 			
 			$(window).resize _.throttle(
 				=> @changeSubject @model
 				1000
 			)
 			
-			@$el.append @$canvas = $('<div class="canvas">').append @canvas.Canvas
-			@$el.append @$ySlider = $('<div class="y-slider">').slider
-				orientation: 'vertical'
-			@$el.append @$xSlider = $('<div class="x-slider">').slider()
+			@$canvas = $ '<div class="canvas">'
+			
+			@swipey = new Swipey @$canvas
+			@swipey.on 'update', (offset) =>
+				
+				tileSize = @environment.tileset().tileSize()
+				
+				@displayList.setPosition Vector.mul(
+					Vector.round offset
+					tileSize
+				) 
+				@render()
+			
+			@subjectCanvas = new Graphics.Image [1, 1]
+			@$canvas.append @subjectCanvas.Canvas
+			
+			@$el.append @$canvas
 			
 			$('#subject').append @$el
 			
@@ -52,16 +93,9 @@
 				)
 				[96, 96]
 			)
-			
-		changeSubject: (@model, render = true) ->
-			
-			@trigger 'windowTitleChanged'
 		
-			# Don't show anything for a null model.
-			@$el.hide()
-			return unless @model?
+		resizeCanvas: ->
 			
-			@environment = @model.subject
 			currentRoom = @model.currentRoom()
 			
 			roomRectangle = Rectangle.compose(
@@ -73,17 +107,19 @@
 			)
 			
 			# Resize the canvas and notify any listeners.
-			@calculatedCanvasSize = Vector.min(
+			calculatedCanvasSize = Vector.min(
 				@canvasSize()
 				Rectangle.size roomRectangle
 			)
-			@canvas.Canvas.width = @calculatedCanvasSize[0]
-			@canvas.Canvas.height = @calculatedCanvasSize[1]
-			@trigger 'canvasSizeRecalculated', @calculatedCanvasSize
+			
+			@subjectCanvas.Canvas.width = calculatedCanvasSize[0]
+			@subjectCanvas.Canvas.height = calculatedCanvasSize[1]
+			
+			@trigger 'canvasSizeRecalculated', calculatedCanvasSize
 			
 			# Start a new display list
 			@displayList = new DisplayList(
-				Rectangle.compose [0, 0], @calculatedCanvasSize
+				Rectangle.compose [0, 0], calculatedCanvasSize
 				roomRectangle
 			)				
 			
@@ -105,14 +141,33 @@
 					currentRoom.layer i
 					@environment.tileset()
 					roomRectangle
-					@calculatedCanvasSize
+					calculatedCanvasSize
 				) 
 			
 			# ###
 			
-			@recalculateSliders()
+			@swipey.setMinMax(
+				[0, 0]
+				Vector.sub(
+					@model.currentRoom().size()
+					Vector.div(
+						calculatedCanvasSize
+						@environment.tileset().tileSize()
+					)
+				)
+			)
 			
-			@render() if render
+		changeSubject: (@model) ->
+			
+			@trigger 'windowTitleChanged'
+		
+			# Don't show anything for a null model.
+			@$el.hide()
+			return unless @model?
+			
+			@environment = @model.subject
+			
+			@resizeCanvas()
 			
 			@$el.show()
 			
@@ -122,67 +177,5 @@
 				title += " (#{@model.id})"
 			@model.trigger 'windowTitleChanged', title
 			
-		recalculateSliders: ->
-			
-			canvasSize = @calculatedCanvasSize
-			totalSize = @model.currentRoom().size()
-			tileSize = @environment.tileset().tileSize()
-			
-			# Some magic to DRY up both axes. The max - ... stuff is due to
-			# jQuery UI making 0 the bottom of vertical sliders.
-			$sliders = [@$xSlider, @$ySlider]
-			max = (i) -> totalSize[i] - canvasSize[i] / tileSize[i]
-			offset = (i, ui) ->
-				[
-					ui.value
-					max(1) - ui.value
-				][i]
-			setPosition = (i) =>
-				[
-					=> @displayList.setPosition [
-						@model.offset[0] * tileSize[0]
-						@displayList.position()[1]
-					]
-					=> @displayList.setPosition [
-						@displayList.position()[0]
-						@model.offset[1] * tileSize[1]
-					]
-				][i]()
-			value = (i) =>
-				[
-					@model.offset[i]
-					max(1) - @model.offset[i]
-				][i]
-			
-			setPosition 0
-			setPosition 1
-			
-			css = ['width', 'height']
-			for i in [0...2]
-				
-				# Don't show unusable sliders.
-				if 0 is max i
-					$sliders[i].hide()
-					continue
-				else
-					$sliders[i].show()
-				
-				((i) =>
-					
-					$sliders[i].css css[i], canvasSize[i] - 24
-					$sliders[i].slider(
-						'option'
-							min: 0
-							max: max i
-							value: value i
-							slide: (event, ui) =>
-								@model.offset[i] = offset i, ui
-								setPosition i
-								@render()
-					)
-				) i
-				
-			undefined
-			
-		render: -> @displayList.render @canvas
+		render: -> @displayList.render @subjectCanvas
 		

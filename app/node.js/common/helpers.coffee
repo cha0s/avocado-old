@@ -64,3 +64,40 @@ exports.serveModuleFiles = (app, resourcePath, rootPath, modulePrefix) ->
 		defer.then (code) ->
 			req.processedCode = "requires_['#{moduleName}'] = function(module, exports) {\n#{code}\n}\n"
 			next()
+
+exports.preprocessFiles = (
+	app
+	resourcePath
+	rootPath
+	mimes
+	fn
+) ->
+
+	# Automatically stream any LESS files requested as CSS.
+	app.get resourcePath, (req, res, next) ->
+		
+		# Make sure the file exists.
+		filename = "#{rootPath}#{req._parsedUrl.pathname}"
+		fs.exists filename, (exists) ->
+			return res.status(404).end 'File Not Found' unless exists
+			
+			# Read it.
+			fs.readFile filename, 'UTF-8', (error, code) ->
+				throw error if error
+				
+				# If the original LESS was requested, end the request
+				# with its return.
+				if req.query.original?
+					res.type mimes.original
+					res.end code
+					
+				# Otherwise, process the LESS and continue the request.
+				else
+					res.type mimes.processed
+					
+					try
+						fn req, res, next, code
+
+					catch e
+						throw new Error "Failed processing #{filename}: #{e.stack}"
+					

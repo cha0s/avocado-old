@@ -2,6 +2,7 @@ _ = require 'core/Utility/underscore'
 coffee = require 'coffee-script'
 fs = require 'fs'
 helpers = require './helpers'
+less = require 'less'
 mustache = require 'mustache'
 
 rootPath = '../../..'
@@ -22,35 +23,32 @@ module.exports = (app) ->
 		(filename) -> src: filename.replace '../../..', ''
 	)
 	
-	# Automatically stream any coffeescript files requested as JS.
-	app.get /\/[^/]*\.coffee$/, (req, res, next) ->
-		
-		# Make sure the file exists.
-		filename = "#{rootPath}#{req._parsedUrl.pathname}"
-		fs.exists filename, (exists) ->
-			return res.status(404).end 'File Not Found' unless exists
-			
-			# Read it.
-			fs.readFile filename, 'UTF-8', (error, code) ->
-				throw error if error
-				
-				# If the original coffeescript was requested, end the request
-				# with its return.
-				if req.query.original?
-					res.type 'application/coffeescript'
-					res.end code
-					
-				# Otherwise, process the coffeescript and continue the request.
-				else
-					
-					res.type 'application/javascript'
-					
-					try
-						req.processedCode = coffee.compile code
-					catch e
-						throw new Error "Failed compiling #{filename}: #{e.stack}"
-					
-					next()
+	helpers.preprocessFiles(
+		app
+		/\/[^/]*\.coffee$/
+		rootPath
+		{
+			original: 'application/coffeescript'
+			processed: 'application/javascript'
+		}
+		(req, res, next, code) ->
+			req.processedCode = coffee.compile code
+			next()
+	)
+	
+	helpers.preprocessFiles(
+		app
+		/\/[^/]*\.less$/
+		rootPath
+		{
+			original: 'text/less'
+			processed: 'text/css'
+		}
+		(req, res, next, code) ->
+			less.render code, (e, css) ->
+				req.processedCode = css
+				next()
+	)
 	
 	helpers.serveModuleFiles(
 		app

@@ -43,8 +43,9 @@ module.exports = Backbone.View.extend
 			offset = Vector.floor offset
 			tileSize = @tileset.tileSize()
 			
-			$(@tileset.image().Canvas).css 'left', offset[0] * -tileSize[0]
-			$(@tileset.image().Canvas).css 'top', offset[1] * -tileSize[1]
+			$(@tileset.image().Canvas).css
+				left: offset[0] * -tileSize[0]
+				top: offset[1] * -tileSize[1]
 		
 		taps = 0
 		compoundTapEvent = _.debounce(

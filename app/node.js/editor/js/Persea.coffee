@@ -119,6 +119,8 @@ exports.View = Backbone.View.extend
 			this
 		)
 		
+		$.rloader src: "/app/node.js/editor/css/Editors/#{currentEditorIndex}.less"
+		
 	# Turn off text selection by default to make things look nicer. We'll
 	# individually turn any element unselectability off on a case-by-case
 	# basis.
@@ -128,9 +130,8 @@ exports.View = Backbone.View.extend
 		this
 	
 	# Load a subject from a URI.
-	loadSubject: (uri) ->
-		editors[@currentEditorIndex_].loadSubject uri
-		
+	loadSubject: (uri) -> editors[@currentEditorIndex_].loadSubject uri
+	
 	# Open a subject using a dialog.
 	openSubject: ->
 		uri = prompt 'URI?'

@@ -18,6 +18,7 @@
 Mixin = require 'core/Utility/Mixin'
 String = require 'core/Extension/String'
 TimingService = require('Timing').TimingService
+upon = require 'core/Utility/upon'
 
 module.exports = Transition = class
 
@@ -45,7 +46,6 @@ module.exports = Transition = class
 			# default to 'easeOutQuad'.
 			if 'function' isnt typeof easing
 				easing = easing && Transition.easing[easing] || Transition.easing['easeOutQuad']
-			
 			
 			# Store the original values of the properties and calculate the
 			# difference between the original values and the requested values.
@@ -84,7 +84,9 @@ module.exports = Transition = class
 				
 				# Do easing for each property that actually changed.
 				for i of @change
+					
 					if @change[i]
+						
 						@O[@method[i]] @easing(
 							@elapsed,
 							@original[i],
@@ -121,28 +123,38 @@ module.exports = Transition = class
 				@tick()
 				
 			# The tick interval.
-			transition.interval = setInterval(
-				=>
-					
-					# Update the transition's elapsed time and tick.
-					transition.elapsed += TimingService.elapsed() - transition.start
-					transition.start = TimingService.elapsed()
-					transition.tick()
-				10
-			)
+			intervalDefer = upon.defer()
+			
+			if @transition_?.interval?
+				@transition_.promise.then ->
+					intervalDefer.resolve()
+			else
+				intervalDefer.resolve()
+			
+			intervalDefer.then ->
+				
+				transition.interval = setInterval(
+					=>
+						
+						# Update the transition's elapsed time and tick.
+						transition.elapsed += TimingService.elapsed() - transition.start
+						transition.start = TimingService.elapsed()
+						transition.tick()
+					10
+				)
 			
 			@transition_ = transition
 		
-		if @transition_?.interval?
-			
-			# If any transition is running, add this next one to the queue
-			# after the current transition.
-			@transition_.promise.then -> registerTransition()
-			@transition_
-		else
-			
-			# No other transition running? Start this one immediately.
-			registerTransition()
+#		if @transition_?.interval?
+#			
+#			# If any transition is running, add this next one to the queue
+#			# after the current transition.
+#			registerTransition()
+#			@transition_
+#		else
+#			
+		# No other transition running? Start this one immediately.
+		registerTransition()
 
 ###
  *

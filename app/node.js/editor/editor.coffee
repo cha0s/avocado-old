@@ -46,7 +46,7 @@ app.engine 'html', consolidate.mustache
 
 app.set 'view engine', 'html'
 
-require('../common/avocadoModules') app
+require('../common/process-sources') app
 
 rootPath = '../../..'
 

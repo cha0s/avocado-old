@@ -63,6 +63,8 @@ module.exports = Tileset = class
 
 		@tiles_ = Vector.div @image_.size(), @tileSize_
 	
+	tiles: -> @tiles_
+	
 	render: (
 		location
 		destination

@@ -89,6 +89,14 @@ helpers.serveModuleFiles(
 app.get /.*/, (req, res, next) ->
 	
 	if req.processedCode
+		type = express.mime.lookup req._parsedUrl.pathname
+		unless res.getHeader 'content-type'
+			charset = express.mime.charsets.lookup type
+			res.setHeader(
+				'Content-Type'
+				type + (if charset then "; charset=#{charset}" else '')
+			)
+	
 		res.end req.processedCode
 		
 	else

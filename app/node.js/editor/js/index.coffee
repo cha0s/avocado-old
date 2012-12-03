@@ -26,7 +26,7 @@ socket = io.connect(
 timeCounter = new Timing.Counter()
 setInterval(
 	-> Timing.TimingService.setElapsed timeCounter.current() / 1000
-	10
+	100
 )
 
 $(document).ready ->

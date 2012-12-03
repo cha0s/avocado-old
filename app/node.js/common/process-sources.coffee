@@ -28,8 +28,8 @@ module.exports = (app) ->
 		/\/[^/]*\.coffee$/
 		rootPath
 		{
-			original: 'application/coffeescript'
-			processed: 'application/javascript'
+			original: 'text/coffeescript'
+			processed: 'text/javascript'
 		}
 		(req, res, next, code) ->
 			req.processedCode = coffee.compile code

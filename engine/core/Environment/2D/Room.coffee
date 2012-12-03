@@ -102,6 +102,7 @@ module.exports = Room = class
 	size: -> @size_
 	
 	layer: (index) -> @layers_[index]
+	layerCount: -> @layers_.length
 	
 	tick: ->
 	

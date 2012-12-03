@@ -18,7 +18,7 @@ exports.numberFromPxString = numberFromPxString = (pxString) ->
 	parseFloat pxString.substr 0, pxString.length - 2
 	
 exports.outerWidth = (element, includeMargin = false) ->
-
+	
 	{
 		width
 		borderLeft, borderRight
@@ -37,4 +37,3 @@ exports.outerWidth = (element, includeMargin = false) ->
 		outerWidth += numberFromPxString marginRight
 	
 	outerWidth
-	

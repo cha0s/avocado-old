@@ -29,17 +29,34 @@ module.exports = class
 		
 		@setMinMax = (@min, @max) => @emit 'update', swipeOffset
 		
-		$(window).on
+		if Modernizr.touch
+			
+			$el = $(el)
+			mousedown = 'vmousedown'
+			mousemove = 'vmousemove'
+			mouseup = 'vmouseup'
+			
+		else
+			
+			$el = $(window)
+			mousedown = 'mousedown'
+			mousemove = 'mousemove'
+			mouseup = 'mouseup'
 		
-			mouseup: =>
-				
+		$el.on(
+			mouseup
+			=>
 				return true unless @active
 				
 				holding = false
 				
 				true
 			
-			mousemove: (event) =>
+		)
+		
+		$el.on(
+			mousemove
+			(event) =>
 				
 				return true unless @active
 				
@@ -61,9 +78,11 @@ module.exports = class
 					
 				true
 					
-		$(el).on
-			
-			mousedown: (event) =>
+		)
+		
+		$(el).on(
+			mousedown
+			(event) =>
 				
 				return true unless @active
 				
@@ -75,6 +94,10 @@ module.exports = class
 				
 				true
 				
+		)
+		
+		$(el).on
+			
 			swipe: (event, delta) =>
 				
 				return true unless @active

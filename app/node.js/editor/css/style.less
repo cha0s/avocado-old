@@ -16,6 +16,10 @@ body {
    user-select: none;
 }
 
+.ui-loader {
+  display: none;
+}
+
 #persea {
 
   #menu {
@@ -101,22 +105,43 @@ body {
   }
   
   #subject {
+    overflow: hidden;
     background-color: #444466;
     position: absolute;
     top: 66px;
     left: 8px;
     padding: 0;
     
-    canvas {
+    .canvas {
       box-shadow: 1px 1px 3px black;
-      position: absolute;
-      top: 0;
-      left: 0;
+      
+      .tiles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        
+        .layer {
+          position: absolute;
+        }
+      }
     }
     
     .ui-widget-content {
       background: none;
     }
+    
+    /*
+    
+    .tile {
+      float: left;
+      width: 16px;
+      height: 16px;
+      margin: 0px -1px -1px 0px;
+      border-right: 1px solid rgba(255, 255, 255, .5);
+      border-bottom: 1px solid rgba(255, 255, 255, .5);
+    }
+    
+    */
   }
   
   #editor {

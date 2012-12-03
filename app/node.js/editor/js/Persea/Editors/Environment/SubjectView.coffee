@@ -3,6 +3,7 @@ Graphics = require 'Graphics'
 Image = Graphics.Image
 
 DisplayList = require 'core/Graphics/DisplayList'
+Dom = require 'core/Utility/Dom'
 Rectangle = require 'core/Extension/Rectangle'
 Swipey = require 'Swipey'
 TileLayer = require 'core/Environment/2D/TileLayer'
@@ -55,20 +56,18 @@ module.exports = Backbone.View.extend
 			
 			tileSize = @environment.tileset().tileSize()
 			
-			@displayList.setPosition Vector.mul(
-				Vector.round offset
-				tileSize
-			) 
-			@render()
-		
-		@subjectCanvas = new Graphics.Image [1, 1]
-		@$canvas.append @subjectCanvas.Canvas
-		
+			@$tiles.css
+				top: -offset[1] * tileSize[1]
+				left: -offset[0] * tileSize[0]
+			
 		@$el.append @$canvas
+		@$canvas.append @$tiles = $ '<div class="tiles">'
 		
 		$('#subject').append @$el
 		
 	canvasSize: ->
+		
+		tileSize = @environment.tileset().tileSize()
 	
 		# Start with the window size.
 		size = [$(window).width(), $(window).height()]
@@ -78,7 +77,7 @@ module.exports = Backbone.View.extend
 		size = Vector.sub size, [left, top]
 		
 		# Give it some padding.
-		size = Vector.sub size, [32, 32]
+		size = Vector.sub size, [8, 8]
 		
 		# If the editor's showing, subtract its width.
 		if $('#editor .controls').is ':visible'			
@@ -89,85 +88,120 @@ module.exports = Backbone.View.extend
 		Vector.mul(
 			Vector.floor Vector.div(
 				size
-				[96, 96]
+				tileSize
 			)
-			[96, 96]
+			tileSize
 		)
 	
 	resizeCanvas: ->
 		
 		currentRoom = @model.currentRoom()
+		tileSize = @environment.tileset().tileSize()
 		
 		roomRectangle = Rectangle.compose(
 			[0, 0]
 			Vector.mul(
 				currentRoom.size()
-				@environment.tileset().tileSize()
+				tileSize
 			)
 		)
 		
 		# Resize the canvas and notify any listeners.
-		calculatedCanvasSize = Vector.min(
+		canvasSize = Vector.min(
 			@canvasSize()
 			Rectangle.size roomRectangle
 		)
 		
-		@subjectCanvas.Canvas.width = calculatedCanvasSize[0]
-		@subjectCanvas.Canvas.height = calculatedCanvasSize[1]
+		@$canvas.css
+			width: canvasSize[0]
+			height: canvasSize[1]
 		
-		@trigger 'canvasSizeRecalculated', calculatedCanvasSize
-		
-		# Start a new display list
-		@displayList = new DisplayList(
-			Rectangle.compose [0, 0], calculatedCanvasSize
-			roomRectangle
-		)				
-		
-		# with background color,
-		new Image.FillDisplayCommand(
-			@displayList
-			68, 68, 102, 255
-			roomRectangle
-		)
-		
-		# ###
-		
-		# and 4 layers
-		# TODO dynamic layer count.
-		@tileLayerCommands = []
-		for i in [0...4]
-			@tileLayerCommands[i] = new TileLayer.DisplayCommand(
-				@displayList
-				currentRoom.layer i
-				@environment.tileset()
-				roomRectangle
-				calculatedCanvasSize
-			) 
-		
-		# ###
+		@trigger 'canvasSizeRecalculated', canvasSize
 		
 		@swipey.setMinMax(
 			[0, 0]
 			Vector.sub(
 				@model.currentRoom().size()
 				Vector.div(
-					calculatedCanvasSize
+					canvasSize
 					@environment.tileset().tileSize()
 				)
 			)
 		)
 		
-	changeSubject: (@model) ->
+	generateRoom: ->
+		
+		canvasSize = [@$canvas.width(), @$canvas.height()]
+		tileSize = @environment.tileset().tileSize()
+		
+		currentRoom = @model.currentRoom()
+		
+		sizeInTiles = currentRoom.size()
+		
+		totalTileSize = sizeInTiles[0] * sizeInTiles[1]
+		
+		totalRoomSize = Vector.mul sizeInTiles, tileSize
+		
+		@$tiles.empty()
+		
+		for i in [0...currentRoom.layerCount()]
+		
+			layer = new Image totalRoomSize
+			
+			((i) =>
+				
+				j = 0
+				
+				renderTile = =>
+					
+					y = j
+					
+					for x in [0...sizeInTiles[0]]
+						position = Vector.mul tileSize, [x, y]
+						
+						index = currentRoom.layer(i).tileIndex [x, y]
+						@environment.tileset().render(
+							position
+							layer
+							index
+							null
+							[0, 0, 16, 16]
+						) if index
+					
+					j += 1
+					
+					setTimeout(
+						=> renderTile()
+						10
+					) if j < sizeInTiles[1]
+					
+				renderTile()
+					
+			) i
+				
+			@$tiles.append $(layer.Canvas).addClass 'layer'
+		
+		undefined
+		
+	changeSubject: (model) ->
 		
 		@trigger 'windowTitleChanged'
 	
 		# Don't show anything for a null model.
-		@$el.hide()
-		return unless @model?
+		unless model?
+			@model = model
+			@$el.hide()
+			return
 		
-		@environment = @model.subject
+		roomHasChanged = model.currentRoom() isnt @model?.currentRoom()
+		
+		@environment = model.subject
+		
+		@model = model
 		
 		@resizeCanvas()
+		
+		@generateRoom() if roomHasChanged
 		
 		@$el.show()
 		
@@ -177,5 +211,5 @@ module.exports = Backbone.View.extend
 			title += " (#{@model.id})"
 		@model.trigger 'windowTitleChanged', title
 		
-	render: -> @displayList.render @subjectCanvas
+	render: ->
 	

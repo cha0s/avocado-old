@@ -27,6 +27,7 @@ module.exports = AvoImage = class
 		resolve = ->
 			
 			i.URI = uri
+			i.src = Images[uri].src
 			i.BrowserImage = Images[uri]
 			i.Canvas = document.createElement 'canvas'
 			

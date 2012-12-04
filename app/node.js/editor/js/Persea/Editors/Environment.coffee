@@ -13,7 +13,8 @@ subject = new SubjectView
 
 editor = new EditorView
 	id: 'environment-editor'
-	$canvas: subject.$canvas
+	subject: subject
+subject.editor = editor
 
 subjects.on 'subjectChanged', (model) ->
 	

@@ -99,7 +99,6 @@ module.exports = class
 		$(el).on
 			
 			swipe: (event, delta) =>
-				
 				return true unless @active
 				
 				dp = []

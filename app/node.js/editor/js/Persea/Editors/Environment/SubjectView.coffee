@@ -13,61 +13,171 @@ module.exports = Backbone.View.extend
 	
 	initialize: ->
 		
+		mode = 0
+	
 		@changeSubject null
 	
-		###
-		
-		taps = 0
-		compoundTapEvent = _.debounce(
-			=>
-				switch taps
-					when 2
-						$(@subjectCanvas.Canvas).trigger 'doubletap'
-					when 3
-						$(@subjectCanvas.Canvas).trigger 'tripletap'
-					
-				taps = 0
-			300
-		)
-		
-		$(@subjectCanvas.Canvas).on
-			
-			mousedown: (event) =>
-				
-				taps += 1
-				compoundTapEvent()
-				
-				true
-				
-		$(@subjectCanvas.Canvas).css
-			cursor: 'move'
-		
-		###
-		
 		$(window).resize _.throttle(
 			=> @changeSubject @model
 			1000
 		)
 		
+		buttons = """
+		<ul>
+			<li>
+				<p class="heading">Mode</p>
+				<ul>
+					<li class="button">
+						<a id="mode-environment-move" href="#" style="background-image: url('/app/node.js/editor/images/ui/mode-move.png');"></a>
+					</li>
+					<li class="button">
+						<a id="mode-environment-draw" href="#" style="background-image: url('/app/node.js/editor/images/ui/mode-draw.png');"></a>
+					</li>
+				</ul>
+			</li>
+		</ul>		
+		"""
+		
+		@$buttons = $ '#buttons'
+		@$buttons.html buttons
+		
+		$('#mode-environment-move', @$buttons).addClass 'active'
+		
 		@$canvas = $ '<div class="canvas">'
+		
+		if Modernizr.touch
+			
+			mousedown = 'vmousedown'
+			mousemove = 'vmousemove'
+			mouseout = 'vmouseout'
+			mouseup = 'vmouseup'
+			
+		else
+			
+			mousedown = 'mousedown'
+			mousemove = 'mousemove'
+			mouseout = 'mouseout'
+			mouseup = 'mouseup'
+			
+		holding = false
+		
+		@$canvas.on mousedown, (event) =>
+			
+			return unless mode is 1
+			
+			{tileSelection} = @calculateMousePositions(
+				[event.clientX, event.clientY]
+				@$canvas
+				@$tiles
+			)
+			
+			@setTileIndex @editor.tileSelection, tileSelection
+			
+			undefined
 		
 		@swipey = new Swipey @$canvas
 		@swipey.on 'update', (offset) =>
 			
-			tileSize = @environment.tileset().tileSize()
+			tileSize = @tileset.tileSize()
 			
 			@$tiles.css
 				top: -offset[1] * tileSize[1]
 				left: -offset[0] * tileSize[0]
 			
+		$(window).on mousemove, (event) =>
+			
+			return unless holding and mode is 1
+			
+			{tileSelection} = @calculateMousePositions(
+				[event.clientX, event.clientY]
+				@$canvas
+				@$tiles
+			)
+			
+			@setTileIndex @editor.tileSelection, tileSelection
+			
+			undefined
+		
+		$(window).on mouseup, (event) =>
+			
+			holding = false
+			
+			undefined
+		
+		@$canvas.on mousedown, (event) =>
+				
+			holding = true
+			
+			undefined
+				
+		$('#mode-environment-move', @$buttons).click =>
+			
+			$('.button a', @$buttons).removeClass 'active'
+			$('#mode-environment-move', @$buttons).addClass 'active'
+			
+			mode = 0
+			@$canvas.css cursor: 'move'
+			@swipey.active = true
+			
+			undefined
+			
+		$('#mode-environment-draw', @$buttons).click =>
+			
+			$('.button a', @$buttons).removeClass 'active'
+			$('#mode-environment-draw', @$buttons).addClass 'active'
+			
+			mode = 1
+			@$canvas.css cursor: 'default'
+			@swipey.active = false
+			
+			undefined
+		
+		@$canvas.css cursor: 'move'
+		
 		@$el.append @$canvas
 		@$canvas.append @$tiles = $ '<div class="tiles">'
 		
 		$('#subject').append @$el
 		
+	calculateMousePositions: (position, $el, $scrollEl) ->
+	
+		offset = $el.offset()
+		
+		position = Vector.sub(
+			position
+			[offset.left, offset.top]
+		)
+		
+		tilePosition = Vector.mul(
+			Vector.floor Vector.div(
+				position, @tileset.tileSize()
+			)
+			@tileset.tileSize()
+		)
+		
+		scrollOffset = Vector.scale(
+			[
+				Dom.numberFromPxString $scrollEl.css 'left'
+				Dom.numberFromPxString $scrollEl.css 'top'
+			]
+			-1
+		)
+		
+		tileSelection = Vector.div(
+			Vector.add(
+				scrollOffset
+				tilePosition
+			)
+			@tileset.tileSize()
+		)
+		
+		position: position
+		tilePosition: tilePosition
+		tileSelection: tileSelection
+		
 	canvasSize: ->
 		
-		tileSize = @environment.tileset().tileSize()
+		tileSize = @tileset.tileSize()
 	
 		# Start with the window size.
 		size = [$(window).width(), $(window).height()]
@@ -93,10 +203,39 @@ module.exports = Backbone.View.extend
 			tileSize
 		)
 	
+	setTileIndex: (index, position) ->
+		
+		room = @model.currentRoom()
+		layer = room.layer 0
+		
+		layer.setTileIndex index, position
+		
+		@layers[0].drawFilledBox(
+			Rectangle.compose(
+				Vector.mul(
+					position
+					@tileset.tileSize()
+				)
+				@tileset.tileSize()
+			)
+			0, 0, 0, 0
+		)
+	
+		@tileset.render(
+			Vector.mul(
+				position
+				@tileset.tileSize()
+			)
+			@layers[0]
+			index
+			null
+			[0, 0, 16, 16]
+		) if index
+			
 	resizeCanvas: ->
 		
 		currentRoom = @model.currentRoom()
-		tileSize = @environment.tileset().tileSize()
+		tileSize = @tileset.tileSize()
 		
 		roomRectangle = Rectangle.compose(
 			[0, 0]
@@ -115,6 +254,9 @@ module.exports = Backbone.View.extend
 		@$canvas.css
 			width: canvasSize[0]
 			height: canvasSize[1]
+			
+		@$buttons.css
+			height: canvasSize[1]
 		
 		@trigger 'canvasSizeRecalculated', canvasSize
 		
@@ -124,7 +266,7 @@ module.exports = Backbone.View.extend
 				@model.currentRoom().size()
 				Vector.div(
 					canvasSize
-					@environment.tileset().tileSize()
+					@tileset.tileSize()
 				)
 			)
 		)
@@ -132,7 +274,7 @@ module.exports = Backbone.View.extend
 	generateRoom: ->
 		
 		canvasSize = [@$canvas.width(), @$canvas.height()]
-		tileSize = @environment.tileset().tileSize()
+		tileSize = @tileset.tileSize()
 		
 		currentRoom = @model.currentRoom()
 		
@@ -144,42 +286,46 @@ module.exports = Backbone.View.extend
 		
 		@$tiles.empty()
 		
+		@layers = []
+		
 		for i in [0...currentRoom.layerCount()]
 		
-			layer = new Image totalRoomSize
+			@layers[i] = new Image totalRoomSize
 			
-			((i) =>
-				
-				j = 0
-				
-				renderTile = =>
+			_.defer(
+				(i) =>
 					
-					y = j
+					j = 0
 					
-					for x in [0...sizeInTiles[0]]
-						position = Vector.mul tileSize, [x, y]
+					renderTile = =>
 						
-						index = currentRoom.layer(i).tileIndex [x, y]
-						@environment.tileset().render(
-							position
-							layer
-							index
-							null
-							[0, 0, 16, 16]
-						) if index
-					
-					j += 1
-					
-					setTimeout(
-						=> renderTile()
-						10
-					) if j < sizeInTiles[1]
-					
-				renderTile()
-					
-			) i
+						y = j
+						
+						for x in [0...sizeInTiles[0]]
+							position = Vector.mul tileSize, [x, y]
+							
+							index = currentRoom.layer(i).tileIndex [x, y]
+							@tileset.render(
+								position
+								@layers[i]
+								index
+								null
+								[0, 0, 16, 16]
+							) if index
+						
+						j += 1
+						
+						setTimeout(
+							=> renderTile()
+							10
+						) if j < sizeInTiles[1]
+						
+					renderTile()
+						
+				i
+			)
 				
-			@$tiles.append $(layer.Canvas).addClass 'layer'
+			@$tiles.append $(@layers[i].Canvas).addClass 'layer'
 		
 		undefined
 		
@@ -195,9 +341,9 @@ module.exports = Backbone.View.extend
 		
 		roomHasChanged = model.currentRoom() isnt @model?.currentRoom()
 		
-		@environment = model.subject
-		
 		@model = model
+		@environment = model.subject
+		@tileset = @environment.tileset()
 		
 		@resizeCanvas()
 		

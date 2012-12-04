@@ -12,8 +12,10 @@ Vector = require 'core/Extension/Vector'
 module.exports = Backbone.View.extend
 	
 	initialize: ({
-		@$canvas
+		@subject
 	}) ->
+		
+		@$canvas = @subject.$canvas
 		
 		@$el.append $('<h2>').text 'Draw'
 		
@@ -36,6 +38,23 @@ module.exports = Backbone.View.extend
 		$tilesetContainer.append @$tileset = $ '<div class="tileset">'
 		@$tileset.append @$tilesetImage = $ '<div class="image">'
 		
+		@$tileset.append @$hoverSquare = $ '<div class="hover">'
+#		@$hoverSquare.hide()
+		(pulseHover = =>
+			
+			@$hoverSquare.animate(
+				opacity: 0
+				=>
+					@$hoverSquare.animate(
+						opacity: 1
+						pulseHover
+					)
+			)
+		)()
+		
+		@$tileset.append @$tileSelection = $ '<div class="selection">'
+		@tileSelection = 0
+		
 		@swipey = new Swipey @$tileset
 		@swipey.on 'update', (offset) =>
 			
@@ -45,6 +64,8 @@ module.exports = Backbone.View.extend
 			@$tilesetImage.css
 				left: offset[0] * -tileSize[0]
 				top: offset[1] * -tileSize[1]
+				
+			@updateTileSelection()
 		
 		taps = 0
 		compoundTapEvent = _.debounce(
@@ -61,12 +82,77 @@ module.exports = Backbone.View.extend
 		
 		mode = 0
 		
+		if Modernizr.touch
+			
+			mousedown = 'vmousedown'
+			mousemove = 'vmousemove'
+			mouseout = 'vmouseout'
+			
+		else
+			
+			mousedown = 'mousedown'
+			mousemove = 'mousemove'
+			mouseout = 'mouseout'
+		
 		@$tileset.on(
-			if Modernizr.touch then 'vmousedown' else 'mousedown'
+			mousedown
 			(event) =>
+				
+				if mode is 1
+					
+					tileSize = @tileset.tileSize()
+					
+					{tilePosition, tileSelection} = @calculateMousePositions(
+						[event.clientX, event.clientY]
+						@$tileset
+						@$tilesetImage
+					)
+					
+					tileIndex = tileSelection[0] + tileSelection[1] * @tileset.tiles()[0]
+					
+					@tileSelection = tileIndex
+					
+					@updateTileSelection()
+					
+#					@$hoverSquare.css
+#						top: tilePosition[1]
+#						left: tilePosition[0]
 				
 				taps += 1
 				compoundTapEvent()
+				
+				true
+		)
+		
+		@$tileset.on(
+			mouseout
+			(event) =>
+				
+#				@$hoverSquare.hide()
+				
+				true
+		)
+		
+		@$tileset.on(
+			mousemove
+			(event) =>
+				
+				###
+				
+				return unless mode is 1
+				
+				{tilePosition} = @calculateMousePositions(
+					[event.clientX, event.clientY]
+					@$tileset
+					@$tilesetImage
+				)
+				
+				@$hoverSquare.show()
+				@$hoverSquare.css
+					top: tilePosition[1]
+					left: tilePosition[0]
+				
+				###
 				
 				true
 		)
@@ -84,6 +170,7 @@ module.exports = Backbone.View.extend
 						
 					when 1
 				
+#						@$hoverSquare.hide()
 						@$tileset.css cursor: 'move'
 						@swipey.active = true
 						
@@ -96,6 +183,61 @@ module.exports = Backbone.View.extend
 		
 		$('#editor .controls').append @$el
 	
+	calculateMousePositions: (position, $el, $scrollEl) ->
+	
+		offset = $el.offset()
+		position = Vector.sub(
+			position
+			[offset.left, offset.top]
+		)
+		
+		tilePosition = Vector.mul(
+			Vector.floor Vector.div(
+				position, @tileset.tileSize()
+			)
+			@tileset.tileSize()
+		)
+		
+		scrollOffset = Vector.scale(
+			[
+				Dom.numberFromPxString $scrollEl.css 'left'
+				Dom.numberFromPxString $scrollEl.css 'top'
+			]
+			-1
+		)
+		
+		tileSelection = Vector.div(
+			Vector.add(
+				scrollOffset
+				tilePosition
+			)
+			@tileset.tileSize()
+		)
+		
+		position: position
+		tilePosition: tilePosition
+		tileSelection: tileSelection
+	
+	updateTileSelection: ->
+		
+		position = Vector.add(
+			[
+				Dom.numberFromPxString @$tilesetImage.css 'left'
+				Dom.numberFromPxString @$tilesetImage.css 'top'
+			]
+			Vector.mul(
+				[
+					@tileSelection % @tileset.tiles()[0]
+					Math.floor @tileSelection / @tileset.tiles()[0]
+				]
+				@tileset.tileSize()
+			)
+		)
+		
+		@$hoverSquare.css
+			top: position[1]
+			left: position[0]
+			
 	setCanvasSize: (canvasSize) ->
 	
 	attachCanvas: (@$canvas) ->
@@ -115,6 +257,12 @@ module.exports = Backbone.View.extend
 		
 		@tileset = @model.subject.tileset()
 		
+		tileSize = @tileset.tileSize()
+		
+		@$hoverSquare.css
+			width: tileSize[0]
+			height: tileSize[1]
+		
 		@model.tilesetOffset ?= [0, 0]
 		
 		bg = "url(\"#{@tileset.image().src}\")"
@@ -124,41 +272,13 @@ module.exports = Backbone.View.extend
 			height: @tileset.image().height()
 			'background-image': bg
 		
-		return if $("link[uri=\"#{@tileset.image().src}\"]").length > 0
-		
-		$link = $ '<link>'
-		
-		$link.attr
-			id: 'tileset-index'
-			uri: @tileset.image().src
-			rel: 'stylesheet'
-			type: 'text/css'
-			media: 'all'
-		
-		index = 0
-		html = ''
-		tiles = @tileset.tiles()
-		tileSize = @tileset.tileSize()
-		for y in [0...tiles[1]]
-			for x in [0...tiles[0]]
-				html += "
-					#persea #subject .tile[tile-index=\"#{index++}\"] {
-						background-image: #{bg};
-						background-position: -#{x * tileSize[0]}px -#{y * tileSize[1]}px;
-					}\n
-				"
-		
-		$link.attr
-			href: 'data:text/css,'+escape(html);
-		$('head').append $link
-		
 		@swipey.setMinMax(
 			[0, 0]
 			Vector.sub(
-				Vector.div @tileset.image().size(), @tileset.tileSize()
+				Vector.div @tileset.image().size(), tileSize
 				Vector.div(
 					[256, 256]
-					@tileset.tileSize()
+					tileSize
 				)
 			)
 		)

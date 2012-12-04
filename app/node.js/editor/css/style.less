@@ -21,6 +21,36 @@ body {
 }
 
 #persea {
+  
+  #buttons {
+    position: absolute;
+    height: 100%;
+    left: 2.5px;
+    top: 66px;
+    width: 32px;
+    text-align: center;
+    
+    .heading {
+      font-size: 10px;
+      margin-bottom: 4px; 
+    }
+    
+    .button a {
+
+      display: block;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 4px;
+      background: no-repeat scroll 1px 2px transparent;
+      
+      &:active {
+        background-color: #111133;
+      }
+      &.active {
+        background-color: #222244;
+      }
+    }
+  }
 
   #menu {
     font-size: 12px;
@@ -64,7 +94,7 @@ body {
     overflow: hidden;
     position: absolute;
     top: 38px;
-    left: 8px;
+    left: 40px;
     
     #subject-thumbs {
       position: relative;
@@ -109,7 +139,7 @@ body {
     background-color: #444466;
     position: absolute;
     top: 66px;
-    left: 8px;
+    left: 40px;
     padding: 0;
     
     .canvas {

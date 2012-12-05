@@ -22,9 +22,8 @@ body {
 
 #persea {
   
-  #buttons {
+  .buttons {
     position: absolute;
-    height: 100%;
     left: 2.5px;
     top: 66px;
     width: 32px;
@@ -43,6 +42,7 @@ body {
       margin-bottom: 4px;
       background: no-repeat;
       background-position: 0px 1px;
+      float: left;
       
       &:active {
         background-color: #111133;
@@ -146,6 +146,12 @@ body {
     
     .canvas {
       box-shadow: 1px 1px 3px black;
+      
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
       
       .tiles {
         position: absolute;

@@ -22,7 +22,7 @@ module.exports = Backbone.View.extend
 			1000
 		)
 		
-		buttons = """
+		@$buttons = $('#persea > .buttons').html """
 		<ul>
 			<li>
 				<p class="heading">Mode</p>
@@ -37,9 +37,6 @@ module.exports = Backbone.View.extend
 			</li>
 		</ul>		
 		"""
-		
-		@$buttons = $ '#buttons'
-		@$buttons.html buttons
 		
 		$('#mode-environment-move', @$buttons).addClass 'active'
 		
@@ -65,13 +62,7 @@ module.exports = Backbone.View.extend
 			
 			return unless mode is 1
 			
-			{tileSelection} = @calculateMousePositions(
-				[event.clientX, event.clientY]
-				@$canvas
-				@$tiles
-			)
-			
-			@setTileIndex @editor.tileSelection, tileSelection
+			@paintTiles [event.clientX, event.clientY]
 			
 			undefined
 		
@@ -88,13 +79,7 @@ module.exports = Backbone.View.extend
 			
 			return unless holding and mode is 1
 			
-			{tileSelection} = @calculateMousePositions(
-				[event.clientX, event.clientY]
-				@$canvas
-				@$tiles
-			)
-			
-			@setTileIndex @editor.tileSelection, tileSelection
+			@paintTiles [event.clientX, event.clientY]
 			
 			undefined
 		
@@ -104,9 +89,48 @@ module.exports = Backbone.View.extend
 			
 			undefined
 		
+		@$canvas.on mouseout, (event) =>
+				
+			@$overlay.hide()
+			
+			undefined
+				
 		@$canvas.on mousedown, (event) =>
 				
 			holding = true
+			
+			undefined
+				
+		@$canvas.on mousemove, (event) =>
+			return unless mode is 1
+			
+			@$overlay.show()
+			
+			offset = @$canvas.offset()
+			tileSize = @tileset.tileSize()
+			position = Vector.sub(
+				[event.clientX, event.clientY]
+				[offset.left, offset.top]
+			)
+			
+			tilePosition = Vector.mul(
+				Vector.floor Vector.div(
+					position, tileSize
+				)
+				tileSize
+			)
+			
+			bgImage = $('.tileset .image').css 'background-image'
+			
+			matrix = @editor.tileSelectionMatrix
+			mOffset = Vector.mul tileSize, Rectangle.position matrix
+			@$overlay.css
+				top: tilePosition[1]
+				left: tilePosition[0]
+				width: matrix[2] * tileSize[0]
+				height: matrix[3] * tileSize[1]
+				'background-image': bgImage
+				'background-position': "-#{mOffset[0]}px -#{mOffset[1]}px"
 			
 			undefined
 				
@@ -116,6 +140,7 @@ module.exports = Backbone.View.extend
 			$('#mode-environment-move', @$buttons).addClass 'active'
 			
 			mode = 0
+			@$overlay.hide()
 			@$canvas.css cursor: 'move'
 			@swipey.active = true
 			
@@ -127,6 +152,7 @@ module.exports = Backbone.View.extend
 			$('#mode-environment-draw', @$buttons).addClass 'active'
 			
 			mode = 1
+			@$overlay.show()
 			@$canvas.css cursor: 'default'
 			@swipey.active = false
 			
@@ -136,9 +162,42 @@ module.exports = Backbone.View.extend
 		
 		@$el.append @$canvas
 		@$canvas.append @$tiles = $ '<div class="tiles">'
+		@$canvas.append @$overlay = $ '<div class="overlay">'
+		@$overlay.hide()
+		(pulseHover = =>
+			
+			@$overlay.animate(
+				opacity: 0
+				=>
+					@$overlay.animate(
+						opacity: .8
+						pulseHover
+					)
+			)
+		)()
+		
 		
 		$('#subject').append @$el
+	
+	paintTiles: (position) ->
 		
+		{tileSelection} = @calculateMousePositions(
+			position
+			@$canvas
+			@$tiles
+		)
+		
+		matrix = @editor.tileSelectionMatrix
+		tile = Rectangle.position matrix
+		for y in [0...matrix[3]]
+			for x in [0...matrix[2]]
+				
+				fooTile = Vector.add tile, [x, y]
+				@setTileIndex(
+					fooTile[1] * @tileset.tiles()[0] + fooTile[0]
+					Vector.add tileSelection, [x, y]
+				)
+				
 	calculateMousePositions: (position, $el, $scrollEl) ->
 	
 		offset = $el.offset()

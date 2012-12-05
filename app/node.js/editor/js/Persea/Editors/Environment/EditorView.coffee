@@ -15,21 +15,43 @@ module.exports = Backbone.View.extend
 		@subject
 	}) ->
 		
+		
 		@$canvas = @subject.$canvas
 		
-		@$el.append $('<h2>').text 'Draw'
+		@$el.append """
 		
-		@$el.append $drawWithContainer = $ '<div class="draw-with">'
-		$drawWithContainer.append $('<label>').addClass('draw-label').text 'with:'
-		$drawWithContainer.append $drawSelect = $ '<select>'
-		$drawSelect.append $('<option>').text 'Paintbrush'
-		$drawSelect.append $('<option>').text 'Flood'
-		$drawSelect.append $('<option>').text 'Randomized flood'
+		<div class="draw">
+			<select class="draw-styles"></select>
+			<label>on layer: </label>
+			<select class="layers"></select>
+		</div>
 		
-		@$el.append $drawOnContainer = $ '<div class="draw-on">'
-		$drawOnContainer.append $('<label>').addClass('draw-label').text 'on layer:'
-		$drawOnContainer.append $drawSelect = $ '<select>'
+		<div class="buttons">
+			<ul>
+				<li>
+					<ul>
+						<li class="button">
+							<a id="mode-tileset-move" href="#" style="background-image: url('/app/node.js/editor/images/ui/mode-move.png');"></a>
+						</li>
+						<li class="button">
+							<a id="mode-tileset-draw" href="#" style="background-image: url('/app/node.js/editor/images/ui/mode-select.png');"></a>
+						</li>
+					</ul>
+				</li>
+			</ul>		
+		</div>
 		
+		"""
+		
+		@$buttons = $ '.buttons', @$el
+		
+		$drawStyles = $ '.draw-styles', @$el
+		
+		$drawStyles.append $('<option>').text 'Paintbrush'
+		$drawStyles.append $('<option>').text 'Flood'
+		$drawStyles.append $('<option>').text 'Random flood'
+		
+		$drawSelect = $ '.layers', @$el
 		for index in [0...4]
 			$drawSelect.append $('<option>').html "#{index}&nbsp;"
 		
@@ -39,21 +61,22 @@ module.exports = Backbone.View.extend
 		@$tileset.append @$tilesetImage = $ '<div class="image">'
 		
 		@$tileset.append @$hoverSquare = $ '<div class="hover">'
-#		@$hoverSquare.hide()
 		(pulseHover = =>
 			
 			@$hoverSquare.animate(
 				opacity: 0
+				200
 				=>
 					@$hoverSquare.animate(
-						opacity: 1
+						opacity: .4
+						200
 						pulseHover
 					)
 			)
 		)()
 		
 		@$tileset.append @$tileSelection = $ '<div class="selection">'
-		@tileSelection = 0
+		@tileSelectionMatrix = [0, 0, 1, 1]
 		
 		@swipey = new Swipey @$tileset
 		@swipey.on 'update', (offset) =>
@@ -67,115 +90,103 @@ module.exports = Backbone.View.extend
 				
 			@updateTileSelection()
 		
-		taps = 0
-		compoundTapEvent = _.debounce(
-			=>
-				switch taps
-					when 2
-						@$tileset.trigger 'doubletap'
-					when 3
-						@$tileset.trigger 'tripletap'
-					
-				taps = 0
-			300
-		)
-		
 		mode = 0
+		holding = false
 		
 		if Modernizr.touch
 			
 			mousedown = 'vmousedown'
 			mousemove = 'vmousemove'
 			mouseout = 'vmouseout'
+			mouseup = 'vmouseup'
 			
 		else
 			
 			mousedown = 'mousedown'
 			mousemove = 'mousemove'
 			mouseout = 'mouseout'
+			mouseup = 'mouseup'
 		
 		@$tileset.on(
 			mousedown
 			(event) =>
 				
+				holding = true
+				
 				if mode is 1
 					
-					tileSize = @tileset.tileSize()
-					
-					{tilePosition, tileSelection} = @calculateMousePositions(
+					{tileSelection} = @calculateMousePositions(
 						[event.clientX, event.clientY]
 						@$tileset
 						@$tilesetImage
 					)
 					
-					tileIndex = tileSelection[0] + tileSelection[1] * @tileset.tiles()[0]
+					@tileSelectionMatrix = [
+						tileSelection[0]
+						tileSelection[1]
+						1
+						1
+					]
 					
-					@tileSelection = tileIndex
+					@currentSelection = tileSelection
 					
 					@updateTileSelection()
 					
-#					@$hoverSquare.css
-#						top: tilePosition[1]
-#						left: tilePosition[0]
-				
-				taps += 1
-				compoundTapEvent()
-				
 				true
 		)
 		
-		@$tileset.on(
-			mouseout
-			(event) =>
+		$(window).on mousemove, (event) =>
+			
+			if holding and mode is 1
 				
-#				@$hoverSquare.hide()
+				tileSize = @tileset.tileSize()
 				
-				true
-		)
-		
-		@$tileset.on(
-			mousemove
-			(event) =>
-				
-				###
-				
-				return unless mode is 1
-				
-				{tilePosition} = @calculateMousePositions(
+				{tilePosition, tileSelection} = @calculateMousePositions(
 					[event.clientX, event.clientY]
 					@$tileset
 					@$tilesetImage
 				)
 				
-				@$hoverSquare.show()
-				@$hoverSquare.css
-					top: tilePosition[1]
-					left: tilePosition[0]
+				minSelection = Vector.min @currentSelection, tileSelection
+				maxSelection = Vector.max @currentSelection, tileSelection
+				@tileSelectionMatrix = [
+					minSelection[0]
+					minSelection[1]
+					maxSelection[0] - minSelection[0] + 1
+					maxSelection[1] - minSelection[1] + 1
+				]
 				
-				###
+				@updateTileSelection()
 				
-				true
-		)
-		
-		@$tileset.on
+			true
 			
-			doubletap: =>
-				
-				switch mode
-					
-					when 0
-						
-						@$tileset.css cursor: 'default'
-						@swipey.active = false
-						
-					when 1
-				
-#						@$hoverSquare.hide()
-						@$tileset.css cursor: 'move'
-						@swipey.active = true
-						
-				mode = if mode is 0 then 1 else 0
-				
+		$(window).on mouseup, (event) =>
+			
+			holding = false
+		
+		$('#mode-tileset-move', @$buttons).click =>
+			
+			$('.button a', @$buttons).removeClass 'active'
+			$('#mode-tileset-move', @$buttons).addClass 'active'
+			
+			mode = 0
+			@$tileset.css cursor: 'move'
+			@swipey.active = true
+			
+			undefined
+			
+		$('#mode-tileset-draw', @$buttons).click =>
+			
+			$('.button a', @$buttons).removeClass 'active'
+			$('#mode-tileset-draw', @$buttons).addClass 'active'
+			
+			mode = 1
+			@$tileset.css cursor: 'default'
+			@swipey.active = false
+			
+			undefined
+		
+		$('#mode-tileset-move', @$buttons).addClass 'active'		
 		@$tileset.css
 			cursor: 'move'
 		
@@ -220,23 +231,24 @@ module.exports = Backbone.View.extend
 	
 	updateTileSelection: ->
 		
+		tileSize = @tileset.tileSize()
+		
 		position = Vector.add(
 			[
 				Dom.numberFromPxString @$tilesetImage.css 'left'
 				Dom.numberFromPxString @$tilesetImage.css 'top'
 			]
 			Vector.mul(
-				[
-					@tileSelection % @tileset.tiles()[0]
-					Math.floor @tileSelection / @tileset.tiles()[0]
-				]
-				@tileset.tileSize()
+				Rectangle.position @tileSelectionMatrix
+				tileSize
 			)
 		)
 		
 		@$hoverSquare.css
 			top: position[1]
 			left: position[0]
+			width: @tileSelectionMatrix[2] * tileSize[0]
+			height: @tileSelectionMatrix[3] * tileSize[1]
 			
 	setCanvasSize: (canvasSize) ->
 	

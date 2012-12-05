@@ -9,14 +9,13 @@ Swipey = require 'Swipey'
 TileLayer = require 'core/Environment/2D/TileLayer'
 Vector = require 'core/Extension/Vector'
 
+[MODE_MOVING, MODE_SELECTION] = [0, 1]
+
 module.exports = Backbone.View.extend
 	
 	initialize: ({
 		@subject
 	}) ->
-		
-		
-		@$canvas = @subject.$canvas
 		
 		@$el.append """
 		
@@ -41,254 +40,208 @@ module.exports = Backbone.View.extend
 			</ul>		
 		</div>
 		
+		<div class="tileset-container">
+			<div class="tileset">
+				<div class="image"></div>
+				<div class="selection"></div>
+			</div>
+		</div>
+		
 		"""
 		
+		# Selectors.
 		@$buttons = $ '.buttons', @$el
+		@$drawSelect = $ '.layers', @$el
+		@$drawStyles = $ '.draw-styles', @$el
+		@$tileset = $ '.tileset', @$el
+		@$tilesetImage = $ '.image', @$tileset
+		@$tilesetSelection = $ '.selection', @$tileset
 		
-		$drawStyles = $ '.draw-styles', @$el
+		# Add draw styles.
+		@$drawStyles.append $('<option>').text 'Paintbrush'
+		@$drawStyles.append $('<option>').text 'Flood'
+		@$drawStyles.append $('<option>').text 'Random flood'
 		
-		$drawStyles.append $('<option>').text 'Paintbrush'
-		$drawStyles.append $('<option>').text 'Flood'
-		$drawStyles.append $('<option>').text 'Random flood'
+		@selectionMatrix = [0, 0, 1, 1]
 		
-		$drawSelect = $ '.layers', @$el
-		for index in [0...4]
-			$drawSelect.append $('<option>').html "#{index}&nbsp;"
-		
-		$tilesetContainer = $ '<div class="tileset-container">'
-		
-		$tilesetContainer.append @$tileset = $ '<div class="tileset">'
-		@$tileset.append @$tilesetImage = $ '<div class="image">'
-		
-		@$tileset.append @$hoverSquare = $ '<div class="hover">'
-		(pulseHover = =>
+		# Pulse animation for selected tiles.
+		(pulse = =>
 			
-			@$hoverSquare.animate(
+			@$tilesetSelection.animate(
 				opacity: 0
 				200
 				=>
-					@$hoverSquare.animate(
+					@$tilesetSelection.animate(
 						opacity: .4
 						200
-						pulseHover
+						pulse
 					)
 			)
 		)()
 		
-		@$tileset.append @$tileSelection = $ '<div class="selection">'
-		@tileSelectionMatrix = [0, 0, 1, 1]
-		
+		# Attach swiping behaviors to the tileset.
 		@swipey = new Swipey @$tileset
 		@swipey.on 'update', (offset) =>
 			
-			offset = Vector.floor offset
-			tileSize = @tileset.tileSize()
+			# Update the tileset image offset.
+			[left, top] = Vector.mul(
+				Vector.floor offset
+				Vector.scale @tileset.tileSize(), -1
+			)
+			@$tilesetImage.css left: left, top: top
 			
-			@$tilesetImage.css
-				left: offset[0] * -tileSize[0]
-				top: offset[1] * -tileSize[1]
-				
-			@updateTileSelection()
+			@updateSelectionDimensions()
 		
-		mode = 0
-		holding = false
+		@attachMouseEvents()
 		
-		if Modernizr.touch
-			
-			mousedown = 'vmousedown'
-			mousemove = 'vmousemove'
-			mouseout = 'vmouseout'
-			mouseup = 'vmouseup'
-			
-		else
-			
-			mousedown = 'mousedown'
-			mousemove = 'mousemove'
-			mouseout = 'mouseout'
-			mouseup = 'mouseup'
-		
-		@$tileset.on(
-			mousedown
-			(event) =>
-				
-				holding = true
-				
-				if mode is 1
-					
-					{tileSelection} = @calculateMousePositions(
-						[event.clientX, event.clientY]
-						@$tileset
-						@$tilesetImage
-					)
-					
-					@tileSelectionMatrix = [
-						tileSelection[0]
-						tileSelection[1]
-						1
-						1
-					]
-					
-					@currentSelection = tileSelection
-					
-					@updateTileSelection()
-					
-				true
-		)
-		
-		$(window).on mousemove, (event) =>
-			
-			if holding and mode is 1
-				
-				tileSize = @tileset.tileSize()
-				
-				{tilePosition, tileSelection} = @calculateMousePositions(
-					[event.clientX, event.clientY]
-					@$tileset
-					@$tilesetImage
-				)
-				
-				minSelection = Vector.min @currentSelection, tileSelection
-				maxSelection = Vector.max @currentSelection, tileSelection
-				@tileSelectionMatrix = [
-					minSelection[0]
-					minSelection[1]
-					maxSelection[0] - minSelection[0] + 1
-					maxSelection[1] - minSelection[1] + 1
-				]
-				
-				@updateTileSelection()
-				
-			true
-			
-		$(window).on mouseup, (event) =>
-			
-			holding = false
-		
-		$('#mode-tileset-move', @$buttons).click =>
-			
-			$('.button a', @$buttons).removeClass 'active'
-			$('#mode-tileset-move', @$buttons).addClass 'active'
-			
-			mode = 0
-			@$tileset.css cursor: 'move'
-			@swipey.active = true
-			
-			undefined
-			
-		$('#mode-tileset-draw', @$buttons).click =>
-			
-			$('.button a', @$buttons).removeClass 'active'
-			$('#mode-tileset-draw', @$buttons).addClass 'active'
-			
-			mode = 1
-			@$tileset.css cursor: 'default'
-			@swipey.active = false
-			
-			undefined
-		
-		$('#mode-tileset-move', @$buttons).addClass 'active'		
-		@$tileset.css
-			cursor: 'move'
-		
-		@$el.append $tilesetContainer
+		# Mode selection buttons.
+		$('#mode-tileset-move', @$buttons).click => @setMode MODE_MOVING
+		$('#mode-tileset-draw', @$buttons).click => @setMode MODE_SELECTION
 		
 		$('#editor .controls').append @$el
-	
-	calculateMousePositions: (position, $el, $scrollEl) ->
-	
-		offset = $el.offset()
-		position = Vector.sub(
-			position
-			[offset.left, offset.top]
-		)
 		
-		tilePosition = Vector.mul(
-			Vector.floor Vector.div(
-				position, @tileset.tileSize()
+		@setMode MODE_MOVING
+	
+	attachMouseEvents: ->
+	
+		isSelecting = false
+		{mousedown, mousemove, mouseup} = Dom.mouseEventNames()
+		
+		# Mouse button/tap on the tileset.
+		@$tileset.on mousedown, (event) =>
+			return unless @mode is MODE_SELECTION
+				
+			isSelecting = true
+			
+			# Recalculate the selection matrix as a 1x1 starting at the
+			# selected tile.
+			@selectionMatrix = Rectangle.compose(
+				@selectionStart = @tileAt [event.clientX, event.clientY]
+				[1, 1]
 			)
-			@tileset.tileSize()
-		)
+			
+			@updateSelectionDimensions()
+				
+			true
 		
-		scrollOffset = Vector.scale(
-			[
-				Dom.numberFromPxString $scrollEl.css 'left'
-				Dom.numberFromPxString $scrollEl.css 'top'
-			]
-			-1
-		)
+		# Allow click/tap drag to allow a matrix of tiles to be selected.
+		$(window).on mousemove, (event) =>
+			return unless isSelecting and @mode is MODE_SELECTION
 		
-		tileSelection = Vector.div(
-			Vector.add(
-				scrollOffset
-				tilePosition
-			)
-			@tileset.tileSize()
-		)
+			tileSize = @tileset.tileSize()
+			
+			# Recalculate the new selection matrix.
+			tileAt = @tileAt [event.clientX, event.clientY]
+			topLeft = Vector.min @selectionStart, tileAt
+			bottomRight = Vector.max @selectionStart, tileAt
+			@selectionMatrix = Rectangle.compose(
+				topLeft
+				Vector.add [1, 1], Vector.sub bottomRight, topLeft
+			) 
+			
+			@updateSelectionDimensions()
+			
+			true
 		
-		position: position
-		tilePosition: tilePosition
-		tileSelection: tileSelection
+		# End selection.	
+		$(window).on mouseup, (event) => isSelecting = false
+		
+	setMode: (@mode) ->
+		
+		$('.button a', @$buttons).removeClass 'active'
+		
+		switch @mode
+		
+			when MODE_MOVING
+				$('#mode-tileset-move', @$buttons).addClass 'active'
+				@$tileset.css cursor: 'move'
+				@swipey.active = true
+			
+			when MODE_SELECTION
+				$('#mode-tileset-draw', @$buttons).addClass 'active'
+				@$tileset.css cursor: 'default'
+				@swipey.active = false
+				
+		undefined
 	
-	updateTileSelection: ->
+	tileAt: (position) ->
 		
 		tileSize = @tileset.tileSize()
 		
-		position = Vector.add(
+		Vector.div(
+			Vector.add(
+				Vector.scale(
+					Dom.position @$tilesetImage
+					-1
+				)
+				Vector.mul(
+					Vector.floor Vector.div(
+						Vector.sub(
+							position
+							Dom.offset @$tileset
+						)
+						tileSize
+					)
+					tileSize
+				)
+			)
+			tileSize
+		)
+	
+	updateSelectionDimensions: ->
+		
+		tileSize = @tileset.tileSize()
+		
+		[left, top] = Vector.add(
 			[
 				Dom.numberFromPxString @$tilesetImage.css 'left'
 				Dom.numberFromPxString @$tilesetImage.css 'top'
 			]
 			Vector.mul(
-				Rectangle.position @tileSelectionMatrix
+				Rectangle.position @selectionMatrix
 				tileSize
 			)
 		)
-		
-		@$hoverSquare.css
-			top: position[1]
-			left: position[0]
-			width: @tileSelectionMatrix[2] * tileSize[0]
-			height: @tileSelectionMatrix[3] * tileSize[1]
+		[width, height] = Vector.mul(
+			Rectangle.size @selectionMatrix
+			tileSize
+		)
+		@$tilesetSelection.css
+			left: left
+			top: top
+			width: width
+			height: height
 			
 	setCanvasSize: (canvasSize) ->
-	
-	attachCanvas: (@$canvas) ->
-	
-		@$canvas.on
-		
-			doubletap: ->
-				
-				alert 'Double tap!'
-		
-			tripletap: ->
-				
-				alert 'Triple tap!'
 	
 	setModel: (@model) ->
 		return unless @model?
 		
 		@tileset = @model.subject.tileset()
 		
+		currentRoom = @model.currentRoom()
 		tileSize = @tileset.tileSize()
 		
-		@$hoverSquare.css
-			width: tileSize[0]
-			height: tileSize[1]
+		# Add layer selection options.
+		@$drawSelect.empty()
+		for index in [0...currentRoom.layerCount()]
+			@$drawSelect.append $('<option>').html "#{index}&nbsp;"
 		
-		@model.tilesetOffset ?= [0, 0]
+		# Reset the tileset selection.
+		@updateSelectionDimensions()
 		
-		bg = "url(\"#{@tileset.image().src}\")"
-		
+		# Reset the tileset image.
 		@$tilesetImage.css
 			width: @tileset.image().width()
 			height: @tileset.image().height()
-			'background-image': bg
+			'background-image': "url(\"#{@tileset.image().src}\")"
 		
+		# Resize the area to be swiped upon.
 		@swipey.setMinMax(
 			[0, 0]
 			Vector.sub(
-				Vector.div @tileset.image().size(), tileSize
-				Vector.div(
+				@tileset.tiles()
+				Vector.floor Vector.div(
 					[256, 256]
 					tileSize
 				)

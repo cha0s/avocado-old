@@ -13,6 +13,25 @@ module.exports = Backbone.View.extend
 	
 	initialize: ->
 		
+		
+		$template = $ """
+			
+			<ul>
+				<li>
+					<p class="heading">Mode</p>
+					<ul>
+						<li class="button">
+							<a id="mode-environment-move" href="#" style="background-image: url('/app/node.js/editor/images/ui/mode-move.png');"></a>
+						</li>
+						<li class="button">
+							<a id="mode-environment-draw" href="#" style="background-image: url('/app/node.js/editor/images/ui/mode-draw.png');"></a>
+						</li>
+					</ul>
+				</li>
+			</ul>		
+						
+		"""
+		
 		mode = 0
 	
 		@changeSubject null
@@ -22,21 +41,7 @@ module.exports = Backbone.View.extend
 			1000
 		)
 		
-		@$buttons = $('#persea > .buttons').html """
-		<ul>
-			<li>
-				<p class="heading">Mode</p>
-				<ul>
-					<li class="button">
-						<a id="mode-environment-move" href="#" style="background-image: url('/app/node.js/editor/images/ui/mode-move.png');"></a>
-					</li>
-					<li class="button">
-						<a id="mode-environment-draw" href="#" style="background-image: url('/app/node.js/editor/images/ui/mode-draw.png');"></a>
-					</li>
-				</ul>
-			</li>
-		</ul>		
-		"""
+		@$buttons = $('#persea > .buttons').html $template
 		
 		$('#mode-environment-move', @$buttons).addClass 'active'
 		
@@ -120,16 +125,13 @@ module.exports = Backbone.View.extend
 				tileSize
 			)
 			
-			bgImage = $('.tileset .image').css 'background-image'
-			
-			matrix = @editor.tileSelectionMatrix
+			matrix = @editor.selectionMatrix
 			mOffset = Vector.mul tileSize, Rectangle.position matrix
 			@$overlay.css
 				top: tilePosition[1]
 				left: tilePosition[0]
 				width: matrix[2] * tileSize[0]
 				height: matrix[3] * tileSize[1]
-				'background-image': bgImage
 				'background-position': "-#{mOffset[0]}px -#{mOffset[1]}px"
 			
 			undefined
@@ -187,7 +189,7 @@ module.exports = Backbone.View.extend
 			@$tiles
 		)
 		
-		matrix = @editor.tileSelectionMatrix
+		matrix = @editor.selectionMatrix
 		tile = Rectangle.position matrix
 		for y in [0...matrix[3]]
 			for x in [0...matrix[2]]
@@ -403,6 +405,9 @@ module.exports = Backbone.View.extend
 		@model = model
 		@environment = model.subject
 		@tileset = @environment.tileset()
+		
+		@$overlay.css
+			'background-image': "url(\"#{@tileset.image().src}\")"
 		
 		@resizeCanvas()
 		

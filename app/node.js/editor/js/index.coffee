@@ -19,7 +19,8 @@ Logger.registerStrategy (message, type) ->
 require 'core/proxySpiis'
 
 socket = io.connect(
-	'http://192.168.1.2:13338'
+	'http://localhost:13338'
+#	'http://192.168.1.2:13338'
 #	'http://editor.avocado.cha0sb0x.ath.cx'
 )
 

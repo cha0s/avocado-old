@@ -6,10 +6,6 @@ Vector = require 'core/Extension/Vector'
 controller = Ember.Controller.extend
 	
 	navBarContent: [
-		noLink: true
-		id: 'environment-landscape-mode'
-		text: 'Mode'
-	,
 		mode: 'move'
 		i: 'icon-move'
 		title: 'Move: Click and drag or swipe to move the tileset.'
@@ -53,7 +49,7 @@ controller = Ember.Controller.extend
 	
 	layersLabel: 'Layer'
 	layersContent: [0, 1, 2, 3, 4]
-	layersSelection: 0
+	currentLayerIndex: 0
 	
 	solo: false
 	
@@ -294,7 +290,7 @@ view = Ember.View.extend
 			
 			@set 'controller.swipey', swipey
 			
-			@set 'controller.navBarSelection', @get('controller.navBarContent')[1]
+			@set 'controller.navBarSelection', @get('controller.navBarContent')[0]
 			
 		) jQuery
 		
@@ -331,7 +327,7 @@ view = Ember.View.extend
 <div class="layers">
 	{{view Bootstrap.Forms.Select
 		contentBinding="layersContent"
-		selectionBinding="layersSelection"
+		selectionBinding="currentLayerIndex"
 		labelBinding="layersLabel"
 	}}
 </div>

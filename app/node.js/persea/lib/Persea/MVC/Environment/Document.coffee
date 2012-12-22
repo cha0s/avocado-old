@@ -2,7 +2,11 @@ Image = require('Graphics').Image
 NavBar = require 'Persea/Bootstrap/NavBar'
 Rectangle = require 'core/Extension/Rectangle'
 Swipey = require 'Swipey'
+UndoCommand = require 'Persea/Undo/Command'
+UndoStack = require 'Persea/Undo/Stack'
 Vector = require 'core/Extension/Vector'
+
+window.undoStack = new UndoStack
 
 LayersView = Ember.CollectionView.extend
 	
@@ -102,10 +106,6 @@ LayersView = Ember.CollectionView.extend
 Controller = exports.Controller = Ember.Controller.extend
 	
 	navBarContent: [
-		noLink: true
-		id: 'environment-document-mode'
-		text: 'Mode'
-	,
 		mode: 'move'
 		i: 'icon-move'
 		title: 'Move: Click and drag or swipe to move the environment.'
@@ -113,6 +113,19 @@ Controller = exports.Controller = Ember.Controller.extend
 		mode: 'edit'
 		i: 'icon-pencil'
 		title: 'Edit: Click/tap and drag to draw upon the environment.'
+	,
+		noLink: true
+		text: '|'
+	,
+		id: 'document-undo'
+		noSelect: true
+		i: 'icon-backward'
+		title: 'Undo the last action.'
+	,
+		id: 'document-redo'
+		noSelect: true
+		i: 'icon-forward'
+		title: 'Redo the last undone action.'
 	]
 	navBarSelection: null
 	navBarView: NavBar.View
@@ -270,8 +283,7 @@ exports.View = Ember.View.extend
 		return unless (environmentObject = @get 'controller.environment.object')?
 		
 		matrix = @get 'controller.landscapeController.tilesetSelectionMatrix'
-		mode = @get 'controller.navBarSelection.mode'
-		selectedLayer = @get 'controller.landscapeController.layersSelection'
+		currentLayerIndex = @get 'controller.landscapeController.currentLayerIndex'
 		tileset = environmentObject.tileset()
 		tileSize = tileset.tileSize()
 		
@@ -279,7 +291,7 @@ exports.View = Ember.View.extend
 		top = tileSize[1] * -matrix[1]
 		width = tileSize[0] * matrix[2]
 		height = tileSize[1] * matrix[3]
-		zIndex = selectedLayer * 10 + 1
+		zIndex = currentLayerIndex * 10 + 1
 		
 		"
 background-position: #{left}px #{top}px; 
@@ -289,51 +301,38 @@ z-index: #{zIndex}
 "
 
 	).property(
-		'controller.navBarSelection'
 		'controller.landscapeController.tilesetSelectionMatrix'
 		'controller.environment.object'
-		'controller.landscapeController.layersSelection'
+		'controller.landscapeController.currentLayerIndex'
 	)
 	
 	soloChanged: (->
 		
 		layersContent = @get 'controller.layersContent'
 		solo = @get 'controller.landscapeController.solo'
-		selectedLayer = @get 'controller.landscapeController.layersSelection'
+		currentLayerIndex = @get 'controller.landscapeController.currentLayerIndex'
 		
 		$layers = @$().find '.layers'
 		
 		if solo
 			
 			$layers.find('.layer').hide()	
-			$layers.find('.layer').eq(selectedLayer).show()	
+			$layers.find('.layer').eq(currentLayerIndex).show()	
 			
 		else
 			
 			$layers.find('.layer').show()
 		
-	).observes 'controller.landscapeController.solo', 'controller.layersContent', 'controller.landscapeController.layersSelection'
+	).observes 'controller.landscapeController.solo', 'controller.layersContent', 'controller.landscapeController.currentLayerIndex'
 	
-	paintTiles: (position) ->
-	
-		return unless (environmentObject = @get 'controller.environment.object')?
-		return unless (roomObject = @get 'controller.currentRoom.object')?
-		return unless (swipey = @get 'controller.swipey')?
+	positionTranslatedToTile: (position) ->
+		
+		return [0, 0] unless (environmentObject = @get 'controller.environment.object')?
 		
 		$environmentDocument = $('#environment-document')
-		layersSelection = @get 'controller.landscapeController.layersSelection'
-		matrix = @get 'controller.landscapeController.tilesetSelectionMatrix'
 		tileset = environmentObject.tileset()
-		tileSize = tileset.tileSize()
-		
-		index = matrix[1] * tileset.tiles()[0] + matrix[0]
-		layer = roomObject.layer layersSelection
-		
-		layerImage = new Image()
-		
-		layerImage.Canvas = $('.layers canvas', $environmentDocument).eq(layersSelection)[0]
-		
-		offset = $environmentDocument.offset()			
+		offset = $environmentDocument.offset()
+					
 		position = Vector.sub(
 			Vector.add(
 				position
@@ -344,45 +343,180 @@ z-index: #{zIndex}
 		
 		position = Vector.floor Vector.div position, tileset.tileSize()
 		
+	positionTranslatedToLayer: (position) ->
+		
+		return [0, 0] unless (swipey = @get 'controller.swipey')?
+		
+		position = @positionTranslatedToTile position
+		
 		position = Vector.add position, swipey.offset()
 		
-		layerImage.drawFilledBox Rectangle.compose(
-			Vector.mul tileSize, position
-			Vector.mul tileSize, Rectangle.size matrix
-		), 0, 0, 0, 0
+	positionTranslatedToOverlay: (position) ->
+		
+		return [0, 0] unless (environmentObject = @get 'controller.environment.object')?
+		
+		tileset = environmentObject.tileset()
+		
+		position = @positionTranslatedToTile position
+		
+		position = Vector.mul position, tileset.tileSize()
+		
+	tileMatrixFromSelectionMatrix: (selectionMatrix) ->
+		
+		return [[0]] unless (environmentObject = @get 'controller.environment.object')?
+		
+		selectionMatrix = @get 'controller.landscapeController.tilesetSelectionMatrix'
+		tileset = environmentObject.tileset()
+		
+		index = selectionMatrix[1] * tileset.tiles()[0] + selectionMatrix[0]
 		
 		tileMatrix = []
-		for y in [0...matrix[3]]
+		for y in [0...selectionMatrix[3]]
 			
 			row = []
 			tileMatrix.push row
 			
-			for x in [0...matrix[2]]
+			for x in [0...selectionMatrix[2]]
 				
 				tileIndex = index + y * tileset.tiles()[0] + x
 				
+				row.push tileIndex
+				
+		tileMatrix
+	
+	paintTiles: (position, matrix, layerIndex) ->
+		
+		return unless (environmentObject = @get 'controller.environment.object')?
+		return unless (roomObject = @get 'controller.currentRoom.object')?
+		return unless (swipey = @get 'controller.swipey')?
+		
+		$environmentDocument = $('#environment-document')
+		tileset = environmentObject.tileset()
+		tileSize = tileset.tileSize()
+		
+		layer = roomObject.layer layerIndex
+		
+		layerImage = new Image()
+		layerImage.Canvas = $('.layers canvas', $environmentDocument).eq(layerIndex)[0]
+		
+		layerImage.drawFilledBox Rectangle.compose(
+			Vector.mul tileSize, position
+			Vector.mul tileSize, [matrix[0].length, matrix.length]
+		), 0, 0, 0, 0
+		
+		for row, y in matrix
+			
+			for index, x in row
+		
 				tileset.render(
 					Vector.add(
 						Vector.mul position, tileSize
 						Vector.mul [x, y], tileSize
 					)
 					layerImage
-					tileIndex
+					index
 				) if index
 				
-				row.push tileIndex
+		layer.setTileMatrix matrix, position
+		
+	registerPaintCommand: (position) ->
+		
+		return unless (roomObject = @get 'controller.currentRoom.object')?
+		
+		currentLayerIndex = @get 'controller.landscapeController.currentLayerIndex'
+		layer = roomObject.layer currentLayerIndex
+		position = @positionTranslatedToLayer position
+		selectionMatrix = @tileMatrixFromSelectionMatrix()
+		self = this
+		tileMatrix = layer.tileMatrix(
+			[selectionMatrix[0].length, selectionMatrix.length]
+			position
+		)
+		
+		hasDraw = _.find @draws, (draw) ->
+			
+			Vector.equals draw.position, position
+		
+		unless hasDraw?
+		
+			@draws.push position: position, tileMatrix: tileMatrix
+		
+		@paintTiles(
+			position
+			selectionMatrix
+			currentLayerIndex
+		)
+		
+	commitPaintCommands: ->
+		
+		return unless (roomObject = @get 'controller.currentRoom.object')?
+		
+		currentLayerIndex = @get 'controller.landscapeController.currentLayerIndex'
+		layer = roomObject.layer currentLayerIndex
+		selectionMatrix = @tileMatrixFromSelectionMatrix()
+		self = this
+		
+		draws = _.map @draws, _.identity
+		
+		ranFirstRedo = false
+		
+		undoStack.push new class extends UndoCommand
+			
+			undo: ->
 				
-		layer.setTileMatrix tileMatrix, position
+				for i in [draws.length - 1..0]
+					draw = draws[i]
+					
+					self.paintTiles(
+						draw.position
+						draw.tileMatrix
+						currentLayerIndex
+					)
+			
+			redo: ->
+				
+				if ranFirstRedo
+
+					for draw in draws
+	
+						self.paintTiles(
+							draw.position
+							selectionMatrix
+							currentLayerIndex
+						)
+						
+				ranFirstRedo = true
+		
+		@draws = []
 		
 	didInsertElement: ->
 		
+		@draws = []
+		
 		(($) =>
+			
+			$('#document-undo').click ->
+				undoStack.undo()
+				false
+			undoStack.on 'canUndoChanged', (canUndo) ->
+				if canUndo
+					$('#document-undo').closest('li').removeClass 'disabled'
+				else
+					$('#document-undo').closest('li').addClass 'disabled'
+			$('#document-redo').click ->
+				undoStack.redo()
+				false
+			undoStack.on 'canRedoChanged', (canRedo) ->
+				if canRedo
+					$('#document-redo').closest('li').removeClass 'disabled'
+				else
+					$('#document-redo').closest('li').addClass 'disabled'
+			$('#document-redo, #document-undo').closest('li').addClass 'disabled'
 			
 			$environmentDocument = $('#environment-document')
 			
 			$('.draw-overlay', $environmentDocument).css opacity: .85, width: 16, height: 16
-				
-			(pulseSelection = ->
+			(pulseOverlay = ->
 				$('.draw-overlay', $environmentDocument).animate
 					opacity: .45
 				,
@@ -392,7 +526,7 @@ z-index: #{zIndex}
 							opacity: .85
 						,
 							500
-							pulseSelection
+							pulseOverlay
 			)()
 			
 			if Modernizr.touch
@@ -416,6 +550,7 @@ z-index: #{zIndex}
 			$el.off '.environmentDocument'
 			
 			holding = false
+#			drawPositions = []
 			
 			$environmentDocument.on(
 				"#{mousedown}.environmentDocument"
@@ -424,20 +559,19 @@ z-index: #{zIndex}
 					return if 'move' is @get 'controller.navBarSelection.mode'
 					
 					holding = true
-		
-					@paintTiles [event.clientX, event.clientY]
+					
+#					drawPositions.push [event.clientX, event.clientY]
+					
+					@registerPaintCommand [event.clientX, event.clientY]
 					
 					false
 			)
 			
-			setOverlayPosition = _.throttle(
-				(position) ->
+			setOverlayPosition = (position) ->
 				
-					$('.draw-overlay', $environmentDocument).css
-						left: position[0]
-						top: position[1]
-				50
-			)
+				$('.draw-overlay', $environmentDocument).css
+					left: position[0]
+					top: position[1]
 			
 			$environmentDocument.on(
 				"#{mousemove}.environmentDocument"
@@ -445,31 +579,13 @@ z-index: #{zIndex}
 					
 					return if 'move' is @get 'controller.navBarSelection.mode'
 					
-					return unless (environmentObject = @get 'controller.environment.object')?
-
-					offset = $environmentDocument.offset()			
-					position = Vector.sub(
-						Vector.add(
-							[event.clientX, event.clientY]
-							[$(window).scrollLeft(), $(window).scrollTop()]
-						)
-						[offset.left, offset.top]
-					)
-					tileSize = environmentObject.tileset().tileSize()
-					
-					position = Vector.mul(
-						Vector.floor Vector.div(
-							position
-							tileSize
-						)
-						tileSize
-					)
-					
-					setOverlayPosition position
+					setOverlayPosition @positionTranslatedToOverlay [event.clientX, event.clientY]
 					
 					if holding
 						
-						@paintTiles [event.clientX, event.clientY]
+#						drawPositions.push [event.clientX, event.clientY]
+						
+						@registerPaintCommand [event.clientX, event.clientY]
 					
 					false
 			)
@@ -501,6 +617,10 @@ z-index: #{zIndex}
 				=>
 					
 					return if 'move' is @get 'controller.navBarSelection.mode'
+					
+					return if holding is false
+					
+					@commitPaintCommands()
 					
 					holding = false
 					
@@ -561,7 +681,7 @@ z-index: #{zIndex}
 			$(window).resize =>
 				@handleResize()
 				
-			@set 'controller.navBarSelection', @get('controller.navBarContent')[1]
+			@set 'controller.navBarSelection', @get('controller.navBarContent')[0]
 			
 		) jQuery
 		

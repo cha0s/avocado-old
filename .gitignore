@@ -2,3 +2,5 @@ avocado
 deploy
 node_modules
 npm-debug.log
+.project
+.settings

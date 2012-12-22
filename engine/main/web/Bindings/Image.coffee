@@ -162,11 +162,20 @@ module.exports = AvoImage = class
 		position[0] = 0 if position[0] < 0
 		position[1] = 0 if position[1] < 0
 		
-		context.drawImage(
-			@Canvas
-			sourceRect[0], sourceRect[1], sourceRect[2], sourceRect[3]
-			position[0], position[1], sourceRect[2], sourceRect[3]
-		)
+		if sourceRect[0] is 0 and sourceRect[1] is 0 and sourceRect[2] is @width() and sourceRect[3] is @height()
+		
+			context.drawImage(
+				@Canvas
+				position[0], position[1]
+			)
+			
+		else
+		
+			context.drawImage(
+				@Canvas
+				sourceRect[0], sourceRect[1], sourceRect[2], sourceRect[3]
+				position[0], position[1], sourceRect[2], sourceRect[3]
+			)
 		
 		context.globalAlpha = 1.0
 	

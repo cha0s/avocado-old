@@ -65,11 +65,13 @@ module.exports = TileLayer = class
 	
 	size: -> @size_
 	
+	height: -> @size_[1]
+	width: -> @size_[0]
+	
 	# Calculate a tile index. You can call this function in 3 ways:
 	# 
 	# * With a vector:
-	#     vector = [10, 10]
-	#     calcTileIndex vector
+	#     calcTileIndex [10, 10]
 	# * With width, height:
 	#     calcTileIndex 10, 10
 	# * With a tile index:
@@ -85,8 +87,7 @@ module.exports = TileLayer = class
 	# Retrieve a tile index. You can call this function in 3 ways:
 	# 
 	# * With a vector:
-	#     vector = [10, 10]
-	#     tileIndex vector
+	#     tileIndex [10, 10]
 	# * With width, height:
 	#     tileIndex 10, 10
 	# * With a tile index:
@@ -100,8 +101,7 @@ module.exports = TileLayer = class
 	# Set a tile index. You can call this function in 3 ways:
 	# 
 	# * With a vector:
-	#     vector = [10, 10]
-	#     setTileIndex index, vector
+	#     setTileIndex index, [10, 10]
 	# * With width, height:
 	#     setTileIndex index, 10, 10
 	# * With a tile index:
@@ -117,8 +117,7 @@ module.exports = TileLayer = class
 	# Check whether a tile is valid. You can call this function in 3 ways:
 	# 
 	# * With a vector:
-	#     vector = [10, 10]
-	#     tileIsValid vector
+	#     tileIsValid [10, 10]
 	# * With width, height:
 	#     tileIsValid 10, 10
 	# * With a tile index:
@@ -140,6 +139,128 @@ module.exports = TileLayer = class
 	# Calculate the area of the tile layer.
 	area: -> @size_[0] * @size_[1]
 	
+	setTileMatrix: (matrix, position) ->
+	
+		for row, y in matrix
+			for index, x in row
+				@setTileIndex index, position[0] + x, position[1] + y
+	
+	tileMatrix: (size, position) ->
+		
+		matrix = []
+		
+		for y in [0...size[1]]
+			
+			row = []
+			matrix.push row
+			
+			for x in [0...size[0]]
+				
+				row.push @tileIndex position[0] + x, position[1] + y
+				
+		matrix
+	
+	fastRender: (
+		tileset
+		destination
+	) ->
+	
+		tiles = tileset.tiles()
+		image = tileset.image()
+		
+		imageWidth = image.width() * 4
+		destinationWidth = destination.width() * 4
+		tileSize = tileset.tileSize()
+		tileSize4 = Vector.scale tileset.tileSize(), 4
+		dh = destinationWidth * tileSize[1]
+		
+		position = [0, 0]
+		
+		i = 0
+		
+		y = 0
+		while y++ < @size_[1]
+			
+			x = 0
+			while x++ < @size_[0]
+				
+				index = @tileIndices_[i++]
+				
+				tileset.render(
+					position
+					destination
+					index
+				) if index
+				
+				position[0] += tileSize[0]
+				
+			position[0] -= tileSize[0] * @size_[0]
+			position[1] += tileSize[1]
+				
+	pxRender: (
+		tileset
+		destination
+	) ->
+		
+		tiles = tileset.tiles()
+		image = tileset.image()
+		
+		imageWidth = image.width() * 4
+		destinationWidth = destination.width() * 4
+		tileSize = tileset.tileSize()
+		tileSize4 = Vector.scale tileset.tileSize(), 4
+		dh = destinationWidth * tileSize[1]
+		
+		indexMap = []
+		
+		for y in [0...tiles[1]]
+			for x in [0...tiles[0]]
+				indexMap.push y * tileSize[1] * imageWidth + x * tileSize[0] * 4
+		
+		destination.lockPixels()
+		image.lockPixels()
+		
+		i = 0
+		gt = 0
+		
+		y = 0
+		while y++ < @size_[1]
+			
+			x = 0
+			while x++ < @size_[0]
+				
+				t = indexMap[@tileIndices_[i]]
+				
+				ty = 0
+				while ty++ < tileSize[1]
+					
+					tx = 0
+					while tx++ < tileSize[0]
+						
+						for p in [0...4]
+							
+							destination.Pixels.data[gt + p] = image.Pixels.data[t + p]
+						
+						gt += 4
+						t += 4
+						
+					gt -= tileSize4[0]
+					t -= tileSize4[0]
+					
+					gt += destinationWidth
+					t += imageWidth
+					
+				gt -= dh
+				gt += tileSize4[0]
+				
+				i += 1
+				
+			gt -= destinationWidth
+			gt += dh
+		
+		image.unlockPixels()
+		destination.unlockPixels()
+			
 	render: (
 		position
 		tileset

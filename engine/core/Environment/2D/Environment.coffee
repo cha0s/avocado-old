@@ -50,10 +50,11 @@ module.exports = Environment = class
 		defer.promise
 	
 	room: (index) -> @rooms_[index]
+	roomCount: -> @rooms_.length
 	
 	tileset: -> @tileset_
 	
-	name: -> @name_
+	name: -> if @name_ is '' then @uri_ else @name_
 	setName: (@name_) ->
 	
 	uri: -> @uri_

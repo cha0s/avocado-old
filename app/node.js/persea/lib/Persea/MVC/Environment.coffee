@@ -98,7 +98,7 @@ exports.View = Ember.View.extend
 		
 		<div class="span4">
 		
-			<h1>{{environment.name}} <small>({{currentProject.name}})</small></h1>
+			<h1>{{environment.name}}</h1>
 	
 			<h2>Rooms</h2>
 			<div class="rooms">

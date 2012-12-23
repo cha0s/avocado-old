@@ -45,7 +45,7 @@ controller = Ember.Controller.extend
 		'Floodfill'
 		'Random flood'
 	]
-	drawSelection: 'Paintbrush'
+	currentDrawMode: 'Paintbrush'
 	
 	layersLabel: 'Layer'
 	layersContent: [0, 1, 2, 3, 4]
@@ -317,7 +317,7 @@ view = Ember.View.extend
 <div class="draw">
 	{{view Bootstrap.Forms.Select
 		contentBinding="drawContent"
-		selectionBinding="drawSelection"
+		selectionBinding="currentDrawMode"
 		labelBinding="drawLabel"
 	}}
 </div>

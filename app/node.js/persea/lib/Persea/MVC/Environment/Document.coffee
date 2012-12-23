@@ -1,3 +1,4 @@
+Floodfill = require 'core/Utility/Floodfill'
 Image = require('Graphics').Image
 NavBar = require 'Persea/Bootstrap/NavBar'
 Rectangle = require 'core/Extension/Rectangle'
@@ -280,9 +281,9 @@ exports.View = Ember.View.extend
 		
 	drawOverlayStyle: (->
 		
-		return unless (environmentObject = @get 'controller.environment.object')?
+		return '' unless (environmentObject = @get 'controller.environment.object')?
+		return '' unless (matrix = @get 'controller.landscapeController.tilesetSelectionMatrix')?
 		
-		matrix = @get 'controller.landscapeController.tilesetSelectionMatrix'
 		currentLayerIndex = @get 'controller.landscapeController.currentLayerIndex'
 		tileset = environmentObject.tileset()
 		tileSize = tileset.tileSize()
@@ -364,8 +365,8 @@ z-index: #{zIndex}
 	tileMatrixFromSelectionMatrix: (selectionMatrix) ->
 		
 		return [[0]] unless (environmentObject = @get 'controller.environment.object')?
+		return [[0]] unless (selectionMatrix = @get 'controller.landscapeController.tilesetSelectionMatrix')?
 		
-		selectionMatrix = @get 'controller.landscapeController.tilesetSelectionMatrix'
 		tileset = environmentObject.tileset()
 		
 		index = selectionMatrix[1] * tileset.tiles()[0] + selectionMatrix[0]
@@ -419,42 +420,148 @@ z-index: #{zIndex}
 				
 		layer.setTileMatrix matrix, position
 		
-	registerPaintCommand: (position) ->
+	floodfillTiles: (position, matrix, layerIndex) ->
 		
+		return unless (environmentObject = @get 'controller.environment.object')?
 		return unless (roomObject = @get 'controller.currentRoom.object')?
+		return unless (swipey = @get 'controller.swipey')?
 		
-		currentLayerIndex = @get 'controller.landscapeController.currentLayerIndex'
-		layer = roomObject.layer currentLayerIndex
-		position = @positionTranslatedToLayer position
-		selectionMatrix = @tileMatrixFromSelectionMatrix()
-		self = this
-		tileMatrix = layer.tileMatrix(
-			[selectionMatrix[0].length, selectionMatrix.length]
-			position
-		)
+		$environmentDocument = $('#environment-document')
+		tileset = environmentObject.tileset()
+		tileSize = tileset.tileSize()
 		
-		hasDraw = _.find @draws, (draw) ->
+		layer = roomObject.layer layerIndex
+		
+		layerImage = new Image()
+		layerImage.Canvas = $('.layers canvas', $environmentDocument).eq(layerIndex)[0]
+		
+		LayerFloodfill = class extends Floodfill
 			
-			Vector.equals draw.position, position
+			valueEquals: (l, r) ->
+				
+				return false unless l.length is r.length
+				return false unless l[0].length is r[0].length
+			
+				for lrow, y in l
+					rrow = r[y]
+					for lindex, x in lrow
+						return false unless lindex is rrow[x]
+						
+				true
+				
+			value: (x, y) ->
+				
+				layer.tileMatrix [matrix[0].length, matrix.length], [x, y]
+			
+			setValue: (x, y, matrix) ->
+				
+				layerImage.drawFilledBox Rectangle.compose(
+					Vector.mul [x, y], tileSize
+					Vector.mul tileSize, [matrix[0].length, matrix.length]
+				), 0, 0, 0, 0
+				
+				layer.setTileMatrix matrix, [x, y]
+				
+				for row, my in matrix
+					
+					for index, mx in row
+				
+						tileset.render(
+							Vector.add(
+								Vector.mul [x, y], tileSize
+								Vector.mul [mx, my], tileSize
+							)
+							layerImage
+							index
+						) if index
+				
+		floodfill = new LayerFloodfill roomObject.size(), [matrix[0].length, matrix.length]
 		
-		unless hasDraw?
+		floodfill.fillAt position[0], position[1], matrix
 		
-			@draws.push position: position, tileMatrix: tileMatrix
+	pushDrawCommand:
 		
-		@paintTiles(
-			position
-			selectionMatrix
-			currentLayerIndex
-		)
+		Paintbrush: (position) ->
 		
-	commitPaintCommands: ->
+			return unless (roomObject = @get 'controller.currentRoom.object')?
+			
+			currentLayerIndex = @get 'controller.landscapeController.currentLayerIndex'
+			layer = roomObject.layer currentLayerIndex
+			position = @positionTranslatedToLayer position
+			selectionMatrix = @tileMatrixFromSelectionMatrix()
+			self = this
+			tileMatrix = layer.tileMatrix(
+				[selectionMatrix[0].length, selectionMatrix.length]
+				position
+			)
+			
+			hasDraw = _.find @draws, (draw) ->
+				
+				Vector.equals draw.position, position
+			
+			unless hasDraw?
+			
+				@draws.push
+					position: position
+					
+					undo: _.bind(
+						@paintTiles, this
+						position, tileMatrix, currentLayerIndex
+					)
+					redo: _.bind(
+						@paintTiles, this
+						position, selectionMatrix, currentLayerIndex
+					)
+			
+			@paintTiles(
+				position
+				selectionMatrix
+				currentLayerIndex
+			)
 		
-		return unless (roomObject = @get 'controller.currentRoom.object')?
+		Floodfill: (position) ->
 		
-		currentLayerIndex = @get 'controller.landscapeController.currentLayerIndex'
-		layer = roomObject.layer currentLayerIndex
-		selectionMatrix = @tileMatrixFromSelectionMatrix()
-		self = this
+			return unless (roomObject = @get 'controller.currentRoom.object')?
+			
+			currentLayerIndex = @get 'controller.landscapeController.currentLayerIndex'
+			layer = roomObject.layer currentLayerIndex
+			position = @positionTranslatedToLayer position
+			selectionMatrix = @tileMatrixFromSelectionMatrix()
+			self = this
+			tileMatrix = layer.tileMatrix(
+				[selectionMatrix[0].length, selectionMatrix.length]
+				position
+			)
+			
+			hasDraw = _.find @draws, (draw) ->
+				
+				Vector.equals draw.position, position
+			
+			unless hasDraw?
+			
+				@draws.push
+					position: position
+					
+					undo: _.bind(
+						@floodfillTiles, this
+						position, tileMatrix, currentLayerIndex
+					)
+					redo: _.bind(
+						@floodfillTiles, this
+						position, selectionMatrix, currentLayerIndex
+					)
+			
+			@floodfillTiles(
+				position
+				selectionMatrix
+				currentLayerIndex
+			)
+		
+		'Random flood': ->
+		
+	commitDrawCommands: ->
+		
+		return if @draws.length is 0
 		
 		draws = _.map @draws, _.identity
 		
@@ -467,23 +574,15 @@ z-index: #{zIndex}
 				for i in [draws.length - 1..0]
 					draw = draws[i]
 					
-					self.paintTiles(
-						draw.position
-						draw.tileMatrix
-						currentLayerIndex
-					)
+					draw.undo()
 			
 			redo: ->
 				
 				if ranFirstRedo
 
 					for draw in draws
-	
-						self.paintTiles(
-							draw.position
-							selectionMatrix
-							currentLayerIndex
-						)
+						
+						draw.redo()
 						
 				ranFirstRedo = true
 		
@@ -550,7 +649,6 @@ z-index: #{zIndex}
 			$el.off '.environmentDocument'
 			
 			holding = false
-#			drawPositions = []
 			
 			$environmentDocument.on(
 				"#{mousedown}.environmentDocument"
@@ -558,11 +656,11 @@ z-index: #{zIndex}
 					
 					return if 'move' is @get 'controller.navBarSelection.mode'
 					
+					currentDrawMode = @get 'controller.landscapeController.currentDrawMode'
+					
 					holding = true
 					
-#					drawPositions.push [event.clientX, event.clientY]
-					
-					@registerPaintCommand [event.clientX, event.clientY]
+					@pushDrawCommand[currentDrawMode].call this, [event.clientX, event.clientY]
 					
 					false
 			)
@@ -579,13 +677,13 @@ z-index: #{zIndex}
 					
 					return if 'move' is @get 'controller.navBarSelection.mode'
 					
+					currentDrawMode = @get 'controller.landscapeController.currentDrawMode'
+					
 					setOverlayPosition @positionTranslatedToOverlay [event.clientX, event.clientY]
 					
 					if holding
 						
-#						drawPositions.push [event.clientX, event.clientY]
-						
-						@registerPaintCommand [event.clientX, event.clientY]
+						@pushDrawCommand[currentDrawMode].call this, [event.clientX, event.clientY]
 					
 					false
 			)
@@ -620,7 +718,7 @@ z-index: #{zIndex}
 					
 					return if holding is false
 					
-					@commitPaintCommands()
+					@commitDrawCommands()
 					
 					holding = false
 					

@@ -60,7 +60,7 @@ exports.Controller = Ember.Controller.extend
 			object: object.room i
 				
 		@set 'roomSelectContent', roomSelectContent
-		@set 'currentRoom', roomSelectContent[1]
+		@set 'currentRoom', roomSelectContent[0]
 		
 	).observes 'environment.object'
 	

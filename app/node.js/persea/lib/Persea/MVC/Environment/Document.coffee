@@ -1,5 +1,6 @@
 Floodfill = require 'core/Utility/Floodfill'
 Image = require('Graphics').Image
+Matrix = require 'core/Extension/Matrix'
 NavBar = require 'Persea/Bootstrap/NavBar'
 Rectangle = require 'core/Extension/Rectangle'
 Swipey = require 'Swipey'
@@ -385,24 +386,22 @@ z-index: #{zIndex}
 				
 		tileMatrix
 	
-	paintTiles: (position, matrix, layerIndex) ->
-		
+	updateCanvas: (position, matrix, layerIndex) ->
+	
 		return unless (environmentObject = @get 'controller.environment.object')?
 		return unless (roomObject = @get 'controller.currentRoom.object')?
-		return unless (swipey = @get 'controller.swipey')?
 		
 		$environmentDocument = $('#environment-document')
+		layer = roomObject.layer layerIndex
 		tileset = environmentObject.tileset()
 		tileSize = tileset.tileSize()
-		
-		layer = roomObject.layer layerIndex
 		
 		layerImage = new Image()
 		layerImage.Canvas = $('.layers canvas', $environmentDocument).eq(layerIndex)[0]
 		
 		layerImage.drawFilledBox Rectangle.compose(
 			Vector.mul tileSize, position
-			Vector.mul tileSize, [matrix[0].length, matrix.length]
+			Vector.mul tileSize, Matrix.sizeVector matrix
 		), 0, 0, 0, 0
 		
 		for row, y in matrix
@@ -418,6 +417,18 @@ z-index: #{zIndex}
 					index
 				) if index
 				
+		undefined
+
+	paintTiles: (position, matrix, layerIndex) ->
+		
+		return unless (environmentObject = @get 'controller.environment.object')?
+		return unless (roomObject = @get 'controller.currentRoom.object')?
+		return unless (swipey = @get 'controller.swipey')?
+		
+		layer = roomObject.layer layerIndex
+		
+		@updateCanvas position, matrix, layerIndex
+		
 		layer.setTileMatrix matrix, position
 		
 	floodfillTiles: (position, matrix, layerIndex) ->
@@ -435,49 +446,76 @@ z-index: #{zIndex}
 		layerImage = new Image()
 		layerImage.Canvas = $('.layers canvas', $environmentDocument).eq(layerIndex)[0]
 		
+		self = this
+		
 		LayerFloodfill = class extends Floodfill
 			
-			valueEquals: (l, r) ->
-				
-				return false unless l.length is r.length
-				return false unless l[0].length is r[0].length
-			
-				for lrow, y in l
-					rrow = r[y]
-					for lindex, x in lrow
-						return false unless lindex is rrow[x]
-						
-				true
+			valueEquals: Matrix.equals
 				
 			value: (x, y) ->
 				
-				layer.tileMatrix [matrix[0].length, matrix.length], [x, y]
+				layer.tileMatrix(
+					Matrix.sizeVector matrix
+					[x, y]
+				)
 			
 			setValue: (x, y, matrix) ->
 				
-				layerImage.drawFilledBox Rectangle.compose(
-					Vector.mul [x, y], tileSize
-					Vector.mul tileSize, [matrix[0].length, matrix.length]
-				), 0, 0, 0, 0
-				
 				layer.setTileMatrix matrix, [x, y]
 				
-				for row, my in matrix
-					
-					for index, mx in row
+				self.updateCanvas [x, y], matrix, layerIndex
 				
-						tileset.render(
-							Vector.add(
-								Vector.mul [x, y], tileSize
-								Vector.mul [mx, my], tileSize
-							)
-							layerImage
-							index
-						) if index
-				
-		floodfill = new LayerFloodfill roomObject.size(), [matrix[0].length, matrix.length]
+		floodfill = new LayerFloodfill roomObject.size(), Matrix.sizeVector matrix
 		
 		floodfill.fillAt position[0], position[1], matrix
+		
+	randomFloodfillTiles: (position, matrix, layerIndex) ->
+		
+		return unless (environmentObject = @get 'controller.environment.object')?
+		return unless (roomObject = @get 'controller.currentRoom.object')?
+		return unless (swipey = @get 'controller.swipey')?
+		
+		$environmentDocument = $('#environment-document')
+		tileset = environmentObject.tileset()
+		tileSize = tileset.tileSize()
+		
+		layer = roomObject.layer layerIndex
+		
+		layerImage = new Image()
+		layerImage.Canvas = $('.layers canvas', $environmentDocument).eq(layerIndex)[0]
+		
+		self = this
+		
+		LayerRandomFloodfill = class extends Floodfill
+			
+			valueEquals: Matrix.equals
+				
+			value: (x, y) ->
+				
+				layer.tileMatrix(
+					[1, 1]
+					[x, y]
+				)
+			
+			setValue: (x, y, unused) ->
+				
+				column = Math.floor matrix.length * Math.random()
+				row = Math.floor matrix[0].length * Math.random()
+				
+				value = [[matrix[column][row]]]
+				
+				layer.setTileMatrix value, [x, y]
+				
+				self.updateCanvas [x, y], value, layerIndex
+		
+		floodfill = new LayerRandomFloodfill roomObject.size(), [1, 1]
+		
+		index = if 1 is Matrix.size matrix then matrix[0][0] else -1
+		
+		floodfill.fillAt(
+			position[0], position[1]
+			index
+		)
 		
 	pushDrawCommand:
 		
@@ -491,7 +529,7 @@ z-index: #{zIndex}
 			selectionMatrix = @tileMatrixFromSelectionMatrix()
 			self = this
 			tileMatrix = layer.tileMatrix(
-				[selectionMatrix[0].length, selectionMatrix.length]
+				Matrix.sizeVector selectionMatrix
 				position
 			)
 			
@@ -529,7 +567,7 @@ z-index: #{zIndex}
 			selectionMatrix = @tileMatrixFromSelectionMatrix()
 			self = this
 			tileMatrix = layer.tileMatrix(
-				[selectionMatrix[0].length, selectionMatrix.length]
+				Matrix.sizeVector selectionMatrix
 				position
 			)
 			
@@ -537,19 +575,10 @@ z-index: #{zIndex}
 				
 				Vector.equals draw.position, position
 			
-			unless hasDraw?
-			
-				@draws.push
-					position: position
-					
-					undo: _.bind(
-						@floodfillTiles, this
-						position, tileMatrix, currentLayerIndex
-					)
-					redo: _.bind(
-						@floodfillTiles, this
-						position, selectionMatrix, currentLayerIndex
-					)
+			oldMatrix = layer.tileMatrix(
+				roomObject.size()
+				[0, 0]
+			)
 			
 			@floodfillTiles(
 				position
@@ -557,8 +586,69 @@ z-index: #{zIndex}
 				currentLayerIndex
 			)
 		
-		'Random flood': ->
+			newMatrix = layer.tileMatrix(
+				roomObject.size()
+				[0, 0]
+			)
+			
+			unless hasDraw?
+			
+				@draws.push
+					position: position
+					
+					undo: ->
+						layer.setTileMatrix oldMatrix, [0, 0]
+						self.updateCanvas [0, 0], oldMatrix, currentLayerIndex
+					redo: ->
+						layer.setTileMatrix newMatrix, [0, 0]
+						self.updateCanvas [0, 0], newMatrix, currentLayerIndex
+			
+		'Random flood': (position) ->
 		
+			return unless (roomObject = @get 'controller.currentRoom.object')?
+			
+			currentLayerIndex = @get 'controller.landscapeController.currentLayerIndex'
+			layer = roomObject.layer currentLayerIndex
+			position = @positionTranslatedToLayer position
+			selectionMatrix = @tileMatrixFromSelectionMatrix()
+			self = this
+			tileMatrix = layer.tileMatrix(
+				Matrix.sizeVector selectionMatrix
+				position
+			)
+			
+			hasDraw = _.find @draws, (draw) ->
+				
+				Vector.equals draw.position, position
+			
+			oldMatrix = layer.tileMatrix(
+				roomObject.size()
+				[0, 0]
+			)
+			
+			@randomFloodfillTiles(
+				position
+				selectionMatrix
+				currentLayerIndex
+			)
+		
+			newMatrix = layer.tileMatrix(
+				roomObject.size()
+				[0, 0]
+			)
+			
+			unless hasDraw?
+			
+				@draws.push
+					position: position
+					
+					undo: ->
+						layer.setTileMatrix oldMatrix, [0, 0]
+						self.updateCanvas [0, 0], oldMatrix, currentLayerIndex
+					redo: ->
+						layer.setTileMatrix newMatrix, [0, 0]
+						self.updateCanvas [0, 0], newMatrix, currentLayerIndex
+			
 	commitDrawCommands: ->
 		
 		return if @draws.length is 0

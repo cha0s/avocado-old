@@ -8,8 +8,6 @@ UndoCommand = require 'Persea/Undo/Command'
 UndoStack = require 'Persea/Undo/Stack'
 Vector = require 'core/Extension/Vector'
 
-window.undoStack = new UndoStack
-
 LayersView = Ember.CollectionView.extend
 	
 	attributeBindings: ['unselectable']
@@ -107,6 +105,9 @@ LayersView = Ember.CollectionView.extend
 
 Controller = exports.Controller = Ember.Controller.extend
 	
+	environmentBinding: 'environmentController.environment'
+	currentRoomBinding: 'environmentController.currentRoom'
+	
 	navBarContent: [
 		mode: 'move'
 		i: 'icon-move'
@@ -152,7 +153,53 @@ Controller = exports.Controller = Ember.Controller.extend
 		
 	).observes 'navBarSelection'
 	
-	environment: null
+	undoStacks: []
+	currentUndoStack: null
+	
+	environmentObjectChanged: (->
+		
+		return unless (object = @get 'environment.object')?
+		
+		undoStacks = for i in [0...object.roomCount()]
+		
+			undoStack = new UndoStack
+			
+			undoStack.on 'canUndoChanged', (canUndo) ->
+				if canUndo
+					$('#document-undo').closest('li').removeClass 'disabled'
+				else
+					$('#document-undo').closest('li').addClass 'disabled'
+			undoStack.on 'canRedoChanged', (canRedo) ->
+				if canRedo
+					$('#document-redo').closest('li').removeClass 'disabled'
+				else
+					$('#document-redo').closest('li').addClass 'disabled'
+				
+			undoStack
+			
+		@set 'undoStacks', undoStacks
+		
+	).observes 'environment.object'
+	
+	roomChanged: (->
+		
+		return unless (currentRoom = @get 'currentRoom')?
+		return if (undoStacks = @get 'undoStacks').length is 0
+		
+		undoStack = undoStacks[currentRoom.index]
+		
+		@set 'currentUndoStack', undoStack
+		
+		if undoStack.canUndo()
+			$('#document-undo').closest('li').removeClass 'disabled'
+		else
+			$('#document-undo').closest('li').addClass 'disabled'
+		if undoStack.canRedo()
+			$('#document-redo').closest('li').removeClass 'disabled'
+		else
+			$('#document-redo').closest('li').addClass 'disabled'
+		
+	).observes 'currentRoom', 'undoStacks'
 	
 	layersContent: []
 	layersView: LayersView
@@ -216,14 +263,23 @@ Controller = exports.Controller = Ember.Controller.extend
 
 exports.View = Ember.View.extend
 	
+	currentRoomBinding: 'controller.currentRoom'
+	currentUndoStackBinding: 'controller.currentUndoStack'
+	environmentBinding: 'controller.environment'
+	landscapeControllerBinding: 'controller.landscapeController'
+	layersContentBinding: 'controller.layersContent'
+	navBarContentBinding: 'controller.navBarContent'
+	navBarSelectionBinding: 'controller.navBarSelection'
+	swipeyBinding: 'controller.swipey'
+	
 	attributeBindings: ['unselectable']
 	unselectable: 'on'
 	
 	handleResize: _.throttle(
 		->
 			
-			return unless (environmentObject = @get 'controller.environment.object')?
-			return unless (roomObject = @get 'controller.currentRoom.object')?
+			return unless (environmentObject = @get 'environment.object')?
+			return unless (roomObject = @get 'currentRoom.object')?
 			
 			$el = $('#environment-document')
 			
@@ -278,14 +334,14 @@ exports.View = Ember.View.extend
 			@get('controller').swipeyReset()
 			
 		75
-	).observes 'controller.currentRoom.object', 'controller.environment.object'
+	).observes 'currentRoom.object', 'environment.object'
 		
 	drawOverlayStyle: (->
 		
-		return '' unless (environmentObject = @get 'controller.environment.object')?
-		return '' unless (matrix = @get 'controller.landscapeController.tilesetSelectionMatrix')?
+		return '' unless (environmentObject = @get 'environment.object')?
+		return '' unless (matrix = @get 'landscapeController.tilesetSelectionMatrix')?
 		
-		currentLayerIndex = @get 'controller.landscapeController.currentLayerIndex'
+		currentLayerIndex = @get 'landscapeController.currentLayerIndex'
 		tileset = environmentObject.tileset()
 		tileSize = tileset.tileSize()
 		
@@ -303,16 +359,16 @@ z-index: #{zIndex}
 "
 
 	).property(
-		'controller.landscapeController.tilesetSelectionMatrix'
-		'controller.environment.object'
-		'controller.landscapeController.currentLayerIndex'
+		'landscapeController.tilesetSelectionMatrix'
+		'environment.object'
+		'landscapeController.currentLayerIndex'
 	)
 	
 	soloChanged: (->
 		
-		layersContent = @get 'controller.layersContent'
-		solo = @get 'controller.landscapeController.solo'
-		currentLayerIndex = @get 'controller.landscapeController.currentLayerIndex'
+		layersContent = @get 'layersContent'
+		solo = @get 'landscapeController.solo'
+		currentLayerIndex = @get 'landscapeController.currentLayerIndex'
 		
 		$layers = @$().find '.layers'
 		
@@ -325,11 +381,11 @@ z-index: #{zIndex}
 			
 			$layers.find('.layer').show()
 		
-	).observes 'controller.landscapeController.solo', 'controller.layersContent', 'controller.landscapeController.currentLayerIndex'
+	).observes 'landscapeController.solo', 'layersContent', 'landscapeController.currentLayerIndex'
 	
 	positionTranslatedToTile: (position) ->
 		
-		return [0, 0] unless (environmentObject = @get 'controller.environment.object')?
+		return [0, 0] unless (environmentObject = @get 'environment.object')?
 		
 		$environmentDocument = $('#environment-document')
 		tileset = environmentObject.tileset()
@@ -347,7 +403,7 @@ z-index: #{zIndex}
 		
 	positionTranslatedToLayer: (position) ->
 		
-		return [0, 0] unless (swipey = @get 'controller.swipey')?
+		return [0, 0] unless (swipey = @get 'swipey')?
 		
 		position = @positionTranslatedToTile position
 		
@@ -355,7 +411,7 @@ z-index: #{zIndex}
 		
 	positionTranslatedToOverlay: (position) ->
 		
-		return [0, 0] unless (environmentObject = @get 'controller.environment.object')?
+		return [0, 0] unless (environmentObject = @get 'environment.object')?
 		
 		tileset = environmentObject.tileset()
 		
@@ -365,8 +421,8 @@ z-index: #{zIndex}
 		
 	tileMatrixFromSelectionMatrix: (selectionMatrix) ->
 		
-		return [[0]] unless (environmentObject = @get 'controller.environment.object')?
-		return [[0]] unless (selectionMatrix = @get 'controller.landscapeController.tilesetSelectionMatrix')?
+		return [[0]] unless (environmentObject = @get 'environment.object')?
+		return [[0]] unless (selectionMatrix = @get 'landscapeController.tilesetSelectionMatrix')?
 		
 		tileset = environmentObject.tileset()
 		
@@ -388,8 +444,8 @@ z-index: #{zIndex}
 	
 	updateCanvas: (position, matrix, layerIndex) ->
 	
-		return unless (environmentObject = @get 'controller.environment.object')?
-		return unless (roomObject = @get 'controller.currentRoom.object')?
+		return unless (environmentObject = @get 'environment.object')?
+		return unless (roomObject = @get 'currentRoom.object')?
 		
 		$environmentDocument = $('#environment-document')
 		layer = roomObject.layer layerIndex
@@ -421,9 +477,9 @@ z-index: #{zIndex}
 
 	paintTiles: (position, matrix, layerIndex) ->
 		
-		return unless (environmentObject = @get 'controller.environment.object')?
-		return unless (roomObject = @get 'controller.currentRoom.object')?
-		return unless (swipey = @get 'controller.swipey')?
+		return unless (environmentObject = @get 'environment.object')?
+		return unless (roomObject = @get 'currentRoom.object')?
+		return unless (swipey = @get 'swipey')?
 		
 		layer = roomObject.layer layerIndex
 		
@@ -433,9 +489,9 @@ z-index: #{zIndex}
 		
 	floodfillTiles: (position, matrix, layerIndex) ->
 		
-		return unless (environmentObject = @get 'controller.environment.object')?
-		return unless (roomObject = @get 'controller.currentRoom.object')?
-		return unless (swipey = @get 'controller.swipey')?
+		return unless (environmentObject = @get 'environment.object')?
+		return unless (roomObject = @get 'currentRoom.object')?
+		return unless (swipey = @get 'swipey')?
 		
 		$environmentDocument = $('#environment-document')
 		tileset = environmentObject.tileset()
@@ -471,9 +527,9 @@ z-index: #{zIndex}
 		
 	randomFloodfillTiles: (position, matrix, layerIndex) ->
 		
-		return unless (environmentObject = @get 'controller.environment.object')?
-		return unless (roomObject = @get 'controller.currentRoom.object')?
-		return unless (swipey = @get 'controller.swipey')?
+		return unless (environmentObject = @get 'environment.object')?
+		return unless (roomObject = @get 'currentRoom.object')?
+		return unless (swipey = @get 'swipey')?
 		
 		$environmentDocument = $('#environment-document')
 		tileset = environmentObject.tileset()
@@ -521,9 +577,9 @@ z-index: #{zIndex}
 		
 		Paintbrush: (position) ->
 		
-			return unless (roomObject = @get 'controller.currentRoom.object')?
+			return unless (roomObject = @get 'currentRoom.object')?
 			
-			currentLayerIndex = @get 'controller.landscapeController.currentLayerIndex'
+			currentLayerIndex = @get 'landscapeController.currentLayerIndex'
 			layer = roomObject.layer currentLayerIndex
 			position = @positionTranslatedToLayer position
 			selectionMatrix = @tileMatrixFromSelectionMatrix()
@@ -559,9 +615,9 @@ z-index: #{zIndex}
 		
 		Floodfill: (position) ->
 		
-			return unless (roomObject = @get 'controller.currentRoom.object')?
+			return unless (roomObject = @get 'currentRoom.object')?
 			
-			currentLayerIndex = @get 'controller.landscapeController.currentLayerIndex'
+			currentLayerIndex = @get 'landscapeController.currentLayerIndex'
 			layer = roomObject.layer currentLayerIndex
 			position = @positionTranslatedToLayer position
 			selectionMatrix = @tileMatrixFromSelectionMatrix()
@@ -605,9 +661,9 @@ z-index: #{zIndex}
 			
 		'Random flood': (position) ->
 		
-			return unless (roomObject = @get 'controller.currentRoom.object')?
+			return unless (roomObject = @get 'currentRoom.object')?
 			
-			currentLayerIndex = @get 'controller.landscapeController.currentLayerIndex'
+			currentLayerIndex = @get 'landscapeController.currentLayerIndex'
 			layer = roomObject.layer currentLayerIndex
 			position = @positionTranslatedToLayer position
 			selectionMatrix = @tileMatrixFromSelectionMatrix()
@@ -652,6 +708,7 @@ z-index: #{zIndex}
 	commitDrawCommands: ->
 		
 		return if @draws.length is 0
+		return unless (undoStack = @get 'currentUndoStack')?
 		
 		draws = _.map @draws, _.identity
 		
@@ -684,23 +741,16 @@ z-index: #{zIndex}
 		
 		(($) =>
 			
-			$('#document-undo').click ->
+			$('#document-undo').click =>
+				return unless (undoStack = @get 'currentUndoStack')?
+				
 				undoStack.undo()
 				false
-			undoStack.on 'canUndoChanged', (canUndo) ->
-				if canUndo
-					$('#document-undo').closest('li').removeClass 'disabled'
-				else
-					$('#document-undo').closest('li').addClass 'disabled'
-			$('#document-redo').click ->
+			$('#document-redo').click =>
+				return unless (undoStack = @get 'currentUndoStack')?
+				
 				undoStack.redo()
 				false
-			undoStack.on 'canRedoChanged', (canRedo) ->
-				if canRedo
-					$('#document-redo').closest('li').removeClass 'disabled'
-				else
-					$('#document-redo').closest('li').addClass 'disabled'
-			$('#document-redo, #document-undo').closest('li').addClass 'disabled'
 			
 			$environmentDocument = $('#environment-document')
 			
@@ -744,9 +794,9 @@ z-index: #{zIndex}
 				"#{mousedown}.environmentDocument"
 				(event) =>
 					
-					return if 'move' is @get 'controller.navBarSelection.mode'
+					return if 'move' is @get 'navBarSelection.mode'
 					
-					currentDrawMode = @get 'controller.landscapeController.currentDrawMode'
+					currentDrawMode = @get 'landscapeController.currentDrawMode'
 					
 					holding = true
 					
@@ -765,9 +815,9 @@ z-index: #{zIndex}
 				"#{mousemove}.environmentDocument"
 				(event) =>
 					
-					return if 'move' is @get 'controller.navBarSelection.mode'
+					return if 'move' is @get 'navBarSelection.mode'
 					
-					currentDrawMode = @get 'controller.landscapeController.currentDrawMode'
+					currentDrawMode = @get 'landscapeController.currentDrawMode'
 					
 					setOverlayPosition @positionTranslatedToOverlay [event.clientX, event.clientY]
 					
@@ -782,7 +832,7 @@ z-index: #{zIndex}
 				"#{mouseout}.environmentDocument"
 				=>
 					
-					return if 'move' is @get 'controller.navBarSelection.mode'
+					return if 'move' is @get 'navBarSelection.mode'
 					
 					$('.draw-overlay', $environmentDocument).hide()
 					
@@ -793,7 +843,7 @@ z-index: #{zIndex}
 				"#{mouseover}.environmentDocument"
 				=>
 					
-					return if 'move' is @get 'controller.navBarSelection.mode'
+					return if 'move' is @get 'navBarSelection.mode'
 					
 					$('.draw-overlay', $environmentDocument).show()
 					
@@ -804,7 +854,7 @@ z-index: #{zIndex}
 				"#{mouseup}.environmentDocument"
 				=>
 					
-					return if 'move' is @get 'controller.navBarSelection.mode'
+					return if 'move' is @get 'navBarSelection.mode'
 					
 					return if holding is false
 					
@@ -819,7 +869,7 @@ z-index: #{zIndex}
 			swipey = new Swipey $environmentDocument, 'environmentSwipey'
 			swipey.on 'update', (offset) =>
 				
-				return unless (object = @get 'controller.environment.object')?
+				return unless (object = @get 'environment.object')?
 				
 				tileSize = object.tileset().tileSize()
 				
@@ -831,7 +881,7 @@ z-index: #{zIndex}
 				
 				$('.layers', $environmentDocument).css left: left, top: top
 				
-			@set 'controller.swipey', swipey
+			@set 'swipey', swipey
 			
 			offset = $environmentDocument.offset()
 			
@@ -869,7 +919,7 @@ z-index: #{zIndex}
 			$(window).resize =>
 				@handleResize()
 				
-			@set 'controller.navBarSelection', @get('controller.navBarContent')[0]
+			@set 'navBarSelection', @get('navBarContent')[0]
 			
 		) jQuery
 		

@@ -5,6 +5,8 @@ Vector = require 'core/Extension/Vector'
 
 controller = Ember.Controller.extend
 	
+	environmentBinding: 'environmentController.environment'
+	
 	navBarContent: [
 		mode: 'move'
 		i: 'icon-move'
@@ -95,6 +97,13 @@ view = Ember.View.extend
 	
 	controller: controller
 	
+	environmentBinding: 'controller.environment'
+	navBarContentBinding: 'controller.navBarContent'
+	navBarSelectionBinding: 'controller.navBarSelection'
+	soloBinding: 'controller.solo'
+	swipeyBinding: 'controller.swipey'
+	tilesetSelectionMatrixBinding: 'controller.tilesetSelectionMatrix'
+	
 	classNames: ['landscape']
 	
 	tileAt: (position) ->
@@ -136,7 +145,7 @@ view = Ember.View.extend
 		
 		return unless (object = @get 'environment.tileset.object')?
 		
-		tilesetSelectionMatrix = @get 'controller.tilesetSelectionMatrix'
+		tilesetSelectionMatrix = @get 'tilesetSelectionMatrix'
 		
 		tileSize = object.tileSize()
 		
@@ -165,7 +174,7 @@ view = Ember.View.extend
 			
 	didInsertElement: ->
 		
-		@set 'controller.tilesetSelectionMatrix', [0, 0, 1, 1]
+		@set 'tilesetSelectionMatrix', [0, 0, 1, 1]
 		
 		# Reset the tileset selection.
 		@updateSelectionDimensions()
@@ -211,13 +220,13 @@ view = Ember.View.extend
 				"#{mousedown}.environmentLandscapeTileset"
 				(event) =>
 					
-					return if 'move' is @get 'controller.navBarSelection.mode'
+					return if 'move' is @get 'navBarSelection.mode'
 					
 					holding = true
 					
 					# Recalculate the selection matrix as a 1x1 starting at the
 					# selected tile.
-					@set 'controller.tilesetSelectionMatrix', Rectangle.compose(
+					@set 'tilesetSelectionMatrix', Rectangle.compose(
 						@selectionStart = @tileAt [event.clientX, event.clientY]
 						[1, 1]
 					)
@@ -231,7 +240,7 @@ view = Ember.View.extend
 				"#{mouseup}.environmentLandscapeTileset"
 				(event) =>
 					
-					return if 'move' is @get 'controller.navBarSelection.mode'
+					return if 'move' is @get 'navBarSelection.mode'
 					
 					holding = false
 					
@@ -243,7 +252,7 @@ view = Ember.View.extend
 				(event) =>
 					
 					return unless holding
-					return if 'move' is @get 'controller.navBarSelection.mode'
+					return if 'move' is @get 'navBarSelection.mode'
 					return unless (object = @get 'environment.tileset.object')?
 					
 					tileSize = object.tileSize()
@@ -252,7 +261,7 @@ view = Ember.View.extend
 					tileAt = @tileAt [event.clientX, event.clientY]
 					topLeft = Vector.min @selectionStart, tileAt
 					bottomRight = Vector.max @selectionStart, tileAt
-					@set 'controller.tilesetSelectionMatrix', Rectangle.compose(
+					@set 'tilesetSelectionMatrix', Rectangle.compose(
 						topLeft
 						Vector.add [1, 1], Vector.sub bottomRight, topLeft
 					) 
@@ -284,13 +293,13 @@ view = Ember.View.extend
 			$solo = @$().find('.solo')
 			$solo.change =>
 				
-				@set 'controller.solo', $solo.find('input').attr('checked')?
+				@set 'solo', $solo.find('input').attr('checked')?
 				
 				return true
 			
-			@set 'controller.swipey', swipey
+			@set 'swipey', swipey
 			
-			@set 'controller.navBarSelection', @get('controller.navBarContent')[0]
+			@set 'navBarSelection', @get('navBarContent')[0]
 			
 		) jQuery
 		

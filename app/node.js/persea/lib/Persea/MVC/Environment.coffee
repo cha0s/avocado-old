@@ -19,34 +19,6 @@ exports.Controller = Ember.Controller.extend
 	roomSelectContent: []
 	currentRoom: null
 	
-	environmentChanged: (->
-		
-		environment = @get 'environment'
-		
-		for control in @get 'content'
-			
-			continue unless control.get('controller')?
-			
-			control.set 'controller.environment', environment
-		
-		@set 'documentController.environment', environment
-		
-	).observes 'environment'
-	
-	currentRoomChanged: (->
-		
-		currentRoom = @get 'currentRoom'
-		
-		for control in @get 'content'
-			
-			continue unless control.get('controller')?
-			
-			control.set 'controller.currentRoom', currentRoom
-			
-		@set 'documentController.currentRoom', currentRoom
-		
-	).observes 'currentRoom'
-	
 	environmentObjectChanged: (->
 		
 		environment = @get 'environment'
@@ -72,9 +44,13 @@ exports.Controller = Ember.Controller.extend
 	
 	init: ->
 		
-		@set 'selection', @get('content')[0]
+		for control in @get 'content'
+			control.set 'controller.environmentController', this
+		@set 'documentController.environmentController', this
 		
 		@set 'documentController.landscapeController', Landscape.controls.controller
+		
+		@set 'selection', @get('content')[0]
 		
 exports.View = Ember.View.extend
 	

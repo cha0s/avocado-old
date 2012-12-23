@@ -40,6 +40,13 @@ module.exports = Rectangle =
 		
 		l.concat r
 		
+	# Make a deep copy of the rectangle.
+	#
+	#     avocado> rectangle = [0, 0, 16, 16]
+	#     avocado> rectangle is Rectangle.copy rectangle
+	#     false
+	copy: (rectangle) -> [rectangle[0], rectangle[1], rectangle[2], rectangle[3]]
+	
 	# Convert a rectangle to an object. If you *useShortKeys*, The width and
 	# height keys will be named w and h, respectively. 
 	#

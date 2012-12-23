@@ -1,5 +1,7 @@
 
 CoreService = require 'main/web/Bindings/CoreService'
+Rectangle = require 'core/Extension/Rectangle'
+Vector = require 'core/Extension/Vector'
 upon = require 'core/Utility/upon'
 
 Images = {}
@@ -62,7 +64,23 @@ module.exports = AvoImage = class
 			"rgba(#{r}, #{g}, #{b}, #{a})"
 		else
 			"rgb(#{r}, #{g}, #{b})"
-			
+	
+	'%drawCircle': (position, radius, r, g, b, a, mode) ->
+		
+		context = @Canvas.getContext '2d'
+		
+		oldAlpha = context.globalAlpha
+		context.globalAlpha = a / 255
+		
+		context.beginPath();
+		context.arc position[0], position[1], radius, 0, 2*Math.PI
+		
+		context.fillStyle = context.strokeStyle = rgbToHex r, g, b, a
+		context.fill()
+		context.stroke()
+	
+		context.globalAlpha = oldAlpha
+	
 	'%drawFilledBox': (box, r, g, b, a, mode) ->
 		
 		context = @Canvas.getContext '2d'
@@ -157,10 +175,21 @@ module.exports = AvoImage = class
 		
 		context.globalAlpha = alpha / 255
 		
+		sourceRect = Rectangle.copy sourceRect
+		position = Vector.copy position
+		
 		sourceRect[0] = 0 if sourceRect[0] < 0
 		sourceRect[1] = 0 if sourceRect[1] < 0
-		position[0] = 0 if position[0] < 0
-		position[1] = 0 if position[1] < 0
+		
+		if position[0] < 0
+			sourceRect[0] += -position[0]
+			sourceRect[2] += position[0]
+			position[0] = 0
+		
+		if position[1] < 0
+			sourceRect[1] += -position[1]
+			sourceRect[3] += position[1]
+			position[1] = 0
 		
 		if sourceRect[0] is 0 and sourceRect[1] is 0 and sourceRect[2] is @width() and sourceRect[3] is @height()
 		

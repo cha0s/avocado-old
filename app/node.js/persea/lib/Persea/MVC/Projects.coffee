@@ -62,6 +62,7 @@ exports.Router =
 					
 					router.set 'navController.selected', 'projects'
 					router.set 'navController.fluid', false
+					router.set 'footerController.fluid', false
 					
 					undefined
 		

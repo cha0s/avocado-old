@@ -101,6 +101,7 @@ exports.Route = Ember.Route.extend
 		
 		router.set 'navController.selected', 'project'
 		router.set 'navController.fluid', false
+		router.set 'footerController.fluid', false
 		
 		undefined
 		

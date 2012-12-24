@@ -5,7 +5,7 @@ exports.View = Ember.View.extend
 	
 	template: Ember.Handlebars.compile """
 
-<div id="footer" class="container">
+<div id="footer" {{bindAttr class="fluid:container-fluid:container"}} >
 
 	<hr>
 	

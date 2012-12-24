@@ -124,6 +124,8 @@ exports.Route = Ember.Route.extend
 		router.get('applicationController').connectOutlet 'footer', 'footer'
 		
 		router.set 'navController.fluid', true
+		router.set 'footerController.fluid', true
+		
 		router.set 'navController.selected', 'environment'
 		
 		undefined

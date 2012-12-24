@@ -23,8 +23,10 @@ exports.View = Ember.View.extend
 			<a class="media span6" {{action goToProjectEnvironment this href=true}} >
 			    <img class="pull-left media-object" src="http://placekitten.com/g/64/64">
 			    <div class="media-body">
-				    <h4 class="media-heading">{{name}}</h4>
-				    <p>A description will go here once it is built into the data model.</p>
+				    <h4 class="media-heading">{{name}} <small>{{fetching}}</small></h4>
+				    {{#unless fetching}}
+				    	<p>{{description}}</p>
+				    {{/unless}}
 			    </div>
 			</a>
 		</div>

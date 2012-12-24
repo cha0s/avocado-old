@@ -3,15 +3,27 @@ Environment = require 'core/Environment/2D/Environment'
 Model = module.exports = DS.Model.extend
 	revision: 10
 	
-	description: DS.attr 'string'
-	
 	project: DS.belongsTo 'App.ProjectModel'
 	tileset: DS.belongsTo 'App.TilesetModel'
 	
 	name: (->
 		
 		object = @get 'object'
-		object?.name() ? "Fetching #{@get 'id'}..."
+		object?.name() ? @get 'id'
+		
+	).property 'object'
+	
+	description: (->
+		
+		'A description will go here once it is built into the data model.'
+		
+	).property 'object'
+	
+	fetching: (->
+		
+		object = @get 'object'
+		
+		return if object? then '' else 'Fetching from server...'
 		
 	).property 'object'
 	
@@ -25,12 +37,10 @@ Model = module.exports = DS.Model.extend
 
 Model.FIXTURES = [
 	id: '/environment/wb-forest.environment.json'
-	description: 'A nice foresty area'
 	project: 'my-first-project'
 	tileset: '/tileset/wb-forest.tileset.json'
 ,
 	id: '/environment/platforms.environment.json'
-	description: 'Some platforms'
 	project: 'my-second-project'
 	tileset: '/tileset/wb-forest.tileset.json'
 ]

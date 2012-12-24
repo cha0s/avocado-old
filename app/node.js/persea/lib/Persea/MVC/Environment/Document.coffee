@@ -22,72 +22,39 @@ LayersView = Ember.CollectionView.extend
 			
 			$layer = @$()
 			
-			i = $layer.index()
 			roomObject = @get 'content.roomObject'
 			environmentObject = @get 'content.environmentObject'
 			
 			sizeInTiles = roomObject.size()
 			tileset = environmentObject.tileset()
+			tileIndices = roomObject.layer($layer.index()).tileIndices_
 			tileSize = tileset.tileSize()
 			
 			layer = new Image()
 			layer.Canvas = $('canvas', $layer)[0]
 			
-#			blob = new Blob ["""
-#
-#// Render a freakin' layer!
-#
-#			"""], type: 'text/javascript'
-			
-			_.defer(
-				(i) =>
-					
-					###
-					
-					_.defer ->
-						
-						roomObject.layer(i).fastRender(
-							tileset
+			# Render the layer, row by row.
+			y = 0
+			indexPointer = 0
+			renderPosition = [0, 0]
+			(renderTile = =>
+				for x in [0...sizeInTiles[0]]
+					if (index = tileIndices[indexPointer++])
+						tileset.render(
+							renderPosition
 							layer
+							index
 						)
 					
-					###
+					renderPosition[0] += tileSize[0]
 					
-					###
-					
-					roomObject.layer(i).render(
-						[0, 0]
-						tileset
-						layer
-					)
-					
-					###
-					
-					
-					j = 0
-					
-					renderTile = =>
-						
-						y = j
-						
-						for x in [0...sizeInTiles[0]]
-							position = Vector.mul tileSize, [x, y]
-							
-							index = roomObject.layer(i).tileIndex [x, y]
-							tileset.render(
-								position
-								layer
-								index
-							) if index
-						
-						j += 1
-						
-						_.defer renderTile if j < sizeInTiles[1]
-						
-					renderTile()
-						
-				i
-			)
+				renderPosition[0] = 0
+				renderPosition[1] += tileSize[1]
+				
+				# Defer the next render until we get a tick from the VM, to
+				# the browser's UI thread a chance to keep updating.
+				_.defer renderTile if ++y < sizeInTiles[1]
+			)()
 		
 		classNames: ['layer']
 		template: Ember.Handlebars.compile """

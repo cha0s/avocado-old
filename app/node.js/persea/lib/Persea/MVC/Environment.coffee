@@ -70,12 +70,12 @@ exports.View = Ember.View.extend
 		<li class="active">{{environment.name}}</li>
 	</ul>
 
+	<h1>{{environment.name}}</h1>
+	
 	<div class="row-fluid">
 		
 		<div class="span4">
 		
-			<h1>{{environment.name}}</h1>
-	
 			<h2>Rooms</h2>
 			<div class="rooms">
 				{{view Bootstrap.Forms.Select

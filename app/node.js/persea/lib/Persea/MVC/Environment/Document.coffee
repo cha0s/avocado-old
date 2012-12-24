@@ -9,7 +9,7 @@ UndoStack = require 'Persea/Undo/Stack'
 UndoGroup = require 'Persea/Undo/Group'
 Vector = require 'core/Extension/Vector'
 
-LayersView = Ember.CollectionView.extend
+RoomLayersView = Ember.CollectionView.extend
 	
 	attributeBindings: ['unselectable']
 	unselectable: 'on'
@@ -40,7 +40,7 @@ LayersView = Ember.CollectionView.extend
 			renderPosition = [0, 0]
 			(renderTile = =>
 				for x in [0...sizeInTiles[0]]
-					if (index = tileIndices[indexPointer++])
+					if index = tileIndices[indexPointer++]
 						tileset.render(
 							renderPosition
 							layer
@@ -66,6 +66,7 @@ LayersView = Ember.CollectionView.extend
 	{{bindAttr width="view.content.width"}}
 	{{bindAttr height="view.content.height"}}
 	{{bindAttr style="view.content.style"}}
+	{{bindAttr solo="view.content.solo"}}
 >
 </canvas>
 
@@ -105,13 +106,14 @@ Controller = exports.Controller = Ember.Controller.extend
 	navBarSelection: null
 	navBarView: NavBar.View
 	
+	# Convenience property to DRY up client usage of the active undo stack.
 	undoStack: (->
 		return unless (undoGroup = @get 'undoGroup')?
 		
 		undoGroup.activeStack()
 	).property().volatile()
 	
-	selectedMode: (->
+	selectedModeChanged: (->
 		
 		return unless (swipey = @get 'swipey')?
 		
@@ -153,8 +155,7 @@ Controller = exports.Controller = Ember.Controller.extend
 		
 	).observes 'currentRoom', 'undoGroup'
 	
-	layersContent: []
-	layersView: LayersView
+	roomLayers: null
 	
 	swipeyReset: (->
 		
@@ -184,7 +185,7 @@ Controller = exports.Controller = Ember.Controller.extend
 		
 	).observes 'currentRoom.object', 'environment.object', 'swipey'
 
-	layersChanged: (->
+	roomLayersChanged: (->
 		
 		return unless (environmentObject = @get 'environment.object')?
 		return unless (roomObject = @get 'currentRoom.object')?
@@ -194,9 +195,9 @@ Controller = exports.Controller = Ember.Controller.extend
 			environmentObject.tileset().tileSize()
 		)
 		
-		layersContent = for i in [0...roomObject.layerCount()]
-			
-			Ember.Controller.create
+		roomLayers = Ember.ArrayController.create()
+		content = for i in [0...roomObject.layerCount()]
+			Ember.Object.create
 				
 				style: "z-index: #{i * 10};"
 				
@@ -205,11 +206,12 @@ Controller = exports.Controller = Ember.Controller.extend
 				
 				width: canvasSize[0]
 				height: canvasSize[1]
-			
-		layersContent.roomObject = roomObject
-		layersContent.environmentObject = environmentObject
-		
-		@set 'layersContent', layersContent
+				
+				solo: false
+				
+		roomLayers.set 'content', content
+		 
+		@set 'roomLayers', roomLayers
 		
 	).observes 'currentRoom.object', 'environment.object'
 
@@ -218,7 +220,7 @@ exports.View = Ember.View.extend
 	currentRoomBinding: 'controller.currentRoom'
 	environmentBinding: 'controller.environment'
 	landscapeControllerBinding: 'controller.landscapeController'
-	layersContentBinding: 'controller.layersContent'
+	roomLayersBinding: 'controller.roomLayers'
 	navBarContentBinding: 'controller.navBarContent'
 	navBarSelectionBinding: 'controller.navBarSelection'
 	swipeyBinding: 'controller.swipey'
@@ -233,44 +235,40 @@ exports.View = Ember.View.extend
 			return unless (environmentObject = @get 'environment.object')?
 			return unless (roomObject = @get 'currentRoom.object')?
 			
-			$el = $('#environment-document')
+			$el = $ '#environment-document'
 			
-			offset = $el.offset()
-			
-			windowHeight = $(window).height()
-			
-			autoCanvasHeight = windowHeight
-			
-			footerOffset = $('#footer').offset()
-			unless autoCanvasHeight < footerOffset.top
-				autoCanvasHeight -= $('#footer').height()
-			
-			autoCanvasHeight -= offset.top
-			
+			documentOffset = $el.offset()
 			$row = $el.parent()
-			
 			rowOffset = $row.offset()
-			
-			width = $row.width() - (offset.left - rowOffset.left)
-			
-			height = Math.max(
-				320
-				if autoCanvasHeight <= 0
-					windowHeight - 40
-				else
-					autoCanvasHeight
-			)
-			
 			tileSize = environmentObject.tileset().tileSize()
 			
-			canvasSize = Vector.mul(
-				roomObject.size()
-				tileSize
+			# Calcuate the maximum width and height that the layout will allow
+			# for the canvas.
+			width = $row.width() - (documentOffset.left - rowOffset.left)
+			
+			windowHeight = $(window).height()
+			height = windowHeight
+			unless height < $('#footer').offset().top
+				height -= $('#footer').height()
+			height -= documentOffset.top
+			height = Math.max(
+				320
+				if height <= 0
+					windowHeight - 40
+				else
+					height
 			)
 			
+			# Shrink the canvas to fit a small room.
+			canvasSize = Vector.min(
+				[width, height]
+				Vector.mul roomObject.size(), tileSize
+			)
+			
+			# Quantize to tile size.
 			size = Vector.mul(
 				Vector.floor Vector.div(
-					Vector.min [width, height], canvasSize
+					canvasSize
 					tileSize
 				)
 				tileSize
@@ -280,6 +278,7 @@ exports.View = Ember.View.extend
 				width: size[0]
 				height: size[1]
 				
+			# Remove the spinner.
 			$el.parent().css
 				background: 'none'
 			
@@ -311,29 +310,31 @@ z-index: #{zIndex}
 "
 
 	).property(
-		'landscapeController.tilesetSelectionMatrix'
 		'environment.object'
 		'landscapeController.currentLayerIndex'
+		'landscapeController.tilesetSelectionMatrix'
 	)
 	
 	soloChanged: (->
 		
-		layersContent = @get 'layersContent'
-		solo = @get 'landscapeController.solo'
 		currentLayerIndex = @get 'landscapeController.currentLayerIndex'
-		
-		$layers = @$().find '.layers'
+		roomLayers = @get 'roomLayers'
+		roomLayersContent = roomLayers.get 'content'
+		solo = @get 'landscapeController.solo'
 		
 		if solo
 			
-			$layers.find('.layer').hide()	
-			$layers.find('.layer').eq(currentLayerIndex).show()	
+			for roomLayer, index in roomLayersContent
+				roomLayer.set 'solo', currentLayerIndex isnt index
 			
 		else
+			roomLayer.set 'solo', false for roomLayer in roomLayersContent
 			
-			$layers.find('.layer').show()
-		
-	).observes 'landscapeController.solo', 'layersContent', 'landscapeController.currentLayerIndex'
+	).observes(
+		'landscapeController.currentLayerIndex'
+		'landscapeController.solo'
+		'roomLayers'
+	)
 	
 	undoGroupChanged: (->
 		
@@ -475,14 +476,13 @@ z-index: #{zIndex}
 		return unless (roomObject = @get 'currentRoom.object')?
 		return unless (swipey = @get 'swipey')?
 		
-		$environmentDocument = $('#environment-document')
 		tileset = environmentObject.tileset()
 		tileSize = tileset.tileSize()
 		
 		layer = roomObject.layer layerIndex
 		
 		layerImage = new Image()
-		layerImage.Canvas = $('.layers canvas', $environmentDocument).eq(layerIndex)[0]
+		layerImage.Canvas = @$().find('.layers canvas').eq(layerIndex)[0]
 		
 		self = this
 		
@@ -513,14 +513,13 @@ z-index: #{zIndex}
 		return unless (roomObject = @get 'currentRoom.object')?
 		return unless (swipey = @get 'swipey')?
 		
-		$environmentDocument = $('#environment-document')
 		tileset = environmentObject.tileset()
 		tileSize = tileset.tileSize()
 		
 		layer = roomObject.layer layerIndex
 		
 		layerImage = new Image()
-		layerImage.Canvas = $('.layers canvas', $environmentDocument).eq(layerIndex)[0]
+		layerImage.Canvas = @$().find('.layers canvas').eq(layerIndex)[0]
 		
 		self = this
 		
@@ -901,6 +900,8 @@ z-index: #{zIndex}
 			
 		) jQuery
 		
+	roomLayersView: RoomLayersView
+	
 	template: Ember.Handlebars.compile """
 
 <div class="navbar">
@@ -915,9 +916,9 @@ z-index: #{zIndex}
 <div id="environment-document">
 	<div class="draw-overlay" {{bindAttr style="view.drawOverlayStyle"}} ></div>
 	
-	{{view layersView
+	{{view view.roomLayersView
 		class="layers"
-		contentBinding="layersContent"
+		contentBinding="roomLayers"
 	}}
 	
 </div>

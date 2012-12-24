@@ -4,6 +4,7 @@ fs = require 'fs'
 helpers = require './helpers'
 less = require 'less'
 mustache = require 'mustache'
+util = require 'util'
 
 module.exports = (
 	app
@@ -32,8 +33,18 @@ module.exports = (
 			original: 'text/coffeescript'
 			processed: 'text/javascript'
 		}
-		(req, res, next, code) ->
-			req.processedCode = coffee.compile code
+		(req, res, next, code, pathname) ->
+			
+			try
+				
+				req.processedCode = coffee.compile code
+				
+			catch e
+				
+				req.processedCode = "
+				console.log('Coffee compiler couldn\\'t compile #{pathname}! Reason given: #{(util.inspect e).replace /'/g, "\\'"}');
+				"
+				
 			next()
 	)
 	

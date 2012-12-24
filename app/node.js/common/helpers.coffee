@@ -96,7 +96,7 @@ exports.preprocessFiles = (
 					res.type mimes.processed
 					
 					try
-						fn req, res, next, code
+						fn req, res, next, code, req._parsedUrl.pathname
 
 					catch e
 						throw new Error "Failed processing #{filename}: #{e.stack}"

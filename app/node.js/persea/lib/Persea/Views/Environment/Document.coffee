@@ -3,227 +3,22 @@ Image = require('Graphics').Image
 Matrix = require 'core/Extension/Matrix'
 NavBarView = require 'Persea/Views/Bootstrap/NavBar'
 Rectangle = require 'core/Extension/Rectangle'
+RoomLayersView = require 'Persea/Views/Environment/RoomLayers'
 Swipey = require 'Swipey'
 UndoCommand = require 'Persea/Undo/Command'
 UndoStack = require 'Persea/Undo/Stack'
 UndoGroup = require 'Persea/Undo/Group'
 Vector = require 'core/Extension/Vector'
 
-RoomLayersView = Ember.CollectionView.extend
-	
-	attributeBindings: ['unselectable']
-	unselectable: 'on'
-	
-	itemViewClass: Ember.View.extend
-		
-		attributeBindings: ['unselectable']
-		unselectable: 'on'
-		
-		didInsertElement: ->
-			
-			$layer = @$()
-			
-			roomObject = @get 'content.roomObject'
-			environmentObject = @get 'content.environmentObject'
-			
-			sizeInTiles = roomObject.size()
-			tileset = environmentObject.tileset()
-			tileIndices = roomObject.layer($layer.index()).tileIndices_
-			tileSize = tileset.tileSize()
-			
-			layer = new Image()
-			layer.Canvas = $('canvas', $layer)[0]
-			
-			# Render the layer, row by row.
-			y = 0
-			indexPointer = 0
-			renderPosition = [0, 0]
-			(renderTile = =>
-				for x in [0...sizeInTiles[0]]
-					if index = tileIndices[indexPointer++]
-						tileset.render(
-							renderPosition
-							layer
-							index
-						)
-					
-					renderPosition[0] += tileSize[0]
-					
-				renderPosition[0] = 0
-				renderPosition[1] += tileSize[1]
-				
-				# Defer the next render until we get a tick from the VM, to
-				# the browser's UI thread a chance to keep updating.
-				_.defer renderTile if ++y < sizeInTiles[1]
-			)()
-		
-		classNames: ['layer']
-		template: Ember.Handlebars.compile """
-
-<canvas
-	unselectable="on"
-	class="canvas"
-	{{bindAttr width="view.content.width"}}
-	{{bindAttr height="view.content.height"}}
-	{{bindAttr style="view.content.style"}}
-	{{bindAttr solo="view.content.solo"}}
->
-</canvas>
-
-"""
-
-Controller = exports.Controller = Ember.Controller.extend
-	
-	init: ->
-		
-		@undoStacks = []
-		
-	environmentBinding: 'environmentController.environment'
-	currentRoomBinding: 'environmentController.currentRoom'
-	
-	navBarContent: [
-		mode: 'move'
-		i: 'icon-move'
-		title: 'Move: Click and drag or swipe to move the environment.'
-	,
-		mode: 'edit'
-		i: 'icon-pencil'
-		title: 'Edit: Click/tap and drag to draw upon the environment.'
-	,
-		noLink: true
-		text: '|'
-	,
-		id: 'document-undo'
-		noSelect: true
-		i: 'icon-backward'
-		title: 'Undo the last action.'
-	,
-		id: 'document-redo'
-		noSelect: true
-		i: 'icon-forward'
-		title: 'Redo the last undone action.'
-	]
-	navBarSelection: null
-	navBarView: NavBarView
-	
-	# Convenience property to DRY up client usage of the active undo stack.
-	undoStack: (->
-		return unless (undoGroup = @get 'undoGroup')?
-		
-		undoGroup.activeStack()
-	).property().volatile()
-	
-	selectedModeChanged: (->
-		
-		return unless (swipey = @get 'swipey')?
-		
-		$environmentDocument = $('#environment-document')
-		
-		switch @get 'navBarSelection.mode'
-			
-			when 'move'
-				
-				swipey.active = true
-				$environmentDocument.css cursor: 'move'
-				
-			when 'edit'
-				
-				swipey.active = false
-				$environmentDocument.css cursor: 'default'
-		
-	).observes 'navBarSelection'
-	
-	undoGroup: null
-	
-	environmentObjectChanged: (->
-		
-		return unless (object = @get 'environment.object')?
-		
-		@set 'undoGroup', undoGroup = new UndoGroup()
-		
-		@undoStacks = for i in [0...object.roomCount()]
-			new UndoStack undoGroup
-			
-	).observes 'environment.object'
-	
-	roomChanged: (->
-		
-		return unless (currentRoom = @get 'currentRoom')?
-		return unless (undoGroup = @get 'undoGroup')?
-		
-		undoGroup.setActiveStack @undoStacks[currentRoom.index]
-		
-	).observes 'currentRoom', 'undoGroup'
-	
-	roomLayers: null
-	
-	swipeyReset: (->
-		
-		return unless (environmentObject = @get 'environment.object')?
-		return unless (roomObject = @get 'currentRoom.object')?
-		return unless (swipey = @get 'swipey')?
-		
-		tileset = environmentObject.tileset()
-		
-		$environmentDocument = $('#environment-document')
-		
-		swipey.setMinMax(
-			[0, 0]
-			Vector.sub(
-				roomObject.size()
-				Vector.floor Vector.div(
-					[
-						$environmentDocument.width()
-						$environmentDocument.height()
-					]
-					tileset.tileSize()
-				)
-			)
-		)
-		
-		swipey.setOffset [0, 0]
-		
-	).observes 'currentRoom.object', 'environment.object', 'swipey'
-
-	roomLayersChanged: (->
-		
-		return unless (environmentObject = @get 'environment.object')?
-		return unless (roomObject = @get 'currentRoom.object')?
-		
-		canvasSize = Vector.mul(
-			roomObject.size()
-			environmentObject.tileset().tileSize()
-		)
-		
-		roomLayers = Ember.ArrayController.create()
-		content = for i in [0...roomObject.layerCount()]
-			Ember.Object.create
-				
-				style: "z-index: #{i * 10};"
-				
-				roomObject: roomObject
-				environmentObject: environmentObject
-				
-				width: canvasSize[0]
-				height: canvasSize[1]
-				
-				solo: false
-				
-		roomLayers.set 'content', content
-		 
-		@set 'roomLayers', roomLayers
-		
-	).observes 'currentRoom.object', 'environment.object'
-
-exports.View = Ember.View.extend
+module.exports = Ember.View.extend
 	
 	currentRoomBinding: 'controller.currentRoom'
+	environmentControllerBinding: 'controller.environmentController'
 	environmentBinding: 'controller.environment'
-	landscapeControllerBinding: 'controller.landscapeController'
+	landscapeControllerBinding: 'environmentController.landscapeController'
 	roomLayersBinding: 'controller.roomLayers'
 	navBarContentBinding: 'controller.navBarContent'
 	navBarSelectionBinding: 'controller.navBarSelection'
-	swipeyBinding: 'controller.swipey'
 	undoGroupBinding: 'controller.undoGroup'
 	
 	attributeBindings: ['unselectable']
@@ -366,6 +161,54 @@ z-index: #{zIndex}
 			
 	).observes 'undoGroup'
 	
+	selectedModeChanged: (->
+		
+		return unless (swipey = @get 'swipey')?
+		
+		$environmentDocument = $('#environment-document')
+		
+		switch @get 'navBarSelection.mode'
+			
+			when 'move'
+				
+				swipey.active = true
+				$environmentDocument.css cursor: 'move'
+				
+			when 'edit'
+				
+				swipey.active = false
+				$environmentDocument.css cursor: 'default'
+		
+	).observes 'navBarSelection'
+	
+	swipeyReset: (->
+		
+		return unless (environmentObject = @get 'environment.object')?
+		return unless (roomObject = @get 'currentRoom.object')?
+		return unless (swipey = @get 'swipey')?
+		
+		tileset = environmentObject.tileset()
+		
+		$environmentDocument = $('#environment-document')
+		
+		swipey.setMinMax(
+			[0, 0]
+			Vector.sub(
+				roomObject.size()
+				Vector.floor Vector.div(
+					[
+						$environmentDocument.width()
+						$environmentDocument.height()
+					]
+					tileset.tileSize()
+				)
+			)
+		)
+		
+		swipey.setOffset [0, 0]
+		
+	).observes 'currentRoom.object', 'environment.object', 'swipey'
+
 	positionTranslatedToTile: (position) ->
 		
 		return [0, 0] unless (environmentObject = @get 'environment.object')?

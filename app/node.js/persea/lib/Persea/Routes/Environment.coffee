@@ -1,16 +1,13 @@
 TabPanesView = require 'Persea/Views/Bootstrap/TabPanes'
 
-Landscape = require 'Persea/MVC/Environment/Landscape'
-Entities = require 'Persea/MVC/Environment/Entities'
-Collision = require 'Persea/MVC/Environment/Collision'
-
-Document = require 'Persea/MVC/Environment/Document'
+DocumentController = require 'Persea/Controllers/Environment/Document'
+DocumentView = require 'Persea/Views/Environment/Document'
 
 EnvironmentModel = require 'Persea/Models/Environment'
 
 exports.Controller = Ember.Controller.extend
 	
-	documentController: Document.Controller.create()
+	documentController: DocumentController.create()
 	
 	roomSelectContent: []
 	currentRoom: null
@@ -32,19 +29,34 @@ exports.Controller = Ember.Controller.extend
 		
 	).observes 'environment.object'
 	
-	content: [
-		Landscape.controls			
-		Entities.controls
-		Collision.controls
-	]
-	
+	_loadControls: ->
+		
+		controls = for controlType in [
+			'Landscape'
+			'Entities'
+			'Collision'
+		]
+			
+			lowered = controlType.charAt(0).toLowerCase() + controlType.substr(1)
+			
+			Controller = require "Persea/Controllers/Environment/#{controlType}"
+			View = require "Persea/Views/Environment/#{controlType}"
+			
+			@set "#{lowered}Controller", controller = Controller.create
+				environmentController: this
+		
+			title: controlType
+			link: lowered
+			paneView: View.extend
+				controller: controller
+		
+		@set 'content', controls
+		
 	init: ->
 		
-		for control in @get 'content'
-			control.set 'controller.environmentController', this
-		@set 'documentController.environmentController', this
+		@_loadControls()
 		
-		@set 'documentController.landscapeController', Landscape.controls.controller
+		@set 'documentController.environmentController', this
 		
 		@set 'selection', @get('content')[0]
 		
@@ -52,7 +64,7 @@ exports.View = Ember.View.extend
 	
 	controlsView: TabPanesView
 	
-	documentView: Document.View
+	documentView: DocumentView
 	
 	template: Ember.Handlebars.compile """
 

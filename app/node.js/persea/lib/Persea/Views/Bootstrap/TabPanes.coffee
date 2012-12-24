@@ -2,9 +2,9 @@ Tabs = Bootstrap.Tabs.extend
 
 	itemViewClass: Ember.View.extend(Bootstrap.ItemSelectionSupport, Bootstrap.ItemViewHrefSupport, {
 		click: ->
-		paneHref: Ember.computed(->
+		paneHref: (->
 			"[data-tab-pane=\"#{@get('href')}\"]"
-		).property('href').cacheable()
+		).property 'href'
 		
 		template: Ember.Handlebars.compile """
 
@@ -16,15 +16,14 @@ Tabs = Bootstrap.Tabs.extend
 TabPane = Ember.View.extend Bootstrap.ItemSelectionSupport, Bootstrap.ItemViewHrefSupport,
 	classNames: ['tab-pane']
 	attributeBindings: ['data-tab-pane']
-	'data-tab-pane': Ember.computed(->
+	'data-tab-pane': (->
 		@get('href')
-	).property('href').cacheable()
+	).property 'href'
 	
 	click: ->
 	template: Ember.Handlebars.compile """
 
-{{view view.content.view
-	environmentBinding="environment"
+{{view view.content.paneView
 }}
 
 """

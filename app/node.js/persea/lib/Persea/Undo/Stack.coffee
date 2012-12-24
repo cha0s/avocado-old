@@ -3,13 +3,19 @@ Mixin = require 'core/Utility/Mixin'
 
 module.exports = class
 	
-	constructor: ->
+	constructor: (@group_) ->
 		
 		Mixin this, EventEmitter
 		
 		@stack_ = []
 		@stackIndex_ = -1
+		
+		@group_?.addStack this
 	
+	canRedo: -> @stackIndex_ isnt @stack_.length - 1
+	
+	canUndo: -> @stackIndex_ isnt -1
+		
 	push: (command) ->
 		
 		canRedo = @canRedo()
@@ -25,7 +31,18 @@ module.exports = class
 		@emit 'canUndoChanged', @canUndo() unless canUndo
 		@emit 'canRedoChanged', @canRedo() if canRedo
 		
-	canUndo: -> @stackIndex_ isnt -1
+	redo: ->
+		
+		return unless @canRedo()
+		
+		canUndo = @canUndo()
+		
+		@stack_[++@stackIndex_].redo()
+
+		@emit 'canRedoChanged', @canRedo() unless @canRedo()
+		@emit 'canUndoChanged', @canUndo() unless canUndo
+	
+	setActive: -> @group_?.setActiveStack this
 		
 	undo: ->
 		
@@ -37,17 +54,4 @@ module.exports = class
 		
 		@emit 'canRedoChanged', @canRedo() unless canRedo
 		@emit 'canUndoChanged', @canUndo() unless @canUndo()
-		
-	canRedo: -> @stackIndex_ isnt @stack_.length - 1
-	
-	redo: ->
-		
-		return unless @canRedo()
-		
-		canUndo = @canUndo()
-		
-		@stack_[++@stackIndex_].redo()
-
-		@emit 'canRedoChanged', @canRedo() unless @canRedo()
-		@emit 'canUndoChanged', @canUndo() unless canUndo
 		

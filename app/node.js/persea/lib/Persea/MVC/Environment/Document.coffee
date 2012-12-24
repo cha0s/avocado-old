@@ -6,6 +6,7 @@ Rectangle = require 'core/Extension/Rectangle'
 Swipey = require 'Swipey'
 UndoCommand = require 'Persea/Undo/Command'
 UndoStack = require 'Persea/Undo/Stack'
+UndoGroup = require 'Persea/Undo/Group'
 Vector = require 'core/Extension/Vector'
 
 LayersView = Ember.CollectionView.extend
@@ -72,6 +73,10 @@ LayersView = Ember.CollectionView.extend
 
 Controller = exports.Controller = Ember.Controller.extend
 	
+	init: ->
+		
+		@undoStacks = []
+		
 	environmentBinding: 'environmentController.environment'
 	currentRoomBinding: 'environmentController.currentRoom'
 	
@@ -100,6 +105,12 @@ Controller = exports.Controller = Ember.Controller.extend
 	navBarSelection: null
 	navBarView: NavBar.View
 	
+	undoStack: (->
+		return unless (undoGroup = @get 'undoGroup')?
+		
+		undoGroup.activeStack()
+	).property().volatile()
+	
 	selectedMode: (->
 		
 		return unless (swipey = @get 'swipey')?
@@ -120,53 +131,27 @@ Controller = exports.Controller = Ember.Controller.extend
 		
 	).observes 'navBarSelection'
 	
-	undoStacks: []
-	currentUndoStack: null
+	undoGroup: null
 	
 	environmentObjectChanged: (->
 		
 		return unless (object = @get 'environment.object')?
 		
-		undoStacks = for i in [0...object.roomCount()]
+		@set 'undoGroup', undoGroup = new UndoGroup()
 		
-			undoStack = new UndoStack
+		@undoStacks = for i in [0...object.roomCount()]
+			new UndoStack undoGroup
 			
-			undoStack.on 'canUndoChanged', (canUndo) ->
-				if canUndo
-					$('#document-undo').closest('li').removeClass 'disabled'
-				else
-					$('#document-undo').closest('li').addClass 'disabled'
-			undoStack.on 'canRedoChanged', (canRedo) ->
-				if canRedo
-					$('#document-redo').closest('li').removeClass 'disabled'
-				else
-					$('#document-redo').closest('li').addClass 'disabled'
-				
-			undoStack
-			
-		@set 'undoStacks', undoStacks
-		
 	).observes 'environment.object'
 	
 	roomChanged: (->
 		
 		return unless (currentRoom = @get 'currentRoom')?
-		return if (undoStacks = @get 'undoStacks').length is 0
+		return unless (undoGroup = @get 'undoGroup')?
 		
-		undoStack = undoStacks[currentRoom.index]
+		undoGroup.setActiveStack @undoStacks[currentRoom.index]
 		
-		@set 'currentUndoStack', undoStack
-		
-		if undoStack.canUndo()
-			$('#document-undo').closest('li').removeClass 'disabled'
-		else
-			$('#document-undo').closest('li').addClass 'disabled'
-		if undoStack.canRedo()
-			$('#document-redo').closest('li').removeClass 'disabled'
-		else
-			$('#document-redo').closest('li').addClass 'disabled'
-		
-	).observes 'currentRoom', 'undoStacks'
+	).observes 'currentRoom', 'undoGroup'
 	
 	layersContent: []
 	layersView: LayersView
@@ -231,13 +216,13 @@ Controller = exports.Controller = Ember.Controller.extend
 exports.View = Ember.View.extend
 	
 	currentRoomBinding: 'controller.currentRoom'
-	currentUndoStackBinding: 'controller.currentUndoStack'
 	environmentBinding: 'controller.environment'
 	landscapeControllerBinding: 'controller.landscapeController'
 	layersContentBinding: 'controller.layersContent'
 	navBarContentBinding: 'controller.navBarContent'
 	navBarSelectionBinding: 'controller.navBarSelection'
 	swipeyBinding: 'controller.swipey'
+	undoGroupBinding: 'controller.undoGroup'
 	
 	attributeBindings: ['unselectable']
 	unselectable: 'on'
@@ -349,6 +334,36 @@ z-index: #{zIndex}
 			$layers.find('.layer').show()
 		
 	).observes 'landscapeController.solo', 'layersContent', 'landscapeController.currentLayerIndex'
+	
+	undoGroupChanged: (->
+		
+		return unless (undoGroup = @get 'undoGroup')?
+		
+		undoGroup.on 'canUndoChanged', (canUndo) ->
+			$('#document-undo').closest('li').toggleClass(
+				'disabled'
+				not canUndo
+			)
+		
+		undoGroup.on 'canRedoChanged', (canRedo) ->
+			$('#document-redo').closest('li').toggleClass(
+				'disabled'
+				not canRedo
+			)
+		
+		undoGroup.on 'activeStackChanged', (activeStack) ->
+		
+			$('#document-undo').closest('li').toggleClass(
+				'disabled'
+				not activeStack.canUndo()
+			)
+		
+			$('#document-redo').closest('li').toggleClass(
+				'disabled'
+				not activeStack.canRedo()
+			)
+			
+	).observes 'undoGroup'
 	
 	positionTranslatedToTile: (position) ->
 		
@@ -675,7 +690,7 @@ z-index: #{zIndex}
 	commitDrawCommands: ->
 		
 		return if @draws.length is 0
-		return unless (undoStack = @get 'currentUndoStack')?
+		return unless (undoStack = @get 'controller.undoStack')?		
 		
 		draws = _.map @draws, _.identity
 		
@@ -709,14 +724,10 @@ z-index: #{zIndex}
 		(($) =>
 			
 			$('#document-undo').click =>
-				return unless (undoStack = @get 'currentUndoStack')?
-				
-				undoStack.undo()
+				@get('controller.undoStack')?.undo()
 				false
 			$('#document-redo').click =>
-				return unless (undoStack = @get 'currentUndoStack')?
-				
-				undoStack.redo()
+				@get('controller.undoStack')?.redo()
 				false
 			
 			$environmentDocument = $('#environment-document')

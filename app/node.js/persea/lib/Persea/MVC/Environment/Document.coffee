@@ -1,7 +1,7 @@
 Floodfill = require 'core/Utility/Floodfill'
 Image = require('Graphics').Image
 Matrix = require 'core/Extension/Matrix'
-NavBar = require 'Persea/Bootstrap/NavBar'
+NavBarView = require 'Persea/Views/Bootstrap/NavBar'
 Rectangle = require 'core/Extension/Rectangle'
 Swipey = require 'Swipey'
 UndoCommand = require 'Persea/Undo/Command'
@@ -104,7 +104,7 @@ Controller = exports.Controller = Ember.Controller.extend
 		title: 'Redo the last undone action.'
 	]
 	navBarSelection: null
-	navBarView: NavBar.View
+	navBarView: NavBarView
 	
 	# Convenience property to DRY up client usage of the active undo stack.
 	undoStack: (->

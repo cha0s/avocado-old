@@ -73,9 +73,11 @@ App.store = DS.Store.create
 		simulateRemoteResponse: true
 		latency: 50
 		
-#	adapter: DS.fixtureAdapter
-
-ember.mixinApp App, mixin for mixin in mvcs
+ember.mixinModels App, [
+	'Environment'
+	'Project'
+	'Tileset'
+]
 
 (($) ->
 	

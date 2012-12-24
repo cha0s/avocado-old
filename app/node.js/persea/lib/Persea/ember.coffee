@@ -1,7 +1,7 @@
 
 exports.mixinMvc = (app, name) ->
 	
-	mvc = require "Persea/MVC/#{name}"
+	mvc = require "Persea/Routes/#{name}"
 	
 	app["#{name}Controller"] = mvc.Controller if mvc.Controller?
 	app["#{name}View"] = mvc.View if mvc.View?
@@ -10,17 +10,17 @@ exports.mixinMvc = (app, name) ->
 
 exports.mixinRouter = (router, name) ->
 	
-	mvc = require "Persea/MVC/#{name}"
+	mvc = require "Persea/Routes/#{name}"
 	
 	_.extend router.actions, mvc.Router?.actions ? {}
 	_.extend router.routes, mvc.Router?.routes ? {}
 	
 	undefined
 
-exports.mixinApp = (App, name) ->
+exports.mixinModels = (App, modelNames) ->
 	
-	mvc = require "Persea/MVC/#{name}"
-	
-	mvc.mixinApp? App
+	for modelName in modelNames
+		
+		App["#{modelName}Model"] = require "Persea/Models/#{modelName}"
 	
 	undefined

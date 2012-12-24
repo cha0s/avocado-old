@@ -1,4 +1,4 @@
-View = exports.View = Ember.CollectionView.extend
+module.exports = Ember.CollectionView.extend
 	classNames: ['nav']
 	tagName: 'ul'
 

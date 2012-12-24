@@ -1,12 +1,7 @@
 
-Environments = require 'Persea/MVC/Environments'
-Environment = require 'Persea/MVC/Environment'
+Environments = require 'Persea/Routes/Environments'
 
 ProjectModel = require 'Persea/Models/Project'
-
-exports.mixinApp = (App) ->
-	
-	App.ProjectModel = ProjectModel
 
 exports.Controller = Ember.ObjectController.extend()
 	

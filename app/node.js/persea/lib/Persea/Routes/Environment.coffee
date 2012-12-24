@@ -1,4 +1,4 @@
-TabPanes = require 'Persea/MVC/TabPanes'
+TabPanesView = require 'Persea/Views/Bootstrap/TabPanes'
 
 Landscape = require 'Persea/MVC/Environment/Landscape'
 Entities = require 'Persea/MVC/Environment/Entities'
@@ -7,10 +7,6 @@ Collision = require 'Persea/MVC/Environment/Collision'
 Document = require 'Persea/MVC/Environment/Document'
 
 EnvironmentModel = require 'Persea/Models/Environment'
-
-exports.mixinApp = (App) ->
-	
-	App.EnvironmentModel = EnvironmentModel
 
 exports.Controller = Ember.Controller.extend
 	
@@ -54,7 +50,7 @@ exports.Controller = Ember.Controller.extend
 		
 exports.View = Ember.View.extend
 	
-	controlsView: TabPanes.View
+	controlsView: TabPanesView
 	
 	documentView: Document.View
 	

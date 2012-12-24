@@ -1,5 +1,5 @@
 
-Environment = require 'Persea/MVC/Environment'
+Environment = require 'Persea/Routes/Environment'
 
 exports.Controller = Ember.ArrayController.extend()
 

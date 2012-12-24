@@ -1,4 +1,4 @@
-NavBar = require 'Persea/Bootstrap/NavBar'
+NavBarView = require 'Persea/Views/Bootstrap/NavBar'
 Rectangle = require 'core/Extension/Rectangle'
 Swipey = require 'Swipey'
 Vector = require 'core/Extension/Vector'
@@ -17,7 +17,7 @@ controller = Ember.Controller.extend
 		title: 'Edit: Click/tap and drag to select tiles.'
 	]
 	navBarSelection: null
-	navBarView: NavBar.View
+	navBarView: NavBarView
 	
 	selectedMode: (->
 		

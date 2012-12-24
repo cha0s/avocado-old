@@ -1,16 +1,10 @@
 
-Project = require 'Persea/MVC/Project'
+Project = require 'Persea/Routes/Project'
 ProjectModel = require 'Persea/Models/Project'
 
 exports.Controller = Ember.ArrayController.extend()
 	
-#	projectsBinding: -> App.store.findAll Project.Model
-
 exports.View = Ember.View.extend
-	
-#	projects: Project.store
-	
-#	projectsBinding: 'App.projectsController.content'
 	
 	template: Ember.Handlebars.compile """
 

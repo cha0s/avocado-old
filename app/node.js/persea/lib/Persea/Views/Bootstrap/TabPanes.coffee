@@ -29,7 +29,7 @@ TabPane = Ember.View.extend Bootstrap.ItemSelectionSupport, Bootstrap.ItemViewHr
 
 """
 
-TabPanes = exports.View = Ember.View.extend
+module.exports = Ember.View.extend
 	
 	tabs: Tabs
 

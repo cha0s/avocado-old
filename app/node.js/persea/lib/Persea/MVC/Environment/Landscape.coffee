@@ -305,23 +305,6 @@ view = Ember.View.extend
 		
 	template: Ember.Handlebars.compile """
 
-<h3>Tileset <small>({{environment.tileset.id}})</small></h3>
-
-<div class="navbar">
-	<div class="navbar-inner">
-		{{view navBarView
-			contentBinding="navBarContent"
-			selectionBinding="navBarSelection"
-		}}
-	</div>	
-</div>
-
-<div {{bindAttr style="tilesetStyle"}} id="tileset" unselectable="on">
-	<div {{bindAttr style="tilesetImageStyle"}} class="image">
-	</div>
-	<div class="selection"></div>
-</div>
-
 <h3>Draw</h3>
 <div class="draw">
 	{{view Bootstrap.Forms.Select
@@ -344,6 +327,23 @@ view = Ember.View.extend
 <label class="checkbox inline solo">
 	<input type="checkbox"> Solo
 </label>
+
+<h3>Tileset <small>({{environment.tileset.id}})</small></h3>
+
+<div class="navbar">
+	<div class="navbar-inner">
+		{{view navBarView
+			contentBinding="navBarContent"
+			selectionBinding="navBarSelection"
+		}}
+	</div>	
+</div>
+
+<div {{bindAttr style="tilesetStyle"}} id="tileset" unselectable="on">
+	<div {{bindAttr style="tilesetImageStyle"}} class="image">
+	</div>
+	<div class="selection"></div>
+</div>
 
 """
 

@@ -373,7 +373,7 @@ z-index: #{zIndex}
 		$environmentDocument = $('#environment-document')
 		tileset = environmentObject.tileset()
 		offset = $environmentDocument.offset()
-					
+		
 		position = Vector.sub(
 			Vector.add(
 				position

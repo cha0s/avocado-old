@@ -563,185 +563,181 @@ z-index: #{zIndex}
 		
 		@draws = []
 		
-		(($) =>
+		$('#document-undo').click =>
+			@get('controller.undoStack')?.undo()
+			false
+		$('#document-redo').click =>
+			@get('controller.undoStack')?.redo()
+			false
+		
+		$environmentDocument = $('#environment-document')
+		
+		$('.draw-overlay', $environmentDocument).css opacity: .85, width: 16, height: 16
+		(pulseOverlay = ->
+			$('.draw-overlay', $environmentDocument).animate
+				opacity: .45
+			,
+				500
+				->
+					$('.draw-overlay', $environmentDocument).animate
+						opacity: .85
+					,
+						500
+						pulseOverlay
+		)()
+		
+		if Modernizr.touch
 			
-			$('#document-undo').click =>
-				@get('controller.undoStack')?.undo()
+			$el = $environmentDocument
+			mousedown = 'vmousedown'
+			mousemove = 'vmousemove'
+			mouseout = 'vmouseout'
+			mouseover = 'vmouseover'
+			mouseup = 'vmouseup'
+			
+		else
+			
+			$el = $(window)
+			mousedown = 'mousedown'
+			mousemove = 'mousemove'
+			mouseout = 'mouseout'
+			mouseover = 'mouseover'
+			mouseup = 'mouseup'
+		
+		$el.off '.environmentDocument'
+		
+		holding = false
+		
+		$environmentDocument.on(
+			"#{mousedown}.environmentDocument"
+			(event) =>
+				
+				return if 'move' is @get 'navBarSelection.mode'
+				
+				currentDrawMode = @get 'landscapeController.currentDrawMode'
+				
+				holding = true
+				
+				@pushDrawCommand[currentDrawMode].call this, [event.clientX, event.clientY]
+				
 				false
-			$('#document-redo').click =>
-				@get('controller.undoStack')?.redo()
-				false
+		)
+		
+		setOverlayPosition = (position) ->
 			
-			$environmentDocument = $('#environment-document')
-			
-			$('.draw-overlay', $environmentDocument).css opacity: .85, width: 16, height: 16
-			(pulseOverlay = ->
-				$('.draw-overlay', $environmentDocument).animate
-					opacity: .45
-				,
-					500
-					->
-						$('.draw-overlay', $environmentDocument).animate
-							opacity: .85
-						,
-							500
-							pulseOverlay
-			)()
-			
-			if Modernizr.touch
+			$('.draw-overlay', $environmentDocument).css
+				left: position[0]
+				top: position[1]
+		
+		$environmentDocument.on(
+			"#{mousemove}.environmentDocument"
+			(event) =>
 				
-				$el = $environmentDocument
-				mousedown = 'vmousedown'
-				mousemove = 'vmousemove'
-				mouseout = 'vmouseout'
-				mouseover = 'vmouseover'
-				mouseup = 'vmouseup'
+				return if 'move' is @get 'navBarSelection.mode'
 				
-			else
+				currentDrawMode = @get 'landscapeController.currentDrawMode'
 				
-				$el = $(window)
-				mousedown = 'mousedown'
-				mousemove = 'mousemove'
-				mouseout = 'mouseout'
-				mouseover = 'mouseover'
-				mouseup = 'mouseup'
-			
-			$el.off '.environmentDocument'
-			
-			holding = false
-			
-			$environmentDocument.on(
-				"#{mousedown}.environmentDocument"
-				(event) =>
-					
-					return if 'move' is @get 'navBarSelection.mode'
-					
-					currentDrawMode = @get 'landscapeController.currentDrawMode'
-					
-					holding = true
+				setOverlayPosition @positionTranslatedToOverlay [event.clientX, event.clientY]
+				
+				if holding
 					
 					@pushDrawCommand[currentDrawMode].call this, [event.clientX, event.clientY]
-					
-					false
+				
+				false
+		)
+		
+		$environmentDocument.on(
+			"#{mouseout}.environmentDocument"
+			=>
+				
+				return if 'move' is @get 'navBarSelection.mode'
+				
+				$('.draw-overlay', $environmentDocument).hide()
+				
+				false
+		)
+		
+		$environmentDocument.on(
+			"#{mouseover}.environmentDocument"
+			=>
+				
+				return if 'move' is @get 'navBarSelection.mode'
+				
+				$('.draw-overlay', $environmentDocument).show()
+				
+				false
+		)
+		
+		$el.on(
+			"#{mouseup}.environmentDocument"
+			=>
+				
+				return if 'move' is @get 'navBarSelection.mode'
+				
+				return if holding is false
+				
+				@commitDrawCommands()
+				
+				holding = false
+				
+				false
+		)
+		
+		# Attach swiping behaviors to the tileset.
+		swipey = new Swipey $environmentDocument, 'environmentSwipey'
+		swipey.on 'update', (offset) =>
+			
+			return unless (object = @get 'environment.object')?
+			
+			tileSize = object.tileset().tileSize()
+			
+			# Update the tileset image offset.
+			[left, top] = Vector.mul(
+				Vector.floor offset
+				Vector.scale tileSize, -1
 			)
 			
-			setOverlayPosition = (position) ->
-				
-				$('.draw-overlay', $environmentDocument).css
-					left: position[0]
-					top: position[1]
+			$('.layers', $environmentDocument).css left: left, top: top
 			
-			$environmentDocument.on(
-				"#{mousemove}.environmentDocument"
-				(event) =>
-					
-					return if 'move' is @get 'navBarSelection.mode'
-					
-					currentDrawMode = @get 'landscapeController.currentDrawMode'
-					
-					setOverlayPosition @positionTranslatedToOverlay [event.clientX, event.clientY]
-					
-					if holding
-						
-						@pushDrawCommand[currentDrawMode].call this, [event.clientX, event.clientY]
-					
-					false
-			)
-			
-			$environmentDocument.on(
-				"#{mouseout}.environmentDocument"
-				=>
-					
-					return if 'move' is @get 'navBarSelection.mode'
-					
-					$('.draw-overlay', $environmentDocument).hide()
-					
-					false
-			)
-			
-			$environmentDocument.on(
-				"#{mouseover}.environmentDocument"
-				=>
-					
-					return if 'move' is @get 'navBarSelection.mode'
-					
-					$('.draw-overlay', $environmentDocument).show()
-					
-					false
-			)
-			
-			$el.on(
-				"#{mouseup}.environmentDocument"
-				=>
-					
-					return if 'move' is @get 'navBarSelection.mode'
-					
-					return if holding is false
-					
-					@commitDrawCommands()
-					
-					holding = false
-					
-					false
-			)
-			
-			# Attach swiping behaviors to the tileset.
-			swipey = new Swipey $environmentDocument, 'environmentSwipey'
-			swipey.on 'update', (offset) =>
-				
-				return unless (object = @get 'environment.object')?
-				
-				tileSize = object.tileset().tileSize()
-				
-				# Update the tileset image offset.
-				[left, top] = Vector.mul(
-					Vector.floor offset
-					Vector.scale tileSize, -1
-				)
-				
-				$('.layers', $environmentDocument).css left: left, top: top
-				
-			@set 'swipey', swipey
-			
-			offset = $environmentDocument.offset()
-			
-			windowHeight = $(window).height()
-			
-			autoCanvasHeight = windowHeight
-			
-			footerOffset = $('#footer').offset()
-			unless autoCanvasHeight < footerOffset.top
-				autoCanvasHeight -= $('#footer').height()
-			
-			autoCanvasHeight -= offset.top
-			
-			autoCanvasHeight = Math.max(
-				320
+		@set 'swipey', swipey
+		
+		offset = $environmentDocument.offset()
+		
+		windowHeight = $(window).height()
+		
+		autoCanvasHeight = windowHeight
+		
+		footerOffset = $('#footer').offset()
+		unless autoCanvasHeight < footerOffset.top
+			autoCanvasHeight -= $('#footer').height()
+		
+		autoCanvasHeight -= offset.top
+		
+		autoCanvasHeight = Math.max(
+			320
+			autoCanvasHeight
+		)
+		
+		height = Math.max(
+			320
+			if autoCanvasHeight <= 0
+				windowHeight - 40
+			else
 				autoCanvasHeight
-			)
+		)
+		
+		$environmentDocument.css
+			height: height
 			
-			height = Math.max(
-				320
-				if autoCanvasHeight <= 0
-					windowHeight - 40
-				else
-					autoCanvasHeight
-			)
-			
-			$environmentDocument.css
-				height: height
-				
-			$environmentDocument.parent().css
-				background: "url('/app/node.js/persea/static/img/spinner.svg') center no-repeat"
-				'background-size': 'contain'
-			
+		$environmentDocument.parent().css
+			background: "url('/app/node.js/persea/static/img/spinner.svg') center no-repeat"
+			'background-size': 'contain'
+		
+		@handleResize()
+		$(window).resize =>
 			@handleResize()
-			$(window).resize =>
-				@handleResize()
-				
-			@set 'navBarSelection', @get('navBarContent')[0]
 			
-		) jQuery
+		@set 'navBarSelection', @get('navBarContent')[0]
 		
 	roomLayersView: RoomLayersView
 	

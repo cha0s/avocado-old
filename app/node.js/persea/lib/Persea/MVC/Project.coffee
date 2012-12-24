@@ -71,12 +71,6 @@ exports.View = Ember.View.extend
 
 """
 
-#exports.Router =
-#	
-#	actions:
-#		
-#		goToProject: Ember.Route.transitionTo 'root.projects.project.index' 
-
 exports.Route = Ember.Route.extend
 	
 	goToProjectEnvironments: Ember.Route.transitionTo 'environments.index'

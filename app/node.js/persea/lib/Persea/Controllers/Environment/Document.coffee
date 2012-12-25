@@ -15,8 +15,8 @@ module.exports = Ember.Controller.extend
 		
 		@undoStacks = []
 		
-	environmentBinding: 'environmentController.environment'
-	currentRoomBinding: 'environmentController.currentRoom'
+	environmentBinding: Ember.Binding.oneWay 'environmentController.environment'
+	currentRoomBinding: Ember.Binding.oneWay 'environmentController.currentRoom'
 	
 	navBarContent: [
 		mode: 'move'
@@ -44,11 +44,7 @@ module.exports = Ember.Controller.extend
 	navBarView: NavBarView
 	
 	# Convenience property to DRY up client usage of the active undo stack.
-	undoStack: (->
-		return unless (undoGroup = @get 'undoGroup')?
-		
-		undoGroup.activeStack()
-	).property().volatile()
+	undoStack: null
 	
 	undoGroup: null
 	
@@ -57,6 +53,9 @@ module.exports = Ember.Controller.extend
 		return unless (object = @get 'environment.object')?
 		
 		@set 'undoGroup', undoGroup = new UndoGroup()
+		
+		undoGroup.on 'activeStackChanged', (activeStack) =>
+			@set 'undoStack', activeStack
 		
 		@undoStacks = for i in [0...object.roomCount()]
 			new UndoStack undoGroup
@@ -72,7 +71,7 @@ module.exports = Ember.Controller.extend
 		
 	).observes 'currentRoom', 'undoGroup'
 	
-	roomLayers: null
+	roomLayers: []
 	
 	roomLayersChanged: (->
 		
@@ -84,23 +83,48 @@ module.exports = Ember.Controller.extend
 			tilesetObject.tileSize()
 		)
 		
-		roomLayers = Ember.ArrayController.create()
-		content = for i in [0...roomObject.layerCount()]
+		roomLayers = for i in [0...roomObject.layerCount()]
 			Ember.Object.create
 				
 				style: "z-index: #{i * 10};"
 				
 				roomObject: roomObject
 				tilesetObject: tilesetObject
+				layerImage: null
 				
 				width: canvasSize[0]
 				height: canvasSize[1]
 				
 				solo: false
 				
-		roomLayers.set 'content', content
-		 
 		@set 'roomLayers', roomLayers
 		
 	).observes 'currentRoom.object', 'environment.tileset.object'
 
+	updateLayerImage: (position, matrix, layerIndex) ->
+		
+		return unless (roomLayers = @get 'roomLayers')?
+		return unless (tilesetObject = @get 'environment.tileset.object')?
+		
+		layerImage = roomLayers[layerIndex].layerImage
+		tileSize = tilesetObject.tileSize()
+		
+		layerImage.drawFilledBox Rectangle.compose(
+			Vector.mul tileSize, position
+			Vector.mul tileSize, Matrix.sizeVector matrix
+		), 0, 0, 0, 0
+		
+		for row, y in matrix
+			
+			for index, x in row
+		
+				tilesetObject.render(
+					Vector.add(
+						Vector.mul position, tileSize
+						Vector.mul [x, y], tileSize
+					)
+					layerImage
+					index
+				) if index
+				
+		undefined

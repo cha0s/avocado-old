@@ -1,3 +1,5 @@
+Image = require('Graphics').Image
+
 module.exports = Ember.CollectionView.extend
 	
 	attributeBindings: ['unselectable']
@@ -21,6 +23,7 @@ module.exports = Ember.CollectionView.extend
 			
 			layer = new Image()
 			layer.Canvas = $('canvas', $layer)[0]
+			@set 'content.layerImage', layer
 			
 			# Render the layer, row by row.
 			y = 0

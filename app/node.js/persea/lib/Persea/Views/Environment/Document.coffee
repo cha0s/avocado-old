@@ -12,14 +12,15 @@ Vector = require 'core/Extension/Vector'
 
 module.exports = Ember.View.extend
 	
-	currentRoomBinding: 'controller.currentRoom'
-	environmentControllerBinding: 'controller.environmentController'
-	environmentBinding: 'controller.environment'
-	landscapeControllerBinding: 'environmentController.landscapeController'
-	roomLayersBinding: 'controller.roomLayers'
-	navBarContentBinding: 'controller.navBarContent'
-	navBarSelectionBinding: 'controller.navBarSelection'
-	undoGroupBinding: 'controller.undoGroup'
+	currentRoomBinding: Ember.Binding.oneWay 'controller.currentRoom'
+	environmentControllerBinding: Ember.Binding.oneWay 'controller.environmentController'
+	environmentBinding: Ember.Binding.oneWay 'controller.environment'
+	landscapeControllerBinding: Ember.Binding.oneWay 'environmentController.landscapeController'
+	navBarContentBinding: Ember.Binding.oneWay 'controller.navBarContent'
+	navBarSelectionBinding: Ember.Binding.oneWay 'controller.navBarSelection'
+	roomLayersBinding: Ember.Binding.oneWay 'controller.roomLayers'
+	undoGroupBinding: Ember.Binding.oneWay 'controller.undoGroup'
+	undoStackBinding: Ember.Binding.oneWay 'controller.undoStack'
 	
 	attributeBindings: ['unselectable']
 	unselectable: 'on'
@@ -113,16 +114,15 @@ z-index: #{zIndex}
 		
 		currentLayerIndex = @get 'landscapeController.currentLayerIndex'
 		roomLayers = @get 'roomLayers'
-		roomLayersContent = roomLayers.get 'content'
 		solo = @get 'landscapeController.solo'
 		
 		if solo
 			
-			for roomLayer, index in roomLayersContent
+			for roomLayer, index in roomLayers
 				roomLayer.set 'solo', currentLayerIndex isnt index
 			
 		else
-			roomLayer.set 'solo', false for roomLayer in roomLayersContent
+			roomLayer.set 'solo', false for roomLayer in roomLayers
 			
 	).observes(
 		'landscapeController.currentLayerIndex'
@@ -146,17 +146,21 @@ z-index: #{zIndex}
 				not canRedo
 			)
 		
-		undoGroup.on 'activeStackChanged', (activeStack) ->
+	).observes 'undoGroup'
+	
+	undoStackChanged: (->
 		
-			$('#document-undo').closest('li').toggleClass(
-				'disabled'
-				not activeStack.canUndo()
-			)
+		return unless (undoStack = @get 'undoStack')?
 		
-			$('#document-redo').closest('li').toggleClass(
-				'disabled'
-				not activeStack.canRedo()
-			)
+		$('#document-undo').closest('li').toggleClass(
+			'disabled'
+			not undoStack.canUndo()
+		)
+	
+		$('#document-redo').closest('li').toggleClass(
+			'disabled'
+			not undoStack.canRedo()
+		)
 			
 	).observes 'undoGroup'
 	
@@ -260,45 +264,14 @@ z-index: #{zIndex}
 				
 		tileMatrix
 	
-	updateCanvas: (position, matrix, layerIndex) ->
-	
-		return unless (roomObject = @get 'currentRoom.object')?
-		return unless (tilesetObject = @get 'environment.tileset.object')?
-		
-		$environmentDocument = $('#environment-document')
-		layer = roomObject.layer layerIndex
-		tileSize = tilesetObject.tileSize()
-		
-		layerImage = new Image()
-		layerImage.Canvas = $('.layers canvas', $environmentDocument).eq(layerIndex)[0]
-		
-		layerImage.drawFilledBox Rectangle.compose(
-			Vector.mul tileSize, position
-			Vector.mul tileSize, Matrix.sizeVector matrix
-		), 0, 0, 0, 0
-		
-		for row, y in matrix
-			
-			for index, x in row
-		
-				tilesetObject.render(
-					Vector.add(
-						Vector.mul position, tileSize
-						Vector.mul [x, y], tileSize
-					)
-					layerImage
-					index
-				) if index
-				
-		undefined
-
 	paintTiles: (position, matrix, layerIndex) ->
 		
 		return unless (roomObject = @get 'currentRoom.object')?
 		
+		controller = @get 'controller'
 		layer = roomObject.layer layerIndex
 		
-		@updateCanvas position, matrix, layerIndex
+		controller.updateLayerImage position, matrix, layerIndex
 		
 		layer.setTileMatrix matrix, position
 		
@@ -307,14 +280,9 @@ z-index: #{zIndex}
 		return unless (roomObject = @get 'currentRoom.object')?
 		return unless (tilesetObject = @get 'environment.tileset.object')?
 		
-		tileSize = tilesetObject.tileSize()
-		
+		controller = @get 'controller'
 		layer = roomObject.layer layerIndex
-		
-		layerImage = new Image()
-		layerImage.Canvas = @$().find('.layers canvas').eq(layerIndex)[0]
-		
-		self = this
+		tileSize = tilesetObject.tileSize()
 		
 		LayerFloodfill = class extends Floodfill
 			
@@ -331,7 +299,7 @@ z-index: #{zIndex}
 				
 				layer.setTileMatrix matrix, [x, y]
 				
-				self.updateCanvas [x, y], matrix, layerIndex
+				controller.updateLayerImage [x, y], matrix, layerIndex
 				
 		floodfill = new LayerFloodfill roomObject.size(), Matrix.sizeVector matrix
 		
@@ -342,14 +310,9 @@ z-index: #{zIndex}
 		return unless (roomObject = @get 'currentRoom.object')?
 		return unless (tilesetObject = @get 'environment.tileset.object')?
 		
-		tileSize = tilesetObject.tileSize()
-		
+		controller = @get 'controller'
 		layer = roomObject.layer layerIndex
-		
-		layerImage = new Image()
-		layerImage.Canvas = @$().find('.layers canvas').eq(layerIndex)[0]
-		
-		self = this
+		tileSize = tilesetObject.tileSize()
 		
 		LayerRandomFloodfill = class extends Floodfill
 			
@@ -371,7 +334,7 @@ z-index: #{zIndex}
 				
 				layer.setTileMatrix value, [x, y]
 				
-				self.updateCanvas [x, y], value, layerIndex
+				controller.updateLayerImage [x, y], value, layerIndex
 		
 		floodfill = new LayerRandomFloodfill roomObject.size(), [1, 1]
 		
@@ -388,11 +351,11 @@ z-index: #{zIndex}
 		
 			return unless (roomObject = @get 'currentRoom.object')?
 			
+			controller = @get 'controller'
 			currentLayerIndex = @get 'landscapeController.currentLayerIndex'
 			layer = roomObject.layer currentLayerIndex
 			position = @positionTranslatedToLayer position
 			selectionMatrix = @tileMatrixFromSelectionMatrix()
-			self = this
 			tileMatrix = layer.tileMatrix(
 				Matrix.sizeVector selectionMatrix
 				position
@@ -402,35 +365,43 @@ z-index: #{zIndex}
 				
 				Vector.equals draw.position, position
 			
-			unless hasDraw?
-			
-				@draws.push
-					position: position
-					
-					undo: _.bind(
-						@paintTiles, this
-						position, tileMatrix, currentLayerIndex
-					)
-					redo: _.bind(
-						@paintTiles, this
-						position, selectionMatrix, currentLayerIndex
-					)
+			oldMatrix = layer.tileMatrix(
+				Matrix.sizeVector selectionMatrix
+				position
+			)
 			
 			@paintTiles(
 				position
 				selectionMatrix
 				currentLayerIndex
 			)
-		
+			
+			newMatrix = layer.tileMatrix(
+				Matrix.sizeVector selectionMatrix
+				position
+			)
+			
+			unless hasDraw?
+			
+				@draws.push
+					position: position
+					
+					undo: ->
+						layer.setTileMatrix oldMatrix, position
+						controller.updateLayerImage position, oldMatrix, currentLayerIndex
+					redo: ->
+						layer.setTileMatrix newMatrix, position
+						controller.updateLayerImage position, newMatrix, currentLayerIndex
+			
 		Floodfill: (position) ->
 		
 			return unless (roomObject = @get 'currentRoom.object')?
 			
+			controller = @get 'controller'
 			currentLayerIndex = @get 'landscapeController.currentLayerIndex'
 			layer = roomObject.layer currentLayerIndex
 			position = @positionTranslatedToLayer position
 			selectionMatrix = @tileMatrixFromSelectionMatrix()
-			self = this
 			tileMatrix = layer.tileMatrix(
 				Matrix.sizeVector selectionMatrix
 				position
@@ -463,20 +434,20 @@ z-index: #{zIndex}
 					
 					undo: ->
 						layer.setTileMatrix oldMatrix, [0, 0]
-						self.updateCanvas [0, 0], oldMatrix, currentLayerIndex
+						controller.updateLayerImage [0, 0], oldMatrix, currentLayerIndex
 					redo: ->
 						layer.setTileMatrix newMatrix, [0, 0]
-						self.updateCanvas [0, 0], newMatrix, currentLayerIndex
+						controller.updateLayerImage [0, 0], newMatrix, currentLayerIndex
 			
 		'Random flood': (position) ->
 		
 			return unless (roomObject = @get 'currentRoom.object')?
 			
+			controller = @get 'controller'
 			currentLayerIndex = @get 'landscapeController.currentLayerIndex'
 			layer = roomObject.layer currentLayerIndex
 			position = @positionTranslatedToLayer position
 			selectionMatrix = @tileMatrixFromSelectionMatrix()
-			self = this
 			tileMatrix = layer.tileMatrix(
 				Matrix.sizeVector selectionMatrix
 				position
@@ -509,15 +480,15 @@ z-index: #{zIndex}
 					
 					undo: ->
 						layer.setTileMatrix oldMatrix, [0, 0]
-						self.updateCanvas [0, 0], oldMatrix, currentLayerIndex
+						controller.updateLayerImage [0, 0], oldMatrix, currentLayerIndex
 					redo: ->
 						layer.setTileMatrix newMatrix, [0, 0]
-						self.updateCanvas [0, 0], newMatrix, currentLayerIndex
+						controller.updateLayerImage [0, 0], newMatrix, currentLayerIndex
 			
 	commitDrawCommands: ->
 		
 		return if @draws.length is 0
-		return unless (undoStack = @get 'controller.undoStack')?		
+		return unless (undoStack = @get 'undoStack')?		
 		
 		draws = _.map @draws, _.identity
 		
@@ -549,11 +520,21 @@ z-index: #{zIndex}
 		@draws = []
 		
 		$('#document-undo').click =>
-			@get('controller.undoStack')?.undo()
+			(@get 'undoStack')?.undo()
 			false
 		$('#document-redo').click =>
-			@get('controller.undoStack')?.redo()
+			(@get 'undoStack')?.redo()
 			false
+			
+		undoStack = @get 'undoStack'
+		$('#document-undo').closest('li').toggleClass(
+			'disabled'
+			not undoStack?.canUndo()
+		)
+		$('#document-redo').closest('li').toggleClass(
+			'disabled'
+			not undoStack?.canRedo()
+		)
 		
 		$environmentDocument = $('#environment-document')
 		

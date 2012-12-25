@@ -36,10 +36,7 @@ module.exports = class
 			swipeOffset[0] = offset[0]
 			swipeOffset[1] = offset[1]
 		
-		@offset = -> [
-			swipeOffset[0]
-			swipeOffset[1]
-		]
+		@offset = -> Vector.floor swipeOffset
 		
 		@setMinMax [0, 0], [0, 0]
 		
@@ -88,7 +85,7 @@ module.exports = class
 					
 					swipeOffset[i] = offset[i] for i in [0..1]
 					
-					@emit 'update', swipeOffset
+					@emit 'update', @offset()
 					
 				false
 					
@@ -144,7 +141,7 @@ module.exports = class
 					500
 				)
 				
-				update = => @emit 'update', swipeOffset
+				update = => @emit 'update', @offset()
 				
 				swiping.defer.then(
 					update

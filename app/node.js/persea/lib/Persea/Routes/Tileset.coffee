@@ -65,7 +65,7 @@ height: #{height}px;
 	gridChanged: (->
 	
 		return unless (object = @get 'tileset.object')?
-		return if ($gridCanvas = $('.grid', @$())).length is 0
+		return if ($gridCanvas = @$('.grid')).length is 0
 		
 		gridImage = new Image()
 		tileImage = new Image object.tileSize()
@@ -122,7 +122,7 @@ height: #{height}px;
 	didInsertElement: ->
 	
 		# Attach swiping behaviors to the tileset.
-		swipey = new Swipey $('.image-container', @$()), 'tilesetSwipey'
+		swipey = new Swipey @$('.image-container'), 'tilesetSwipey'
 		swipey.on 'update', (offset) =>
 			
 			return unless (object = @get 'tileset.object')?
@@ -135,7 +135,7 @@ height: #{height}px;
 				Vector.scale tileSize, -1
 			)
 			
-			$('.image', @$()).css left: left, top: top
+			@$('.image').css left: left, top: top
 			
 		@set 'swipey', swipey
 		

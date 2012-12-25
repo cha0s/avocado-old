@@ -277,7 +277,7 @@ height: #{object.image().height()}px;
 			
 		@set 'swipey', swipey
 		
-		$solo = @$().find('.solo')
+		$solo = @$('.solo')
 		$solo.change =>
 			
 			@set 'solo', $solo.find('input').attr('checked')?

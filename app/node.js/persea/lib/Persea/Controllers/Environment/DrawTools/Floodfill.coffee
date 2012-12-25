@@ -107,11 +107,3 @@ module.exports = Ember.Object.create
 		mousemove: (event, documentView) ->
 			
 			@setOverlayPosition documentView, documentView.positionTranslatedToOverlay [event.clientX, event.clientY]
-			
-		mouseover: (event, documentView) ->
-		
-			documentView.$('.draw-overlay').show()
-			
-		mouseout: (event, documentView) ->
-			
-			documentView.$('.draw-overlay').hide()

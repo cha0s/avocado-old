@@ -386,6 +386,8 @@ z-index: #{zIndex}
 				
 				return if 'move' is @get 'navBarSelection.mode'
 				
+				@$('.draw-overlay').hide()
+				
 				currentDrawTool = @get 'landscapeController.currentDrawTool'
 				currentDrawTool.eventHandler['mouseout']?.call currentDrawTool, event, this
 				
@@ -397,6 +399,8 @@ z-index: #{zIndex}
 			(event) =>
 				
 				return if 'move' is @get 'navBarSelection.mode'
+				
+				@$('.draw-overlay').show()
 				
 				currentDrawTool = @get 'landscapeController.currentDrawTool'
 				currentDrawTool.eventHandler['mouseover']?.call currentDrawTool, event, this

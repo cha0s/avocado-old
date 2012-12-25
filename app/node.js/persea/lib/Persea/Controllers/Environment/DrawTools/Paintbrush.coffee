@@ -81,11 +81,3 @@ module.exports = Ember.Object.create
 			return unless documentView.get 'drawing'
 			
 			@draw [event.clientX, event.clientY], documentView
-			
-		mouseover: (event, documentView) ->
-		
-			documentView.$('.draw-overlay').show()
-			
-		mouseout: (event, documentView) ->
-			
-			documentView.$('.draw-overlay').hide()

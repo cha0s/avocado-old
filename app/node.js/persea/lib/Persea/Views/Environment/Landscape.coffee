@@ -280,7 +280,7 @@ height: #{object.image().height()}px;
 		$solo = @$('.solo')
 		$solo.change =>
 			
-			@set 'solo', $solo.find('input').attr('checked')?
+			@set 'solo', $('input', $solo).attr('checked')?
 			
 			return true
 		

@@ -152,17 +152,12 @@ z-index: #{zIndex}
 		
 		return unless (undoStack = @get 'undoStack')?
 		
-		$('#document-undo').closest('li').toggleClass(
-			'disabled'
-			not undoStack.canUndo()
-		)
-	
-		$('#document-redo').closest('li').toggleClass(
-			'disabled'
-			not undoStack.canRedo()
-		)
+		$('#document-undo, #document-redo').each (i, elm) =>
+			$(elm).closest('li').toggleClass(
+				'disabled', not undoStack?["can#{['Undo', 'Redo'][i]}"]()
+			)
 			
-	).observes 'undoGroup'
+	).observes 'undoStack'
 	
 	selectedModeChanged: (->
 		
@@ -519,22 +514,14 @@ z-index: #{zIndex}
 		
 		@draws = []
 		
-		$('#document-undo').click =>
-			(@get 'undoStack')?.undo()
-			false
-		$('#document-redo').click =>
-			(@get 'undoStack')?.redo()
-			false
-			
-		undoStack = @get 'undoStack'
-		$('#document-undo').closest('li').toggleClass(
-			'disabled'
-			not undoStack?.canUndo()
-		)
-		$('#document-redo').closest('li').toggleClass(
-			'disabled'
-			not undoStack?.canRedo()
-		)
+		controller = @get 'controller'
+		
+		$('#document-undo, #document-redo').each (i, elm) =>
+			$(elm).click =>
+				(@get 'undoStack')?[['undo', 'redo'][i]]()
+				false
+
+		controller.roomChanged()
 		
 		$environmentDocument = $('#environment-document')
 		

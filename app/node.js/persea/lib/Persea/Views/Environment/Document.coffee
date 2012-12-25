@@ -77,7 +77,7 @@ module.exports = Ember.View.extend
 			$el.parent().css
 				background: 'none'
 			
-			@get('controller').swipeyReset()
+			@swipeyReset()
 			
 		75
 	).observes 'currentRoom.object', 'environment.object'

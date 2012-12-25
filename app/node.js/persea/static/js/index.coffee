@@ -16,7 +16,7 @@ mvcs = [
 	
 	'Environment', 'Environments'
 	'Project', 'Projects'
-	'Tileset'
+	'Tileset', 'Tilesets'
 ]
 
 app =

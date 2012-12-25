@@ -148,7 +148,11 @@ background-size: contain;
 	tilesetImageStyle: (->
 		
 		if (object = @get 'environment.tileset.object')?
-			"background-image: url(/resource#{object.image().uri()}); width: #{object.image().width()}px; height: #{object.image().height()}px;"
+			"
+background-image: url(/resource#{object.image().uri()}); 
+width: #{object.image().width()}px; 
+height: #{object.image().height()}px;
+"
 		else
 			'background: none;'
 		

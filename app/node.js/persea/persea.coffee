@@ -14,9 +14,6 @@ app.set 'view engine', 'html'
 
 require('../common/process-sources') app, "../../.."
 
-perseaFiles = helpers.gatherFilesRecursiveSync('./lib').map (filename) ->
-	src: filename.replace './lib', '/app/node.js/persea/lib'
-
 helpers.serveModuleFiles(
 	app
 	resourcePath
@@ -25,8 +22,6 @@ helpers.serveModuleFiles(
 ) for resourcePath in [
 	/^\/app\/node.js\/persea\/lib\/.*/
 ]
-
-app.locals.perseaFiles = perseaFiles
 
 # Catch-all. Actually send any processed code we've handled.
 app.get /.*/, (req, res, next) ->
@@ -47,7 +42,15 @@ app.get /.*/, (req, res, next) ->
 	
 app.get '/', (req, res) ->
 	
-	res.render 'index', {}, (error, html) ->
+	fileLists = require('../common/file-lists')()
+	
+	locals =
+		perseaFiles: helpers.gatherFilesRecursiveSync('./lib').map (filename) ->
+			src: filename.replace './lib', '/app/node.js/persea/lib'
+		coreFiles: fileLists.coreFiles
+		bindingFiles: fileLists.bindingFiles
+	
+	res.render 'index', locals, (error, html) ->
 		
 		res.end html
 

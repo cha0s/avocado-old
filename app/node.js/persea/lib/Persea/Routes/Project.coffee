@@ -1,5 +1,6 @@
 
 Environments = require 'Persea/Routes/Environments'
+Tilesets = require 'Persea/Routes/Tilesets'
 
 ProjectModel = require 'Persea/Models/Project'
 
@@ -37,9 +38,9 @@ exports.View = Ember.View.extend
 				<div class="navbar-inner">
 					<h2>Resources</h2>
 					<ul class="nav">
-						<li><a {{action goToProjectEnvironments content href=true}}><i class="icon-globe"></i> Environments ({{environments.length}})</a></li>
+						<li><a {{action goToProjectEnvironments content href=true}} ><i class="icon-globe"></i> Environments ({{environments.length}})</a></li>
 						<li><a href="#"><i class="icon-user"></i> Entities ({{entities.length}})</a></li>
-						<li><a href="#"><i class="icon-th"></i> Tilesets ({{tilesets.length}})</a></li>
+						<li><a {{action goToProjectTilesets content href=true}} ><i class="icon-th"></i> Tilesets ({{tilesets.length}})</a></li>
 						<li><a href="#"><i class="icon-film"></i> Animations ({{animations.length}})</a></li>
 					</ul>
 				</div>
@@ -69,6 +70,7 @@ exports.View = Ember.View.extend
 exports.Route = Ember.Route.extend
 	
 	goToProjectEnvironments: Ember.Route.transitionTo 'environments.index'
+	goToProjectTilesets: Ember.Route.transitionTo 'tilesets.index'
 	
 	route: '/:id'
 	
@@ -103,3 +105,5 @@ exports.Route = Ember.Route.extend
 			router.get('applicationController').connectOutlet 'body', 'project'
 			
 	environments: Environments.Route
+	tilesets: Tilesets.Route
+	

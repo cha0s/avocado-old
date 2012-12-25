@@ -53,6 +53,7 @@ module.exports = Environment = class
 	roomCount: -> @rooms_.length
 	
 	tileset: -> @tileset_
+	setTileset: (@tileset_) ->
 	
 	name: -> if @name_ is '' then @uri_ else @name_
 	setName: (@name_) ->

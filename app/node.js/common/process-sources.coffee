@@ -1,4 +1,3 @@
-_ = require 'core/Utility/underscore'
 coffee = require 'coffee-script'
 fs = require 'fs'
 helpers = require './helpers'
@@ -10,20 +9,6 @@ module.exports = (
 	app
 	rootPath = '../../..'
 ) ->
-	
-	# Build the list of core files. We'll generate script tags for each to
-	# send to the client.
-	app.locals.coreFiles = _.map(
-		helpers.gatherFilesRecursiveSync "#{rootPath}/engine/core", "/engine/core"
-		(filename) -> src: filename.replace rootPath, ''
-	)
-	
-	# Build the list of bindings. We'll generate script tags for each to
-	# send to the client.
-	app.locals.bindingFiles = _.map(
-		helpers.gatherFilesRecursiveSync "#{rootPath}/engine/main/web/Bindings", "/engine/main/web/Bindings"
-		(filename) -> src: filename.replace rootPath, ''
-	)
 	
 	helpers.preprocessFiles(
 		app

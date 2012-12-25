@@ -12,6 +12,7 @@ module.exports = Tileset = class
 		@image_ = null
 		@tileSize_ = [0, 0]
 		@tiles_ = [0, 0]
+		@name_ = ''
 	
 	fromObject: (O) ->
 		
@@ -54,7 +55,14 @@ module.exports = Tileset = class
 		
 		tileset
 	
+	name: -> if @name_ is '' then @uri_ else @name_
+	setName: (@name_) ->
+	
 	tileSize: -> @tileSize_
+	
+	tileWidth: -> @tileSize_[0]
+	tileHeight: -> @tileSize_[1]
+	
 	setTileSize: (w, h) ->
 		
 		@tileSize_ = if h? then [w, h] else w
@@ -62,6 +70,9 @@ module.exports = Tileset = class
 		return unless @image_?
 
 		@tiles_ = Vector.div @image_.size(), @tileSize_
+	
+	setTileWidth: (width) -> @setTileSize width, @tileHeight()
+	setTileHeight: (height) -> @setTileSize @tileWidth(), height
 	
 	tiles: -> @tiles_
 	

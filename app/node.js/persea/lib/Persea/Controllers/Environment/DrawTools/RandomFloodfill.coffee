@@ -74,7 +74,7 @@ module.exports = Ember.Object.create
 			layer, selectionMatrix, currentLayerIndex, controller
 		)
 		
-		index = if 1 is Matrix.size selectionMatrix then matrix[0][0] else -1
+		index = if 1 is Matrix.size selectionMatrix then selectionMatrix[0][0] else -1
 		floodfill.fillAt position[0], position[1], index
 	
 		newMatrix = layer.tileMatrix(

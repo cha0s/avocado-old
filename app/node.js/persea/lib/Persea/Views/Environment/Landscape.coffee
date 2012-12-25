@@ -205,7 +205,7 @@ height: #{object.image().height()}px;
 		$tileset.on(
 			"#{mousedown}.environmentLandscapeTileset"
 			(event) =>
-				console.log 'hi'
+				
 				return if 'move' is @get 'navBarSelection.mode'
 				
 				holding = true

@@ -16,15 +16,28 @@ module.exports = Ember.Controller.extend
 	navBarSelection: null
 	
 	drawLabel: 'With'
-	drawContent: [
-		'Paintbrush'
-		'Floodfill'
-		'Random flood'
-	]
-	currentDrawMode: 'Paintbrush'
+	drawTools: []
+	currentDrawTool: null
 	
 	layersLabel: 'Layer'
 	layersContent: [0, 1, 2, 3, 4]
 	currentLayerIndex: 0
 	
 	solo: false
+	
+	_initDrawTools: ->
+		
+		drawTools = for drawTool in [
+			'Paintbrush'
+			'Floodfill'
+			'RandomFloodfill'
+		]
+			
+			require "Persea/Controllers/Environment/DrawTools/#{drawTool}"
+			
+		@set 'drawTools', drawTools
+		@set 'currentDrawTool', drawTools[0]
+	
+	init: ->
+		
+		@_initDrawTools()

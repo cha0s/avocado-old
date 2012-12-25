@@ -291,8 +291,9 @@ height: #{object.image().height()}px;
 <h3>Draw</h3>
 <div class="draw">
 	{{view Bootstrap.Forms.Select
-		contentBinding="drawContent"
-		selectionBinding="currentDrawMode"
+		contentBinding="drawTools"
+		optionLabelPath="content.label"
+		selectionBinding="currentDrawTool"
 		labelBinding="drawLabel"
 	}}
 </div>

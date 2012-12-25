@@ -259,233 +259,12 @@ z-index: #{zIndex}
 				
 		tileMatrix
 	
-	paintTiles: (position, matrix, layerIndex) ->
-		
-		return unless (roomObject = @get 'currentRoom.object')?
-		
-		controller = @get 'controller'
-		layer = roomObject.layer layerIndex
-		
-		controller.updateLayerImage position, matrix, layerIndex
-		
-		layer.setTileMatrix matrix, position
-		
-	floodfillTiles: (position, matrix, layerIndex) ->
-		
-		return unless (roomObject = @get 'currentRoom.object')?
-		return unless (tilesetObject = @get 'environment.tileset.object')?
-		
-		controller = @get 'controller'
-		layer = roomObject.layer layerIndex
-		tileSize = tilesetObject.tileSize()
-		
-		LayerFloodfill = class extends Floodfill
-			
-			valueEquals: Matrix.equals
-				
-			value: (x, y) ->
-				
-				layer.tileMatrix(
-					Matrix.sizeVector matrix
-					[x, y]
-				)
-			
-			setValue: (x, y, matrix) ->
-				
-				layer.setTileMatrix matrix, [x, y]
-				
-				controller.updateLayerImage [x, y], matrix, layerIndex
-				
-		floodfill = new LayerFloodfill roomObject.size(), Matrix.sizeVector matrix
-		
-		floodfill.fillAt position[0], position[1], matrix
-		
-	randomFloodfillTiles: (position, matrix, layerIndex) ->
-		
-		return unless (roomObject = @get 'currentRoom.object')?
-		return unless (tilesetObject = @get 'environment.tileset.object')?
-		
-		controller = @get 'controller'
-		layer = roomObject.layer layerIndex
-		tileSize = tilesetObject.tileSize()
-		
-		LayerRandomFloodfill = class extends Floodfill
-			
-			valueEquals: Matrix.equals
-				
-			value: (x, y) ->
-				
-				layer.tileMatrix(
-					[1, 1]
-					[x, y]
-				)
-			
-			setValue: (x, y, unused) ->
-				
-				column = Math.floor matrix.length * Math.random()
-				row = Math.floor matrix[0].length * Math.random()
-				
-				value = [[matrix[column][row]]]
-				
-				layer.setTileMatrix value, [x, y]
-				
-				controller.updateLayerImage [x, y], value, layerIndex
-		
-		floodfill = new LayerRandomFloodfill roomObject.size(), [1, 1]
-		
-		index = if 1 is Matrix.size matrix then matrix[0][0] else -1
-		
-		floodfill.fillAt(
-			position[0], position[1]
-			index
-		)
-		
-	pushDrawCommand:
-		
-		Paintbrush: (position) ->
-		
-			return unless (roomObject = @get 'currentRoom.object')?
-			
-			controller = @get 'controller'
-			currentLayerIndex = @get 'landscapeController.currentLayerIndex'
-			layer = roomObject.layer currentLayerIndex
-			position = @positionTranslatedToLayer position
-			selectionMatrix = @tileMatrixFromSelectionMatrix()
-			tileMatrix = layer.tileMatrix(
-				Matrix.sizeVector selectionMatrix
-				position
-			)
-			
-			hasDraw = _.find @draws, (draw) ->
-				
-				Vector.equals draw.position, position
-			
-			oldMatrix = layer.tileMatrix(
-				Matrix.sizeVector selectionMatrix
-				position
-			)
-			
-			@paintTiles(
-				position
-				selectionMatrix
-				currentLayerIndex
-			)
-			
-			newMatrix = layer.tileMatrix(
-				Matrix.sizeVector selectionMatrix
-				position
-			)
-			
-			unless hasDraw?
-			
-				@draws.push
-					position: position
-					
-					undo: ->
-						layer.setTileMatrix oldMatrix, position
-						controller.updateLayerImage position, oldMatrix, currentLayerIndex
-					redo: ->
-						layer.setTileMatrix newMatrix, position
-						controller.updateLayerImage position, newMatrix, currentLayerIndex
-			
-		Floodfill: (position) ->
-		
-			return unless (roomObject = @get 'currentRoom.object')?
-			
-			controller = @get 'controller'
-			currentLayerIndex = @get 'landscapeController.currentLayerIndex'
-			layer = roomObject.layer currentLayerIndex
-			position = @positionTranslatedToLayer position
-			selectionMatrix = @tileMatrixFromSelectionMatrix()
-			tileMatrix = layer.tileMatrix(
-				Matrix.sizeVector selectionMatrix
-				position
-			)
-			
-			hasDraw = _.find @draws, (draw) ->
-				
-				Vector.equals draw.position, position
-			
-			oldMatrix = layer.tileMatrix(
-				roomObject.size()
-				[0, 0]
-			)
-			
-			@floodfillTiles(
-				position
-				selectionMatrix
-				currentLayerIndex
-			)
-		
-			newMatrix = layer.tileMatrix(
-				roomObject.size()
-				[0, 0]
-			)
-			
-			unless hasDraw?
-			
-				@draws.push
-					position: position
-					
-					undo: ->
-						layer.setTileMatrix oldMatrix, [0, 0]
-						controller.updateLayerImage [0, 0], oldMatrix, currentLayerIndex
-					redo: ->
-						layer.setTileMatrix newMatrix, [0, 0]
-						controller.updateLayerImage [0, 0], newMatrix, currentLayerIndex
-			
-		'Random flood': (position) ->
-		
-			return unless (roomObject = @get 'currentRoom.object')?
-			
-			controller = @get 'controller'
-			currentLayerIndex = @get 'landscapeController.currentLayerIndex'
-			layer = roomObject.layer currentLayerIndex
-			position = @positionTranslatedToLayer position
-			selectionMatrix = @tileMatrixFromSelectionMatrix()
-			tileMatrix = layer.tileMatrix(
-				Matrix.sizeVector selectionMatrix
-				position
-			)
-			
-			hasDraw = _.find @draws, (draw) ->
-				
-				Vector.equals draw.position, position
-			
-			oldMatrix = layer.tileMatrix(
-				roomObject.size()
-				[0, 0]
-			)
-			
-			@randomFloodfillTiles(
-				position
-				selectionMatrix
-				currentLayerIndex
-			)
-		
-			newMatrix = layer.tileMatrix(
-				roomObject.size()
-				[0, 0]
-			)
-			
-			unless hasDraw?
-			
-				@draws.push
-					position: position
-					
-					undo: ->
-						layer.setTileMatrix oldMatrix, [0, 0]
-						controller.updateLayerImage [0, 0], oldMatrix, currentLayerIndex
-					redo: ->
-						layer.setTileMatrix newMatrix, [0, 0]
-						controller.updateLayerImage [0, 0], newMatrix, currentLayerIndex
-			
 	commitDrawCommands: ->
 		
-		return if @draws.length is 0
+		return if (drawCommands = @get 'drawCommands').length is 0
 		return unless (undoStack = @get 'undoStack')?		
 		
-		draws = _.map @draws, _.identity
+		draws = _.map drawCommands, _.identity
 		
 		ranFirstRedo = false
 		
@@ -508,11 +287,7 @@ z-index: #{zIndex}
 						
 				ranFirstRedo = true
 		
-		@draws = []
-		
 	didInsertElement: ->
-		
-		@draws = []
 		
 		controller = @get 'controller'
 		
@@ -567,20 +342,14 @@ z-index: #{zIndex}
 				
 				return if 'move' is @get 'navBarSelection.mode'
 				
-				currentDrawMode = @get 'landscapeController.currentDrawMode'
+				@set 'drawing', true
+				@set 'drawCommands', []
 				
-				holding = true
-				
-				@pushDrawCommand[currentDrawMode].call this, [event.clientX, event.clientY]
+				currentDrawTool = @get 'landscapeController.currentDrawTool'
+				currentDrawTool.eventHandler['mousedown']?.call currentDrawTool, event, this
 				
 				false
 		)
-		
-		setOverlayPosition = (position) ->
-			
-			$('.draw-overlay', $environmentDocument).css
-				left: position[0]
-				top: position[1]
 		
 		$environmentDocument.on(
 			"#{mousemove}.environmentDocument"
@@ -588,50 +357,50 @@ z-index: #{zIndex}
 				
 				return if 'move' is @get 'navBarSelection.mode'
 				
-				currentDrawMode = @get 'landscapeController.currentDrawMode'
-				
-				setOverlayPosition @positionTranslatedToOverlay [event.clientX, event.clientY]
-				
-				if holding
-					
-					@pushDrawCommand[currentDrawMode].call this, [event.clientX, event.clientY]
-				
-				false
-		)
-		
-		$environmentDocument.on(
-			"#{mouseout}.environmentDocument"
-			=>
-				
-				return if 'move' is @get 'navBarSelection.mode'
-				
-				$('.draw-overlay', $environmentDocument).hide()
-				
-				false
-		)
-		
-		$environmentDocument.on(
-			"#{mouseover}.environmentDocument"
-			=>
-				
-				return if 'move' is @get 'navBarSelection.mode'
-				
-				$('.draw-overlay', $environmentDocument).show()
+				currentDrawTool = @get 'landscapeController.currentDrawTool'
+				currentDrawTool.eventHandler['mousemove']?.call currentDrawTool, event, this
 				
 				false
 		)
 		
 		$el.on(
 			"#{mouseup}.environmentDocument"
-			=>
+			(event) =>
 				
 				return if 'move' is @get 'navBarSelection.mode'
 				
-				return if holding is false
+				return unless @get 'drawing'
+				
+				currentDrawTool = @get 'landscapeController.currentDrawTool'
+				currentDrawTool.eventHandler['mouseup']?.call currentDrawTool, event, this
 				
 				@commitDrawCommands()
 				
-				holding = false
+				@set 'drawing', false
+				
+				false
+		)
+		
+		$environmentDocument.on(
+			"#{mouseout}.environmentDocument"
+			(event) =>
+				
+				return if 'move' is @get 'navBarSelection.mode'
+				
+				currentDrawTool = @get 'landscapeController.currentDrawTool'
+				currentDrawTool.eventHandler['mouseout']?.call currentDrawTool, event, this
+				
+				false
+		)
+		
+		$environmentDocument.on(
+			"#{mouseover}.environmentDocument"
+			(event) =>
+				
+				return if 'move' is @get 'navBarSelection.mode'
+				
+				currentDrawTool = @get 'landscapeController.currentDrawTool'
+				currentDrawTool.eventHandler['mouseover']?.call currentDrawTool, event, this
 				
 				false
 		)

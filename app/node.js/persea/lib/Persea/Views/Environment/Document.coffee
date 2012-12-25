@@ -85,29 +85,28 @@ module.exports = Ember.View.extend
 		
 	drawOverlayStyle: (->
 		
-		return '' unless (matrix = @get 'landscapeController.tilesetSelectionMatrix')?
-		return '' unless (tilesetObject = @get 'environment.tileset.object')?
+		return '' if 'move' is @get 'navBarSelection.mode'
+		
+		currentDrawTool = @get 'landscapeController.currentDrawTool'
+		return "" unless (properties = currentDrawTool.drawOverlayStyle? this)?
+		{left, top, width, height, imageUrl} = properties
 		
 		currentLayerIndex = @get 'landscapeController.currentLayerIndex'
-		tileSize = tilesetObject.tileSize()
-		
-		left = tileSize[0] * -matrix[0]
-		top = tileSize[1] * -matrix[1]
-		width = tileSize[0] * matrix[2]
-		height = tileSize[1] * matrix[3]
 		zIndex = currentLayerIndex * 10 + 1
 		
 		"
 background-position: #{left}px #{top}px; 
 width: #{width}px; height: #{height}px; 
-background-image: url('/resource#{tilesetObject.image().uri()}');
+background-image: url('/resource#{imageUrl}'); 
 z-index: #{zIndex}
 "
 
 	).property(
 		'environment.object'
+		'landscapeController.currentDrawTool'
 		'landscapeController.currentLayerIndex'
 		'landscapeController.tilesetSelectionMatrix'
+		'navBarSelection.mode'
 	)
 	
 	soloChanged: (->

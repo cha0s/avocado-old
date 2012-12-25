@@ -40,9 +40,7 @@ module.exports = Ember.Object.create
 	
 	init: ->
 		
-		@draws = []
-		
-		undefined
+		@shuffleInterval = null
 	
 	label: 'Random floodfill'
 	
@@ -98,6 +96,33 @@ module.exports = Ember.Object.create
 			left: position[0]
 			top: position[1]
 	
+	drawOverlayStyle: (documentController) ->
+		
+		return unless (matrix = documentController.get 'landscapeController.tilesetSelectionMatrix')?
+		return unless (tilesetObject = documentController.get 'environment.tileset.object')?
+		
+		tileSize = tilesetObject.tileSize()
+		
+		clearInterval @shuffleInterval if @shuffleInterval?
+		@shuffleInterval = setInterval(
+			=>
+				return unless this is documentController.get 'landscapeController.currentDrawTool'
+				
+				left = tileSize[0] * -(matrix[0] + Math.floor Math.random() * matrix[2])
+				top = tileSize[1] * -(matrix[1] + Math.floor Math.random() * matrix[3])
+				
+				documentController.$('.draw-overlay').css
+					'background-position': "#{left}px #{top}px";
+				
+			100
+		)
+		
+		left: tileSize[0] * -matrix[0]
+		top: tileSize[1] * -matrix[1]
+		width: tileSize[0]
+		height: tileSize[1]
+		imageUrl: tilesetObject.image().uri()
+		
 	eventHandler:
 		
 		mousedown: (event, documentView) ->

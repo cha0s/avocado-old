@@ -3,12 +3,6 @@ Vector = require 'core/Extension/Vector'
 
 module.exports = Ember.Object.create
 	
-	init: ->
-		
-		@draws = []
-		
-		undefined
-	
 	label: 'Paintbrush'
 	
 	draw: (position, documentView) ->
@@ -61,6 +55,19 @@ module.exports = Ember.Object.create
 			left: position[0]
 			top: position[1]
 	
+	drawOverlayStyle: (documentController) ->
+		
+		return unless (matrix = documentController.get 'landscapeController.tilesetSelectionMatrix')?
+		return unless (tilesetObject = documentController.get 'environment.tileset.object')?
+		
+		tileSize = tilesetObject.tileSize()
+		
+		left: tileSize[0] * -matrix[0]
+		top: tileSize[1] * -matrix[1]
+		width: tileSize[0] * matrix[2]
+		height: tileSize[1] * matrix[3]
+		imageUrl: tilesetObject.image().uri()
+		
 	eventHandler:
 		
 		mousedown: (event, documentView) ->

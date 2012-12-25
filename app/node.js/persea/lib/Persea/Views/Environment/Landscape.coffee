@@ -267,7 +267,7 @@ height: #{object.image().height()}px;
 			
 			# Update the tileset image offset.
 			[left, top] = Vector.mul(
-				Vector.floor offset
+				offset
 				Vector.scale tileSize, -1
 			)
 			

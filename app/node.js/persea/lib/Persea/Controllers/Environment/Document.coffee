@@ -76,12 +76,12 @@ module.exports = Ember.Controller.extend
 	
 	roomLayersChanged: (->
 		
-		return unless (environmentObject = @get 'environment.object')?
 		return unless (roomObject = @get 'currentRoom.object')?
+		return unless (tilesetObject = @get 'environment.tileset.object')?
 		
 		canvasSize = Vector.mul(
 			roomObject.size()
-			environmentObject.tileset().tileSize()
+			tilesetObject.tileSize()
 		)
 		
 		roomLayers = Ember.ArrayController.create()
@@ -91,7 +91,7 @@ module.exports = Ember.Controller.extend
 				style: "z-index: #{i * 10};"
 				
 				roomObject: roomObject
-				environmentObject: environmentObject
+				tilesetObject: tilesetObject
 				
 				width: canvasSize[0]
 				height: canvasSize[1]
@@ -102,5 +102,5 @@ module.exports = Ember.Controller.extend
 		 
 		@set 'roomLayers', roomLayers
 		
-	).observes 'currentRoom.object', 'environment.object'
+	).observes 'currentRoom.object', 'environment.tileset.object'
 

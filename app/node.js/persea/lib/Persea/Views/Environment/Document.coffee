@@ -27,15 +27,15 @@ module.exports = Ember.View.extend
 	handleResize: _.throttle(
 		->
 			
-			return unless (environmentObject = @get 'environment.object')?
 			return unless (roomObject = @get 'currentRoom.object')?
+			return unless (tilesetObject = @get 'environment.tileset.object')?
 			
 			$el = $ '#environment-document'
 			
 			documentOffset = $el.offset()
 			$row = $el.parent()
 			rowOffset = $row.offset()
-			tileSize = environmentObject.tileset().tileSize()
+			tileSize = tilesetObject.tileSize()
 			
 			# Calcuate the maximum width and height that the layout will allow
 			# for the canvas.
@@ -84,12 +84,11 @@ module.exports = Ember.View.extend
 		
 	drawOverlayStyle: (->
 		
-		return '' unless (environmentObject = @get 'environment.object')?
 		return '' unless (matrix = @get 'landscapeController.tilesetSelectionMatrix')?
+		return '' unless (tilesetObject = @get 'environment.tileset.object')?
 		
 		currentLayerIndex = @get 'landscapeController.currentLayerIndex'
-		tileset = environmentObject.tileset()
-		tileSize = tileset.tileSize()
+		tileSize = tilesetObject.tileSize()
 		
 		left = tileSize[0] * -matrix[0]
 		top = tileSize[1] * -matrix[1]
@@ -100,7 +99,7 @@ module.exports = Ember.View.extend
 		"
 background-position: #{left}px #{top}px; 
 width: #{width}px; height: #{height}px; 
-background-image: url('/resource#{tileset.image().uri()}');
+background-image: url('/resource#{tilesetObject.image().uri()}');
 z-index: #{zIndex}
 "
 
@@ -183,11 +182,9 @@ z-index: #{zIndex}
 	
 	swipeyReset: (->
 		
-		return unless (environmentObject = @get 'environment.object')?
 		return unless (roomObject = @get 'currentRoom.object')?
 		return unless (swipey = @get 'swipey')?
-		
-		tileset = environmentObject.tileset()
+		return unless (tilesetObject = @get 'environment.tileset.object')?
 		
 		$environmentDocument = $('#environment-document')
 		
@@ -200,21 +197,20 @@ z-index: #{zIndex}
 						$environmentDocument.width()
 						$environmentDocument.height()
 					]
-					tileset.tileSize()
+					tilesetObject.tileSize()
 				)
 			)
 		)
 		
 		swipey.setOffset [0, 0]
 		
-	).observes 'currentRoom.object', 'environment.object', 'swipey'
+	).observes 'currentRoom.object', 'environment.tileset.object', 'swipey'
 
 	positionTranslatedToTile: (position) ->
 		
-		return [0, 0] unless (environmentObject = @get 'environment.object')?
+		return [0, 0] unless (tilesetObject = @get 'environment.tileset.object')?
 		
 		$environmentDocument = $('#environment-document')
-		tileset = environmentObject.tileset()
 		offset = $environmentDocument.offset()
 		
 		position = Vector.sub(
@@ -225,7 +221,7 @@ z-index: #{zIndex}
 			[offset.left, offset.top]
 		)
 		
-		position = Vector.floor Vector.div position, tileset.tileSize()
+		position = Vector.floor Vector.div position, tilesetObject.tileSize()
 		
 	positionTranslatedToLayer: (position) ->
 		
@@ -237,22 +233,18 @@ z-index: #{zIndex}
 		
 	positionTranslatedToOverlay: (position) ->
 		
-		return [0, 0] unless (environmentObject = @get 'environment.object')?
-		
-		tileset = environmentObject.tileset()
-		
+		return [0, 0] unless (tilesetObject = @get 'environment.tileset.object')?
+				
 		position = @positionTranslatedToTile position
 		
-		position = Vector.mul position, tileset.tileSize()
+		position = Vector.mul position, tilesetObject.tileSize()
 		
 	tileMatrixFromSelectionMatrix: (selectionMatrix) ->
 		
-		return [[0]] unless (environmentObject = @get 'environment.object')?
 		return [[0]] unless (selectionMatrix = @get 'landscapeController.tilesetSelectionMatrix')?
+		return [[0]] unless (tilesetObject = @get 'environment.tileset.object')?
 		
-		tileset = environmentObject.tileset()
-		
-		index = selectionMatrix[1] * tileset.tiles()[0] + selectionMatrix[0]
+		index = selectionMatrix[1] * tilesetObject.tiles()[0] + selectionMatrix[0]
 		
 		tileMatrix = []
 		for y in [0...selectionMatrix[3]]
@@ -262,7 +254,7 @@ z-index: #{zIndex}
 			
 			for x in [0...selectionMatrix[2]]
 				
-				tileIndex = index + y * tileset.tiles()[0] + x
+				tileIndex = index + y * tilesetObject.tiles()[0] + x
 				
 				row.push tileIndex
 				
@@ -270,13 +262,12 @@ z-index: #{zIndex}
 	
 	updateCanvas: (position, matrix, layerIndex) ->
 	
-		return unless (environmentObject = @get 'environment.object')?
 		return unless (roomObject = @get 'currentRoom.object')?
+		return unless (tilesetObject = @get 'environment.tileset.object')?
 		
 		$environmentDocument = $('#environment-document')
 		layer = roomObject.layer layerIndex
-		tileset = environmentObject.tileset()
-		tileSize = tileset.tileSize()
+		tileSize = tilesetObject.tileSize()
 		
 		layerImage = new Image()
 		layerImage.Canvas = $('.layers canvas', $environmentDocument).eq(layerIndex)[0]
@@ -290,7 +281,7 @@ z-index: #{zIndex}
 			
 			for index, x in row
 		
-				tileset.render(
+				tilesetObject.render(
 					Vector.add(
 						Vector.mul position, tileSize
 						Vector.mul [x, y], tileSize
@@ -303,9 +294,7 @@ z-index: #{zIndex}
 
 	paintTiles: (position, matrix, layerIndex) ->
 		
-		return unless (environmentObject = @get 'environment.object')?
 		return unless (roomObject = @get 'currentRoom.object')?
-		return unless (swipey = @get 'swipey')?
 		
 		layer = roomObject.layer layerIndex
 		
@@ -315,12 +304,10 @@ z-index: #{zIndex}
 		
 	floodfillTiles: (position, matrix, layerIndex) ->
 		
-		return unless (environmentObject = @get 'environment.object')?
 		return unless (roomObject = @get 'currentRoom.object')?
-		return unless (swipey = @get 'swipey')?
+		return unless (tilesetObject = @get 'environment.tileset.object')?
 		
-		tileset = environmentObject.tileset()
-		tileSize = tileset.tileSize()
+		tileSize = tilesetObject.tileSize()
 		
 		layer = roomObject.layer layerIndex
 		
@@ -352,12 +339,10 @@ z-index: #{zIndex}
 		
 	randomFloodfillTiles: (position, matrix, layerIndex) ->
 		
-		return unless (environmentObject = @get 'environment.object')?
 		return unless (roomObject = @get 'currentRoom.object')?
-		return unless (swipey = @get 'swipey')?
+		return unless (tilesetObject = @get 'environment.tileset.object')?
 		
-		tileset = environmentObject.tileset()
-		tileSize = tileset.tileSize()
+		tileSize = tilesetObject.tileSize()
 		
 		layer = roomObject.layer layerIndex
 		
@@ -687,13 +672,13 @@ z-index: #{zIndex}
 		swipey = new Swipey $environmentDocument, 'environmentSwipey'
 		swipey.on 'update', (offset) =>
 			
-			return unless (object = @get 'environment.object')?
+			return unless (tilesetObject = @get 'environment.tileset.object')?
 			
-			tileSize = object.tileset().tileSize()
+			tileSize = tilesetObject.tileSize()
 			
 			# Update the tileset image offset.
 			[left, top] = Vector.mul(
-				Vector.floor offset
+				offset
 				Vector.scale tileSize, -1
 			)
 			

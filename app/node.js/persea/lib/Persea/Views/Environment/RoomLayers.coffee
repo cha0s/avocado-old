@@ -13,12 +13,11 @@ module.exports = Ember.CollectionView.extend
 			$layer = @$()
 			
 			roomObject = @get 'content.roomObject'
-			environmentObject = @get 'content.environmentObject'
+			tilesetObject = @get 'content.tilesetObject'
 			
 			sizeInTiles = roomObject.size()
-			tileset = environmentObject.tileset()
 			tileIndices = roomObject.layer($layer.index()).tileIndices_
-			tileSize = tileset.tileSize()
+			tileSize = tilesetObject.tileSize()
 			
 			layer = new Image()
 			layer.Canvas = $('canvas', $layer)[0]
@@ -30,7 +29,7 @@ module.exports = Ember.CollectionView.extend
 			(renderTile = =>
 				for x in [0...sizeInTiles[0]]
 					if index = tileIndices[indexPointer++]
-						tileset.render(
+						tilesetObject.render(
 							renderPosition
 							layer
 							index

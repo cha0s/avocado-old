@@ -65,7 +65,7 @@ height: #{height}px;
 	gridChanged: (->
 	
 		return unless (object = @get 'tileset.object')?
-		return if ($gridCanvas = @$('.grid')).length is 0
+		return unless ($gridCanvas = @$('.grid'))?
 		
 		gridImage = new Image()
 		tileImage = new Image object.tileSize()

@@ -1,4 +1,5 @@
 Image = require('Graphics').Image
+Vector = require 'core/Extension/Vector'
 
 module.exports = Ember.CollectionView.extend
 	
@@ -7,8 +8,33 @@ module.exports = Ember.CollectionView.extend
 	
 	itemViewClass: Ember.View.extend
 		
-		attributeBindings: ['unselectable']
+		attributeBindings: ['unselectable', 'style']
 		unselectable: 'on'
+		
+		style: (->
+			
+			index = @get 'content.index'
+			
+			"
+z-index: #{index * 10};
+	"
+		).property 'content.index'
+		
+		layerStyle: (->
+			
+			roomObject = @get 'content.roomObject'
+			tilesetObject = @get 'content.tilesetObject'
+			
+			canvasSize = Vector.scale(
+				Vector.mul roomObject.size(), tilesetObject.tileSize()
+				@get 'parentView.zoomRatio'
+			)
+			
+			"
+width: #{canvasSize[0]}px; height: #{canvasSize[1]}px; 
+"
+			
+		).property 'parentView.zoomRatio'
 		
 		didInsertElement: ->
 			
@@ -56,7 +82,7 @@ module.exports = Ember.CollectionView.extend
 	class="canvas"
 	{{bindAttr width="view.content.width"}}
 	{{bindAttr height="view.content.height"}}
-	{{bindAttr style="view.content.style"}}
+	{{bindAttr style="view.layerStyle"}}
 	{{bindAttr solo="view.content.solo"}}
 >
 </canvas>

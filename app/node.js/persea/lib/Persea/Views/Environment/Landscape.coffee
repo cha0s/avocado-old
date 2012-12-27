@@ -101,6 +101,8 @@ module.exports = Ember.View.extend
 		return unless (object = @get 'environment.tileset.object')?
 		return unless (swipey = @get 'swipey')?
 		
+		swipey.area = Vector.copy object.tileSize()
+		
 		swipey.setMinMax(
 			[0, 0]
 			Vector.sub(
@@ -258,7 +260,7 @@ height: #{object.image().height()}px;
 		)
 		
 		# Attach swiping behaviors to the tileset.
-		swipey = new Swipey $tileset, 'tilesetSwipey'
+		swipey = new Swipey $tileset, [0, 0], 'tilesetSwipey'
 		swipey.on 'update', (offset) =>
 			
 			return unless (object = @get 'environment.tileset.object')?

@@ -156,14 +156,28 @@
               display: none;
             }
             
-            position: relative;
+            image-rendering: optimizeSpeed;
+            image-rendering: crisp-edges;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: optimize-contrast;
+            -ms-interpolation-mode: nearest-neighbor;
           }
         }
       }
       
       .draw-overlay {
         position: absolute;
+        overflow: hidden;
         display: none;
+        
+        .image {
+          position: absolute;
+          
+          img {
+            position: relative;
+          }
+        }
       }
     }
   }

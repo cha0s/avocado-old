@@ -8,8 +8,9 @@ UndoCommand = require 'Persea/Undo/Command'
 UndoStack = require 'Persea/Undo/Stack'
 UndoGroup = require 'Persea/Undo/Group'
 Vector = require 'core/Extension/Vector'
+Zoom = require 'Persea/Mixins/Zoom'
 
-module.exports = Ember.Controller.extend
+module.exports = Ember.Controller.extend Zoom,
 	
 	init: ->
 		
@@ -39,6 +40,19 @@ module.exports = Ember.Controller.extend
 		noSelect: true
 		i: 'icon-forward'
 		title: 'Redo the last undone action.'
+	,
+		noLink: true
+		text: '|'
+	,
+		id: 'document-zoom-out'
+		noSelect: true
+		i: 'icon-zoom-out'
+		title: 'Zoom out from the environment.'
+	,
+		id: 'document-zoom-in'
+		noSelect: true
+		i: 'icon-zoom-in'
+		title: 'Zoom in to the environment.'
 	]
 	navBarSelection: null
 	navBarView: NavBarView
@@ -86,7 +100,7 @@ module.exports = Ember.Controller.extend
 		roomLayers = for i in [0...roomObject.layerCount()]
 			Ember.Object.create
 				
-				style: "z-index: #{i * 10};"
+				index: i
 				
 				roomObject: roomObject
 				tilesetObject: tilesetObject

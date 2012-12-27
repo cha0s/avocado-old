@@ -55,10 +55,10 @@ module.exports = Ember.Object.create
 			left: position[0]
 			top: position[1]
 	
-	drawOverlayStyle: (documentController) ->
+	drawOverlayStyle: (documentView) ->
 		
-		return unless (matrix = documentController.get 'landscapeController.tilesetSelectionMatrix')?
-		return unless (tilesetObject = documentController.get 'environment.tileset.object')?
+		return unless (matrix = documentView.get 'landscapeController.tilesetSelectionMatrix')?
+		return unless (tilesetObject = documentView.get 'environment.tileset.object')?
 		
 		tileSize = tilesetObject.tileSize()
 		

@@ -8,6 +8,7 @@ module.exports = class
 	
 	constructor: (
 		@el
+		@area
 		@namespace = 'swipey'
 	) ->
 		
@@ -24,13 +25,20 @@ module.exports = class
 		swipeOffset.setY = (y) -> @[1] = y
 		Mixin swipeOffset, Transition
 		
+		@setArea = (@area) ->
+		
 		swiping = null
 		
 		holding = false
 		holdStartPosition = [0, 0]
 		holdStartOffset = [0, 0]
 		
-		@setMinMax = (@min, @max) => @emit 'update', swipeOffset
+		@setMinMax = (@min, @max) =>
+			
+			clamped = Vector.clamp swipeOffset, @min, @max
+			swipeOffset[i] = clamped[i] for i in [0..1]
+			
+			@emit 'update', swipeOffset
 		
 		@setOffset = (offset) ->
 			swipeOffset[0] = offset[0]
@@ -75,7 +83,7 @@ module.exports = class
 					
 					position = [event.clientX, event.clientY]
 					delta = Vector.sub position, holdStartPosition
-					delta = Vector.floor Vector.scale delta, -1/16
+					delta = Vector.floor Vector.div delta, Vector.scale @area, -1
 					
 					offset = Vector.clamp(
 						Vector.add delta, holdStartOffset
@@ -125,7 +133,7 @@ module.exports = class
 						1.2
 					)
 				
-				delta = Vector.floor Vector.scale delta, 1/16
+				delta = Vector.floor Vector.div delta, @area
 				delta = Vector.mul delta, dp
 				
 				destination = Vector.clamp(

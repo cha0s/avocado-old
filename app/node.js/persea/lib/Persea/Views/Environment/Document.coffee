@@ -17,10 +17,13 @@ module.exports = Ember.View.extend
 	environmentBinding: Ember.Binding.oneWay 'controller.environment'
 	landscapeControllerBinding: Ember.Binding.oneWay 'environmentController.landscapeController'
 	navBarContentBinding: Ember.Binding.oneWay 'controller.navBarContent'
-	navBarSelectionBinding: Ember.Binding.oneWay 'controller.navBarSelection'
+	navBarSelectionBinding: 'controller.navBarSelection'
 	roomLayersBinding: Ember.Binding.oneWay 'controller.roomLayers'
 	undoGroupBinding: Ember.Binding.oneWay 'controller.undoGroup'
 	undoStackBinding: Ember.Binding.oneWay 'controller.undoStack'
+	zoomMayDecreaseBinding: Ember.Binding.oneWay 'controller.zoomMayDecrease'
+	zoomMayIncreaseBinding: Ember.Binding.oneWay 'controller.zoomMayIncrease'
+	zoomRatioBinding: Ember.Binding.oneWay 'controller.zoomRatio'
 	
 	attributeBindings: ['unselectable']
 	unselectable: 'on'
@@ -36,7 +39,7 @@ module.exports = Ember.View.extend
 			documentOffset = $el.offset()
 			$row = $el.parent()
 			rowOffset = $row.offset()
-			tileSize = tilesetObject.tileSize()
+			tileSize = Vector.scale tilesetObject.tileSize(), @get 'zoomRatio'
 			
 			# Calcuate the maximum width and height that the layout will allow
 			# for the canvas.
@@ -81,7 +84,7 @@ module.exports = Ember.View.extend
 			@swipeyReset()
 			
 		75
-	).observes 'currentRoom.object', 'environment.object'
+	).observes 'currentRoom.object', 'environment.object', 'zoomRatio'
 		
 	drawOverlayStyle: (->
 		
@@ -89,18 +92,92 @@ module.exports = Ember.View.extend
 		
 		currentDrawTool = @get 'landscapeController.currentDrawTool'
 		return "" unless (properties = currentDrawTool.drawOverlayStyle? this)?
-		{left, top, width, height, imageUrl} = properties
+		{width, height} = properties
+		
+		zoomRatio = @get 'zoomRatio'
+		[width, height] = Vector.scale [width, height], zoomRatio
 		
 		currentLayerIndex = @get 'landscapeController.currentLayerIndex'
 		zIndex = currentLayerIndex * 10 + 1
 		
 		"
-background-position: #{left}px #{top}px; 
 width: #{width}px; height: #{height}px; 
-background-image: url('/resource#{imageUrl}'); 
-z-index: #{zIndex}
+z-index: #{zIndex};
 "
 
+	).property(
+		'environment.object'
+		'landscapeController.currentDrawTool'
+		'landscapeController.currentLayerIndex'
+		'landscapeController.tilesetSelectionMatrix'
+		'navBarSelection.mode'
+		'zoomRatio'
+	)
+	
+	drawOverlayImageStyle: (->
+		
+		return '' if 'move' is @get 'navBarSelection.mode'
+		
+		return '' unless (tilesetObject = @get 'environment.tileset.object')?
+		
+		currentDrawTool = @get 'landscapeController.currentDrawTool'
+		return "" unless (properties = currentDrawTool.drawOverlayStyle? this)?
+		{top, left} = properties
+		
+		zoomRatio = @get 'zoomRatio'
+		
+		imageSize = Vector.scale tilesetObject.image().size(), zoomRatio
+		[left, top] = Vector.scale [left, top], zoomRatio
+		
+		"
+width: #{imageSize[0]}px; height: #{imageSize[1]}px; 
+top: #{top}px; left: #{left}px;
+"
+
+	).property(
+		'environment.tileset.object'
+		'landscapeController.currentDrawTool'
+		'landscapeController.currentLayerIndex'
+		'landscapeController.tilesetSelectionMatrix'
+		'navBarSelection.mode'
+		'zoomRatio'
+	)
+	
+	drawOverlayImgStyle: (->
+		
+		return '' if 'move' is @get 'navBarSelection.mode'
+		
+		return '' unless (tilesetObject = @get 'environment.tileset.object')?
+		
+		currentDrawTool = @get 'landscapeController.currentDrawTool'
+		return "" unless (properties = currentDrawTool.drawOverlayStyle? this)?
+		{top, left} = properties
+		
+		imageSize = Vector.scale tilesetObject.image().size(), @get 'zoomRatio'
+		
+		"
+width: #{imageSize[0]}px; height: #{imageSize[1]}px; 
+"
+
+	).property(
+		'environment.tileset.object'
+		'landscapeController.currentDrawTool'
+		'landscapeController.currentLayerIndex'
+		'landscapeController.tilesetSelectionMatrix'
+		'navBarSelection.mode'
+		'zoomRatio'
+	)
+	
+	drawOverlayImgSrc: (->
+		
+		return '/app/node.js/persea/static/img/spinner.svg' if 'move' is @get 'navBarSelection.mode'
+		
+		currentDrawTool = @get 'landscapeController.currentDrawTool'
+		return '/app/node.js/persea/static/img/spinner.svg' unless (properties = currentDrawTool.drawOverlayStyle? this)?
+		{imageUrl} = properties
+		
+		"/resource#{imageUrl}"
+		
 	).property(
 		'environment.object'
 		'landscapeController.currentDrawTool'
@@ -186,6 +263,9 @@ z-index: #{zIndex}
 		
 		$environmentDocument = $('#environment-document')
 		
+		area = Vector.scale tilesetObject.tileSize(), @get 'zoomRatio'
+		swipey.area = area
+		
 		swipey.setMinMax(
 			[0, 0]
 			Vector.sub(
@@ -195,10 +275,18 @@ z-index: #{zIndex}
 						$environmentDocument.width()
 						$environmentDocument.height()
 					]
-					tilesetObject.tileSize()
+					area
 				)
 			)
 		)
+		
+	).observes 'currentRoom.object', 'environment.tileset.object', 'swipey', 'zoomRatio'
+
+	swipeyPositionReset: (->
+		
+		return unless (roomObject = @get 'currentRoom.object')?
+		return unless (swipey = @get 'swipey')?
+		return unless (tilesetObject = @get 'environment.tileset.object')?
 		
 		swipey.setOffset [0, 0]
 		
@@ -219,7 +307,7 @@ z-index: #{zIndex}
 			[offset.left, offset.top]
 		)
 		
-		position = Vector.floor Vector.div position, tilesetObject.tileSize()
+		position = Vector.floor Vector.div position, Vector.scale tilesetObject.tileSize(), @get 'zoomRatio'
 		
 	positionTranslatedToLayer: (position) ->
 		
@@ -235,7 +323,7 @@ z-index: #{zIndex}
 				
 		position = @positionTranslatedToTile position
 		
-		position = Vector.mul position, tilesetObject.tileSize()
+		position = Vector.mul position, Vector.scale tilesetObject.tileSize(), @get 'zoomRatio'
 		
 	tileMatrixFromSelectionMatrix: (selectionMatrix) ->
 		
@@ -286,6 +374,20 @@ z-index: #{zIndex}
 						
 				ranFirstRedo = true
 		
+	zoomMayDecreaseChanged: (->
+		@$('#document-zoom-out').closest('li').toggleClass(
+			'disabled'
+			not @get 'zoomMayDecrease'
+		)
+	).observes 'zoomMayDecrease'
+		
+	zoomMayIncreaseChanged: (->
+		@$('#document-zoom-in').closest('li').toggleClass(
+			'disabled'
+			not @get 'zoomMayIncrease'
+		)
+	).observes 'zoomMayIncrease'
+		
 	didInsertElement: ->
 		
 		controller = @get 'controller'
@@ -296,6 +398,9 @@ z-index: #{zIndex}
 				false
 
 		controller.roomChanged()
+		
+		@zoomMayDecreaseChanged()
+		@zoomMayIncreaseChanged()
 		
 		$environmentDocument = $('#environment-document')
 		
@@ -332,6 +437,12 @@ z-index: #{zIndex}
 			mouseup = 'mouseup'
 		
 		$el.off '.environmentDocument'
+		
+		$('#document-zoom-in').click ->
+			controller.increaseZoom()
+		
+		$('#document-zoom-out').click ->
+			controller.decreaseZoom()
 		
 		holding = false
 		
@@ -409,17 +520,20 @@ z-index: #{zIndex}
 		)
 		
 		# Attach swiping behaviors to the tileset.
-		swipey = new Swipey $environmentDocument, 'environmentSwipey'
+		swipey = new Swipey $environmentDocument, [1, 1], 'environmentSwipey'
 		swipey.on 'update', (offset) =>
 			
 			return unless (tilesetObject = @get 'environment.tileset.object')?
 			
 			tileSize = tilesetObject.tileSize()
 			
-			# Update the tileset image offset.
+			# Update the layer image offset.
 			[left, top] = Vector.mul(
 				offset
-				Vector.scale tileSize, -1
+				Vector.scale(
+					Vector.scale tileSize, @get 'zoomRatio'
+					-1
+				)
 			)
 			
 			$('.layers', $environmentDocument).css left: left, top: top
@@ -478,11 +592,21 @@ z-index: #{zIndex}
 </div>
 
 <div id="environment-document">
-	<div class="draw-overlay" {{bindAttr style="view.drawOverlayStyle"}} ></div>
+	<div class="draw-overlay" {{bindAttr style="view.drawOverlayStyle"}} >
+		<div class="image"
+			{{bindAttr style="view.drawOverlayImageStyle"}}
+		>
+			<img
+				{{bindAttr style="view.drawOverlayImgStyle"}}
+				{{bindAttr src="view.drawOverlayImgSrc"}}
+			/>
+		</div>
+	</div>
 	
 	{{view view.roomLayersView
 		class="layers"
 		contentBinding="roomLayers"
+		zoomRatioBinding="zoomRatio"
 	}}
 	
 </div>

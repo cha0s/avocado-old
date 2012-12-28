@@ -1,6 +1,7 @@
 Vector = require 'core/Extension/Vector'
+Zoom = require 'Persea/Mixins/Zoom'
 
-module.exports = Ember.Controller.extend
+module.exports = Ember.Controller.extend Zoom,
 	
 	environmentBinding: 'environmentController.environment'
 	
@@ -12,6 +13,19 @@ module.exports = Ember.Controller.extend
 		mode: 'edit'
 		i: 'icon-pencil'
 		title: 'Edit: Click/tap and drag to select tiles.'
+	,
+		noLink: true
+		text: '|'
+	,
+		id: 'tileset-zoom-out'
+		noSelect: true
+		i: 'icon-zoom-out'
+		title: 'Zoom out from the environment.'
+	,
+		id: 'tileset-zoom-in'
+		noSelect: true
+		i: 'icon-zoom-in'
+		title: 'Zoom in to the environment.'
 	]
 	navBarSelection: null
 	

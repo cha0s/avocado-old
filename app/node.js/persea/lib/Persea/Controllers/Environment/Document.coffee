@@ -10,7 +10,9 @@ UndoGroup = require 'Persea/Undo/Group'
 Vector = require 'core/Extension/Vector'
 Zoom = require 'Persea/Mixins/Zoom'
 
-module.exports = Ember.Controller.extend Zoom,
+DocumentZoom = Ember.Mixin.create Zoom, zoomLevel: 200
+
+module.exports = Ember.Controller.extend DocumentZoom,
 	
 	init: ->
 		
@@ -22,11 +24,11 @@ module.exports = Ember.Controller.extend Zoom,
 	navBarContent: [
 		mode: 'move'
 		i: 'icon-move'
-		title: 'Move: Click and drag or swipe to move the environment.'
+		title: 'Move: Click and drag or swipe to move within the room.'
 	,
 		mode: 'edit'
 		i: 'icon-pencil'
-		title: 'Edit: Click/tap and drag to draw upon the environment.'
+		title: 'Edit: Click/tap and drag to draw upon the current layer.'
 	,
 		noLink: true
 		text: '|'
@@ -47,12 +49,20 @@ module.exports = Ember.Controller.extend Zoom,
 		id: 'document-zoom-out'
 		noSelect: true
 		i: 'icon-zoom-out'
-		title: 'Zoom out from the environment.'
+		title: 'Zoom out from the room.'
 	,
 		id: 'document-zoom-in'
 		noSelect: true
 		i: 'icon-zoom-in'
-		title: 'Zoom in to the environment.'
+		title: 'Zoom in to the room.'
+	,
+		noLink: true
+		text: '|'
+	,
+		id: 'document-resize'
+		noSelect: true
+		i: 'icon-cog'
+		title: 'Resize this room.'
 	]
 	navBarSelection: null
 	navBarView: NavBarView

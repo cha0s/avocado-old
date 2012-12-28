@@ -47,6 +47,7 @@ module.exports = Ember.View.extend
 			
 			windowHeight = $(window).height()
 			height = windowHeight
+			height -= @$('.statusbar').outerHeight true
 			unless height < $('#footer').offset().top
 				height -= $('#footer').height()
 			height -= documentOffset.top
@@ -617,7 +618,7 @@ width: #{imageSize[0]}px; height: #{imageSize[1]}px;
 	
 </div>
 
-<div class="well well-small">
+<div class="well well-small statusbar">
 <strong>Tile:</strong>
 <span class="on-tile">[N/A, N/A]</span>
 </div>

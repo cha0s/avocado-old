@@ -11,14 +11,17 @@ module.exports = Ember.View.extend
 	soloBinding: 'controller.solo'
 	swipey: null
 	tilesetSelectionMatrixBinding: 'controller.tilesetSelectionMatrix'
+	zoomMayDecreaseBinding: Ember.Binding.oneWay 'controller.zoomMayDecrease'
+	zoomMayIncreaseBinding: Ember.Binding.oneWay 'controller.zoomMayIncrease'
+	zoomRatioBinding: Ember.Binding.oneWay 'controller.zoomRatio'
 	
 	classNames: ['landscape']
 	
 	tileAt: (position) ->
 		
-		return unless (object = @get 'environment.tileset.object')?
+		return unless (tilesetObject = @get 'environment.tileset.object')?
 		
-		tileSize = object.tileSize()
+		tileSize = Vector.scale tilesetObject.tileSize(), @get 'zoomRatio'
 		
 		position = Vector.add position, [
 			$(window).scrollLeft()
@@ -51,11 +54,11 @@ module.exports = Ember.View.extend
 		
 	updateSelectionDimensions: ->
 		
-		return unless (object = @get 'environment.tileset.object')?
+		return unless (tilesetObject = @get 'environment.tileset.object')?
 		
 		tilesetSelectionMatrix = @get 'tilesetSelectionMatrix'
 		
-		tileSize = object.tileSize()
+		tileSize = Vector.scale tilesetObject.tileSize(), @get 'controller.zoomRatio'
 		
 		position = $('#tileset .image').position()
 		
@@ -98,23 +101,25 @@ module.exports = Ember.View.extend
 	
 	setSwipeyMinMax: (->
 		
-		return unless (object = @get 'environment.tileset.object')?
+		return unless (tilesetObject = @get 'environment.tileset.object')?
 		return unless (swipey = @get 'swipey')?
 		
-		swipey.area = Vector.copy object.tileSize()
+		area = Vector.scale tilesetObject.tileSize(), @get 'zoomRatio'
+		
+		swipey.area = area
 		
 		swipey.setMinMax(
 			[0, 0]
 			Vector.sub(
-				object.tiles()
+				tilesetObject.tiles()
 				Vector.floor Vector.div(
 					[256, 256]
-					object.tileSize()
+					area
 				)
 			)
 		)
 		
-	).observes 'environment.tileset.object', 'swipey'
+	).observes 'environment.tileset.object', 'swipey', 'zoomRatio'
 	
 	tilesetStyle: (->
 		
@@ -132,7 +137,7 @@ module.exports = Ember.View.extend
 				
 				cursor = 'default'
 		
-		if (object = @get 'environment.tileset.object')?
+		if (@get 'environment.tileset.object')?
 			"
 cursor: #{cursor}; 
 background: none;
@@ -149,25 +154,56 @@ background-size: contain;
 	
 	tilesetImageStyle: (->
 		
-		if (object = @get 'environment.tileset.object')?
+		if (tilesetObject = @get 'environment.tileset.object')?
+			
+			size = Vector.scale tilesetObject.image().size(), @get 'zoomRatio'
+			
 			"
-background-image: url(/resource#{object.image().uri()}); 
-width: #{object.image().width()}px; 
-height: #{object.image().height()}px;
+background-image: url(/resource#{tilesetObject.image().uri()}); 
+width: #{size[0]}px; 
+height: #{size[1]}px; 
+background-size: contain;
 "
 		else
-			'background: none;'
+			
+			"
+background: none;
+"
 		
-	).property 'environment.tileset.object'
+	).property 'environment.tileset.object', 'zoomRatio'
 	
 	navBarView: NavBarView
 	
+	zoomMayDecreaseChanged: (->
+		@$('#tileset-zoom-out').closest('li').toggleClass(
+			'disabled'
+			not @get 'zoomMayDecrease'
+		)
+	).observes 'zoomMayDecrease'
+		
+	zoomMayIncreaseChanged: (->
+		@$('#tileset-zoom-in').closest('li').toggleClass(
+			'disabled'
+			not @get 'zoomMayIncrease'
+		)
+	).observes 'zoomMayIncrease'
+		
 	didInsertElement: ->
+		
+		controller = @get 'controller'
+		
+		$('#tileset-zoom-out, #tileset-zoom-in').each (i, elm) =>
+			$(elm).click =>
+				controller[['decreaseZoom', 'increaseZoom'][i]]()
+				@updateSelectionDimensions()
 		
 		@set 'tilesetSelectionMatrix', [0, 0, 1, 1]
 		
 		# Reset the tileset selection.
 		@updateSelectionDimensions()
+		
+		@zoomMayDecreaseChanged()
+		@zoomMayIncreaseChanged()
 		
 		$tileset = $('#tileset')
 		
@@ -241,9 +277,9 @@ height: #{object.image().height()}px;
 				
 				return unless holding
 				return if 'move' is @get 'navBarSelection.mode'
-				return unless (object = @get 'environment.tileset.object')?
+				return unless (tilesetObject = @get 'environment.tileset.object')?
 				
-				tileSize = object.tileSize()
+				tileSize = tilesetObject.tileSize()
 				
 				# Recalculate the new selection matrix.
 				tileAt = @tileAt [event.clientX, event.clientY]
@@ -263,14 +299,17 @@ height: #{object.image().height()}px;
 		swipey = new Swipey $tileset, [0, 0], 'tilesetSwipey'
 		swipey.on 'update', (offset) =>
 			
-			return unless (object = @get 'environment.tileset.object')?
+			return unless (tilesetObject = @get 'environment.tileset.object')?
 			
-			tileSize = object.tileSize()
+			tileSize = tilesetObject.tileSize()
 			
 			# Update the tileset image offset.
 			[left, top] = Vector.mul(
 				offset
-				Vector.scale tileSize, -1
+				Vector.scale(
+					Vector.scale tileSize, -1
+					@get 'zoomRatio'
+				)
 			)
 			
 			$('#tileset .image').css left: left, top: top

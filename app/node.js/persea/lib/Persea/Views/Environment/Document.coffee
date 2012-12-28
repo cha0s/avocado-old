@@ -307,7 +307,10 @@ width: #{imageSize[0]}px; height: #{imageSize[1]}px;
 			[offset.left, offset.top]
 		)
 		
-		position = Vector.floor Vector.div position, Vector.scale tilesetObject.tileSize(), @get 'zoomRatio'
+		position = Vector.floor Vector.div(
+			position
+			Vector.scale tilesetObject.tileSize(), @get 'zoomRatio'
+		)
 		
 	positionTranslatedToLayer: (position) ->
 		
@@ -465,6 +468,9 @@ width: #{imageSize[0]}px; height: #{imageSize[1]}px;
 			"#{mousemove}.environmentDocument"
 			(event) =>
 				
+				onTile = @positionTranslatedToLayer [event.clientX, event.clientY]
+				@$('.on-tile').text "[#{onTile[0]}, #{onTile[1]}]"
+				
 				return if 'move' is @get 'navBarSelection.mode'
 				
 				currentDrawTool = @get 'landscapeController.currentDrawTool'
@@ -609,6 +615,11 @@ width: #{imageSize[0]}px; height: #{imageSize[1]}px;
 		zoomRatioBinding="zoomRatio"
 	}}
 	
+</div>
+
+<div class="well well-small">
+<strong>Tile:</strong>
+<span class="on-tile">[N/A, N/A]</span>
 </div>
 
 """

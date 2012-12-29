@@ -174,6 +174,12 @@ module.exports = Vector =
 			Math.floor vector[1]
 		]
 
+	# Get the area a vector.
+	#
+	#     avocado> Vector.area [3, 6]
+	#     18
+	area: (vector) -> vector[0] * vector[1]
+
 	# Checks whether a vector is null. A vector is null if either axis is 0.
 	# The algorithm prefers horizontal directions to vertical; if you move
 	# up-right or down-right you'll face right.

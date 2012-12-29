@@ -391,6 +391,40 @@ width: #{imageSize[0]}px; height: #{imageSize[1]}px;
 			not @get 'zoomMayIncrease'
 		)
 	).observes 'zoomMayIncrease'
+	
+	resizeRoom: (newSize) ->
+
+		return unless (roomObject = @get 'currentRoom.object')?
+		return unless (undoStack = @get 'undoStack')?		
+		
+		commandGenerator = (size, layers) =>
+			
+			=>
+		
+				roomObject.size_ = size
+				roomObject.layers_ = layers
+			
+				@beginPropertyChanges()
+				
+				@set 'currentRoom.object', null
+				@set 'currentRoom.object', roomObject
+				
+				@endPropertyChanges()
+
+		undo = commandGenerator(
+			Vector.copy roomObject.size()
+			layer.copy() for layer in roomObject.layers_
+		)
+		
+		redo = commandGenerator(
+			newSize
+			layer.copy().resize newSize for layer in roomObject.layers_
+		)
+		
+		undoStack.push new class extends UndoCommand
+			
+			redo: redo
+			undo: undo
 		
 	didInsertElement: ->
 		
@@ -405,6 +439,27 @@ width: #{imageSize[0]}px; height: #{imageSize[1]}px;
 		
 		@zoomMayDecreaseChanged()
 		@zoomMayIncreaseChanged()
+		
+		$('#document-resize').click =>
+			
+			return unless (roomObject = @get 'currentRoom.object')?
+			
+			$('#resize-modal .width').val roomObject.width()
+			$('#resize-modal .height').val roomObject.height()
+			
+			$('#resize-modal').modal('show')    
+		
+		$('#resize-modal .btn-primary').click =>
+			
+			@resizeRoom [
+				+$('#resize-modal .width').val()
+				+$('#resize-modal .height').val()
+			]
+			
+			$('#resize-modal').modal('hide')
+		
+		$('#document-resize')
+			.attr href: '#resize-modal', role: 'button', 'data-toggle': 'modal'
 		
 		$environmentDocument = $('#environment-document')
 		
@@ -596,6 +651,30 @@ width: #{imageSize[0]}px; height: #{imageSize[1]}px;
 			selectionBinding="navBarSelection"
 		}}
 	</div>	
+</div>
+
+<div id="resize-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="resize-modal-label" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="resize-modal-label">Resize room</h3>
+	</div>
+	<div class="modal-body">
+		<label>Width</label>
+		<div class="input-append">
+			{{view Ember.TextField class="width input-mini" type="number" valueBinding="tileWidth"}}
+			<span class="add-on">px</span>
+		</div>
+		
+		<label>Height</label>
+		<div class="input-append">
+			{{view Ember.TextField class="height input-mini" type="number" valueBinding="tileHeight"}}
+			<span class="add-on">px</span>
+		</div>		
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+		<button class="btn btn-primary">Lock it in</button>
+	</div>
 </div>
 
 <div id="environment-document">

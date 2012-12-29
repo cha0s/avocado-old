@@ -167,7 +167,7 @@ height: #{height}px;
 		
 		<label>Height</label>
 		<div class="input-append">
-			{{view Ember.TextField class="width input-mini" type="number" valueBinding="tileHeight"}}
+			{{view Ember.TextField class="height input-mini" type="number" valueBinding="tileHeight"}}
 			<span class="add-on">px</span>
 		</div>		
 		

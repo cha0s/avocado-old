@@ -27,8 +27,6 @@ AbstractFactory<v8ScriptService> *v8ScriptService::factory = new AbstractFactory
     v8 ## name ## Service::initialize(name ## Exports); \
     requires_->Set(String::NewSymbol(#name), name); }
 
-
-
 v8ScriptService::v8ScriptService()
 	: ScriptService()
 {

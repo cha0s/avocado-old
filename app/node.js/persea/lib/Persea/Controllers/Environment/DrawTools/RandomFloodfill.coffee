@@ -111,8 +111,9 @@ module.exports = Ember.Object.create
 				left = tileSize[0] * -(matrix[0] + Math.floor Math.random() * matrix[2])
 				top = tileSize[1] * -(matrix[1] + Math.floor Math.random() * matrix[3])
 				
-				documentController.$('.draw-overlay').css
-					'background-position': "#{left}px #{top}px";
+				documentController.$('.draw-overlay .image').css
+					top: "#{top}px";
+					left: "#{left}px";
 				
 			100
 		)

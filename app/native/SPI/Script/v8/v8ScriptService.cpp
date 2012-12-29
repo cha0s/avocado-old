@@ -20,9 +20,11 @@ AbstractFactory<v8ScriptService> *v8ScriptService::factory = new AbstractFactory
 
 #define INITIALIZE_SPI(name) { \
     Handle<Object> name = Object::New(); \
-    Handle<Object> name ## Object = Object::New(); \
-    name->Set(String::NewSymbol("object"), name ## Object); \
-    v8 ## name ## Service::initialize(name ## Object); \
+    Handle<Object> name ## Module = Object::New(); \
+    Handle<Object> name ## Exports = Object::New(); \
+    name ## Module->Set(String::NewSymbol("exports"), name ## Exports); \
+    name->Set(String::NewSymbol("module"), name ## Module); \
+    v8 ## name ## Service::initialize(name ## Exports); \
     requires_->Set(String::NewSymbol(#name), name); }
 
 

@@ -4,13 +4,16 @@ global = this
 	
 	throw new Error "Module #{name} not found!" unless requires_[name]?
 	
-	unless requires_[name].object?
+	unless requires_[name].module?
 		exports = {}
 		module = exports: exports
-		requires_[name].call global, module, exports
-		requires_[name] = object: module.exports
 		
-	requires_[name].object
+		f = requires_[name]
+		requires_[name] = module: module
+		
+		f.call global, module, exports
+		
+	requires_[name].module.exports
 
 Core = require 'Core'
 Graphics = require 'Graphics'

@@ -4,27 +4,28 @@ global = this
 	
 	throw new Error "Module #{name} not found!" unless requires_[name]?
 	
-	unless requires_[name].object?
+	unless requires_[name].module?
 		exports = {}
 		module = exports: exports
-		requires_[name].call global, module, exports
-		requires_[name] = object: module.exports
 		
-	requires_[name].object
+		f = requires_[name]
+		requires_[name] = module: module
+		
+		f.call global, module, exports
+		
+	requires_[name].module.exports
 
 @_ = require 'core/Utility/underscore'
 
 # Hack in the SPIIs.
-spiis = {}
-
 _.extend requires_, 
 	Core:
-		object:
+		module: exports:
 			CoreService: require 'main/web/Bindings/CoreService'
 
 _.extend requires_, 
 	Graphics:
-		object:
+		module: exports:
 			GraphicsService: require 'main/web/Bindings/GraphicsService'
 			Font: require 'main/web/Bindings/Font'
 			Image: require 'main/web/Bindings/Image'
@@ -32,18 +33,16 @@ _.extend requires_,
 
 _.extend requires_, 
 	Timing:
-		object:
+		module: exports:
 			TimingService: require 'main/web/Bindings/TimingService'
 			Counter: require 'main/web/Bindings/Counter'
 
 _.extend requires_, 
 	Sound:
-		object:
+		module: exports:
 			SoundService: require 'main/web/Bindings/SoundService'
 			Music: require 'main/web/Bindings/Music'
 			Sample: require 'main/web/Bindings/Sample'
-
-_.extend requires_, spiis
 
 Core = require 'Core'
 Graphics = require 'Graphics'

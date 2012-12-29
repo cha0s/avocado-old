@@ -5,6 +5,15 @@ Image = require('Graphics').Image
 exports.Controller = Ember.ArrayController.extend
 	sortProperties: ['name']
 
+	projectName: (->
+		
+		projectName = @get 'currentProject.name'
+		projectId = @get 'currentProject.id'
+		
+		if projectName then projectName else projectId
+		
+	).property 'currentProject.id', 'currentProject.name'
+	
 exports.View = Ember.View.extend
 	
 	environmentViewClass: Ember.View.extend
@@ -27,13 +36,27 @@ exports.View = Ember.View.extend
 			
 		).observes 'content.object'
 		
+		thumbnailStyle: (->
+			
+			if (tilesetObject = @get 'content.object')?
+				""
+			else
+				"
+background-image: url('/app/node.js/persea/static/img/spinner.svg'); 
+background-size: contain;
+"
+			
+		).property 'content.object'
+		
 		template: Ember.Handlebars.compile """
 
 <div class="row">
 	
 	<a class="media span6" {{action goToProjectEnvironment view.content href=true}} >
 		
-	    <canvas width="512" height="512" class="pull-left media-object thumb"></canvas>
+	    <canvas width="512" height="512" class="pull-left media-object thumb"
+	    	{{bindAttr style="view.thumbnailStyle"}}
+	    ></canvas>
 	    
 	    <div class="media-body">
 	    	
@@ -58,11 +81,11 @@ exports.View = Ember.View.extend
 	<ul class="breadcrumb">
 		<li><a {{action goToHome href=true}} >Home</a> <span class="divider">/</span></li>
 		<li><a {{action goToProjects href=true}} >My Projects</a> <span class="divider">/</span></li>
-		<li><a {{action goToProject currentProject href=true}} >{{currentProject.name}}</a> <span class="divider">/</span></li>
+		<li><a {{action goToProject currentProject href=true}} >{{projectName}}</a> <span class="divider">/</span></li>
 		<li class="active">Environments</li>
 	</ul>
 
-	<h1>{{currentProject.name}}'s Environments</h1>
+	<h1>{{projectName}}'s Environments</h1>
 	
 	{{collection contentBinding="content" itemViewClass="view.environmentViewClass"}}
 	

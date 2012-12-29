@@ -4,34 +4,75 @@ Tileset = require 'Persea/Routes/Tileset'
 exports.Controller = Ember.ArrayController.extend
 	sortProperties: ['name']
 
+	projectName: (->
+		
+		projectName = @get 'currentProject.name'
+		projectId = @get 'currentProject.id'
+		
+		if projectName then projectName else projectId
+		
+	).property 'currentProject.id', 'currentProject.name'
+	
 exports.View = Ember.View.extend
 
+	tilesetViewClass: Ember.View.extend
+		
+		thumbnailStyle: (->
+			
+			"
+background-image: url('#{
+	if (tilesetObject = @get 'content.object')?
+		"/resource#{tilesetObject.image().uri()}"
+	else
+		"/app/node.js/persea/static/img/spinner.svg"
+	
+}'); 
+background-size: contain;
+"
+			
+		).property 'content.object'
+		
+		template: Ember.Handlebars.compile """
+
+<div class="row">
+
+	<a class="media span6" {{action goToProjectTileset view.content href=true}} >
+		
+		<div class="pull-left media-object thumb"
+			{{bindAttr style="view.thumbnailStyle"}}
+		>
+		</div>
+	    
+	    <div class="media-body">
+	    
+		    <h4 class="media-heading">{{view.content.name}} <small>{{view.content.fetching}}</small></h4>
+		    
+		    {{#unless view.content.fetching}}
+		    	<p>{{view.content.description}}</p>
+		    {{/unless}}
+		    
+	    </div>
+	    
+	</a>
+	
+</div>
+
+"""
+	
 	template: Ember.Handlebars.compile """
 
-<div id="environment-list" class="container">
+<div id="tileset-list" class="container">
 	
 	<ul class="breadcrumb">
 		<li><a {{action goToHome href=true}} >Home</a> <span class="divider">/</span></li>
 		<li><a {{action goToProjects href=true}} >My Projects</a> <span class="divider">/</span></li>
-		<li><a {{action goToProject currentProject href=true}} >{{currentProject.name}}</a> <span class="divider">/</span></li>
+		<li><a {{action goToProject currentProject href=true}} >{{projectName}}</a> <span class="divider">/</span></li>
 		<li class="active">Tilesets</li>
 	</ul>
 
-	<h1>{{currentProject.name}}'s Tilesets</h1>
+	<h1>{{projectName}}'s Tilesets</h1>
 	
-	{{#each controller}}
-		<div class="row">
-			<a class="media span6" {{action goToProjectTileset this href=true}} >
-			    <img class="pull-left media-object" src="http://placekitten.com/g/64/64">
-			    <div class="media-body">
-				    <h4 class="media-heading">{{name}} <small>{{fetching}}</small></h4>
-				    {{#unless fetching}}
-				    	<p>{{description}}</p>
-				    {{/unless}}
-			    </div>
-			</a>
-		</div>
-	{{/each}}
+	{{collection contentBinding="content" itemViewClass="view.tilesetViewClass"}}
 	
 </div>
 

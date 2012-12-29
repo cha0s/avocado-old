@@ -27,7 +27,7 @@ module.exports = TileLayer = class
 		
 		@size_ = Vector.copy @size_
 		
-		@tileIndices_ = @tileIndices_.slice 0 if @tileIndices_
+		@tileIndices_ = (0 for i in [0...Vector.area @size_]) unless @tileIndices_?
 			
 		defer.resolve()
 			
@@ -62,6 +62,8 @@ module.exports = TileLayer = class
 				
 		@size_ = size
 		@tileIndices_ = tileIndices
+		
+		this
 	
 	size: -> @size_
 	

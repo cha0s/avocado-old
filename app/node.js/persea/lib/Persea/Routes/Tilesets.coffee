@@ -1,7 +1,8 @@
 
 Tileset = require 'Persea/Routes/Tileset'
 
-exports.Controller = Ember.ArrayController.extend()
+exports.Controller = Ember.ArrayController.extend
+	sortProperties: ['name']
 
 exports.View = Ember.View.extend
 

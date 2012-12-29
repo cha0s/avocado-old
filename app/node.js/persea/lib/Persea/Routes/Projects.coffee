@@ -2,7 +2,8 @@
 Project = require 'Persea/Routes/Project'
 ProjectModel = require 'Persea/Models/Project'
 
-exports.Controller = Ember.ArrayController.extend()
+exports.Controller = Ember.ArrayController.extend
+	sortProperties: ['name']
 	
 exports.View = Ember.View.extend
 	

@@ -2,7 +2,8 @@
 Environment = require 'Persea/Routes/Environment'
 Image = require('Graphics').Image
 
-exports.Controller = Ember.ArrayController.extend()
+exports.Controller = Ember.ArrayController.extend
+	sortProperties: ['name']
 
 exports.View = Ember.View.extend
 	

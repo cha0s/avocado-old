@@ -89,12 +89,11 @@ module.exports = Room = class
 	
 	resize: (w, h) ->
 		
-		@size_ = if w instanceof Array then w else [w, h]
+		@size_ = if w instanceof Array then Vector.copy(w) else [w, h]
 		
 		for i in [0...Room.layerCount]
 			
-			@layers_[i] = @layers_[i].copy()
-			@layers_[i].resize w, h
+			@layers_[i].copy().resize w, h
 	
 	height: -> @size_[1]
 	width: -> @size_[0]

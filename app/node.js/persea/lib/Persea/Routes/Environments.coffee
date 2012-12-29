@@ -1,10 +1,55 @@
 
 Environment = require 'Persea/Routes/Environment'
+Image = require('Graphics').Image
 
 exports.Controller = Ember.ArrayController.extend()
 
 exports.View = Ember.View.extend
+	
+	environmentViewClass: Ember.View.extend
+		
+		didInsertElement: ->
+			
+			@redrawThumbnail()
+		
+		redrawThumbnail: (->
+			
+			return unless (environmentObject = @get 'content.object')?
+			
+			room = environmentObject.room 0
+			
+			image = new Image()
+			image.Canvas = @$('.thumb')[0]
+			
+			for layer in room.layers_
+				layer.fastRender environmentObject.tileset(), image
+			
+		).observes 'content.object'
+		
+		template: Ember.Handlebars.compile """
 
+<div class="row">
+	
+	<a class="media span6" {{action goToProjectEnvironment view.content href=true}} >
+		
+	    <canvas width="512" height="512" class="pull-left media-object thumb"></canvas>
+	    
+	    <div class="media-body">
+	    	
+		    <h4 class="media-heading">{{view.content.name}} <small>{{view.content.fetching}}</small></h4>
+		    
+		    {{#unless view.content.fetching}}
+		    	<p>{{view.content.description}}</p>
+		    {{/unless}}
+		    
+	    </div>
+	    
+	</a>
+	
+</div>
+
+"""
+	
 	template: Ember.Handlebars.compile """
 
 <div id="environment-list" class="container">
@@ -18,19 +63,7 @@ exports.View = Ember.View.extend
 
 	<h1>{{currentProject.name}}'s Environments</h1>
 	
-	{{#each controller}}
-		<div class="row">
-			<a class="media span6" {{action goToProjectEnvironment this href=true}} >
-			    <img class="pull-left media-object" src="http://placekitten.com/g/64/64">
-			    <div class="media-body">
-				    <h4 class="media-heading">{{name}} <small>{{fetching}}</small></h4>
-				    {{#unless fetching}}
-				    	<p>{{description}}</p>
-				    {{/unless}}
-			    </div>
-			</a>
-		</div>
-	{{/each}}
+	{{collection contentBinding="content" itemViewClass="view.environmentViewClass"}}
 	
 </div>
 

@@ -35,6 +35,11 @@ public:
 	QtImage();
 
 	/**
+	 * Load a QImage from memory.
+	 */
+	QtImage(void *data, unsigned int length);
+
+	/**
 	 * Load a QImage from a filename.
 	 */
 	QtImage(const boost::filesystem::path &uri);
@@ -91,6 +96,10 @@ class AbstractFactory<QtImage> : public AbstractFactory<Image> {
 public:
 
 	virtual ~AbstractFactory<QtImage>() {}
+
+	QtImage *create(void *data, unsigned int length) {
+		return new QtImage(data, length);
+	}
 
 	QtImage *create(const boost::filesystem::path &uri) {
 		return new QtImage(uri);

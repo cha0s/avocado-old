@@ -139,11 +139,31 @@ v8::Handle<v8::Value> v8Image::Load(const v8::Arguments &args) {
 
 	try {
 
-		Handle<Object> image = v8Image::New(
-			Image::manager.load(
-				V8::stringToStdString(args[0]->ToString())
-			)
-		);
+		Handle<Object> image;
+
+		if (args[0]->IsString()) {
+
+			image = v8Image::New(
+				Image::manager.load(
+					V8::stringToStdString(args[0]->ToString())
+				)
+			);
+		}
+		else {
+
+			unsigned int length = args[0].As<Object>()->Get(
+				String::NewSymbol("length")
+			)->Uint32Value();
+
+			unsigned char data[length];
+			for (unsigned int i = 0; i < length; ++i) {
+				data[i] = args[0].As<Object>()->Get(i)->Int32Value();
+			}
+
+			image = v8Image::New(
+				Image::factoryManager.instance()->create(data, length)
+			);
+		}
 
 		Handle<Value> argv[] = {
 			image

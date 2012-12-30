@@ -12,6 +12,25 @@ SfmlImage::SfmlImage()
 {
 }
 
+SfmlImage::SfmlImage(void *data, unsigned int length)
+	: Image()
+	, renderTexture(new sf::RenderTexture())
+{
+
+	sf::Texture texture;
+	if (!texture.loadFromMemory(data, length)) throw std::runtime_error(
+		"SfmlImage::SfmlImage(data, length): SFML couldn't load image."
+	);
+	sf::Vector2u vector = texture.getSize();
+	renderTexture->create(vector.x, vector.y);
+	renderTexture->clear();
+	renderTexture->draw(
+		sf::Sprite(texture),
+		sf::RenderStates(sf::BlendNone)
+	);
+	renderTexture->display();
+}
+
 SfmlImage::SfmlImage(int width, int height)
 	: Image()
 	, renderTexture(new sf::RenderTexture())

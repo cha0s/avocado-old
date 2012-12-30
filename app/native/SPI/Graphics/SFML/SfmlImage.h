@@ -34,6 +34,11 @@ public:
 	SfmlImage();
 
 	/**
+	 * Load an sf::RenderTexture from memory.
+	 */
+	SfmlImage(void *data, unsigned int length);
+
+	/**
 	 * Load an sf::RenderTexture from a filename.
 	 */
 	SfmlImage(const boost::filesystem::path &uri);
@@ -90,6 +95,10 @@ template <>
 class AbstractFactory<SfmlImage> : public AbstractFactory<Image> {
 
 	virtual ~AbstractFactory<SfmlImage>() {}
+
+	SfmlImage *create(void *data, unsigned int length) {
+		return new SfmlImage(data, length);
+	}
 
 	SfmlImage *create(const boost::filesystem::path &uri) {
 		return new SfmlImage(uri);

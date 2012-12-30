@@ -24,6 +24,13 @@ QtImage::QtImage()
 {
 }
 
+QtImage::QtImage(void *data, unsigned int length)
+	: Image()
+	, qImage(new QImage())
+{
+	*qImage = QImage::fromData(static_cast<unsigned char*>(data), length);
+}
+
 QtImage::QtImage(int width, int height)
 	: Image()
 	, qImage(new QImage(width, height, QImage::Format_ARGB32))

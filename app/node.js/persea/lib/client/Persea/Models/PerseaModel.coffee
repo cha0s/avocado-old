@@ -1,6 +1,7 @@
 PerseaModel = module.exports = DS.Model.extend
 	
 	objectProperties: []
+	commit: ->
 	commitDelay: 2000
 	
 	init: ->

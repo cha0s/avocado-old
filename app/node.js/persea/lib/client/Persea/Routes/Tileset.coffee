@@ -28,12 +28,12 @@ exports.View = Ember.View.extend
 	
 	tilesetStyle: (->
 		
-		return '' unless (object = @get 'tileset.object')?
+		return '' unless (tilesetObject = @get 'tileset.object')?
 		
-		[width, height] = object.image().size()
+		[width, height] = tilesetObject.image().size()
 		
 		"
-background-image: url(#{object.image().src});
+background-image: url(#{tilesetObject.image().src});
 width: #{width}px; 
 height: #{height}px;
 "
@@ -42,16 +42,16 @@ height: #{height}px;
 	
 	swipeyReset: (->
 		
-		return unless (object = @get 'tileset.object')?
+		return unless (tilesetObject = @get 'tileset.object')?
 		return unless (swipey = @get 'swipey')?
 		
 		swipey.setMinMax(
 			[0, 0]
 			Vector.sub(
-				object.tiles()
+				tilesetObject.tiles()
 				Vector.floor Vector.div(
 					[256, 256]
-					object.tileSize()
+					tilesetObject.tileSize()
 				)
 			)
 		)
@@ -62,18 +62,18 @@ height: #{height}px;
 	
 	gridChanged: (->
 	
-		return unless (object = @get 'tileset.object')?
+		return unless (tilesetObject = @get 'tileset.object')?
 		return unless ($gridCanvas = @$('.grid'))?
 		
 		gridImage = new Image()
-		tileImage = new Image object.tileSize()
-		tiles = object.tiles()
+		tileImage = new Image tilesetObject.tileSize()
+		tiles = tilesetObject.tiles()
 		
 		gridImage.Canvas = $gridCanvas[0]
 		gridImage.fill 0, 0, 0, 0
 		
 		tileImage.lockPixels()
-		for x in [0...object.tileWidth()]
+		for x in [0...tilesetObject.tileWidth()]
 			tileImage.setPixelAt(
 				x, 0
 				if x % 2 is 0
@@ -81,7 +81,7 @@ height: #{height}px;
 				else
 					Color.Rgb 0, 0, 0
 			)
-		for y in [0...object.tileHeight()]
+		for y in [0...tilesetObject.tileHeight()]
 			tileImage.setPixelAt(
 				0, y
 				if y % 2 is 0
@@ -97,21 +97,21 @@ height: #{height}px;
 				
 				tileImage.render renderPosition, gridImage
 				
-				renderPosition[0] += object.tileWidth()
+				renderPosition[0] += tilesetObject.tileWidth()
 				
 			renderPosition[0] = 0
-			renderPosition[1] += object.tileHeight()
+			renderPosition[1] += tilesetObject.tileHeight()
 	
 	).observes 'tileWidth', 'tileHeight', 'tileset.object'
 		
 	tilesetChanged: (->
 		
-		return unless (object = @get 'tileset.object')?
+		return unless (tilesetObject = @get 'tileset.object')?
 		
 		@beginPropertyChanges()
 		
-		@set 'tileWidth', object.tileWidth()
-		@set 'tileHeight', object.tileHeight()
+		@set 'tileWidth', tilesetObject.tileWidth()
+		@set 'tileHeight', tilesetObject.tileHeight()
 		
 		@endPropertyChanges()
 		
@@ -123,9 +123,9 @@ height: #{height}px;
 		swipey = new Swipey @$('.image-container'), 'tilesetSwipey'
 		swipey.on 'update', (offset) =>
 			
-			return unless (object = @get 'tileset.object')?
+			return unless (tilesetObject = @get 'tileset.object')?
 			
-			tileSize = object.tileSize()
+			tileSize = tilesetObject.tileSize()
 			
 			# Update the tileset image offset.
 			[left, top] = Vector.mul(

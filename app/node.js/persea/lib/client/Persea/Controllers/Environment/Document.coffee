@@ -74,14 +74,14 @@ module.exports = Ember.Controller.extend DocumentZoom,
 	
 	environmentObjectChanged: (->
 		
-		return unless (object = @get 'environment.object')?
+		return unless (environmentObject = @get 'environment.object')?
 		
 		@set 'undoGroup', undoGroup = new UndoGroup()
 		
 		undoGroup.on 'activeStackChanged', (activeStack) =>
 			@set 'undoStack', activeStack
 		
-		@undoStacks = for i in [0...object.roomCount()]
+		@undoStacks = for i in [0...environmentObject.roomCount()]
 			new UndoStack undoGroup
 			
 	).observes 'environment.object'

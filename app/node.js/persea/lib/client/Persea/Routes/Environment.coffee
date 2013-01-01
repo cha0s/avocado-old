@@ -14,13 +14,13 @@ exports.Controller = Ember.Controller.extend
 	
 	environmentObjectChanged: (->
 		
-		return unless (object = @get 'environment.object')?
+		return unless (environmentObject = @get 'environment.object')?
 		
-		roomSelectContent = for i in [0...object.roomCount()]
+		roomSelectContent = for i in [0...environmentObject.roomCount()]
 			
 			index: i
-			name: object.room(i).name()
-			object: object.room i
+			name: environmentObject.room(i).name()
+			object: environmentObject.room i
 				
 		@set 'roomSelectContent', roomSelectContent
 		@set 'currentRoom', roomSelectContent[0]

@@ -26,9 +26,11 @@ module.exports = (
 				
 			catch e
 				
+				reason = (util.inspect e).replace /'/g, "\\'"
+				
 				req.processedCode = "
-				console.log('Coffee compiler couldn\\'t compile #{pathname}! Reason given: #{(util.inspect e).replace /'/g, "\\'"}');
-				"
+				console.log('Coffee compiler couldn\\'t compile #{pathname}! Reason given: #{reason}');
+"
 				
 			next()
 	)
@@ -59,9 +61,9 @@ module.exports = (
 	
 	config =
 		'Network.coffee': {}
-			
+	
 	# Write configuration variables.
-	app.get /^\/engine\/core\/Config\/:filename/, (req, res, next) ->
+	app.get '/engine/core/Config/:filename', (req, res, next) ->
 		
 		switch filename = req.params.filename
 			

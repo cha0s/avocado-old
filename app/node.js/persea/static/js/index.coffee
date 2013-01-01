@@ -1,5 +1,7 @@
 CoreService = require 'main/web/Bindings/CoreService'
+ember = require 'Persea/ember'
 NetworkConfig = 'core/Config/Network'
+somber = require 'Persea/somber'
 Timing = require 'Timing'
 
 # SPI proxies.
@@ -10,18 +12,6 @@ setInterval(
 	-> Timing.TimingService.setElapsed timeCounter.current() / 1000
 	25
 )
-
-CoreService.ResourcePath = ''
-
-ember = require 'Persea/ember'
-
-mvcs = [
-	'Footer', 'Home', 'Nav'
-	
-	'Environment', 'Environments'
-	'Project', 'Projects'
-	'Tileset', 'Tilesets'
-]
 
 app =
 
@@ -37,8 +27,6 @@ app =
 	
 	ApplicationController: Ember.Controller.extend()
 	
-ember.mixinMvc app, mixin for mixin in mvcs
-
 router =
 	
 	actions:
@@ -59,17 +47,22 @@ router =
 				router.set 'navController.selected', 'home'
 				router.set 'navController.fluid', false
 		
-ember.mixinRouter router, mixin for mixin in mvcs
+for route in [
+	'Footer', 'Home', 'Nav'
+	
+	'Environment', 'Environments'
+	'Project', 'Projects'
+	'Tileset', 'Tilesets'
+]
 
-actions = router.actions
-actions.root = Ember.Route.extend router.routes
-router = actions
+	ember.mixinRoutes app, router, route
 
-app.Router = Ember.Router.extend router
+routerObject = router.actions
+routerObject.root = Ember.Route.extend router.routes
+
+app.Router = Ember.Router.extend routerObject
 
 window.App = Ember.Application.create app
-
-somber = require 'Persea/somber-client'
 
 App.store = DS.Store.create
 	revision: 11
@@ -116,10 +109,4 @@ ember.mixinModels App, [
 	'Tileset'
 ]
 
-(($) ->
-	
-) jQuery
-
 App.initialize()
-
-adapter = App.store.get 'adapter'

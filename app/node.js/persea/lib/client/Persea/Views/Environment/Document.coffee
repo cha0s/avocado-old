@@ -178,7 +178,7 @@ width: #{imageSize[0]}px; height: #{imageSize[1]}px;
 		return '/app/node.js/persea/static/img/spinner.svg' unless (properties = currentDrawTool.drawOverlayStyle? this)?
 		{imageUrl} = properties
 		
-		"#{CoreService.ResourcePath}#{imageUrl}"
+		imageUrl
 		
 	).property(
 		'environment.object'

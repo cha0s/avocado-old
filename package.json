@@ -7,9 +7,16 @@
     "project_name": "Avocado",
     "show_timestamp": false
   },
-  "dependencies": [],
+  "dependencies": {
+    "chai": "1.4.2",
+    "mocha": "1.7.4",
+    "coffee-script": "1.4.0"
+  },
   "version": "1.0.0",
   "author": "cha0s <cha0s@therealcha0s.net>",
   "description": "Collaborative, libre, gratis game development",
-  "private": true
+  "private": true,
+  "scripts": {
+    "test": "NODE_PATH=./SPII:./engine:./node_modules node_modules/mocha/bin/mocha --compilers coffee:coffee-script --recursive tests"
+  }
 }

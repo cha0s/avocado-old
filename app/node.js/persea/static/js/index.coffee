@@ -1,4 +1,5 @@
 CoreService = require 'main/web/Bindings/CoreService'
+NetworkConfig = 'core/Config/Network'
 Timing = require 'Timing'
 
 # SPI proxies.
@@ -75,7 +76,7 @@ App.store = DS.Store.create
 
 	adapter: somber.Adapter.create
 		
-		socket: io.connect 'http://192.168.1.2'
+		socket: io.connect NetworkConfig.host
 	
 ###	
 	adapter: DS.FixtureAdapter.create

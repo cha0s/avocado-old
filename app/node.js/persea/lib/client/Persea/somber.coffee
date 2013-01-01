@@ -20,10 +20,45 @@ UPDATES		= 'updates'
 DELETE		= 'delete'
 DELETES		= 'deletes'
 
+Transforms =
+
+	serialized:
+		
+		deserialize: (serialized) ->
+			
+			if Ember.isNone serialized
+				null
+			else
+				JSON.stringify serialized
+			
+		serialize: (deserialized) ->
+			
+			if Ember.isNone deserialized
+				null
+			else
+				JSON.parse deserialized
+	
+	passthru:
+		
+		deserialize: (serialized) ->
+			
+			serialized
+			
+		serialize: (deserialized) ->
+			
+			deserialized
+	
+Transforms[key] = value for key, value of DS.JSONTransforms
+	
+exports.Serializer = SomberSerializer = DS.JSONSerializer.extend
+	
+	transforms: Transforms
+
 exports.Adapter = DS.SomberAdapter = DS.Adapter.extend
 	
 	socket: null
 	requests: {}
+	serializer: SomberSerializer
 	
 	send: (store, action, type, data, result) ->
 		

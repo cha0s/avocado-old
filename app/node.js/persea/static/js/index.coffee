@@ -77,32 +77,6 @@ App.store = DS.Store.create
 		latency: 10
 ###
 
-DS.JSONTransforms.serialized =
-	
-	deserialize: (serialized) ->
-		
-		if Ember.isNone serialized
-			null
-		else
-			JSON.stringify serialized
-		
-	serialize: (deserialized) ->
-		
-		if Ember.isNone deserialized
-			null
-		else
-			JSON.parse deserialized
-
-DS.JSONTransforms.passthru =
-	
-	deserialize: (serialized) ->
-		
-		serialized
-		
-	serialize: (deserialized) ->
-		
-		deserialized
-
 ember.mixinModels App, [
 	'Environment'
 	'Project'

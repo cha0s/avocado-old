@@ -25,5 +25,3 @@ describe 'CoreService', ->
 				expect(resource).to.deep.equal JSON.parse reference
 				
 				next()
-				
-			

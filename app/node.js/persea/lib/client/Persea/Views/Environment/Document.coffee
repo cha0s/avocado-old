@@ -1,3 +1,4 @@
+CoreService = require('Core').CoreService
 Floodfill = require 'core/Utility/Floodfill'
 Image = require('Graphics').Image
 Matrix = require 'core/Extension/Matrix'
@@ -177,7 +178,7 @@ width: #{imageSize[0]}px; height: #{imageSize[1]}px;
 		return '/app/node.js/persea/static/img/spinner.svg' unless (properties = currentDrawTool.drawOverlayStyle? this)?
 		{imageUrl} = properties
 		
-		"/resource#{imageUrl}"
+		"#{CoreService.ResourcePath}#{imageUrl}"
 		
 	).property(
 		'environment.object'

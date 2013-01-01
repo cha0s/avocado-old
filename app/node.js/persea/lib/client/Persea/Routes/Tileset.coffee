@@ -1,4 +1,5 @@
 Color = require 'core/Graphics/Color'
+CoreService = require 'main/web/Bindings/CoreService'
 Image = require('Graphics').Image
 Swipey = require 'Swipey'
 Vector = require 'core/Extension/Vector'
@@ -12,11 +13,9 @@ exports.Controller = Ember.Controller.extend
 	
 	tileSizeChanged: (->
 		
-		return unless (object = @get 'tileset.object')?
-		
-		object.setTileSize [
-			parseInt @get 'tileWidth'
-			parseInt @get 'tileHeight'
+		@set 'tileset.tileSize', [
+			+@get 'tileWidth'
+			+@get 'tileHeight'
 		]
 		
 	).observes 'tileWidth', 'tileHeight'
@@ -31,11 +30,10 @@ exports.View = Ember.View.extend
 		
 		return '' unless (object = @get 'tileset.object')?
 		
-		imageUrl = "/resource#{object.image().uri()}"
 		[width, height] = object.image().size()
 		
 		"
-background-image: url(#{imageUrl}); 
+background-image: url(#{object.image().src});
 width: #{width}px; 
 height: #{height}px;
 "
@@ -139,6 +137,20 @@ height: #{height}px;
 			
 		@set 'swipey', swipey
 		
+#		@$('.upload-tileset').click => @$('input.tileData').click()
+		
+		@$('input.tileData').change (event) =>
+			
+			i = 0
+			while file = event.target.files[i++]
+			
+				continue unless file.type.match 'image.*'
+				
+				reader = new FileReader()
+				reader.onload = ({target}) =>
+					@set 'tileset.tileData', target.result.split(',')[1]
+				reader.readAsDataURL file
+				
 		@gridChanged()
 		
 	template: Ember.Handlebars.compile """
@@ -153,23 +165,40 @@ height: #{height}px;
 		<li class="active">{{tileset.name}}</li>
 	</ul>
 
-	<h1>{{tileset.name}} <small>{{environment.fetching}}</small></h1>
+	<h1>
+		{{tileset.name}}
+		{{#if tileset.isDirty}}
+			*
+		{{/if}}
+		<small>
+			{{environment.fetching}}
+			{{#if tileset.isSaving}}
+				Saving...
+			{{/if}}
+		</small>
+	</h1>
 	
-	<div class="row-fluid">
+	<div class="row-fluid form-row">
 		
-		<h2>Tileset UI</h2>
-		
-		<label>Width</label>
-		<div class="input-append">
-			{{view Ember.TextField class="width input-mini" type="number" valueBinding="tileWidth"}}
-			<span class="add-on">px</span>
+		<div class="span2">
+			<label>Width</label>
+			<div class="input-append">
+				{{view Ember.TextField class="width input-mini" type="number" valueBinding="tileWidth"}}
+				<span class="add-on">px</span>
+			</div>
 		</div>
 		
-		<label>Height</label>
-		<div class="input-append">
-			{{view Ember.TextField class="height input-mini" type="number" valueBinding="tileHeight"}}
-			<span class="add-on">px</span>
-		</div>		
+		<div class="span2">
+			<label>Height</label>
+			<div class="input-append">
+				{{view Ember.TextField class="height input-mini" type="number" valueBinding="tileHeight"}}
+				<span class="add-on">px</span>
+			</div>
+		</div>
+		
+	</div>
+	
+	<div class="row-fluid">
 		
 		<div class="image-container">
 			
@@ -183,6 +212,8 @@ height: #{height}px;
 			
 		</div>
 		
+		<input type="file" class="tileData" name="tileData[]" />
+		
 	</div>
 	
 </div>
@@ -195,11 +226,11 @@ exports.Route = Ember.Route.extend
 	
 	deserialize: (router, context) ->
 		
-		App.store.find TilesetModel, context.id.replace /\|/g, '/'
+		App.store.find TilesetModel, context.id
 	
 	serialize: (router, context) ->
 		
-		id: context.id.replace /\//g, '|'
+		id: context.id
 	
 	connectOutlets: (router, tileset) ->
 		

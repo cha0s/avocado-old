@@ -19,7 +19,7 @@ module.exports = AvoImage = class
 		
 			@Canvas.width = width
 			@Canvas.height = height
-
+	
 	@['%load'] = (uri, fn) ->
 		
 		defer = upon.defer()
@@ -54,8 +54,11 @@ module.exports = AvoImage = class
 			
 			defer.then -> Images[uri].defer.resolve()
 			
-			Images[uri].src = "#{CoreService.ResourcePath}#{uri}"
-		
+			Images[uri].src = if uri.match /\./
+				"#{CoreService.ResourcePath}#{uri}"
+			else
+				"data:image/png;base64,#{uri}"
+			
 		defer.promise
 	
 	rgbToHex = (r, g, b, a) ->

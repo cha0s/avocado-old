@@ -25,6 +25,7 @@ exports.View = Ember.View.extend
 		redrawThumbnail: (->
 			
 			return unless (environmentObject = @get 'content.object')?
+			return unless (tilesetObject = @get 'content.tileset.object')?
 			
 			room = environmentObject.room 0
 			
@@ -32,21 +33,23 @@ exports.View = Ember.View.extend
 			image.Canvas = @$('.thumb')[0]
 			
 			for layer in room.layers_
-				layer.fastRender environmentObject.tileset(), image
+				layer.fastRender tilesetObject, image
 			
-		).observes 'content.object'
+		).observes 'content.object', 'content.tileset.object'
 		
 		thumbnailStyle: (->
 			
-			if (tilesetObject = @get 'content.object')?
-				""
+			if (tilesetObject = @get 'content.tileset.object')?
+				"
+background: none
+"
 			else
 				"
 background-image: url('/app/node.js/persea/static/img/spinner.svg'); 
 background-size: contain;
 "
 			
-		).property 'content.object'
+		).property 'content.tileset.object'
 		
 		template: Ember.Handlebars.compile """
 

@@ -170,11 +170,8 @@ module.exports = TileLayer = class
 		tiles = tileset.tiles()
 		image = tileset.image()
 		
-		imageWidth = image.width() * 4
-		destinationWidth = destination.width() * 4
+		destinationWidth = destination.width()
 		tileSize = tileset.tileSize()
-		tileSize4 = Vector.scale tileset.tileSize(), 4
-		dh = destinationWidth * tileSize[1]
 		
 		position = [0, 0]
 		
@@ -196,8 +193,14 @@ module.exports = TileLayer = class
 				
 				position[0] += tileSize[0]
 				
-			position[0] -= tileSize[0] * @size_[0]
+				if position[0] >= destination.width()
+					i += @size_[0] - x
+					break
+				
+			position[0] -= tileSize[0] * x
 			position[1] += tileSize[1]
+			
+			break if position[1] >= destination.height()
 				
 	pxRender: (
 		tileset

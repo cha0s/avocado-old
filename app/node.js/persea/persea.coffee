@@ -4,7 +4,12 @@ consolidate = require 'consolidate'
 express = require 'express'
 helpers = require '../common/helpers'
 http = require 'http'
+Models = require './lib/server/Models'
+mongoose = require 'mongoose'
 path = require 'path'
+somber = require './lib/server/somber'
+
+mongoose.connect 'mongodb://localhost/persea'
 
 app = express()
 
@@ -18,10 +23,12 @@ helpers.serveModuleFiles(
 	app
 	resourcePath
 	'../../..'
-	'/app/node.js/persea/lib/'
+	'/app/node.js/persea/lib/client/'
 ) for resourcePath in [
-	/^\/app\/node.js\/persea\/lib\/.*/
+	/^\/app\/node.js\/persea\/lib\/client\/.*/
 ]
+
+somber.express app, Models
 
 # Catch-all. Actually send any processed code we've handled.
 app.get /.*/, (req, res, next) ->
@@ -45,8 +52,8 @@ app.get '/', (req, res) ->
 	fileLists = require('../common/file-lists')()
 	
 	locals =
-		perseaFiles: helpers.gatherFilesRecursiveSync('./lib').map (filename) ->
-			src: filename.replace './lib', '/app/node.js/persea/lib'
+		perseaFiles: helpers.gatherFilesRecursiveSync('./lib/client').map (filename) ->
+			src: filename.replace './lib/client', '/app/node.js/persea/lib/client'
 		coreFiles: fileLists.coreFiles
 		bindingFiles: fileLists.bindingFiles
 	
@@ -58,3 +65,28 @@ app.use express.static '../../..'
 
 httpServer = http.createServer app
 httpServer.listen 13338
+
+db = mongoose.connection
+
+db.on 'error', console.error.bind console, 'connection error:'
+
+db.once 'open', ->
+
+	io = require('socket.io').listen httpServer
+	
+	ioSettings =
+		
+		'log level': 1
+		'transports': [
+			'websocket'
+			'flashsocket'
+			'htmlfile'
+			'xhr-polling'
+			'jsonp-polling'
+		]
+	
+	io.set key, value for key, value of ioSettings
+	
+	io.sockets.on 'connection', (socket) ->
+		
+		somber.socket socket, Models

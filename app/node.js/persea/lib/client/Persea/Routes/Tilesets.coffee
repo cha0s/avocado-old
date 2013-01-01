@@ -1,4 +1,5 @@
 
+CoreService = require 'main/web/Bindings/CoreService'
 Tileset = require 'Persea/Routes/Tileset'
 
 exports.Controller = Ember.ArrayController.extend
@@ -22,12 +23,13 @@ exports.View = Ember.View.extend
 			"
 background-image: url('#{
 	if (tilesetObject = @get 'content.object')?
-		"/resource#{tilesetObject.image().uri()}"
+		tilesetObject.image().src
 	else
 		"/app/node.js/persea/static/img/spinner.svg"
 	
 }'); 
 background-size: contain;
+background-repeat: no-repeat;
 "
 			
 		).property 'content.object'
@@ -45,11 +47,13 @@ background-size: contain;
 	    
 	    <div class="media-body">
 	    
-		    <h4 class="media-heading">{{view.content.name}} <small>{{view.content.fetching}}</small></h4>
-		    
-		    {{#unless view.content.fetching}}
+		    {{#if view.content.fetching}}
+			    <h4 class="media-heading"><small>{{view.content.fetching}}</small></h4>
+		    {{else}}
+			    <h4 class="media-heading">{{view.content.name}}</h4>
+			    
 		    	<p>{{view.content.description}}</p>
-		    {{/unless}}
+		    {{/if}}
 		    
 	    </div>
 	    

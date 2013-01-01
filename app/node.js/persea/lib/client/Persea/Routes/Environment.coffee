@@ -73,7 +73,13 @@ exports.View = Ember.View.extend
 		<li><a {{action goToProjects href=true}} >My Projects</a> <span class="divider">/</span></li>
 		<li><a {{action goToProject currentProject href=true}} >{{currentProject.name}}</a> <span class="divider">/</span></li>
 		<li><a {{action goToProjectEnvironments currentProject href=true}} >Environments</a> <span class="divider">/</span></li>
-		<li class="active">{{environment.name}}</li>
+		<li class="active">
+			{{#if environment.fetching}}
+				{{environment.id}}
+			{{else}}
+				{{environment.name}}
+			{{/if}}
+		</li>
 	</ul>
 
 	<h1>{{environment.name}} <small>{{environment.fetching}}</small></h1>

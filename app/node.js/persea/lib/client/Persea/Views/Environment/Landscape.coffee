@@ -1,3 +1,4 @@
+CoreService = require('Core').CoreService
 NavBarView = require 'Persea/Views/Bootstrap/NavBar'
 Rectangle = require 'core/Extension/Rectangle'
 Swipey = require 'Swipey'
@@ -159,7 +160,7 @@ background-size: contain;
 			size = Vector.scale tilesetObject.image().size(), @get 'zoomRatio'
 			
 			"
-background-image: url(/resource#{tilesetObject.image().uri()}); 
+background-image: url(#{tilesetObject.image().src}); 
 width: #{size[0]}px; 
 height: #{size[1]}px; 
 background-size: contain;

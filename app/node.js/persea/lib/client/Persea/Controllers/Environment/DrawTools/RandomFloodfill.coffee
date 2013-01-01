@@ -122,7 +122,7 @@ module.exports = Ember.Object.create
 		top: tileSize[1] * -matrix[1]
 		width: tileSize[0]
 		height: tileSize[1]
-		imageUrl: tilesetObject.image().uri()
+		imageUrl: tilesetObject.image().src
 		
 	eventHandler:
 		

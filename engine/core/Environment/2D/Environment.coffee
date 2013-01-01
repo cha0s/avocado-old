@@ -10,6 +10,7 @@ module.exports = Environment = class
 		@tileset_ = new Tileset()
 		@rooms_ = []
 		@name_ = ''
+		@description_ = ''
 		
 	fromObject: (O) ->
 		
@@ -17,7 +18,8 @@ module.exports = Environment = class
 	
 		@["#{i}_"] = O[i] for i of O
 		
-		tilesetPromise = Tileset.load(O.tilesetUri).then (@tileset_) =>
+		if O.tilesetUri?
+			tilesetPromise = Tileset.load(O.tilesetUri).then (@tileset_) =>
 			
 		promiseRoom = (O, i) =>
 			room = new Room()
@@ -58,6 +60,9 @@ module.exports = Environment = class
 	name: -> if @name_ is '' then @uri_ else @name_
 	setName: (@name_) ->
 	
+	description: -> @description_
+	setDescription: (@description_) ->
+	
 	uri: -> @uri_
 	setUri: (@uri_) ->
 	
@@ -71,7 +76,5 @@ module.exports = Environment = class
 	toJSON: ->
 		
 		name: @name_
-		prefix: @prefix_
-		tileSize: @tileSize_
-#		tilesetUri: @tileset_.image().uri()
+		tilesetUri: @tileset_.image().uri()
 		rooms: @rooms_

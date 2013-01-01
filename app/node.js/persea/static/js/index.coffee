@@ -1,3 +1,4 @@
+CoreService = require 'main/web/Bindings/CoreService'
 Timing = require 'Timing'
 
 # SPI proxies.
@@ -8,6 +9,8 @@ setInterval(
 	-> Timing.TimingService.setElapsed timeCounter.current() / 1000
 	25
 )
+
+CoreService.ResourcePath = ''
 
 ember = require 'Persea/ember'
 
@@ -39,8 +42,7 @@ router =
 	
 	actions:
 		
-		testing: 69
-#		enableLogging: true
+		enableLogging: false
 		
 	routes:
 
@@ -66,13 +68,47 @@ app.Router = Ember.Router.extend router
 
 window.App = Ember.Application.create app
 
+somber = require 'Persea/somber-client'
+
 App.store = DS.Store.create
-	revision: 10
+	revision: 11
+
+	adapter: somber.Adapter.create
+		
+		socket: io.connect 'http://192.168.1.2'
 	
+###	
 	adapter: DS.FixtureAdapter.create
 		simulateRemoteResponse: true
-		latency: 50
+		latency: 10
+###
+
+DS.JSONTransforms.serialized =
+	
+	deserialize: (serialized) ->
 		
+		if Ember.isNone serialized
+			null
+		else
+			JSON.stringify serialized
+		
+	serialize: (deserialized) ->
+		
+		if Ember.isNone deserialized
+			null
+		else
+			JSON.parse deserialized
+
+DS.JSONTransforms.passthru =
+	
+	deserialize: (serialized) ->
+		
+		serialized
+		
+	serialize: (deserialized) ->
+		
+		deserialized
+
 ember.mixinModels App, [
 	'Environment'
 	'Project'
@@ -85,18 +121,4 @@ ember.mixinModels App, [
 
 App.initialize()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+adapter = App.store.get 'adapter'

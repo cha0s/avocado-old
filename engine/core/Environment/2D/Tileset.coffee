@@ -13,22 +13,28 @@ module.exports = Tileset = class
 		@tileSize_ = [0, 0]
 		@tiles_ = [0, 0]
 		@name_ = ''
+		@description_ = ''
 	
 	fromObject: (O) ->
 		
 		defer = upon.defer()
 		
 		@["#{i}_"] = O[i] for i of O
-	
-		uri = O.imageUri ? O.uri.replace '.tileset.json', '.png'
-		Image.load(uri).then (@image_) =>
 		
-			@setTileSize @tileSize_
-		
+		if O.image?
+			
 			defer.resolve()
+		
+		else
+			uri = O.imageUri ? O.uri.replace '.tileset.json', '.png'
+			Image.load(uri).then (@image_) =>
+			
+				defer.resolve()
 	
-		defer.promise
+		defer.promise.then =>
 	
+			@setTileSize @tileSize_
+			
 	@load: (uri) ->
 		
 		defer = upon.defer()
@@ -44,8 +50,19 @@ module.exports = Tileset = class
 		
 		defer.promise
 	
+	toJSON: ->
+		
+		tileSize: Vector.copy @tileSize_
+		name: @name_
+		description: @description_
+	
 	copy: ->
 		
+		tileset = new Tileset()
+		tileset.fromObject @toJSON()
+		
+		layer
+		 
 		tileset = new Tileset()
 		
 		tileset.tileSize_ = Vector.copy @tileSize_
@@ -55,6 +72,9 @@ module.exports = Tileset = class
 		
 		tileset
 	
+	description: -> @description_
+	setDescription: (@description_) ->
+	
 	name: -> if @name_ is '' then @uri_ else @name_
 	setName: (@name_) ->
 	
@@ -62,6 +82,12 @@ module.exports = Tileset = class
 	
 	tileWidth: -> @tileSize_[0]
 	tileHeight: -> @tileSize_[1]
+	
+	setImage: (image) ->
+		
+		@image_ = image
+		
+		@setTileSize @tileSize_
 	
 	setTileSize: (w, h) ->
 		

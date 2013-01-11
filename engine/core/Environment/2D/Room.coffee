@@ -30,7 +30,7 @@ module.exports = Room = class
 			@layers_[i] = new TileLayer()
 			@layers_[i].fromObject layer
 		
-		@resize Vector.copy O.size
+		@size_ = Vector.copy O.size
 		
 		entityPromises = []
 		
